@@ -174,7 +174,8 @@ Contenu affiché :
 - L’écran change dynamiquement selon la direction et amplitude
 **Vidéo de démonstration**
   [Vidéo](https://youtu.be/27L5mn_YXMU),
-  [Vidéo](https://github.com/ucaotech-trc/TRC25-UCAOTECH/blob/main/Electronique/Test1/Video/Videotestmp4.mp4),
+  [Vidéo](https://youtube.com/shorts/REr67c1P6QY),
+  [Vidéo](https://youtube.com/shorts/3eNkmmQ-iXk),
 
 
 ---
