@@ -189,7 +189,8 @@ Contenu affiché :
 | LCD instable                  | Vérification de l’alimentation 5V et du module I2C                  |
 
 ---
-
+## Quelques images de la réalisation
+![Images](https://github.com/TekBot-Robotics-Challenge/2025-Team-UCAO-TECH-Docs/blob/main/Electronique/Test1/Images/image1.jpg), ![Images](https://github.com/TekBot-Robotics-Challenge/2025-Team-UCAO-TECH-Docs/blob/main/Electronique/Test1/Images/imageBoitier.jpg), ![Images](https://github.com/TekBot-Robotics-Challenge/2025-Team-UCAO-TECH-Docs/blob/main/Electronique/Test1/Images/imageGY-521.jpg), ![Images](https://github.com/TekBot-Robotics-Challenge/2025-Team-UCAO-TECH-Docs/blob/main/Electronique/Test1/Images/image_test.jpg),
 
 ## Conclusion
 
