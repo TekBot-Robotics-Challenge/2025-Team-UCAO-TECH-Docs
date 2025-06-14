@@ -1,5 +1,3 @@
-
-
 # TRC 2025 – Équipe UCAO-TECH
 
 Bienvenue dans le dépôt officiel de notre équipe pour la **Tekbot Robotics Challenge 2025** !
@@ -55,6 +53,6 @@ Chaque dossier contient le code source, les schémas électroniques, les modèle
 - [Règlement général TRC 2025](lien)
 - [Guide de la compétition](lien)
 - [Documentation ROS2](https://docs.ros.org/en/humble/index.html)
-- [Elec](Electronique/Test1)
+- [Elec](Electronique/Test1/Gyroscope_Accelerometre.md)
 ---
 
