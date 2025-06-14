@@ -1,7 +1,4 @@
----
-layout: default
-title: This is the documentation Page of the team "UCAO TECH"
----
+
 
 # TRC 2025 – Équipe UCAO-TECH
 
