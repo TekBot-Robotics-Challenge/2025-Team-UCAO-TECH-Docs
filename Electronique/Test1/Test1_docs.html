@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Tests TRC 2025 | UCAO-TECH</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;700;900&family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet" />
+  <style>
+    body {
+      background-color: #020c1b;
+      color: #e6f1ff;
+      font-family: 'Roboto', sans-serif;
+      margin: 0;
+      padding: 0 1rem;
+    }
+    h2.cyber-title, h3, h4, h5 {
+      color: #00f7ff;
+      font-family: 'Orbitron', sans-serif;
+    }
+    img {
+      max-width: 100%;
+      border: 1px solid #00d1ff;
+      margin: 1rem 0;
+    }
+    .section-doc {
+      background-color: rgba(10, 25, 47, 0.4);
+      padding: 2rem;
+      border-radius: 10px;
+      margin-top: 2rem;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 1rem 0;
+    }
+    th, td {
+      padding: 0.5rem;
+      border: 1px solid #00d1ff;
+    }
+    a {
+      color: #00d1ff;
+      text-decoration: none;
+    }
+    a:hover {
+      color: #9452ff;
+      text-decoration: underline;
+    }
+    pre {
+      background-color: #0a192f;
+      padding: 1rem;
+      overflow-x: auto;
+      border-left: 4px solid #00f7ff;
+    }
+    code {
+      font-family: monospace;
+      color: #00f7ff;
+    }
+    .feature-card ul {
+      list-style: none;
+      padding-left: 0;
+    }
+    .feature-card ul li {
+      padding: 0.25rem 0;
+    }
+    .toc {
+      background-color: #081a2b;
+      padding: 1rem;
+      margin: 2rem 0;
+      border-left: 4px solid #00f7ff;
+    }
+    .toc h4 {
+      margin-top: 0;
+    }
+    .toc ul {
+      list-style: none;
+      padding-left: 0;
+    }
+    .toc ul li {
+      margin: 0.5rem 0;
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <section class="section" id="electronique">
+      <div class="section-container">
+        <div class="section-title">
+          <h2 class="cyber-title">Électronique</h2>
+          <p>Présentation du prémier test d'électronique.</p>
+        </div>
+
+        <div class="toc">
+          <h4>Sommaire</h4>
+          <ul>
+            <li><a href="#presentation">Présentation</a></li>
+            <li><a href="#materiel">Matériel utilisé</a></li>
+            <li><a href="#schema">Schéma électronique</a></li>
+            <li><a href="#fonctionnement">Fonctionnement global du système</a></li>
+            <li><a href="#code">Code Arduino</a></li>
+            <li><a href="#videos">Vidéo de démonstration</a></li>
+            <li><a href="#galerie">Galerie</a></li>
+            <li><a href="#problemes">Problèmes rencontrés</a></li>
+            <li><a href="#conclusion">Conclusion</a></li>
+            <li><a href="#downloads">Téléchargements</a></li>
+            <li><a href="#ressource">Ressources</a></li>
+          </ul>
+        </div>
+
+        <div class="section-doc">
+          <h3 id="presentation">Test 1 (Input) : Détection d’Orientation avec Accéléromètre & Gyroscope</h3>
+
+          <h4 id="objectif">Présentation</h4>
+          <p>Un capteur est un dispositif électronique conçu pour convertir des grandeurs physiques ou environnementales (mouvement, température, pression, etc.) en signaux électriques exploitables. Parmi la diversité de capteurs disponibles, ce test se concentre sur l’accéléromètre et le gyroscope, des composants clés en robotique et en navigation autonome. Ces capteurs permettent aux robots de s’orienter et d’interagi avec leur environnement en temps réel, à l’image du sens de l’équilibre et de la proprioception chez l’humain.</p>
+
+          <h4>Objectif</h4>
+          <p id="capteurs">Ce test a pour but de mesurer, interpréter et afficher en temps réel l’orientation et l’accélération d’une main à l’aide d’un capteur inertiel relié à un microcontrôleur. Les données sont visualisées sur un écran LCD via communication I2C.</p>
+
+          <h4>Présentation des capteurs</h4>
+          <ul>
+            <li><strong>Accéléromètre (intégré au MPU6050)</strong></li>
+              <p>L’accéléromètre mesure l’accélération linéaire sur un ou plusieurs axes (X, Y, Z), détectant ainsi les variations de vitesse et de position d’un objet.
+                 Rôles de l’accéléromètre : Détecter les mouvements (avancée, recul, inclinaison).
+                 <ul>
+                 <li><strong>Corriger la trajectoire(montée, descente).</strong></li>
+                 <li><strong>Reconnaître une chute ou un choc pour la sécurité d’un système.</strong></li>
+                 </ul>
+                </p>
+            <li><strong>Gyroscope :</strong></li>
+              <p>Le gyroscope mesure la vitesse angulaire, c’est-à-dire le taux de rotation d’un objet autour de ses axes. Rôles du gyroscope :
+                  <ul>
+                 <li><strong>Suivre l’orientation de l’objet.</strong></li>
+                 <li><strong>Stabiliser les mouvements.</strong></li>
+                 <li><strong>Améliorer la précision de navigation pour les applications robotiques et aéronautiques.</strong></li>
+                 </ul>
+                </p>
+            <li><strong>Identification du capteur</strong></li>
+            <p>
+              Nous avons sélectionné le module GY-521, basé sur le capteur MPU6050, qui intègre un accéléromètre et un gyroscope dans un seul composant. Ce capteur permet de déterminer précisément l’orientation spatiale et les mouvements tout en offrant une interface simplifiée pour les microcontrôleurs.
+            </p>
+                 <img src="Images/GY-521.png" alt="Capteur GY-521" />
+            <p>
+              Fonctionnement du Capteur :
+              <ul>
+              <li><strong>Accéléromètre :</strong>Mesure l’accélération sur les trois axes (X, Y, Z) en m/s² ou en g. La mesure combine l’accélération due au mouvement et l’accélération gravitationnelle.</li>
+              <li><strong>Gyroscope :</strong>Mesure la vitesse angulaire sur les trois axes en °/s, permettant de déterminer la vitesse et la direction de rotation.</li>
+              <li><strong>Communication I2C : </strong>Le capteur utilise l’adresse par défaut 0x68 pour échanger des données avec le microcontrôleur.</li>
+              </ul>
+            </p>
+          </ul>
+
+          <h4 id="materiel">Matériel utilisé</h4>
+          <table>
+            <tr><th>Composant</th><th>Référence</th></tr>
+            <tr><td>Microcontrôleur</td><td>Arduino UNO (ATmega328P)</td></tr>
+            <tr><td>Capteur</td><td>GY-521 (MPU6050)</td></tr>
+            <tr><td>Afficheur</td><td>LCD 16x2 + module I2C</td></tr>
+            <tr><td>Alimentation</td><td>Batterie 9V</td></tr>
+            <tr><td>Câblage</td><td>Breadboard, jumpers</td></tr>
+            <tr><td>Passifs</td><td>Résistances 10 kΩ</td></tr>
+          </table>
+          <h4>Présentation des capteurs</h4>
+          <ul>
+            <li><strong>Microcontrôleur (Arduino UNO)</strong></li>
+               <p>
+                Le microcontrôleur Arduino UNO, basé sur la puce ATmega328P, est le cœur du système. Il exécute le programme, communique avec le capteur via I2C et pilote l’écran LCD. C’est lui qui reçoit les données d’accélération et de rotation, les interprète, puis déclenche l’affichage.
+                 <img src="Images/ArduinoUNO.png" alt="Arduino UNO" />
+               </p>
+            <li><strong>Ecran LCD</strong></li>
+              <p>
+                L’écran LCD 16x2, combiné à un module I2C, sert à afficher les informations détectées par le capteur : direction du mouvement et intensité de l’accélération. Grâce à l’interface I2C, seulement deux fils (SDA et SCL) sont nécessaires pour connecter l’écran à l’Arduino, ce qui simplifie beaucoup le câblage.
+                 <img src="Images/Lcd 16x2.png" alt="Écran LCD" />
+               </p>
+            <li><strong>Breadboard</strong></li>
+            <p>
+                Une breadboard est utilisée pour monter le circuit sans soudure. Cela permet de tester différentes configurations facilement et de modifier rapidement le câblage en cas d’erreur ou d’amélioration.
+                 <img src="Images/breadbord.png" alt="Breadboard" />
+            </p>
+            <li><strong>Jumpers</strong></li>
+            <p>
+                Les jumpers (mâle-mâle ou mâle-femelle) assurent les connexions électriques entre les broches de la carte, du capteur, du régulateur et de l’afficheur. Ils sont souples et facilitent les prototypages rapides et propres.
+                 <img src="Images/Jumpers.png" alt="Jumpers" />
+            </p>
+            <li><strong>Résistances</strong></li>
+            <p>Deux résistances de tirage (pull-up) de 10 kΩ sont connectées aux lignes SDA et SCL. Ces résistances assurent la stabilité du bus I2C et évitent les erreurs de communication dues aux flottements logiques sur ces lignes.</p>
+            <img src="Images/Jumpers.png" alt="Jumpers" />
+            <li><strong>Alimentation</strong></li>
+            <p>Le système est alimenté par une batterie 9V connectée directement au port Jack de l’Arduino UNO. Cette approche permet d'exploiter le régulateur interne de la carte, qui convertit la tension d’entrée en un 5V stable distribué à l’ensemble du montage. Ce choix offre une solution portable, autonome et simple à mettre en œuvre, sans nécessiter de régulateur externe.</p>
+            <img src="Images/batterie.png" alt="Batterie 9V" />
+          </ul>
+      
+          
+
+          <h4 id="schema">Schéma électronique</h4>
+          
+          <img src="Images/Cap_Circuit.PNG" alt="Schéma du montage" />
+
+          <h4 id="fonctionnement">Fonctionnement global du Système</h4>
+          <ol>
+            <li>Initialisation des composants (LCD + MPU6050)</li>
+            <li>Calibration automatique au démarrage</li>
+            <li>Lecture des données brutes (accélération)</li>
+            <li>Détection de la direction dominante</li>
+            <li>Affichage de la direction et intensité</li>
+          </ol>
+
+          <h4 id="code">Code Arduino</h4>
+          <h5>Bibliothèques utilisées :</h5>
+          <ul>
+            <li>Wire.h – Communication I2C</li>
+            <li>Adafruit_MPU6050.h – Cilotage du capteur</li>
+            <li>Adafruit_Sensor.h – Structures et abstractions</li>
+            <li>LiquidCrystal_I2C.h – Gestion de l’écran LCD</li>
+          </ul>
+          <pre><code>// Test 1 - GY-521 (MPU6050) avec LCD et Arduino UNO
+
+#include <Wire.h>
+#include <Adafruit_MPU6050.h>
+#include <Adafruit_Sensor.h>
+#include <LiquidCrystal_I2C.h>
+
+Adafruit_MPU6050 mpu;
+LiquidCrystal_I2C lcd(0x27, 16, 2);
+
+void setup() {
+  Serial.begin(115200);
+  Wire.begin();
+  lcd.begin();
+  lcd.backlight();
+  lcd.print("Init capteur...");
+
+  if (!mpu.begin()) {
+    lcd.clear();
+    lcd.print("Erreur MPU6050");
+    while (1);
+  }
+  lcd.clear();
+  lcd.print("MPU pret.");
+  delay(1000);
+}
+
+void loop() {
+  sensors_event_t a, g, temp;
+  mpu.getEvent(&a, &g, &temp);
+
+  float ax = a.acceleration.x;
+  float ay = a.acceleration.y;
+  float az = a.acceleration.z;
+
+  lcd.clear();
+  if (abs(ax) > abs(ay) && abs(ax) > abs(az)) {
+    lcd.print(ax > 0 ? "Droite" : "Gauche");
+  } else if (abs(ay) > abs(az)) {
+    lcd.print(ay > 0 ? "Avant" : "Arriere");
+  } else {
+    lcd.print(az > 0 ? "Haut" : "Bas");
+  }
+  lcd.setCursor(0, 1);
+  lcd.print("Acc : ");
+  lcd.print(max(max(abs(ax), abs(ay)), abs(az)), 2);
+  lcd.print(" g");
+  delay(300);
+}</code></pre>
+
+        <h4 id="videos">Vidéo de démonstration</h4>
+        <iframe allowfullscreen="" frameborder="0" height="315" src="https://www.youtube.com/embed/3eNkmmQ-iXk" width="100%"></iframe>
+        <iframe allowfullscreen="" frameborder="0" height="315" src="https://www.youtube.com/embed/REr67c1P6QY" width="100%"></iframe>
+        <iframe allowfullscreen="" frameborder="0" height="315" src="https://www.youtube.com/embed/27L5mn_YXMU" width="100%"></iframe>
+         <div></div>
+
+         <h4 id="galerie">Galerie</h4>
+         <p>Consultez les images du montage et des tests réalisés dans la <a href="Test1_galerie.html">galerie complète du Test 1</a>.</p>
+
+          <h4 id="problemes">Problèmes rencontrés</h4>
+          <table>
+            <tr><th>Problème</th><th>Solution</th></tr>
+            <tr><td>Affichage incohérent</td><td>Réglage des seuils</td></tr>
+            <tr><td>Orientation erronée</td><td>Calibration sur axe Z</td></tr>
+            <tr><td>LCD instable</td><td>Vérification de l’alimentation</td></tr>
+          </table>
+
+          <h4 id="conclusion">Conclusion</h4>
+          <p>Ce test nous a permis de :</p>
+          <ul>
+            <li>Appliquer nos compétences en électronique et en programmation.</li>
+            <li>Exploiter un capteur combinant accéléromètre et gyroscope pour détecter les mouvements et l’orientation.</li>
+            <li>Concevoir un circuit fonctionnel et interfacer un écran LCD pour afficher les mesures.</li>
+          </ul>
+           
+          <h4 id="downloads">Téléchargements</h4>
+          <ul>
+            <li><a href="../test1_input.ino">test1_input.ino</a></li>
+            <li><a href="KICAD/test1_circuit.kicad_sch">Schéma KiCad</a></li>
+          </ul>
+
+          <h4 id="ressource">Ressources</h4>
+          <ul>
+          <li><a href="https://invensense.tdk.com/products/motion-tracking/6-axis/mpu-6050/">Datasheet MPU6050</a></li>
+          <li><a href="https://www.arduino.cc/en/Tutorial/HelloWorld">Documentation Arduino LCD</a></li>
+          </ul>
+        </div>
+
+      </div>
+    </section>
+  </main>
+</body>
+</html>
