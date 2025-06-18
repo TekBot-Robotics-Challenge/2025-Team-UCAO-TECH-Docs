@@ -292,14 +292,22 @@
       grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
       gap: 1rem;
     }
-    .gallery .gallery-img img, .gallery .gallery-img video {
+    .gallery .gallery-img img  {
       width: 100%;
       height: 55%;
       border: 2px solid #00d1ff;
       border-radius: 8px;
       transition: transform 0.3s ease;
     }
-    .gallery .gallery-img img:hover {
+
+    .gallery .gallery-img video{
+      width: 100%;
+      height: 55%;
+      border: 2px solid #00d1ff;
+      border-radius: 8px;
+      
+    }
+    .gallery .gallery-img img:hover, .gallery .gallery-img video {
       transform: scale(1.05);
     }
     
