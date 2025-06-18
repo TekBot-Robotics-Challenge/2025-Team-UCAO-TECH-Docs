@@ -6,6 +6,106 @@
   <title>Galerie - Test 1 Gyroscope</title>
   <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
   <style>
+/* Header */
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 1000;
+            background-color: rgba(2, 12, 27, 0.9);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(0, 209, 255, 0.2);
+            transition: all 0.3s ease;
+        }
+        
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 1rem 2rem;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            color: white;
+            text-decoration: none;
+            font-size: 1.5rem;
+            font-weight: 700;
+        }
+        
+        .logo img {
+            height: 50px;
+            transition: transform 0.5s ease;
+        }
+        
+        .logo:hover img {
+            transform: rotate(360deg);
+        }
+        
+        .logo span {
+            color: var(--secondary);
+        }
+        
+        .nav-links {
+            display: flex;
+            gap: 1.5rem;
+        }
+        
+        .nav-links a {
+            color: rgba(230, 241, 255, 0.8);
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 0.82rem;
+            text-transform: uppercase;
+            letter-spacing: 1.2px;
+            padding: 0.5rem 0.8rem;
+            position: relative;
+            transition: all 0.3s ease;
+        }
+        
+        .nav-links a::before {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: linear-gradient(90deg, var(--secondary), var(--cyber-purple));
+            transition: width 0.3s ease;
+        }
+        
+        .nav-links a:hover {
+            color: var(--cyber-blue);
+        }
+        
+        .nav-links a:hover::before {
+            width: 100%;
+        }
+        
+        .nav-links a.active {
+            color: var(--cyber-blue);
+        }
+        
+        .nav-links a.active::before {
+            width: 100%;
+        }
+        
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            color: white;
+            font-size: 1.5rem;
+            cursor: pointer;
+            z-index: 1001;
+        }
+        
+    /* Fin */
     body {
       background-color: #020c1b;
       color: #e6f1ff;
@@ -43,6 +143,23 @@
   </style>
 </head>
 <body>
+  <!-- Header -->
+    <header>
+        <nav class="navbar">
+            <a href="#accueil" class="logo">
+                <img src="https://ucaotech.com/wp-content/uploads/2024/10/UCAO-TECH-1.png" alt="UCAO-TECH Logo">
+                <span>UCAO-TECH</span>
+            </a>
+            <ul class="nav-links">
+                <li><a href="https://tekbot-robotics-challenge.github.io/2025-Team-UCAO-TECH-Docs">Accueil</a></li>
+                <li><a href="#a-propos">À propos</a></li>
+                <li><a href="#equipe">Équipe</a></li>
+                <li><a href="#contact">Contact</a></li>
+                <li><a href="#documentation">Documentation</a></li>
+            </ul>
+        </nav>
+    </header>
+  
   <h1>Galerie – Test 1 : Gyroscope & Accéléromètre</h1>
   <div class="gallery">
     <img src="Images/image1.jpg" alt="Prototype en test">
