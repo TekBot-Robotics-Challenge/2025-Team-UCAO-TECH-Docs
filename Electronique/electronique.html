@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Tests TRC 2025 | UCAO-TECH</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;700;900&family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" /> 
+  <style>
+    body {
+      background-color: #020c1b;
+      color: #e6f1ff;
+      font-family: 'Roboto', sans-serif;
+    }
+    h2.cyber-title {
+      color: #00f7ff;
+      font-family: 'Orbitron', sans-serif;
+      text-align: center;
+      margin-bottom: 1rem;
+    }
+    ul {
+      list-style: none;
+      padding-left: 0;
+    }
+    ul li {
+      padding: 0.25rem 0;
+    }
+    ul li a {
+      color: #00d1ff;
+      text-decoration: none;
+      font-weight: 500;
+    }
+    ul li a:hover {
+      color: #9452ff;
+      text-decoration: underline;
+    }
+    .feature-card {
+      border: 1px solid rgba(0, 209, 255, 0.2);
+      padding: 1.5rem;
+      margin: 1rem 0;
+      background-color: rgba(10, 25, 47, 0.5);
+      backdrop-filter: blur(5px);
+      transition: all 0.3s ease;
+    }
+    .feature-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 0 20px rgba(0, 209, 255, 0.3);
+    }
+  </style>
+</head>
+<body>
+  
+  <main>
+    <section class="section" id="electronique">
+      <div class="section-container">
+        <div class="section-title">
+          <h2 class="cyber-title">Électronique</h2>
+        </div>
+        <div class="features-grid">
+          <div class="feature-card holographic-card">
+            <h3>Test 1 : Test  input : Gyroscope et accéléromètre</h3>
+            <ul>
+              <li><a href="tests/electronique/test1-doc.html">📄 Documentation</a></li>
+              <li><a href="tests/electronique/test1-galerie.html">🖼️ Galerie</a></li>
+            </ul>
+          </div>
+          <div class="feature-card holographic-card">
+            <h3>Test 2 : Test communication : La boîte noire </h3>
+            <ul>
+              <li><a href="tests/electronique/test2-doc.html">📄 Documentation</a></li>
+              <li><a href="tests/electronique/test2-galerie.html">🖼️ Galerie</a></li>
+            </ul>
+          </div>
+          <div class="feature-card holographic-card">
+            <h3>Test 3 : Test output: Réalisation d’un afficheur 7 segments</h3>
+            <ul>
+              <li><a href="tests/electronique/test3-doc.html">📄 Documentation</a></li>
+              <li><a href="tests/electronique/test3-galerie.html">🖼️ Galerie</a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+</body>
+</html>
