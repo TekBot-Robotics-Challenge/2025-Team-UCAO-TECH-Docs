@@ -274,27 +274,32 @@
       margin: 0;
       padding: 2rem;
     }
-    h1 {
+    .gallery {
+      margin-top: 5rem;
+    }
+    .gallery h1 {
       font-family: 'Orbitron', sans-serif;
       color: #00f7ff;
       text-align: center;
-      margin-bottom: 2rem;
+      margin-top: 2rem;
+    
     }
-    .gallery {
+    .gallery .gallery-img {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
       gap: 1rem;
     }
-    .gallery img {
+    .gallery .gallery-img img {
       width: 100%;
       border: 2px solid #00d1ff;
       border-radius: 8px;
       transition: transform 0.3s ease;
     }
-    .gallery img:hover {
+    .gallery .gallery-img img:hover {
       transform: scale(1.05);
     }
-    a.back {
+    
+    .gallery a.back {
       display: block;
       margin: 2rem auto;
       text-align: center;
@@ -321,10 +326,15 @@
         </nav>
     </header>
     <!--  -->
-  <h1>Galerie – CAO SOLIDWORKS</h1>
-  <div class="gallery">
-    
-  </div>
-  <a class="back" href="Test1Mecanique.html">← Retour à la documentation</a>
+  <section class = gallery> 
+    <h1>Galerie – Tests</h1>
+    <div class="gallery-img">
+      <img src="../Galerie/app_mecanique.jpeg" alt="Objet">
+      <img src="../Galerie/outilmecanique.jpeg" alt="objet 2">
+     
+    </div>
+    <a class="back" href="https://tekbot-robotics-challenge.github.io/2025-Team-UCAO-TECH-Docs/Electronique/mecanique.html">← Retour à la page des tests mécaniques</a>  
+    <a class="back" href="Test1Mecanique.html">← Retour à la documentation</a>
+  </section>
 </body>
 </html>
