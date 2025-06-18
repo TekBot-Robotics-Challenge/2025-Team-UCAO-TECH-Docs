@@ -278,20 +278,31 @@
       margin-bottom: 2rem;
     }
     .gallery {
+      margin-top: 5rem;
+    }
+    .gallery h1 {
+      font-family: 'Orbitron', sans-serif;
+      color: #00f7ff;
+      text-align: center;
+      margin-top: 2rem;
+    
+    }
+    .gallery .gallery-img {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
       gap: 1rem;
     }
-    .gallery img {
+    .gallery .gallery-img img {
       width: 100%;
       border: 2px solid #00d1ff;
       border-radius: 8px;
       transition: transform 0.3s ease;
     }
-    .gallery img:hover {
+    .gallery .gallery-img img:hover {
       transform: scale(1.05);
     }
-    a.back {
+    
+    .gallery a.back {
       display: block;
       margin: 2rem auto;
       text-align: center;
@@ -310,18 +321,26 @@
             </a>
             <ul class="nav-links">
                 <li><a href="https://tekbot-robotics-challenge.github.io/2025-Team-UCAO-TECH-Docs">Accueil</a></li>
-                <li><a href="#a-propos">À propos</a></li>
-                <li><a href="#equipe">Équipe</a></li>
-                <li><a href="#contact">Contact</a></li>
-                <li><a href="#documentation">Documentation</a></li>
+                <li><a href="https://tekbot-robotics-challenge.github.io/2025-Team-UCAO-TECH-Docs/#a-propos">À propos</a></li>
+                <li><a href="https://tekbot-robotics-challenge.github.io/2025-Team-UCAO-TECH-Docs/#equipe">Équipe</a></li>
+                <li><a href="https://tekbot-robotics-challenge.github.io/2025-Team-UCAO-TECH-Docs/#contact">Contact</a></li>
+                <li><a href="https://tekbot-robotics-challenge.github.io/2025-Team-UCAO-TECH-Docs/#documentation">Documentation</a></li>
             </ul>
         </nav>
     </header>
     <!--  -->
-  <h1>Galerie – Test 1 : Classe robot</h1>
-  <div class="gallery">
-    
-  </div>
-  <a class="back" href="Test1Informatique.html">← Retour à la documentation</a>
+  
+  <section class = gallery> 
+    <h1>Galerie – Tests IT</h1>
+    <div class="gallery-img">
+      <img src="../Galerie/davidjoIT.jpeg" alt="David AÏDASSO">
+      <img src="../Galerie/ITcodec++.mp4" alt="Code">
+      <img src="../Galerie/installation_ubuntu_etrecherche_c++robot" alt="Recherche et Code">
+      <img src="../Galerie/IT_researchandcode.mp4" alt="Recherche et Code">
+    </div>
+    <a class="back" href="https://tekbot-robotics-challenge.github.io/2025-Team-UCAO-TECH-Docs/Informatique/informatique.html">← Retour à la page des tests informatiques</a>  
+    <a class="back" href="Test1Informatique">← Retour à la documentation du test 1- IT</a>
+  </section>
+  
 </body>
 </html>
