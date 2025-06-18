@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Galerie - Test 1 Gyroscope</title>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
+  <style>
+    body {
+      background-color: #020c1b;
+      color: #e6f1ff;
+      font-family: 'Roboto', sans-serif;
+      margin: 0;
+      padding: 2rem;
+    }
+    h1 {
+      font-family: 'Orbitron', sans-serif;
+      color: #00f7ff;
+      text-align: center;
+      margin-bottom: 2rem;
+    }
+    .gallery {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 1rem;
+    }
+    .gallery img {
+      width: 100%;
+      border: 2px solid #00d1ff;
+      border-radius: 8px;
+      transition: transform 0.3s ease;
+    }
+    .gallery img:hover {
+      transform: scale(1.05);
+    }
+    a.back {
+      display: block;
+      margin: 2rem auto;
+      text-align: center;
+      color: #00d1ff;
+      text-decoration: none;
+    }
+  </style>
+</head>
+<body>
+  <h1>Galerie – CAO SOLIDWORKS</h1>
+  <div class="gallery">
+    
+  </div>
+  <a class="back" href="Test1Mecanique.html">← Retour à la documentation</a>
+</body>
+</html>

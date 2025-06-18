@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Test 1 - CAO SolidWorks | TRC 2025 | UCAO-TECH</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;700;900&family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet" />
+  <style>
+    body {
+      background-color: #020c1b;
+      color: #e6f1ff;
+      font-family: 'Roboto', sans-serif;
+      margin: 0;
+      padding: 0 1rem;
+    }
+    h2.cyber-title, h3, h4, h5 {
+      color: #00f7ff;
+      font-family: 'Orbitron', sans-serif;
+    }
+    img {
+      max-width: 100%;
+      border: 1px solid #00d1ff;
+      margin: 1rem 0;
+    }
+    .section-doc {
+      background-color: rgba(10, 25, 47, 0.4);
+      padding: 2rem;
+      border-radius: 10px;
+      margin-top: 2rem;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 1rem 0;
+    }
+    th, td {
+      padding: 0.5rem;
+      border: 1px solid #00d1ff;
+    }
+    a {
+      color: #00d1ff;
+      text-decoration: none;
+    }
+    a:hover {
+      color: #9452ff;
+      text-decoration: underline;
+    }
+    pre {
+      background-color: #0a192f;
+      padding: 1rem;
+      overflow-x: auto;
+      border-left: 4px solid #00f7ff;
+    }
+    code {
+      font-family: monospace;
+      color: #00f7ff;
+    }
+    .feature-card ul {
+      list-style: none;
+      padding-left: 0;
+    }
+    .feature-card ul li {
+      padding: 0.25rem 0;
+    }
+    .toc {
+      background-color: #081a2b;
+      padding: 1rem;
+      margin: 2rem 0;
+      border-left: 4px solid #00f7ff;
+    }
+    .toc h4 {
+      margin-top: 0;
+    }
+    .toc ul {
+      list-style: none;
+      padding-left: 0;
+    }
+    .toc ul li {
+      margin: 0.5rem 0;
+    }
+    .divider {
+      border-top: 2px dashed #00d1ff;
+      margin: 2rem 0;
+    }
+    .coord {
+      color: #9452ff;
+      font-weight: bold;
+      font-family: 'Orbitron', sans-serif;
+    }
+    .img-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 1rem;
+      margin: 1rem 0;
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <section class="section" id="cao">
+      <div class="section-container">
+        <div class="section-title">
+          <h2 class="cyber-title">Tekbot Robotics Challenge 2025 — Mécanique</h2>
+          <p>TEST 1 - CAO SOLIDWORKS</p>
+        </div>
+
+        <div class="toc">
+          <h4>Sommaire</h4>
+          <ul>
+            <li><a href="#objectif">Objectif</a></li>
+            <li><a href="#pieces">Pièces modélisées</a></li>
+            <li><a href="#assemblage">Assemblage mécanique</a></li>
+            <li><a href="#centre-masse">Analyse du centre de masse</a></li>
+            <li><a href="#problemes">Problèmes rencontrés</a></li>
+            <li><a href="#ressources">Ressources graphiques</a></li>
+            <li><a href="#conclusion">Conclusion</a></li>
+          </ul>
+        </div>
+
+        <div class="section-doc">
+          <h3 id="objectif">Objectif</h3>
+          <p>Ce test évalue nos compétences de base en <strong>Conception Assistée par Ordinateur (CAO)</strong> à travers l'usage de SolidWorks. Il s'agit de créer, à partir de croquis cotés, un ensemble de pièces 3D fonctionnelles, respectant les contraintes de matériau, de masse et de géométrie, puis de réaliser un <strong>assemblage mécanique fonctionnel</strong> avec calcul du centre de gravité.</p>
+
+          <div class="divider"></div>
+
+          <h3 id="pieces">Pièces modélisées</h3>
+          <p>Nous avons conçu quatre pièces individuelles à partir de croquis 2D, en utilisant les outils de base du logiciel.</p>
+
+          <h4>Méthodologie utilisée</h4>
+          <ul>
+            <li><strong>Croquis 2D :</strong> Rectangles, cercles, polygones, lignes construites</li>
+            <li><strong>Fonctions 3D :</strong>
+              <ul>
+                <li>Bossage/base extrudée</li>
+                <li>Enlèvement de matière</li>
+                <li>Congés (rayons)</li>
+                <li>Symétrie</li>
+              </ul>
+            </li>
+            <li><strong>Contraintes de croquis :</strong> Horizontale, verticale, tangente, coïncidente, symétrie</li>
+            <li><strong>Système d'unité :</strong> MMGS (mm, gramme, seconde)</li>
+            <li><strong>Décimales :</strong> 2 chiffres après la virgule</li>
+            <li><strong>Trous :</strong> Tous débouchants sauf mention contraire</li>
+          </ul>
+
+          <h4>Détails des pièces</h4>
+          <table>
+            <tr>
+              <th>Pièce</th>
+              <th>Matériau</th>
+              <th>Densité (g/mm³)</th>
+              <th>Masse obtenue</th>
+            </tr>
+            <tr>
+              <td>Pièce 1</td>
+              <td>Acier AISI 1020</td>
+              <td>0.0079</td>
+              <td>2850.16 g</td>
+            </tr>
+            <tr>
+              <td>Pièce 2</td>
+              <td>Aluminium 1060</td>
+              <td>0.0027</td>
+              <td>279.77 g</td>
+            </tr>
+            <tr>
+              <td>Pièce 3</td>
+              <td>Acier AISI 1020</td>
+              <td>0.0079</td>
+              <td>1633.25 g</td>
+            </tr>
+            <tr>
+              <td>Pièce 4</td>
+              <td>Aluminium 1060</td>
+              <td>0.0027</td>
+              <td>297.29 g</td>
+            </tr>
+          </table>
+
+          <div class="divider"></div>
+
+          <h3 id="assemblage">Assemblage de la pince mécanique</h3>
+          <p>L'assemblage de la pince mécanique a été réalisé sous <em>SolidWorks</em> à partir des composants fournis dans le fichier .zip. L'objectif était d'assembler correctement toutes les pièces en respectant les degrés de liberté nécessaires au fonctionnement de la pince, notamment son ouverture et sa fermeture via l'action du vérin.</p>
+
+          <h4>Pièces utilisées</h4>
+          <ul>
+            <li><em>Corps de vérin</em></li>
+            <li><em>Tige de vérin</em></li>
+            <li><em>Embout de vérin</em></li>
+            <li><em>Biellettes (gauche et droite)</em></li>
+            <li><em>Axes de biellettes</em></li>
+            <li><em>Porte-mâchoires (gauche et droite)</em></li>
+            <li><em>Mâchoires (gauche et droite)</em></li>
+            <li><em>Circlips</em> (éléments de verrouillage)</li>
+            <li><em>Vis Chc M5x25</em></li>
+            <li><em>Axe porte mâchoire</em></li>
+          </ul>
+
+          <h4>Étapes principales de l'assemblage</h4>
+          <ol>
+            <li><strong>Fixation de la base</strong><br>
+              Le sous-ensemble contenant le vérin (corps + tige + embout) a été inséré et <em>fixé</em> en tant que référence (composant immobile).</li>
+            <li><strong>Assemblage des biellettes</strong><br>
+              Les deux biellettes ont été insérées et contraintes avec :
+              <ul>
+                <li>Concentrique : pour aligner les axes de rotation avec les trous du vérin</li>
+                <li>Symétrie : pour assurer un mouvement identique et opposé des deux côtés via le <em>plan dessus</em></li>
+              </ul>
+            </li>
+            <li><strong>Ajout des portes-mâchoires et mâchoires</strong><br>
+              Chaque porte-mâchoire a été assemblée avec sa biellette correspondante :
+              <ul>
+                <li>Concentrique : entre le trou du porte-mâchoire et la biellette</li>
+                <li>Coïncidence : pour fixer la position latérale</li>
+              </ul>
+              Les mâchoires ont été fixées sur les portes-mâchoires avec les mêmes types de contraintes.
+            </li>
+            <li><strong>Insertion des axes de biellettes</strong><br>
+              Les axes ont été utilisés à la place de vis, avec les contraintes :
+              <ul>
+                <li>Concentrique : pour l'axe et les trous traversés</li>
+                <li>Coïncidence : entre la tête de l'axe et la surface de contact</li>
+              </ul>
+            </li>
+            <li><strong>Placement des circlips</strong><br>
+              Les circlips ont été insérés pour verrouiller les axes mécaniquement (sans ajouter de surcontrainte inutile).</li>
+          </ol>
+
+          <h4>Contraintes utilisées</h4>
+          <table>
+            <tr>
+              <th>Type de contrainte</th>
+              <th>Utilisation</th>
+            </tr>
+            <tr>
+              <td>Concentrique</td>
+              <td>Alignement d'axes (trous et axes)</td>
+            </tr>
+            <tr>
+              <td>Coïncidence</td>
+              <td>Contact de faces planes</td>
+            </tr>
+            <tr>
+              <td>Symétrie</td>
+              <td>Synchronisation des mouvements</td>
+            </tr>
+          </table>
+
+          <div class="divider"></div>
+
+          <h3 id="centre-masse">Analyse du centre de masse</h3>
+          <p>L'analyse du centre de masse permet de mieux comprendre l'équilibre de la pince mécanique dans différentes positions de fonctionnement. Elle a été effectuée depuis SolidWorks après la finalisation de l'assemblage.</p>
+
+          <h4>a) Position minimale de la tige de vérin</h4>
+          <p>Dans cette position, la tige du vérin est <em>entièrement rentrée</em> dans le corps, ce qui correspond à l'état <em>pince fermée</em>.</p>
+          
+          <p><strong>Coordonnées du centre de masse (en mm) :</strong><br>
+          <span class="coord">X = -29.15</span><br>
+          <span class="coord">Y = 0.16</span><br>
+          <span class="coord">Z = 19.93</span></p>
+
+          <h4>b) Position maximale de la tige de vérin</h4>
+          <p>La tige est <em>complètement sortie</em>, ce qui correspond à l'état <em>pince ouverte</em>.</p>
+          
+          <p><strong>Coordonnées du centre de masse (en mm) :</strong><br>
+          <span class="coord">X = -25.78</span><br>
+          <span class="coord">Y = 0.06</span><br>
+          <span class="coord">Z = 19.93</span></p>
+
+          <div class="divider"></div>
+
+          <h3 id="problemes">Problèmes rencontrés et solutions</h3>
+          <table>
+            <tr>
+              <th>Problème</th>
+              <th>Cause probable</th>
+              <th>Solution apportée</th>
+            </tr>
+            <tr>
+              <td><em>Surcontrainte</em> de certaines pièces</td>
+              <td>Application excessive ou contradictoire de contraintes</td>
+              <td>Suppression des contraintes redondantes et vérification du degré de liberté</td>
+            </tr>
+            <tr>
+              <td><em>Erreur lors de l'application de contraintes de symétrie</em></td>
+              <td>Sélection incorrecte des faces ou mauvais plan de référence</td>
+              <td>Réapplication en sélectionnant correctement les deux faces et le <em>plan dessus</em></td>
+            </tr>
+            <tr>
+              <td><em>Mouvement bloqué de la pince</em></td>
+              <td>Trop de pièces fixées ou contraintes figées</td>
+              <td>Reprise des contraintes essentielles uniquement (coïncidence et concentrique)</td>
+            </tr>
+            <tr>
+              <td><em>Circlips empêchant le mouvement</em></td>
+              <td>Circlips appliqués avec trop de contraintes</td>
+              <td>N'ajouter qu'une seule contrainte (ex. concentrique) pour éviter le blocage</td>
+            </tr>
+          </table>
+
+          <div class="divider"></div>
+
+          <h3 id="ressources">Ressources graphiques & fichiers SolidWorks</h3>
+          <div class="img-grid">
+            <div>
+              <h4>Pièce 1</h4>
+              <img src="https://github.com/ucaotech-trc/TRC25-UCAOTECH/blob/main/Mecanique/Test1/Images/Pi%C3%A8ce1_2D.PNG" alt="Pièce 1 en 2D">
+              <img src="https://github.com/ucaotech-trc/TRC25-UCAOTECH/blob/main/Mecanique/Test1/Images/Pi%C3%A8ce1_3D.PNG" alt="Pièce 1 en 3D">
+            </div>
+            <div>
+              <h4>Pièce 2</h4>
+              <img src="https://github.com/ucaotech-trc/TRC25-UCAOTECH/blob/main/Mecanique/Test1/Images/Pi%C3%A8ce2_2D3.PNG" alt="Pièce 2 en 2D">
+              <img src="https://github.com/ucaotech-trc/TRC25-UCAOTECH/blob/main/Mecanique/Test1/Images/Pi%C3%A8ce2_3D.PNG" alt="Pièce 2 en 3D">
+            </div>
+            <div>
+              <h4>Pièce 3</h4>
+              <img src="https://github.com/ucaotech-trc/TRC25-UCAOTECH/blob/main/Mecanique/Test1/Images/Pi%C3%A8ce3_2D1.PNG" alt="Pièce 3 en 2D">
+              <img src="https://github.com/ucaotech-trc/TRC25-UCAOTECH/blob/main/Mecanique/Test1/Images/Pi%C3%A8ce3_3D.PNG" alt="Pièce 3 en 3D">
+            </div>
+            <div>
+              <h4>Pièce 4</h4>
+              <img src="https://github.com/ucaotech-trc/TRC25-UCAOTECH/blob/main/Mecanique/Test1/Images/Pi%C3%A8ce4_2D2.PNG" alt="Pièce 4 en 2D">
+              <img src="https://github.com/ucaotech-trc/TRC25-UCAOTECH/blob/main/Mecanique/Test1/Images/Pi%C3%A8ce44_3D.PNG" alt="Pièce 4 en 3D">
+            </div>
+          </div>
+
+          <h4>Assemblage final</h4>
+          <img src="https://github.com/ucaotech-trc/TRC25-UCAOTECH/blob/main/Mecanique/Test1/Images/Assemblage.PNG" alt="Assemblage complet">
+
+          <h4>Fichiers sources SolidWorks 2025</h4>
+          <ul>
+            <li><a href="https://github.com/ucaotech-trc/TRC25-UCAOTECH/blob/main/Mecanique/Test1/SolidWorks/Pi%C3%A8ce_1.SLDPRT">Pièce 1</a></li>
+            <li><a href="https://github.com/ucaotech-trc/TRC25-UCAOTECH/blob/main/Mecanique/Test1/SolidWorks/Pi%C3%A8ce2.SLDPRT">Pièce 2</a></li>
+            <li><a href="https://github.com/ucaotech-trc/TRC25-UCAOTECH/blob/main/Mecanique/Test1/SolidWorks/Pi%C3%A8ce3.SLDPRT">Pièce 3</a></li>
+            <li><a href="https://github.com/ucaotech-trc/TRC25-UCAOTECH/blob/main/Mecanique/Test1/SolidWorks/Pi%C3%A8ce4.SLDPRT">Pièce 4</a></li>
+            <li><a href="https://github.com/ucaotech-trc/TRC25-UCAOTECH/blob/main/Mecanique/Test1/SolidWorks/assemblage%20pince.SLDASM">Assemblage complet</a></li>
+          </ul>
+
+          <blockquote>
+            Ces éléments visuels facilitent la lecture technique du projet et servent de preuve de modélisation dans le cadre du TRC2K25.
+          </blockquote>
+
+          <div class="divider"></div>
+
+          <h3 id="conclusion">Conclusion</h3>
+          <p>Ce test a permis de valider notre capacité à :</p>
+          <ul>
+            <li>Modéliser des pièces mécaniques précises</li>
+            <li>Appliquer des matériaux et contraintes fonctionnelles</li>
+            <li>Réaliser un assemblage réaliste sous contraintes</li>
+            <li>Évaluer des propriétés comme la masse et le centre de gravité</li>
+          </ul>
+          <p>Ce projet constitue une base solide pour des conceptions mécaniques plus complexes dans le cadre du TRC2K25.</p>
+        </div>
+      </div>
+    </section>
+  </main>
+</body>
+</html>
