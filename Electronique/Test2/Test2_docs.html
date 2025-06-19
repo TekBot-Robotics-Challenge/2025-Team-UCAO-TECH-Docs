@@ -448,8 +448,7 @@
             <p>Stabilise l'alimentation électrique :</p>
             <ul>
               <li>Protège les composants sensibles</li>
-              <li>Permet une alimentation par batterie</li>
-              <li>Type : LM7805 ou AMS1117-5.0</li>
+              <li>Type : LM7805</li>
             </ul>
             <p>Courant max : 1A (avec dissipateur)</p>
           </div>
@@ -476,19 +475,35 @@
 
         <!-- Circuit imprimé -->
         <div class="component-card">
-          
-          <div class="component-desc">
-            <h5>Veroboard ou PCB</h5>
-            <p>Support physique du circuit :</p>
-            <ul>
-              <li>Veroboard pour prototypage rapide</li>
-              <li>PCB personnalisé pour version finale</li>
-              <li>Dimensions recommandées : 10×8cm</li>
-            </ul>
-            <p>Épaisseur cuivre : 35μm minimum</p>
-          </div>
-          <img src="Images/veroboard.jpg" alt="Circuit imprimé" class="component-img">
-        </div>
+          <h5>Veroboard ou PCB</h5>
+<p>Support physique du circuit :</p>
+<ul>
+  <p>PCB personnalisé pour chaque module : alimentation, boîte noire et station de contrôle</p>
+ 
+</ul>
+
+
+<div class="pcb-gallery">
+  <div class="pcb-section">
+    <h6>Carte d'alimentation</h6>
+    
+    <img src="Images_membres/img_PCBAlimentation.PNG" alt="Carte alimentation" class="component-img">
+    <img src="Images_membres/img_PCB_3D_Alimentation.PNG" alt="Carte alimentation" class="component-img">
+  </div>
+
+  <div class="pcb-section">
+    <h6>Carte de la boîte noire</h6>
+    <img src="Images_membres/img_PCB_2D_boite_noire.PNG" alt="Carte boîte noire" class="component-img">
+    <img src="Images_membres/img_PCB_3D_boite_noire.PNG" alt="Carte boîte noire" class="component-img">
+  </div>
+
+  <div class="pcb-section">
+    <h6>Carte de la station de contrôle</h6>
+    <img src="Images_membres/imgSC_PCB.PNG" alt="Carte station de contrôle" class="component-img">
+     <img src="Images_membres/imgSC_3D_front.PNG" alt="Carte station de contrôle" class="component-img">
+  </div>
+</div>
+
         
       </div>
 
@@ -498,41 +513,83 @@
         <li><strong>Module capteur (la boîte noire)</strong> : contient l'ATmega328P maître I2C et le MPU6050</li>
         <li><strong>Station de contrôle</strong> : contient l'ATmega328P esclave I2C et l'écran LCD</li>
       </ul>
+<h4>Schémas électroniques (réalisés sur KiCad)</h4>
+<p>Les circuits ont été conçus avec KiCad pour chaque sous-système du projet.</p>
 
-      <h4>Schéma électronique (réalisé sur KiCad)</h4>
-      <div class="image-center">
-        <img src="Images/test2_schematic.jpg" alt="Schéma KiCad">
-      </div>
+<div class="schematic-gallery">
+  <div class="schematic-section">
+    <h6>Schéma de l'alimentation</h6>
+    <img src="Images_membres/IMG_Circuit_Alimentation.PNG" alt="Schéma alimentation" class="component-img">
+  </div>
 
-      <h4>Conception et fabrication du PCB</h4>
-      <p>Le circuit a été conçu avec KiCad. Le PCB a été soudé manuellement sur veroboard.</p>
-      <div class="image-center">
-        <img src="Images/test2_pcb.jpg" alt="Photo du PCB réalisé">
-      </div>
+  <div class="schematic-section">
+    <h6>Schéma de la boîte noire</h6>
+    <img src="Images_membres/img_Circuit_Boite_Noire.PNG" alt="Schéma boîte noire" class="component-img">
+  </div>
 
-      <h4>Code source (extrait)</h4>
-      <pre><code>#include <Wire.h>
-#include <MPU6050.h>
-MPU6050 mpu;
+  <div class="schematic-section">
+    <h6>Schéma de la station de contrôle</h6>
+    <img src="Images_membres/img_Circuit_Station.PNG" alt="Schéma station de contrôle" class="component-img">
+  </div>
+</div>
 
-void setup() {
-  Wire.begin();
-  Serial.begin(9600);
-  mpu.initialize();
+      <h4>Codes</h4>
+      <h5>Côté "boîte noire" (maître I2C, avec MPU6050</h5>
+      <pre><code>// MPU6050 + ATmega328P - Maître I2C
+#include <util/delay.h>
+#include "i2c_master.h"
+#include "mpu6050.h"
+
+void main(void) {
+    int16_t ax, ay, az, gx, gy, gz;
+
+    i2c_init(); // Initialisation I2C
+    mpu6050_init(); // Initialisation du MPU6050
+
+    while (1) {
+        mpu6050_read_accel(&ax, &ay, &az);
+        mpu6050_read_gyro(&gx, &gy, &gz);
+
+        i2c_start(0x10); // Esclave station de contrôle
+        i2c_write(ax >> 8); i2c_write(ax & 0xFF);
+        i2c_write(ay >> 8); i2c_write(ay & 0xFF);
+        i2c_write(az >> 8); i2c_write(az & 0xFF);
+        i2c_stop();
+
+        _delay_ms(500);
+    }
+}
+}</code></pre>
+
+      <h5>Côté "station de contrôle" (esclave I2C + LCD 4 bits)</h5>
+      <pre><code>// ATmega328P - Esclave I2C + Afficheur LCD 4 bits
+#include "i2c_slave.h"
+#include "lcd.h"
+
+volatile uint8_t buffer[6];
+volatile uint8_t index = 0;
+
+void receive_event(uint8_t data) {
+    buffer[index++] = data;
+    if (index >= 6) {
+        lcd_gotoxy(0, 0);
+        lcd_printf("Ax:%d", (buffer[0] << 8) | buffer[1]);
+        lcd_gotoxy(0, 1);
+        lcd_printf("Ay:%d", (buffer[2] << 8) | buffer[3]);
+        index = 0;
+    }
 }
 
-void loop() {
-  int16_t ax, ay, az, gx, gy, gz;
-  mpu.getMotion6(&ax, &ay, &az, &gx, &gy, &gz);
-  Serial.print("Accel: ");
-  Serial.print(ax); Serial.print(", ");
-  Serial.print(ay); Serial.print(", ");
-  Serial.print(az); Serial.print(" | Gyro: ");
-  Serial.print(gx); Serial.print(", ");
-  Serial.print(gy); Serial.print(", ");
-  Serial.println(gz);
-  delay(500);
-}</code></pre>
+int main(void) {
+    lcd_init();
+    lcd_clear();
+
+    i2c_slave_init(0x10);
+    i2c_set_receive_callback(receive_event);
+
+    while (1) { /* boucle vide, tout est géré via interruptions */ }
+}
+</code></pre>
 
       <h4>Contraintes et recommandations</h4>
       <ul>
