@@ -155,22 +155,22 @@ source install/setup.bash</code></pre>
           <div style="flex:1 1 22%; min-width:220px; max-width:24%;">
             <h4>1. Génération et simulation de données</h4>
             <p>Le node <strong>publisher</strong> simule des mesures de température, humidité et pression toutes les 0,5 s. Les valeurs sont générées aléatoirement : 80 % dans la plage normale, 20 % hors plage pour tester la robustesse du système. Cela permet de reproduire un environnement de capteurs réel, avec des anomalies ponctuelles.</p>
-            <div style="border:1px dashed #00f7ff; background:#0a192f; color:#aaa; text-align:center; margin:12px 0; padding:16px; border-radius:8px;">[Photo 1 à insérer ici : Génération de données]</div>
+            <div style="border:1px dashed #00f7ff; background:#0a192f; color:#aaa; text-align:center; margin:12px 0; padding:16px; border-radius:8px;"><img src = "Images/publisher.png" /></div>
           </div>
           <div style="flex:1 1 22%; min-width:220px; max-width:24%;">
             <h4>2. Vérification, log et enregistrement</h4>
             <p>Le node <strong>subscriber</strong> reçoit chaque mesure, vérifie si elle est dans la plage (paramètres dynamiques modifiables à chaud), log “Valide” ou “Hors plage”, et enregistre chaque donnée dans un fichier CSV horodaté. Cela assure la traçabilité et la détection immédiate des anomalies.</p>
-            <div style="border:1px dashed #00f7ff; background:#0a192f; color:#aaa; text-align:center; margin:12px 0; padding:16px; border-radius:8px;">[Photo 2 à insérer ici : Vérification et log]</div>
+            <div style="border:1px dashed #00f7ff; background:#0a192f; color:#aaa; text-align:center; margin:12px 0; padding:16px; border-radius:8px;"></div>
           </div>
           <div style="flex:1 1 22%; min-width:220px; max-width:24%;">
             <h4>3. Statistiques et analyse en temps réel</h4>
             <p>Le node <strong>stats</strong> calcule en continu la moyenne, le min et le max pour chaque capteur, affiche les résultats dans les logs, et sauvegarde périodiquement les statistiques dans un CSV dédié. Cela permet une analyse rapide de l’état du système et une surveillance avancée.</p>
-            <div style="border:1px dashed #00f7ff; background:#0a192f; color:#aaa; text-align:center; margin:12px 0; padding:16px; border-radius:8px;">[Photo 3 à insérer ici : Statistiques en temps réel]</div>
+            <div style="border:1px dashed #00f7ff; background:#0a192f; color:#aaa; text-align:center; margin:12px 0; padding:16px; border-radius:8px;"></div>
           </div>
           <div style="flex:1 1 22%; min-width:220px; max-width:24%;">
             <h4>4. Visualisation web et accès distant</h4>
             <p>Le <strong>dashboard web</strong> (Chart.js) affiche en temps réel les courbes des capteurs, un tableau des dernières valeurs, et permet l’export PNG. Les données sont servies par Flask, et peuvent être consultées à distance via ngrok. L’interface est moderne, responsive et personnalisable.</p>
-            <div style="border:1px dashed #00f7ff; background:#0a192f; color:#aaa; text-align:center; margin:12px 0; padding:16px; border-radius:8px;">[Photo 4 à insérer ici : Dashboard web]</div>
+            <div style="border:1px dashed #00f7ff; background:#0a192f; color:#aaa; text-align:center; margin:12px 0; padding:16px; border-radius:8px;"><img src="Images/interfaceweb.png" /></div>
           </div>
         </div>
         <div style="margin:32px 0 0 0; text-align:center;">
