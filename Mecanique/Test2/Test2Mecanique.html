@@ -1,1 +1,206 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Test 2 - CAO SolidWorks | TRC 2025 | UCAO-TECH</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;700;900&family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet" />
+  <style>
+    body {
+      background-color: #020c1b;
+      color: #e6f1ff;
+      font-family: 'Roboto', sans-serif;
+      margin: 0;
+      padding: 0 1rem;
+    }
+    h2.cyber-title, h3, h4, h5 {
+      color: #00f7ff;
+      font-family: 'Orbitron', sans-serif;
+    }
+    .section-doc {
+      background-color: rgba(10, 25, 47, 0.4);
+      padding: 2rem;
+      border-radius: 10px;
+      margin-top: 2rem;
+    }
+    .divider {
+      border-top: 2px dashed #00d1ff;
+      margin: 2rem 0;
+    }
+    .img-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 1rem;
+      margin: 1rem 0;
+    }
+    .img-grid .img-box {
+      background: rgba(0,209,255,0.07);
+      border-radius: 8px;
+      min-height: 220px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 1rem;
+    }
+    .img-grid img {
+      max-width: 100%;
+      max-height: 180px;
+      object-fit: contain;
+      margin-bottom: 0.5rem;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 1rem 0;
+    }
+    th, td {
+      padding: 0.5rem;
+      border: 1px solid #00d1ff;
+    }
+    a { color: #00d1ff; text-decoration: none; }
+    a:hover { color: #9452ff; text-decoration: underline; }
+    .toc {
+      background-color: #081a2b;
+      padding: 1rem;
+      margin: 2rem 0;
+      border-left: 4px solid #00f7ff;
+    }
+    .toc h4 { margin-top: 0; }
+    .toc ul { list-style: none; padding-left: 0; }
+    .toc ul li { margin: 0.5rem 0; }
+    @media (max-width: 700px) {
+      .section-doc { padding: 1rem; }
+      .img-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <section class="section" id="cao">
+      <div class="section-container">
+        <div class="section-title">
+          <h2 class="cyber-title">Tekbot Robotics Challenge 2025 — Test 2 : Niveau Intermédiaire SOLIDWORKS</h2>
+        </div>
+        <div class="toc">
+          <h4>Sommaire</h4>
+          <ul>
+            <li><a href="#introduction">Introduction</a></li>
+            <li><a href="#partie1">Partie I – Pièces paramétrées</a></li>
+            <li><a href="#partie2">Partie II – Modification</a></li>
+            <li><a href="#partie3">Partie III – Poche</a></li>
+            <li><a href="#assemblage">Assemblage</a></li>
+            <li><a href="#conclusion">Conclusion</a></li>
+            <li><a href="#fichiers">Fichiers à remettre</a></li>
+          </ul>
+        </div>
+        <div class="section-doc">
+          <h3 id="introduction">🔹 Introduction</h3>
+          <p>Ce document détaille le déroulement du test de niveau intermédiaire en CAO sur SOLIDWORKS dans le cadre du Tekbot Robotics Challenge 2025.<br>
+          L’objectif est de mettre en pratique et d’évaluer les compétences suivantes :<br>
+          – La création de pièces paramétrées et adaptables<br>
+          – La modification avancée de géométries existantes<br>
+          – L’ajout de fonctions 3D telles que les poches<br>
+          – La réalisation d’un assemblage complet, avec contrôle de la masse et du centre de gravité.<br>
+          Le test se compose de trois étapes de modélisation de pièce, suivies d’un exercice d’assemblage.<br>
+          Toutes les opérations sont réalisées dans l’environnement MMGS (millimètre, gramme, seconde), avec une précision de 2 décimales. Le matériau utilisé est l’acier AISI 1020 (densité : 0,0079 g/mm³).</p>
+
+          <div class="divider"></div>
+
+          <h3 id="partie1">🔧 Partie I – Conception des pièces paramétrées</h3>
+          <ul>
+            <li><strong>a)</strong> Paramètres : A = 81.00 ; B = 57.00 ; C = 43.00<br>
+              Fichier : Part1(a).SLDPRT<br>
+              Masse obtenue : 977,95 g<br>
+              <div class="img-grid"><div class="img-box"><span>🖼️ Capture de la pièce</span><br><em>(à insérer)</em></div></div>
+            </li>
+            <li><strong>b)</strong> Paramètres : A = 84.00 ; B = 59.00 ; C = 45.00<br>
+              Fichier : Part1(b).SLDPRT<br>
+              Masse obtenue : 1068,75 g<br>
+              <div class="img-grid"><div class="img-box"><span>🖼️ Capture de la pièce</span><br><em>(à insérer)</em></div></div>
+            </li>
+          </ul>
+          <h4>Fonctions utilisées</h4>
+          <ul>
+            <li>En 2D (Esquisse) : Ligne, arc, cercle, cotation intelligente, relations géométriques</li>
+            <li>En 3D (Fonctions) : Bossage/Base extrudé, coupe extrudée, congé, perçage à partir d’esquisse</li>
+          </ul>
+
+          <div class="divider"></div>
+
+          <h3 id="partie2">✂️ Partie II – Modification de la pièce</h3>
+          <ul>
+            <li>Paramètres mis à jour : A = 86.00 ; B = 58.00 ; C = 44.00</li>
+            <li>Modification directe des dimensions dans l’arbre de création</li>
+            <li>Ajout d’une coupe extrudée pour retirer de la matière</li>
+            <li>Fichier : Partie 2.SLDPRT</li>
+            <li>Masse obtenue : 628,18 g</li>
+          </ul>
+          <div class="img-grid"><div class="img-box"><span>🖼️ Capture de la pièce</span><br><em>(à insérer)</em></div></div>
+
+          <div class="divider"></div>
+
+          <h3 id="partie3">🧩 Partie III – Ajout d’une poche</h3>
+          <ul>
+            <li>Ajout d’une poche latérale pour rendre la pièce asymétrique</li>
+            <li>Création d’une esquisse rectangulaire sur une face latérale, puis application d’une coupe extrudée</li>
+            <li>Fichier : Partie 3.SLDPRT</li>
+            <li>Masse obtenue : 426,90 g</li>
+          </ul>
+          <div class="img-grid"><div class="img-box"><span>🖼️ Capture de la pièce</span><br><em>(à insérer)</em></div></div>
+
+          <div class="divider"></div>
+
+          <h3 id="assemblage">🛠️ Assemblage – Maillons de chaîne</h3>
+          <ul>
+            <li>Téléchargez et extrayez le fichier ZIP contenant les pièces</li>
+            <li>Importez les pièces dans SOLIDWORKS</li>
+            <li>Appliquez les contraintes nécessaires : concentricité, coïncidence, et alignement à l’origine</li>
+          </ul>
+          <h4>Cas a)</h4>
+          <ul>
+            <li>Paramètres : A = 25° ; B = 125° ; C = 130°</li>
+            <li>Fichier : Assem3.SLDASM question (a).SLDASM</li>
+            <li>Centre de gravité (mm) : X = 348,66 ; Y = -88,48 ; Z = -91,40</li>
+          </ul>
+          <div class="img-grid"><div class="img-box"><span>🖼️ Capture de l’assemblage</span><br><em>(à insérer)</em></div></div>
+          <h4>Cas b)</h4>
+          <ul>
+            <li>Paramètres : A = 30° ; B = 115° ; C = 135°</li>
+            <li>Fichier : Assem3.SLDASM question (b).SLDASM</li>
+            <li>Centre de gravité (mm) : X = 327,67 ; Y = -98,39 ; Z = -102,91</li>
+          </ul>
+          <div class="img-grid"><div class="img-box"><span>🖼️ Capture de l’assemblage</span><br><em>(à insérer)</em></div></div>
+
+          <div class="divider"></div>
+
+          <h3 id="conclusion">✅ Conclusion</h3>
+          <ul>
+            <li>Maîtrise de la modélisation paramétrique</li>
+            <li>Capacité à modifier et enrichir des fonctions 3D</li>
+            <li>Gestion précise des relations d’assemblage</li>
+            <li>Contrôle rigoureux de la masse et du centre de gravité</li>
+          </ul>
+          <p>Toutes les étapes ont été soigneusement documentées et enregistrées dans des fichiers distincts (.SLDPRT et .SLDASM).</p>
+
+          <div class="divider"></div>
+
+          <h3 id="fichiers">📂 Fichiers à remettre</h3>
+          <table>
+            <tr><th>Fichier</th><th>Description</th></tr>
+            <tr><td>Part1(a).SLDPRT</td><td>Première pièce</td></tr>
+            <tr><td>Part1(b).SLDPRT</td><td>Deuxième pièce paramétrée</td></tr>
+            <tr><td>Partie 2.SLDPRT</td><td>Version modifiée avec nouvelle géométrie</td></tr>
+            <tr><td>Partie 3.SLDPRT</td><td>Version finale avec poche</td></tr>
+            <tr><td>Assem3.SLDASM question (a).SLDASM</td><td>Assemblage 1</td></tr>
+            <tr><td>Assem3.SLDASM question (2).SLDASM</td><td>Assemblage 2</td></tr>
+            <tr><td>Documentation_Test_2.pdf</td><td>Ce document complété</td></tr>
+          </table>
+        </div>
+      </div>
+    </section>
+  </main>
+</body>
+</html>
 
