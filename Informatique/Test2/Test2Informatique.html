@@ -1,1 +1,272 @@
 
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Documentation Complète ROS2 - sensor_data_evaluation | UCAO-TECH</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Roboto:wght@300;400;700&display=swap" rel="stylesheet" />
+  <style>
+    body { background-color: #020c1b; color: #e6f1ff; font-family: 'Roboto', sans-serif; padding: 100px 2rem 2rem 2rem; }
+    h2, h3, h4 { color: #00f7ff; font-family: 'Orbitron', sans-serif; }
+    .section-doc { background-color: rgba(10, 25, 47, 0.4); padding: 2rem; border-radius: 10px; margin-top: 2rem; }
+    ul, ol { margin-left: 1.5rem; }
+    table { width: 100%; border-collapse: collapse; margin: 1rem 0; }
+    th, td { padding: 0.5rem; border: 1px solid #00d1ff; }
+    a { color: #00d1ff; text-decoration: none; }
+    a:hover { color: #9452ff; }
+    pre code { display: block; padding: 1rem; background: #0a192f; border-left: 4px solid #00f7ff; overflow-x: auto; font-family: monospace; }
+    .tip { background: #0a192f; border-left: 4px solid #00f7ff; padding: 1em; margin: 1em 0; border-radius: 6px; }
+    .warn { background: #fff3e0; border-left: 4px solid #ffa726; color: #222; padding: 1em; margin: 1em 0; border-radius: 6px; }
+  </style>
+</head>
+<body>
+  <main>
+    <section class="section-doc">
+      <h2>Documentation complète : ROS2 - <code>sensor_data_evaluation</code></h2>
+      <h3>1. Présentation et objectifs</h3>
+      <p>
+        Ce projet ROS2 simule un système de capteurs (température, humidité, pression) et propose une chaîne complète de génération, vérification, enregistrement et analyse de données. Il est idéal pour l’apprentissage des mécanismes de topics, nodes, paramètres dynamiques et statistiques dans ROS2.
+      </p>
+      <ul>
+        <li>Simulation de données capteurs réalistes</li>
+        <li>Vérification automatique des plages de validité</li>
+        <li>Enregistrement et traçabilité des mesures</li>
+        <li>Statistiques en temps réel et visualisation web</li>
+      </ul>
+      <h3>2. Installation de ROS2 Humble (Ubuntu 22.04)</h3>
+      <ol>
+        <li>Mettez à jour votre système :
+          <pre><code>sudo apt update && sudo apt upgrade -y</code></pre>
+        </li>
+        <li>Configurez la locale :
+          <pre><code>sudo apt install locales
+sudo locale-gen en_US en_US.UTF-8
+sudo update-locale LC_ALL=en_US.UTF-8 LANG=en_US.UTF-8
+export LANG=en_US.UTF-8</code></pre>
+        </li>
+        <li>Ajoutez les sources ROS2 :
+          <pre><code>sudo apt install software-properties-common
+sudo add-apt-repository universe
+sudo apt update && sudo apt install curl -y
+sudo curl -sSL https://raw.githubusercontent.com/ros/rosdistro/master/ros.key -o /usr/share/keyrings/ros-archive-keyring.gpg
+echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/ros-archive-keyring.gpg] http://packages.ros.org/ros2/ubuntu $(lsb_release -cs) main" | sudo tee /etc/apt/sources.list.d/ros2.list > /dev/null</code></pre>
+        </li>
+        <li>Installez ROS2 Humble :
+          <pre><code>sudo apt update
+sudo apt install ros-humble-desktop python3-argcomplete -y</code></pre>
+        </li>
+        <li>Initialisez l’environnement :
+          <pre><code>echo "source /opt/ros/humble/setup.bash" >> ~/.bashrc
+source ~/.bashrc</code></pre>
+        </li>
+      </ol>
+      <h3>3. Création et compilation du package</h3>
+      <ol>
+        <li>Créez le workspace :
+          <pre><code>mkdir -p ~/ros2_ws/src
+cd ~/ros2_ws</code></pre>
+        </li>
+        <li>Créez le package :
+          <pre><code>cd src
+ros2 pkg create --build-type ament_python sensor_data_evaluation
+cd ..</code></pre>
+        </li>
+        <li>Ajoutez les scripts Python dans <code>sensor_data_evaluation/sensor_data_evaluation/</code> :</li>
+        <ul>
+          <li><code>sensor_data_publisher.py</code> : génère et publie les données</li>
+          <li><code>sensor_data_subscriber.py</code> : vérifie, log et enregistre</li>
+          <li><code>sensor_stats_node.py</code> : calcule et sauvegarde les statistiques</li>
+        </ul>
+        <li>Ajoutez le fichier de lancement dans <code>sensor_data_evaluation/launch/sensor_data_launch.py</code>.</li>
+        <li>Compilez :
+          <pre><code>colcon build --packages-select sensor_data_evaluation
+source install/setup.bash</code></pre>
+        </li>
+      </ol>
+      <h3>4. Fonctionnalités détaillées et avantages</h3>
+      <h4>Node Publisher</h4>
+      <ul>
+        <li>Publie toutes les 0,5 s des données aléatoires sur <code>/sensor_data</code>.</li>
+        <li>80 % des valeurs sont dans la plage normale, 20 % hors plage (pour tester la robustesse du système).</li>
+      </ul>
+      <div class="tip">
+        <strong>Avantage :</strong> Permet de simuler un environnement réaliste et de tester la détection d’anomalies.
+      </div>
+      <h4>Node Subscriber</h4>
+      <ul>
+        <li>Vérifie si chaque donnée reçue est dans la plage (plages modifiables dynamiquement via ROS2 parameters).</li>
+        <li>Log “Valide” ou “Hors plage” pour chaque donnée.</li>
+        <li>Enregistre chaque donnée dans un fichier CSV horodaté dans <code>logs/</code>.</li>
+      </ul>
+      <div class="tip">
+        <strong>Avantage :</strong> Permet de tracer toutes les données, d’identifier rapidement les anomalies et d’adapter les seuils sans redémarrer le système.
+      </div>
+      <h4>Node Statistiques</h4>
+      <ul>
+        <li>Calcule en temps réel la moyenne, le min et le max pour chaque capteur.</li>
+        <li>Affiche les statistiques dans les logs à chaque message reçu.</li>
+        <li>Sauvegarde toutes les 10 s dans <code>logs/sensor_stats_log.csv</code>.</li>
+      </ul>
+      <div class="tip">
+        <strong>Avantage :</strong> Permet une analyse statistique complète, utile pour la maintenance prédictive, la calibration ou la détection de dérives.
+      </div>
+      <h4>Fichier de lancement</h4>
+      <ul>
+        <li>Lance automatiquement les trois nodes (publisher, subscriber, stats) pour une expérience clé en main.</li>
+      </ul>
+      <div class="tip">
+        <strong>Avantage :</strong> Simplifie l’utilisation et garantit que tous les composants communiquent correctement.
+      </div>
+      <h3>5. Visualisation et exploitation</h3>
+      <ul>
+        <li>Les fichiers CSV générés sont compatibles avec Excel, LibreOffice Calc, ou tout outil d’analyse de données.</li>
+        <li>Un script Python (<code>plot_sensor_data.py</code>) permet de visualiser en temps réel l’évolution des capteurs.</li>
+        <li>Les paramètres de plage peuvent être modifiés à chaud :
+          <pre><code>ros2 param set /sensor_data_subscriber temperature_min 20</code></pre>
+        </li>
+        <li>Des tests unitaires sont fournis pour valider le comportement des nodes.</li>
+      </ul>
+      <div class="tip">
+        <strong>Conseil :</strong> Utilisez plusieurs terminaux pour lancer et surveiller chaque node séparément en cas de problème.
+      </div>
+      <h3>6. Dépannage</h3>
+      <ul>
+        <li>Si un fichier CSV reste vide, vérifiez que tous les nodes sont bien lancés et que le topic <code>/sensor_data</code> est actif (<code>ros2 topic echo /sensor_data</code>).</li>
+        <li>Les logs du node de statistiques doivent afficher “Reçu: Temp=...”.</li>
+        <li>Pour relancer un node seul :
+          <pre><code>ros2 run sensor_data_evaluation sensor_data_publisher</code></pre>
+        </li>
+      </ul>
+      <div class="warn">
+        <strong>Astuce :</strong> Utilisez plusieurs terminaux pour lancer et surveiller chaque node séparément en cas de problème.
+      </div>
+      <h3>7. Nettoyage</h3>
+      <pre><code>rm -rf build/ install/ logs/</code></pre>
+      <h3>8. Références</h3>
+      <ul>
+        <li><a href="https://docs.ros.org/en/humble/index.html" target="_blank">Documentation ROS2 Humble</a></li>
+        <li><a href="https://docs.ros.org/en/humble/Tutorials.html" target="_blank">Tutoriels ROS2 Python</a></li>
+      </ul>
+      <h3>9. Fonctionnalités détaillées du projet</h3>
+      <div class="section-doc">
+        <div style="display:flex; flex-wrap:wrap; gap:16px; justify-content:space-between;">
+          <div style="flex:1 1 22%; min-width:220px; max-width:24%;">
+            <h4>1. Génération et simulation de données</h4>
+            <p>Le node <strong>publisher</strong> simule des mesures de température, humidité et pression toutes les 0,5 s. Les valeurs sont générées aléatoirement : 80 % dans la plage normale, 20 % hors plage pour tester la robustesse du système. Cela permet de reproduire un environnement de capteurs réel, avec des anomalies ponctuelles.</p>
+            <div style="border:1px dashed #00f7ff; background:#0a192f; color:#aaa; text-align:center; margin:12px 0; padding:16px; border-radius:8px;">[Photo 1 à insérer ici : Génération de données]</div>
+          </div>
+          <div style="flex:1 1 22%; min-width:220px; max-width:24%;">
+            <h4>2. Vérification, log et enregistrement</h4>
+            <p>Le node <strong>subscriber</strong> reçoit chaque mesure, vérifie si elle est dans la plage (paramètres dynamiques modifiables à chaud), log “Valide” ou “Hors plage”, et enregistre chaque donnée dans un fichier CSV horodaté. Cela assure la traçabilité et la détection immédiate des anomalies.</p>
+            <div style="border:1px dashed #00f7ff; background:#0a192f; color:#aaa; text-align:center; margin:12px 0; padding:16px; border-radius:8px;">[Photo 2 à insérer ici : Vérification et log]</div>
+          </div>
+          <div style="flex:1 1 22%; min-width:220px; max-width:24%;">
+            <h4>3. Statistiques et analyse en temps réel</h4>
+            <p>Le node <strong>stats</strong> calcule en continu la moyenne, le min et le max pour chaque capteur, affiche les résultats dans les logs, et sauvegarde périodiquement les statistiques dans un CSV dédié. Cela permet une analyse rapide de l’état du système et une surveillance avancée.</p>
+            <div style="border:1px dashed #00f7ff; background:#0a192f; color:#aaa; text-align:center; margin:12px 0; padding:16px; border-radius:8px;">[Photo 3 à insérer ici : Statistiques en temps réel]</div>
+          </div>
+          <div style="flex:1 1 22%; min-width:220px; max-width:24%;">
+            <h4>4. Visualisation web et accès distant</h4>
+            <p>Le <strong>dashboard web</strong> (Chart.js) affiche en temps réel les courbes des capteurs, un tableau des dernières valeurs, et permet l’export PNG. Les données sont servies par Flask, et peuvent être consultées à distance via ngrok. L’interface est moderne, responsive et personnalisable.</p>
+            <div style="border:1px dashed #00f7ff; background:#0a192f; color:#aaa; text-align:center; margin:12px 0; padding:16px; border-radius:8px;">[Photo 4 à insérer ici : Dashboard web]</div>
+          </div>
+        </div>
+        <div style="margin:32px 0 0 0; text-align:center;">
+          <h4>Vidéo explicative du projet</h4>
+          <div style="border:2px dashed #9452ff; background:#0a192f; color:#aaa; text-align:center; margin:12px auto; padding:32px; border-radius:12px; max-width:600px;">[Espace réservé pour une vidéo de démonstration du projet]</div>
+        </div>
+        <div style="margin:32px 0 0 0; text-align:center;">
+          <h4>Vidéos explicatives du projet</h4>
+          <div style="border:2px dashed #9452ff; background:#0a192f; color:#aaa; text-align:center; margin:12px auto; padding:32px; border-radius:12px; max-width:600px;">[Vidéo 1 à insérer ici : Présentation générale du projet]</div>
+          <div style="border:2px dashed #9452ff; background:#0a192f; color:#aaa; text-align:center; margin:12px auto; padding:32px; border-radius:12px; max-width:600px;">[Vidéo 2 à insérer ici : Démonstration de l’utilisation ou du dashboard]</div>
+        </div>
+      </div>
+      <h3>10. Schéma de fonctionnement global</h3>
+      <div class="section-doc">
+        <p><strong>Architecture :</strong></p>
+        <ul>
+          <li><strong>sensor_data_publisher</strong> &rarr; publie sur <code>/sensor_data</code> (topic ROS2)</li>
+          <li><strong>sensor_data_subscriber</strong> &larr; souscrit à <code>/sensor_data</code>, vérifie, log, enregistre CSV</li>
+          <li><strong>sensor_stats_node</strong> &larr; souscrit à <code>/sensor_data</code>, calcule stats, log, enregistre stats CSV</li>
+          <li><strong>Dashboard web</strong> &larr; lit les CSV via <strong>Flask</strong> (API HTTP)</li>
+        </ul>
+        <pre><code>+-------------------+        +---------------------+
+| sensor_data_      |        | sensor_data_        |
+| publisher (Node)  |----->  | subscriber (Node)   |
+|  (données aléa)   |        |  (vérif, log, CSV)  |
++-------------------+        +---------------------+
+         |                           |
+         |                           |
+         |                           v
+         |                 +---------------------+
+         |                 | sensor_stats_node   |
+         |                 | (stats, log, CSV)   |
+         |                 +---------------------+
+         |                           |
+         v                           v
++-----------------------------------------------+
+|         Fichiers CSV (logs/)                  |
++-----------------------------------------------+
+         |
+         v
++-------------------+
+|  Flask server     |
+|  (server.py)      |
++-------------------+
+         |
+         v
++-------------------+
+| Dashboard Web     |
+| (dashboard_ros2)  |
++-------------------+</code></pre>
+      </div>
+      <h3>11. Interface web (dashboard)</h3>
+      <div class="section-doc">
+        <ul>
+          <li>Visualisation en temps réel des 3 capteurs (graphiques Chart.js dynamiques)</li>
+          <li>Tableau des 10 dernières valeurs reçues</li>
+          <li>Bouton d’export PNG des graphiques</li>
+          <li>Mise à jour automatique toutes les 2 s (AJAX)</li>
+          <li>Style moderne conforme à la charte UCAO-TECH (bleu, violet, sombre, police Orbitron/Roboto)</li>
+          <li>Facilement personnalisable (CSS, logo, couleurs)</li>
+        </ul>
+        <div class="tip">
+          <strong>Astuce :</strong> Pour adapter le style, modifiez les couleurs ou ajoutez votre logo dans le fichier <code>dashboard_ros2.html</code>.
+        </div>
+      </div>
+      <h3>12. Serveur Flask & accès distant (ngrok)</h3>
+      <div class="section-doc">
+        <ul>
+          <li>Le serveur <code>server.py</code> expose les CSV via HTTP (API REST simple)</li>
+          <li>Permet au dashboard d’accéder aux données même à distance</li>
+          <li>Pour ouvrir l’accès à Internet : <code>ngrok http 5000</code> (nécessite <a href="https://ngrok.com/" target="_blank">ngrok</a>)</li>
+          <li>URL publique générée par ngrok à partager pour consultation externe</li>
+          <li><strong>Sécurité :</strong> Pour un usage public, ajoutez une authentification ou limitez l’accès par IP</li>
+        </ul>
+        <div class="warn">
+          <strong>Conseil sécurité :</strong> Ne laissez pas un tunnel ngrok ouvert sans surveillance sur un réseau public.
+        </div>
+      </div>
+      <h3>13. FAQ & cas d’usage</h3>
+      <div class="section-doc">
+        <ul>
+          <li><strong>Q : Puis-je ajouter d’autres capteurs ?</strong><br>A : Oui, modifiez le publisher et adaptez le message/CSV.</li>
+          <li><strong>Q : Comment changer les plages de validité ?</strong><br>A : Utilisez <code>ros2 param set</code> sur le node subscriber.</li>
+          <li><strong>Q : Peut-on visualiser l’historique complet ?</strong><br>A : Oui, ouvrez le CSV dans Excel ou développez une page web dédiée.</li>
+          <li><strong>Q : Comment exporter les données ?</strong><br>A : Utilisez l’export PNG du dashboard ou téléchargez le CSV via Flask.</li>
+        </ul>
+        <h4>Cas d’usage</h4>
+        <ul>
+          <li>Démo pédagogique ROS2 (université, formation, MOOC)</li>
+          <li>Tests de robustesse d’algorithmes de monitoring</li>
+          <li>Prototype de supervision IoT/industrielle</li>
+          <li>Base pour projet d’analyse prédictive ou IA</li>
+        </ul>
+      </div>
+    </section>
+  </main>
+</body>
+</html>
+
