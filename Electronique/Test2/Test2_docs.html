@@ -260,6 +260,28 @@
             background-color: var(--secondary);
             box-shadow: 0 0 5px var(--secondary);
         }
+    .schematic-gallery {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  justify-content: space-between;
+  margin-top: 10px;
+}
+
+.schematic-section {
+  flex: 1;
+  min-width: 250px;
+  max-width: 300px;
+  text-align: center;
+}
+
+.component-img {
+  width: 100%;
+  height: auto;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0,0,0,0.1);
+}
+
     body {
       background-color: #020c1b;
       color: #e6f1ff;
@@ -373,6 +395,22 @@
   </style>
 </head>
 <body>
+  <!-- Header -->
+    <header>
+        <nav class="navbar">
+            <a href="https://tekbot-robotics-challenge.github.io/2025-Team-UCAO-TECH-Docs" class="logo">
+                <img src="https://ucaotech.com/wp-content/uploads/2024/10/UCAO-TECH-1.png" alt="UCAO-TECH Logo">
+                <span>UCAO-TECH</span>
+            </a>
+            <ul class="nav-links">
+                <li><a href="https://tekbot-robotics-challenge.github.io/2025-Team-UCAO-TECH-Docs">Accueil</a></li>
+                <li><a href="https://tekbot-robotics-challenge.github.io/2025-Team-UCAO-TECH-Docs/#a-propos">À propos</a></li>
+                <li><a href="https://tekbot-robotics-challenge.github.io/2025-Team-UCAO-TECH-Docs/#equipe">Équipe</a></li>
+                <li><a href="https://tekbot-robotics-challenge.github.io/2025-Team-UCAO-TECH-Docs/#contact">Contact</a></li>
+                <li><a href="https://tekbot-robotics-challenge.github.io/2025-Team-UCAO-TECH-Docs/#documentation">Documentation</a></li>
+            </ul>
+        </nav>
+    </header>
   <main>
     <section class="section-doc">
       <h2>Test 2 : Boîte Noire - Communication et Contrôle</h2>
@@ -519,7 +557,7 @@
 <div class="schematic-gallery">
   <div class="schematic-section">
     <h6>Schéma de l'alimentation</h6>
-    <img src="Images_membres/IMG_Circuit_Alimentation.PNG" alt="Schéma alimentation" class="component-img">
+    <img src="Images/IMG_Circuit_Alimentation.PNG" alt="Schéma alimentation" class="component-img">
   </div>
 
   <div class="schematic-section">
