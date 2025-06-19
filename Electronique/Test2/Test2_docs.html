@@ -1,1 +1,314 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Test 2 - Boîte noire | UCAO-TECH</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Roboto:wght@300;400;700&display=swap" rel="stylesheet" />
+  <style>
+    body {
+      background-color: #020c1b;
+      color: #e6f1ff;
+      font-family: 'Roboto', sans-serif;
+      padding: 100px 2rem 2rem 2rem;
+    }
+    h2, h3, h4 {
+      color: #00f7ff;
+      font-family: 'Orbitron', sans-serif;
+    }
+    .section-doc {
+      background-color: rgba(10, 25, 47, 0.4);
+      padding: 2rem;
+      border-radius: 10px;
+      margin-top: 2rem;
+    }
+    ul, ol {
+      margin-left: 1.5rem;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 1rem 0;
+    }
+    th, td {
+      padding: 0.5rem;
+      border: 1px solid #00d1ff;
+    }
+    a {
+      color: #00d1ff;
+      text-decoration: none;
+    }
+    a:hover {
+      color: #9452ff;
+    }
+    .video-container {
+      margin-top: 2rem;
+      display: grid;
+      gap: 1rem;
+    }
+    iframe, video {
+      width: 100%;
+      max-width: 800px;
+      height: 450px;
+      border: 2px solid #00d1ff;
+      border-radius: 8px;
+    }
+    .image-center {
+      text-align: center;
+      margin-top: 1rem;
+    }
+    .image-center img {
+      width: 90%;
+      max-width: 600px;
+      border: 2px solid #00d1ff;
+      border-radius: 8px;
+    }
+    pre code {
+      display: block;
+      padding: 1rem;
+      background: #0a192f;
+      border-left: 4px solid #00f7ff;
+      overflow-x: auto;
+      font-family: monospace;
+    }
+    /* Styles ajoutés pour les composants */
+    .component-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+      gap: 1.5rem;
+      margin: 2rem 0;
+    }
+    .component-card {
+      background: rgba(10, 25, 47, 0.6);
+      border: 1px solid #00d1ff;
+      border-radius: 8px;
+      overflow: hidden;
+      transition: transform 0.3s ease;
+    }
+    .component-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 5px 15px rgba(0, 247, 255, 0.2);
+    }
+    .component-img {
+      width: 100%;
+      height: 200px;
+      object-fit: cover;
+      border-bottom: 1px solid #00d1ff;
+    }
+    .component-desc {
+      padding: 1rem;
+    }
+    .component-desc h5 {
+      color: #00f7ff;
+      margin-top: 0;
+      font-family: 'Orbitron', sans-serif;
+    }
+    .component-desc ul {
+      padding-left: 1.2rem;
+      margin: 0.5rem 0;
+    }
+    .component-desc li {
+      margin-bottom: 0.3rem;
+      font-size: 0.9rem;
+    }
+    .component-desc p:last-child {
+      font-size: 0.8rem;
+      color: #8a9db3;
+      margin-bottom: 0;
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <section class="section-doc">
+      <h2>Test 2 : Boîte Noire - Communication et Contrôle</h2>
+      <h3>Durée : 1 semaine</h3>
 
+      <h4>Introduction</h4>
+      <p>Dans les secteurs de l'aéronautique, de l'automobile ou du ferroviaire, les boîtes noires sont essentielles pour l'enregistrement des données de fonctionnement. Inspirés de ces systèmes, nous avons conçu un dispositif capable d'enregistrer et de transmettre en temps réel les données de mouvement d'un robot grâce à un capteur MPU6050 (accéléromètre + gyroscope) intégré dans une boîte cubique.</p>
+
+      <h4>Objectifs du test</h4>
+      <ul>
+        <li>Mettre en œuvre un système d'acquisition de données inertielle (MPU6050)</li>
+        <li>Transmettre les données via un bus I2C vers une station de contrôle</li>
+        <li>Afficher les données en temps réel sur un écran LCD</li>
+        <li>Utiliser des microcontrôleurs ATmega328P sans carte Arduino</li>
+        <li>Documenter la conception du circuit imprimé (PCB) et assurer une présentation professionnelle</li>
+      </ul>
+
+      <h4>Liste des composants utilisés</h4>
+      <div class="component-grid">
+        <!-- ATmega328P -->
+        <div class="component-card">
+          
+          <div class="component-desc">
+            <h5>2 × ATmega328P</h5>
+            <p>Cœur du système, ces microcontrôleurs 8-bit gèrent :</p>
+            <ul>
+              <li>La communication I2C entre modules</li>
+              <li>Le traitement des données du capteur</li>
+              <li>L'affichage sur l'écran LCD</li>
+            </ul>
+            <p>Caractéristiques : 32KB Flash, 2KB SRAM, 16MHz</p>
+          </div>
+          <img src="https://i.imgur.com/JQh1F8m.jpg" alt="ATmega328P" class="component-img">
+        </div>
+
+        <!-- MPU6050 -->
+        <div class="component-card">
+          
+          <div class="component-desc">
+            <h5>1 × Module MPU6050</h5>
+            <p>Capteur 6 axes (gyroscope + accéléromètre) utilisé pour :</p>
+            <ul>
+              <li>Détection de l'orientation spatiale</li>
+              <li>Mesure des mouvements brusques</li>
+              <li>Référence à la gravité terrestre</li>
+            </ul>
+            <p>Communication via I2C (adresse 0x68)</p>
+          </div>
+          <img src="../Test1/Images/GY-521.png" alt="MPU6050" class="component-img">
+        </div>
+
+        <!-- LCD 16x2 -->
+        <div class="component-card">
+          
+          <div class="component-desc">
+            <h5>1 × Écran LCD 16x2</h5>
+            <p>Interface de visualisation des données :</p>
+            <ul>
+              <li>Affiche les données en temps réel</li>
+              <li>Contrôlé via interface I2C</li>
+              <li>Adresse typique : 0x27 ou 0x3F</li>
+            </ul>
+            <p>Consommation : ~1mA</p>
+          </div>
+          <img src="https://i.imgur.com/3W7Q5Yp.jpg" alt="LCD 16x2" class="component-img">
+        </div>
+
+        <!-- Régulateur 5V -->
+        <div class="component-card">
+          
+          <div class="component-desc">
+            <h5>1 × Régulateur de tension 5V</h5>
+            <p>Stabilise l'alimentation électrique :</p>
+            <ul>
+              <li>Protège les composants sensibles</li>
+              <li>Permet une alimentation par batterie</li>
+              <li>Type : LM7805 ou AMS1117-5.0</li>
+            </ul>
+            <p>Courant max : 1A (avec dissipateur)</p>
+          </div>
+          <img src="https://i.imgur.com/mXQZ3Bd.jpg" alt="Régulateur 5V" class="component-img">
+        </div>
+
+        <!-- Composants passifs -->
+        <div class="component-card">
+          
+          <div class="component-desc">
+            <h5>Résistances, condensateurs, quartz 16MHz</h5>
+            <p>Éléments essentiels au fonctionnement :</p>
+            <ul>
+              <li>Résistances 10kΩ et 220Ω</li>
+              <li>Condensateurs de découplage (100nF)</li>
+              <li>Quartz pour l'horloge du microcontrôleur</li>
+            </ul>
+            <p>Précision requise : ±5%</p>
+          </div>
+          <img src="https://i.imgur.com/2JdGmwB.jpg" alt="Composants passifs" class="component-img">
+        </div>
+
+        <!-- Circuit imprimé -->
+        <div class="component-card">
+          
+          <div class="component-desc">
+            <h5>Veroboard ou PCB</h5>
+            <p>Support physique du circuit :</p>
+            <ul>
+              <li>Veroboard pour prototypage rapide</li>
+              <li>PCB personnalisé pour version finale</li>
+              <li>Dimensions recommandées : 10×8cm</li>
+            </ul>
+            <p>Épaisseur cuivre : 35μm minimum</p>
+          </div>
+        </div>
+        <img src="https://i.imgur.com/8WqFZJg.jpg" alt="Circuit imprimé" class="component-img">
+      </div>
+
+      <h4>Architecture du système</h4>
+      <p>Le système est réparti en deux modules :</p>
+      <ul>
+        <li><strong>Module capteur (la boîte noire)</strong> : contient l'ATmega328P maître I2C et le MPU6050</li>
+        <li><strong>Station de contrôle</strong> : contient l'ATmega328P esclave I2C et l'écran LCD</li>
+      </ul>
+
+      <h4>Schéma électronique (réalisé sur KiCad)</h4>
+      <div class="image-center">
+        <img src="Images/test2_schematic.jpg" alt="Schéma KiCad">
+      </div>
+
+      <h4>Conception et fabrication du PCB</h4>
+      <p>Le circuit a été conçu avec KiCad. Le PCB a été soudé manuellement sur veroboard.</p>
+      <div class="image-center">
+        <img src="Images/test2_pcb.jpg" alt="Photo du PCB réalisé">
+      </div>
+
+      <h4>Code source (extrait)</h4>
+      <pre><code>#include <Wire.h>
+#include <MPU6050.h>
+MPU6050 mpu;
+
+void setup() {
+  Wire.begin();
+  Serial.begin(9600);
+  mpu.initialize();
+}
+
+void loop() {
+  int16_t ax, ay, az, gx, gy, gz;
+  mpu.getMotion6(&ax, &ay, &az, &gx, &gy, &gz);
+  Serial.print("Accel: ");
+  Serial.print(ax); Serial.print(", ");
+  Serial.print(ay); Serial.print(", ");
+  Serial.print(az); Serial.print(" | Gyro: ");
+  Serial.print(gx); Serial.print(", ");
+  Serial.print(gy); Serial.print(", ");
+  Serial.println(gz);
+  delay(500);
+}</code></pre>
+
+      <h4>Contraintes et recommandations</h4>
+      <ul>
+        <li>Ne pas utiliser de carte Arduino ou breadboard dans la version finale</li>
+        <li>Boîte cubique de 7 cm avec ouverture sur le dessus si opaque</li>
+        <li>Câblage propre et composants fixés solidement</li>
+        <li>Station de contrôle séparée avec écran bien lisible</li>
+      </ul>
+
+      <h4>Vidéo de démonstration</h4>
+      <div class="video-container">
+        <video controls>
+          <source src="#" type="video/mp4">
+          Votre navigateur ne supporte pas la lecture de cette vidéo.
+        </video>
+        <iframe src="#" allowfullscreen></iframe>
+      </div>
+
+      <h4>Critères d'évaluation</h4>
+      <table>
+        <tr><th>Critère</th><th>Détails</th><th>Points</th></tr>
+        <tr><td>Circuiterie</td><td>Qualité du schéma, soudure, alimentation, présentation du circuit</td><td>25</td></tr>
+        <tr><td>Code</td><td>Lisibilité, commentaires, logique du code</td><td>25</td></tr>
+        <tr><td>Réalisation physique</td><td>Esthétique de la boîte et du poste de contrôle</td><td>10</td></tr>
+        <tr><td>Fonctionnement</td><td>Qualité de la démonstration du système</td><td>25</td></tr>
+        <tr><td>Documentation</td><td>Structure, clarté, rigueur technique</td><td>10</td></tr>
+        <tr><td>Présentation orale</td><td>Slides, expression orale, réponse aux questions</td><td>5</td></tr>
+      </table>
+
+      <h4>Conclusion</h4>
+      <p>Ce test a permis de mettre en œuvre un système embarqué capable de mesurer et transmettre des données inertielle en temps réel. Il s'inscrit dans une logique de fiabilité, de rigueur technique et d'intégration dans une solution robotique autonome.</p>
+    </section>
+  </main>
+</body>
+</html>
