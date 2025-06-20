@@ -91,153 +91,31 @@
     .nav-links a:hover::before {
       width: 100%;
     }
-    .section-doc {
-      background-color: rgba(10, 25, 47, 0.4);
-      padding: 2rem;
-      border-radius: 10px;
-      margin-top: 2rem;
-      max-width: 90vw;
-      margin-left: auto;
-      margin-right: auto;
-    }
-    ul, ol {
-      margin-left: 1.5rem;
-      margin-bottom: 1rem;
-    }
-    table {
-      width: 100%;
-      border-collapse: collapse;
-      margin: 1rem 0;
-    }
-    th, td {
-      padding: 0.5rem;
-      border: 1px solid #00d1ff;
-      text-align: left;
-    }
-    a {
+    .nav-links a.active {
       color: #00d1ff;
-      text-decoration: none;
     }
-    a:hover {
-      color: #9452ff;
-    }
-    .video-container {
-      margin-top: 2rem;
-      display: flex;
-      justify-content: center;
-    }
-    video {
+    .nav-links a.active::before {
       width: 100%;
-      max-width: 800px;
-      height: auto;
-      border: 2px solid #00d1ff;
-      border-radius: 8px;
-    }
-    .image-center {
-      text-align: center;
-      margin-top: 1rem;
-    }
-    .image-center img {
-      width: 90%;
-      max-width: 600px;
-      border: 2px solid #00d1ff;
-      border-radius: 8px;
-    }
-    pre code {
-      display: block;
-      padding: 1rem;
-      background: #0a192f;
-      border-left: 4px solid #00f7ff;
-      overflow-x: auto;
-      font-family: monospace;
-      color: #e6f1ff;
-    }
-    .component-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-      gap: 1.5rem;
-      margin-top: 2rem;
-    }
-    .component-card {
-      background: rgba(10, 25, 47, 0.6);
-      border: 1px solid #00d1ff;
-      border-radius: 8px;
-      overflow: hidden;
-      transition: transform 0.3s ease;
-    }
-    .component-card:hover {
-      transform: translateY(-5px);
-      box-shadow: 0 5px 15px rgba(0, 247, 255, 0.2);
-    }
-    .component-img {
-      width: 100%;
-      height: auto;
-      object-fit: cover;
-      border-bottom: 1px solid #00d1ff;
-    }
-    .component-desc {
-      padding: 1rem;
-    }
-    .component-desc h5 {
-      color: #00f7ff;
-      margin-top: 0;
-      font-family: 'Orbitron', sans-serif;
-    }
-    .component-desc ul {
-      padding-left: 1.2rem;
-      margin: 0.5rem 0;
-    }
-    .component-desc li {
-      margin-bottom: 0.3rem;
-      font-size: 0.9rem;
-    }
-    .component-desc p:last-child {
-      font-size: 0.8rem;
-      color: #8a9db3;
-      margin-bottom: 0;
-    }
-    .pcb-gallery {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 1rem;
-      margin-top: 1rem;
-      justify-content: center;
-    }
-    .pcb-section {
-      max-width: 320px;
-      flex: 1 1 300px;
-      text-align: center;
-    }
-    .schematic-gallery {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 20px;
-      justify-content: center;
-      margin-top: 10px;
-    }
-    .schematic-section {
-      flex: 1 1 300px;
-      text-align: center;
     }
   </style>
 </head>
 <body>
   <!-- Header -->
     <header>
-        <nav class="navbar">
-            <a href="https://tekbot-robotics-challenge.github.io/2025-Team-UCAO-TECH-Docs" class="logo">
-                <img src="https://ucaotech.com/wp-content/uploads/2024/10/UCAO-TECH-1.png" alt="UCAO-TECH Logo">
-                <span>UCAO-TECH</span>
-            </a>
-            <ul class="nav-links">
-                <li><a href="https://tekbot-robotics-challenge.github.io/2025-Team-UCAO-TECH-Docs">Accueil</a></li>
-                <li><a href="https://tekbot-robotics-challenge.github.io/2025-Team-UCAO-TECH-Docs/#a-propos">À propos</a></li>
-                <li><a href="https://tekbot-robotics-challenge.github.io/2025-Team-UCAO-TECH-Docs/#equipe">Équipe</a></li>
-                <li><a href="https://tekbot-robotics-challenge.github.io/2025-Team-UCAO-TECH-Docs/#contact">Contact</a></li>
-                <li><a href="https://tekbot-robotics-challenge.github.io/2025-Team-UCAO-TECH-Docs/#documentation">Documentation</a></li>
-            </ul>
-        </nav>
-    </header>
+    <nav class="navbar">
+      <a href="https://tekbot-robotics-challenge.github.io/2025-Team-UCAO-TECH-Docs" class="logo">
+        <img src="https://ucaotech.com/wp-content/uploads/2024/10/UCAO-TECH-1.png" alt="UCAO-TECH Logo">
+        <span>UCAO-TECH</span>
+      </a>
+      <ul class="nav-links">
+        <li><a href="https://tekbot-robotics-challenge.github.io/2025-Team-UCAO-TECH-Docs">Accueil</a></li>
+        <li><a href="https://tekbot-robotics-challenge.github.io/2025-Team-UCAO-TECH-Docs/#a-propos">À propos</a></li>
+        <li><a href="https://tekbot-robotics-challenge.github.io/2025-Team-UCAO-TECH-Docs/#equipe">Équipe</a></li>
+        <li><a href="https://tekbot-robotics-challenge.github.io/2025-Team-UCAO-TECH-Docs/#contact">Contact</a></li>
+        <li><a href="https://tekbot-robotics-challenge.github.io/2025-Team-UCAO-TECH-Docs/#documentation">Documentation</a></li>
+      </ul>
+    </nav>
+  </header>
   <main>
     <section class="section-doc">
       <h2>Test 2 : Boîte Noire - Communication et Contrôle</h2>
