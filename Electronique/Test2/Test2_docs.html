@@ -88,14 +88,83 @@
     .nav-links a:hover {
       color: #00d1ff;
     }
-    .nav-links a:hover::before {
+    .nav-links a:hover::before,
+    .nav-links a.active::before {
       width: 100%;
     }
     .nav-links a.active {
       color: #00d1ff;
     }
-    .nav-links a.active::before {
+    .section {
+      background-color: rgba(10, 25, 47, 0.4);
+      padding: 2rem;
+      border-radius: 10px;
+      margin-top: 2rem;
+      max-width: 1000px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    .section p {
+      margin-top: 1rem;
+      line-height: 1.6;
+    }
+    img {
+      max-width: 70%;
+      height: auto;
+      display: block;
+      margin: 1rem auto;
+      border: 1px solid #00d1ff;
+    }
+    ul, ol {
+      margin-left: 1.5rem;
+      margin-top: 1rem;
+    }
+    table {
       width: 100%;
+      border-collapse: collapse;
+      margin: 1rem 0;
+    }
+    th, td {
+      padding: 0.5rem;
+      border: 1px solid #00d1ff;
+    }
+    pre {
+      background-color: #0a192f;
+      padding: 1rem;
+      overflow-x: auto;
+      border-left: 4px solid #00f7ff;
+      margin-top: 1rem;
+    }
+    code {
+      font-family: monospace;
+      color: #00f7ff;
+    }
+    iframe {
+      margin-top: 1rem;
+      border: 1px solid #00d1ff;
+    }
+    .toc {
+      background-color: #081a2b;
+      padding: 1rem;
+      margin: 2rem 0;
+      border-left: 4px solid #00f7ff;
+    }
+    .toc h4 {
+      margin-top: 0;
+    }
+    .toc ul {
+      list-style: none;
+      padding-left: 0;
+    }
+    .toc ul li {
+      margin: 0.5rem 0;
+    }
+    .toc ul li a {
+      color: #00d1ff;
+      text-decoration: none;
+    }
+    .toc ul li a:hover {
+      text-decoration: underline;
     }
   </style>
 </head>
