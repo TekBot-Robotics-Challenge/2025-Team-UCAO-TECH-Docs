@@ -246,6 +246,31 @@
       box-shadow: 0 0 20px #00d1ff;
       border-radius: 10px;
     }
+    .download-btn {
+  display: inline-block;
+  padding: 12px 25px;
+  background: linear-gradient(90deg, #00d1ff, #9452ff);
+  color: #fff;
+  font-weight: 600;
+  text-decoration: none;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 209, 255, 0.5);
+  transition: background 0.3s ease, box-shadow 0.3s ease;
+  font-size: 1rem;
+  margin-top: 1rem;
+  user-select: none;
+}
+.download-btn:hover,
+.download-btn:focus {
+  background: linear-gradient(90deg, #9452ff, #00d1ff);
+  box-shadow: 0 6px 16px rgba(148, 82, 255, 0.7);
+  outline: none;
+}
+.download-btn i {
+  margin-right: 8px;
+  vertical-align: middle;
+}
+
   </style>
 </head>
 <body>
@@ -416,6 +441,11 @@
           <img src="Images/imgSC_3D_front.PNG" alt="Carte station de contrôle 3D" />
         </div>
       </div>
+<h4>Téléchargement des fichiers KiCad</h4>
+<p>Téléchargez ici tous les fichiers sources KiCad regroupant les schémas et PCB du projet :</p>
+<a href="Schemas/Circuit_electronique_test2.rar" download class="download-btn" aria-label="Télécharger les fichiers KiCad">
+  <i class="fa fa-download"></i> Télécharger le dossier KiCad complet (RAR)
+</a>
 
       <h4>Codes</h4>
       <h5>Côté "boîte noire" (maître I2C, avec MPU6050</h5>
