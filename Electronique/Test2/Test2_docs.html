@@ -709,6 +709,43 @@ int main() {
 }
 </code></pre>
 
+  <section class="section">
+  <h4>Explication : de la Simulation à la Réalité</h4>
+  <p>Cette section vise à établir une correspondance claire entre ce qui a été simulé dans Proteus et ce qui se passe dans la mise en œuvre réelle du projet.</p>
+
+  <h5>a. Simulation dans Proteus</h5>
+  <ul>
+    <li>Dans l’environnement de simulation, deux microcontrôleurs ATmega328P communiquent via le bus I2C :</li>
+    <ul>
+      <li>Le microcontrôleur maître génère des données aléatoires simulant les valeurs de l’accéléromètre (accX, accY, accZ).</li>
+      <li>Ces données sont transmises via I2C à un microcontrôleur esclave, qui les affiche sur un écran LCD 16x2.</li>
+    </ul>
+    <li>Des LEDs permettent de visualiser l’activité du système :</li>
+    <ul>
+      <li>La LED du maître s’allume après chaque transmission.</li>
+      <li>La LED de l’esclave clignote à chaque réception complète des données.</li>
+    </ul>
+    <li>La simulation permet donc de valider la logique du protocole de communication (I2C), la réception, et l’affichage des données, sans avoir besoin de matériel réel.</li>
+  </ul>
+
+  <h5>b. Implémentation réelle avec MPU6050</h5>
+  <ul>
+    <li>Dans la version physique :</li>
+    <ul>
+      <li>Le maître n’utilise plus de données aléatoires, mais récupère les vraies valeurs d’accélération du capteur MPU6050, connecté via I2C.</li>
+      <li>Les données lues depuis le MPU6050 sont ensuite envoyées exactement de la même manière à l’esclave via I2C.</li>
+    </ul>
+    <li>L’esclave reste inchangé : il reçoit 6 octets (2 par axe) et les affiche sur le même écran LCD.</li>
+  </ul>
+</section>
+      <h4>Vidéo de démonstration</h4>
+      <div class="video-container">
+        <video controls>
+          <source src="#" type="video/mp4">
+          Votre navigateur ne supporte pas la lecture de cette vidéo.
+        </video>
+        </div>
+
       <h4>Contraintes et recommandations</h4>
       <ul>
         <li>Ne pas utiliser de carte Arduino ou breadboard dans la version finale</li>
@@ -716,16 +753,7 @@ int main() {
         <li>Câblage propre et composants fixés solidement</li>
         <li>Station de contrôle séparée avec écran bien lisible</li>
       </ul>
-
-      <h4>Vidéo de démonstration</h4>
-      <div class="video-container">
-        <video controls>
-          <source src="#" type="video/mp4">
-          Votre navigateur ne supporte pas la lecture de cette vidéo.
-        </video>
-          
-      </div>
-
+              
       <h4>Critères d'évaluation</h4>
       <table>
         <tr><th>Critère</th><th>Détails</th><th>Points</th></tr>
@@ -736,7 +764,7 @@ int main() {
         <tr><td>Documentation</td><td>Structure, clarté, rigueur technique</td><td>10</td></tr>
         <tr><td>Présentation orale</td><td>Slides, expression orale, réponse aux questions</td><td>5</td></tr>
       </table>
-
+<section class="section">
       <h4>Références techniques</h4>
 <p>Voici les liens vers les documents techniques (datasheets) utilisés dans ce projet </p>
 
@@ -746,7 +774,7 @@ int main() {
   <li><a href="https://www.sparkfun.com/datasheets/LCD/HD44780.pdf" target="_blank">Écran LCD HD44780 – Datasheet</a></li>
   <li><a href="https://www.st.com/resource/en/datasheet/l7805cv.pdf" target="_blank">LM7805 – Datasheet (STMicroelectronics)</a></li>
 </ul>
-
+</section>
       <h4>Conclusion</h4>
       <p>Ce test a permis de mettre en œuvre un système embarqué capable de mesurer et transmettre des données inertielle en temps réel. Il s'inscrit dans une logique de fiabilité, de rigueur technique et d'intégration dans une solution robotique autonome.</p>
     </section>
