@@ -808,54 +808,77 @@ def handle_request_data():
           <div class="divider"></div>
 
           <h3 id="illustrations">9. Illustrations clés du projet</h3>
-          <div style="display:flex; flex-wrap:wrap; gap:24px; justify-content:space-between;">
-            <div style="flex:1 1 30%; min-width:320px; max-width:48%; background:#0a192f; border-radius:10px; padding:1em; margin-bottom:1.5em; box-shadow:0 2px 8px #111;">
-              <h4>9.1 Lancement des nodes ROS2</h4>
-              <div style="display:flex; gap:18px; align-items:center;">
-                <div style="flex:1 1 50%; background:#081a2b; border-radius:10px; border:2px dashed #00f7ff; padding:18px; display:flex; align-items:center; justify-content:center; min-height:90px;">
-                  <span style="color:#00f7ff;">[Photo à insérer ici]</span>
-                </div>
-                <div style="flex:1 1 50%; background:#081a2b; border-radius:10px; border:2px dashed #9452ff; padding:18px; display:flex; align-items:center; justify-content:center; min-height:90px;">
-                   <video style="width:100%; height:auto; border-radius:8px;" controls>
-                    <source src="Videos/lancementNode.mp4" type="video/mp4">
-                     Votre navigateur ne supporte pas la vidéo HTML5.
-                   </video>
-                  </div>
+<div style="display:flex; flex-wrap:wrap; gap:24px; justify-content:space-between;">
 
-              </div>
-            </div>
-            <div style="flex:1 1 30%; min-width:320px; max-width:48%; background:#0a192f; border-radius:10px; padding:1em; margin-bottom:1.5em; box-shadow:0 2px 8px #111;">
-              <h4>9.2 Fichiers CSV générés</h4>
-              <div style="display:flex; gap:18px; align-items:center;">
-                <div style="flex:1 1 50%; background:#081a2b; border-radius:10px; border:2px dashed #00f7ff; padding:18px; display:flex; align-items:center; justify-content:center; min-height:90px;">
-                  <span style="color:#00f7ff;">
-                     <img src="Images/csv.png" alt="Photo du CSV">
-                  </span>
-                </div>
-                <div style="flex:1 1 50%; background:#081a2b; border-radius:10px; border:2px dashed #9452ff; padding:18px; display:flex; align-items:center; justify-content:center; min-height:90px;">
-                  <span style="color:#9452ff;">[Vidéo à insérer ici]</span>
-                </div>
-              </div>
-            </div>
-            <div style="flex:1 1 30%; min-width:320px; max-width:48%; background:#0a192f; border-radius:10px; padding:1em; margin-bottom:1.5em; box-shadow:0 2px 8px #111;">
-             <h4>9.3 Interface web (dashboard)</h4>
-               <div style="background:#081a2b; border-radius:10px; border:2px dashed #9452ff; padding:18px; display:flex; align-items:center; justify-content:center; min-height:90px;">
-                   <video style="width:100%; height:auto; border-radius:8px;" controls>
-                   <source src="Videos/videoDonneeCapteur.mp4" type="video/mp4">
-                  Votre navigateur ne supporte pas la vidéo HTML5.
-                 </video>
-               </div>
-              </div>
+  <!-- 9.1 -->
+  <div style="flex:1 1 30%; min-width:320px; max-width:48%; background:#0a192f; border-radius:10px; padding:1em; margin-bottom:1.5em; box-shadow:0 2px 8px #111;">
+    <h4>9.1 Lancement des nodes ROS2</h4>
+    <div style="display:flex; gap:18px; align-items:center;">
+      <!-- Image à gauche -->
+      <div style="flex:1 1 50%; background:#081a2b; border-radius:10px; border:2px dashed #00f7ff; padding:18px; display:flex; align-items:center; justify-content:center; min-height:90px;">
+        <span style="color:#00f7ff;">[Photo à insérer ici]</span>
+      </div>
+      <!-- Vidéo à droite -->
+      <div style="flex:1 1 50%; background:#081a2b; border-radius:10px; border:2px dashed #9452ff; padding:18px; display:flex; align-items:center; justify-content:center; min-height:90px;">
+        <video style="width:100%; height:auto; border-radius:8px;" controls>
+          <source src="Videos/lancementNode.mp4" type="video/mp4">
+          Votre navigateur ne supporte pas la vidéo HTML5.
+        </video>
+      </div>
+    </div>
+  </div>
 
-            <div style="flex:1 1 30%; min-width:320px; max-width:48%; background:#0a192f; border-radius:10px; padding:1em; margin-bottom:1.5em; box-shadow:0 2px 8px #111; display:flex; flex-direction:column; justify-content:center; align-items:center;">
-              <h4 style="color:#00f7ff; text-align:center;">Vidéo récapitulative de toutes les fonctionnalités</h4>
-              <div style="background:#081a2b; border-radius:10px; border:2px dashed #9452ff; padding:24px; margin:18px auto; min-height:120px; max-width:600px; display:flex; align-items:center; justify-content:center;">
-                <span style="color:#9452ff; font-size:1.1em;">
-                  [Vidéo à insérer ici]
-                </span>
-              </div>
-            </div>
-          </div>
+  <!-- 9.2 -->
+  <div style="flex:1 1 30%; min-width:320px; max-width:48%; background:#0a192f; border-radius:10px; padding:1em; margin-bottom:1.5em; box-shadow:0 2px 8px #111;">
+    <h4>9.2 Fichiers CSV générés</h4>
+    <div style="display:flex; gap:18px; align-items:center;">
+      <!-- Image à gauche -->
+      <div style="flex:1 1 50%; background:#081a2b; border-radius:10px; border:2px dashed #00f7ff; padding:18px; display:flex; align-items:center; justify-content:center; min-height:90px;">
+        <img src="Images/csv.png" alt="Photo du CSV" style="width:100%; border-radius:8px;">
+      </div>
+      <!-- Vidéo à droite -->
+      <div style="flex:1 1 50%; background:#081a2b; border-radius:10px; border:2px dashed #9452ff; padding:18px; display:flex; align-items:center; justify-content:center; min-height:90px;">
+        <video style="width:100%; height:auto; border-radius:8px;" controls>
+          <source src="Videos/videoCSV.mp4" type="video/mp4">
+          Votre navigateur ne supporte pas la vidéo HTML5.
+        </video>
+      </div>
+    </div>
+  </div>
+
+  <!-- 9.3 -->
+  <div style="flex:1 1 30%; min-width:320px; max-width:48%; background:#0a192f; border-radius:10px; padding:1em; margin-bottom:1.5em; box-shadow:0 2px 8px #111;">
+    <h4>9.3 Interface web (dashboard)</h4>
+    <div style="display:flex; gap:18px; align-items:center;">
+      <!-- Image à gauche -->
+      <div style="flex:1 1 50%; background:#081a2b; border-radius:10px; border:2px dashed #00f7ff; padding:18px; display:flex; align-items:center; justify-content:center; min-height:90px;">
+        <img src="Images/dashboard.png" alt="Interface web" style="width:100%; border-radius:8px;">
+      </div>
+      <!-- Vidéo à droite -->
+      <div style="flex:1 1 50%; background:#081a2b; border-radius:10px; border:2px dashed #9452ff; padding:18px; display:flex; align-items:center; justify-content:center; min-height:90px;">
+        <video style="width:100%; height:auto; border-radius:8px;" controls>
+          <source src="Videos/videoDonneeCapteur.mp4" type="video/mp4">
+          Votre navigateur ne supporte pas la vidéo HTML5.
+        </video>
+      </div>
+    </div>
+  </div>
+
+  <!-- 9.4 Vidéo récapitulative -->
+  <div style="flex:1 1 30%; min-width:320px; max-width:48%; background:#0a192f; border-radius:10px; padding:1em; margin-bottom:1.5em; box-shadow:0 2px 8px #111; display:flex; flex-direction:column; justify-content:center; align-items:center;">
+    <h4 style="color:#00f7ff; text-align:center;">Vidéo récapitulative de toutes les fonctionnalités</h4>
+    <div style="background:#081a2b; border-radius:10px; border:2px dashed #9452ff; padding:24px; margin:18px auto; min-height:120px; max-width:600px; display:flex; align-items:center; justify-content:center;">
+      <video style="width:100%; height:auto; border-radius:8px;" controls>
+        <source src="Videos/videoRecapitulatif.mp4" type="video/mp4">
+        Votre navigateur ne supporte pas la vidéo HTML5.
+      </video>
+    </div>
+  </div>
+
+</div>
+
+<div class="divider"></div>
+
 
           <div class="divider"></div>
 
