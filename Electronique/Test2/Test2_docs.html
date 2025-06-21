@@ -55,6 +55,7 @@
     .logo img {
       height: 50px;
       transition: transform 0.5s ease;
+      cursor: pointer;
     }
     .logo:hover img {
       transform: rotate(360deg);
@@ -110,13 +111,6 @@
       margin-top: 1rem;
       line-height: 1.6;
     }
-    img {
-      max-width: 70%;
-      height: auto;
-      display: block;
-      margin: 1rem auto;
-      border: 1px solid #00d1ff;
-    }
     ul, ol {
       margin-left: 1.5rem;
       margin-top: 1rem;
@@ -170,75 +164,96 @@
     }
 
     .component-card {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 2rem;
-  background-color: rgba(2, 12, 27, 0.6);
-  padding: 1.5rem;
-  border-radius: 10px;
-  margin: 2rem auto;
-  max-width: 900px;
-  align-items: center;
-  border-left: 4px solid #00f7ff;
-  box-shadow: 0 0 10px rgba(0, 209, 255, 0.1);
-}
+      display: flex;
+      flex-wrap: wrap;
+      gap: 2rem;
+      background-color: rgba(2, 12, 27, 0.6);
+      padding: 1.5rem;
+      border-radius: 10px;
+      margin: 2rem auto;
+      max-width: 900px;
+      align-items: center;
+      border-left: 4px solid #00f7ff;
+      box-shadow: 0 0 10px rgba(0, 209, 255, 0.1);
+    }
 
-.component-img {
-  flex: 1 1 40%;
-  max-width: 300px;
-  height: auto;
-  border-radius: 8px;
-  border: 1px solid #00d1ff;
-  display: block;
-  margin: 0 auto;
-}
+    .component-img {
+      width: 100%;
+      max-width: 220px;
+      height: auto;
+      border-radius: 8px;
+      border: 1px solid #00d1ff;
+      margin: 0 auto;
+      display: block;
+      cursor: pointer; /* pour la lightbox */
+      transition: transform 0.3s ease;
+    }
+    .component-img:hover {
+      transform: scale(1.05);
+    }
 
-.component-desc {
-  flex: 1 1 55%;
-}
+    /* Si plusieurs images dans un même composant */
+    .component-card .component-img + .component-img {
+      margin-top: 1rem;
+    }
 
-.pcb-gallery, .schematic-gallery {
-  display: grid;
-  gap: 2rem;
-  margin-top: 2rem;
-}
+    /* Spécial pour les images empilées */
+    .component-card img:not(:first-child) {
+      margin-top: 1rem;
+    }
 
-.pcb-section, .schematic-section {
-  background-color: rgba(2, 12, 27, 0.6);
-  padding: 1rem;
-  border-radius: 8px;
-  border-left: 4px solid #00d1ff;
-  box-shadow: 0 0 5px rgba(0, 209, 255, 0.1);
-}
+    .pcb-section img,
+    .schematic-section img {
+      max-width: 400px;
+      width: 100%;
+      height: auto;
+      cursor: pointer;
+      border-radius: 6px;
+      border: 1px solid #00d1ff;
+      display: block;
+      margin: 0.8rem auto;
+      transition: transform 0.3s ease;
+    }
+    .pcb-section img:hover,
+    .schematic-section img:hover {
+      transform: scale(1.03);
+    }
 
-.pcb-section img, .schematic-section img {
-  display: block;
-  margin: 0.8rem auto;
-  max-width: 90%;
-  height: auto;
-  border-radius: 6px;
-  border: 1px solid #00d1ff;
-}
+    @media (max-width: 768px) {
+      .component-card {
+        flex-direction: column;
+        text-align: center;
+      }
+      .component-img, .component-desc {
+        flex: 1 1 100%;
+      }
+    }
 
-@media (max-width: 768px) {
-  .component-card {
-    flex-direction: column;
-    text-align: center;
-  }
-
-  .component-img, .component-desc {
-    flex: 1 1 100%;
-  }
-}
-
+    /* Lightbox styles */
+    #lightbox-overlay {
+      position: fixed;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: rgba(0,0,0,0.85);
+      display: none;
+      justify-content: center;
+      align-items: center;
+      z-index: 2000;
+      cursor: zoom-out;
+    }
+    #lightbox-overlay img {
+      max-width: 90vw;
+      max-height: 90vh;
+      box-shadow: 0 0 20px #00d1ff;
+      border-radius: 10px;
+    }
   </style>
 </head>
 <body>
   <!-- Header -->
-    <header>
+  <header>
     <nav class="navbar">
       <a href="https://tekbot-robotics-challenge.github.io/2025-Team-UCAO-TECH-Docs" class="logo">
-        <img src="https://ucaotech.com/wp-content/uploads/2024/10/UCAO-TECH-1.png" alt="UCAO-TECH Logo">
+        <img src="https://ucaotech.com/wp-content/uploads/2024/10/UCAO-TECH-1.png" alt="UCAO-TECH Logo" />
         <span>UCAO-TECH</span>
       </a>
       <ul class="nav-links">
@@ -250,6 +265,7 @@
       </ul>
     </nav>
   </header>
+
   <main>
     <section class="section-doc">
       <h2>Test 2 : Boîte Noire - Communication et Contrôle</h2>
@@ -270,23 +286,22 @@
       <h4>Liste des composants utilisés</h4>
       <div class="component-grid">
         <!-- ATmega328P -->
-<div class="component-card">
-  <img src="Images/ATMEGA328P.jpg" alt="ATmega328P" class="component-img">
-  <div class="component-desc">
-    <h5>2 × ATmega328P</h5>
-    <p>Cœur du système, ces microcontrôleurs 8-bit gèrent :</p>
-    <ul>
-      <li>La communication I2C entre modules</li>
-      <li>Le traitement des données du capteur</li>
-      <li>L'affichage sur l'écran LCD</li>
-    </ul>
-    <p>Caractéristiques : 32KB Flash, 2KB SRAM, 16MHz</p>
-  </div>
-</div>
+        <div class="component-card">
+          <img src="Images/ATMEGA328P.jpg" alt="ATmega328P" class="component-img" />
+          <div class="component-desc">
+            <h5>2 × ATmega328P</h5>
+            <p>Cœur du système, ces microcontrôleurs 8-bit gèrent :</p>
+            <ul>
+              <li>La communication I2C entre modules</li>
+              <li>Le traitement des données du capteur</li>
+              <li>L'affichage sur l'écran LCD</li>
+            </ul>
+            <p>Caractéristiques : 32KB Flash, 2KB SRAM, 16MHz</p>
+          </div>
+        </div>
 
         <!-- MPU6050 -->
         <div class="component-card">
-          
           <div class="component-desc">
             <h5>1 × Module MPU6050</h5>
             <p>Capteur 6 axes (gyroscope + accéléromètre) utilisé pour :</p>
@@ -297,12 +312,11 @@
             </ul>
             <p>Communication via I2C (adresse 0x68)</p>
           </div>
-          <img src="../Test1/Images/GY-521.png" alt="MPU6050" class="component-img">
+          <img src="../Test1/Images/GY-521.png" alt="MPU6050" class="component-img" />
         </div>
 
         <!-- LCD 16x2 -->
         <div class="component-card">
-          
           <div class="component-desc">
             <h5>1 × Écran LCD 16x2</h5>
             <p>Interface de visualisation des données :</p>
@@ -313,12 +327,11 @@
             </ul>
             <p>Consommation : ~1mA</p>
           </div>
-          <img src="Images/16x2-lcd.webp" alt="LCD 16x2" class="component-img">
+          <img src="Images/16x2-lcd.webp" alt="LCD 16x2" class="component-img" />
         </div>
 
         <!-- Régulateur 5V -->
         <div class="component-card">
-          
           <div class="component-desc">
             <h5>1 × Régulateur de tension 5V</h5>
             <p>Stabilise l'alimentation électrique :</p>
@@ -328,12 +341,11 @@
             </ul>
             <p>Courant max : 1A (avec dissipateur)</p>
           </div>
-          <img src="Images/regulateurdetension5v.jpg" alt="Régulateur 5V" class="component-img">
+          <img src="Images/regulateurdetension5v.jpg" alt="Régulateur 5V" class="component-img" />
         </div>
 
         <!-- Composants passifs -->
         <div class="component-card">
-          
           <div class="component-desc">
             <h5>Résistances, condensateurs, quartz 16MHz</h5>
             <p>Éléments essentiels au fonctionnement :</p>
@@ -344,62 +356,66 @@
             </ul>
             <p>Précision requise : ±5%</p>
           </div>
-          <img src="Images/resistance220.jpg" class="component-img">
-          <img src="Images/CONDENSATEUR100nF.jpg" class="component-img">
-          <img src="Images/quartz16mhZ.webp" class="component-img">
+          <div style="display: flex; gap: 1rem; flex-wrap: wrap; justify-content: center;">
+            <img src="Images/resistance220.jpg" class="component-img" style="max-width: 120px;" alt="Résistance 220Ω"/>
+            <img src="Images/CONDENSATEUR100nF.jpg" class="component-img" style="max-width: 120px;" alt="Condensateur 100nF"/>
+            <img src="Images/quartz16mhZ.webp" class="component-img" style="max-width: 120px;" alt="Quartz 16MHz"/>
+          </div>
         </div>
+      </div>
+
       <h4>Architecture du système</h4>
       <p>Le système est réparti en deux modules :</p>
       <ul>
         <li><strong>Module capteur (la boîte noire)</strong> : contient l'ATmega328P maître I2C et le MPU6050</li>
         <li><strong>Station de contrôle</strong> : contient l'ATmega328P esclave I2C et l'écran LCD</li>
       </ul>
-<h4>Schémas électroniques (réalisés sur KiCad)</h4>
-<p>Les circuits ont été conçus avec KiCad pour chaque sous-système du projet.</p>
 
-<div class="schematic-gallery">
-  <div class="schematic-section">
-    <h6>Schéma de l'alimentation</h6>
-    <img src="Images/IMG_Circuit_Alimentation.PNG" alt="Schéma alimentation" class="component-img">
-  </div>
+      <h4>Schémas électroniques (réalisés sur KiCad)</h4>
+      <p>Les circuits ont été conçus avec KiCad pour chaque sous-système du projet.</p>
 
-  <div class="schematic-section">
-    <h6>Schéma de la boîte noire</h6>
-    <img src="Images/img_Circuit_Boite_Noire.PNG" alt="Schéma boîte noire" class="component-img">
-  </div>
+      <div class="schematic-gallery">
+        <div class="schematic-section">
+          <h6>Schéma de l'alimentation</h6>
+          <img src="Images/IMG_Circuit_Alimentation.PNG" alt="Schéma alimentation" />
+        </div>
 
-  <div class="schematic-section">
-    <h6>Schéma de la station de contrôle</h6>
-    <img src="Images/img_Circuit_Station.PNG" alt="Schéma station de contrôle" class="component-img">
-  </div>
-</div>
- <h4>Circuit imprimé</h4>
-<p>Support physique du circuit : PCB personnalisé pour chaque module : alimentation, boîte noire et station de contrôle</p>
+        <div class="schematic-section">
+          <h6>Schéma de la boîte noire</h6>
+          <img src="Images/img_Circuit_Boite_Noire.PNG" alt="Schéma boîte noire" />
+        </div>
 
-<div class="pcb-gallery">
+        <div class="schematic-section">
+          <h6>Schéma de la station de contrôle</h6>
+          <img src="Images/img_Circuit_Station.PNG" alt="Schéma station de contrôle" />
+        </div>
+      </div>
 
-  <!-- Carte alimentation -->
-  <div class="pcb-section">
-    <h6>Carte d'alimentation</h6>
-    <img src="Images/img_PCBAlimentation.PNG" alt="Carte alimentation 2D">
-    <img src="Images/img_PCB_3D_Alimentation.PNG" alt="Carte alimentation 3D">
-  </div>
+      <h4>Circuit imprimé</h4>
+      <p>Support physique du circuit : PCB personnalisé pour chaque module : alimentation, boîte noire et station de contrôle</p>
 
-  <!-- Carte boîte noire -->
-  <div class="pcb-section">
-    <h6>Carte de la boîte noire</h6>
-    <img src="Images/img_PCB_2D_boite_noire.PNG" alt="Carte boîte noire 2D">
-    <img src="Images/img_PCB_3D_boite_noire.PNG" alt="Carte boîte noire 3D">
-  </div>
+      <div class="pcb-gallery">
+        <!-- Carte alimentation -->
+        <div class="pcb-section">
+          <h6>Carte d'alimentation</h6>
+          <img src="Images/img_PCBAlimentation.PNG" alt="Carte alimentation 2D" />
+          <img src="Images/img_PCB_3D_Alimentation.PNG" alt="Carte alimentation 3D" />
+        </div>
 
-  <!-- Carte station de contrôle -->
-  <div class="pcb-section">
-    <h6>Carte de la station de contrôle</h6>
-    <img src="Images/imgSC_PCB.PNG" alt="Carte station de contrôle 2D">
-    <img src="Images/imgSC_3D_front.PNG" alt="Carte station de contrôle 3D">
-  </div>
+        <!-- Carte boîte noire -->
+        <div class="pcb-section">
+          <h6>Carte de la boîte noire</h6>
+          <img src="Images/img_PCB_2D_boite_noire.PNG" alt="Carte boîte noire 2D" />
+          <img src="Images/img_PCB_3D_boite_noire.PNG" alt="Carte boîte noire 3D" />
+        </div>
 
-</div>
+        <!-- Carte station de contrôle -->
+        <div class="pcb-section">
+          <h6>Carte de la station de contrôle</h6>
+          <img src="Images/imgSC_PCB.PNG" alt="Carte station de contrôle 2D" />
+          <img src="Images/imgSC_3D_front.PNG" alt="Carte station de contrôle 3D" />
+        </div>
+      </div>
 
       <h4>Codes</h4>
       <h5>Côté "boîte noire" (maître I2C, avec MPU6050</h5>
