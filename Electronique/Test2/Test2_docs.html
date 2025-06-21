@@ -270,6 +270,16 @@
   margin-right: 8px;
   vertical-align: middle;
 }
+    .video-container video {
+  max-width: 600px;
+  width: 100%;
+  margin: 2rem auto;
+  display: block;
+  border: 1px solid #00d1ff;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 209, 255, 0.2);
+}
+
 
   </style>
 </head>
@@ -482,12 +492,12 @@
       </a>
 
       <h5 id="video">Vidéo de démonstration de la simulation</h5>
-      <div class="video-container">
-        <video controls>
-          <source src="Videos/VideoSimulation.mp4" type="video/mp4">
-          Votre navigateur ne supporte pas la lecture de cette vidéo.
-        </video>
-      </div>
+     <div class="video-container">
+  <video controls>
+    <source src="Videos/VideoSimulation.mp4" type="video/mp4">
+    Votre navigateur ne supporte pas la lecture de cette vidéo.
+  </video>
+</div>
 
       
       <h4>Codes</h4>
