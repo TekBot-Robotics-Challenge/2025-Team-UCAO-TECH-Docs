@@ -1,0 +1,472 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Test3 Electronique | UCAO-TECH</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;700;900&family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet" />
+  <link rel="icon" href="https://ucaotech.com/wp-content/uploads/2024/10/UCAO-TECH-1.png" type="image/png">
+  <style>/* Header */
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 1000;
+            background-color: rgba(2, 12, 27, 0.9);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(0, 209, 255, 0.2);
+            transition: all 0.3s ease;
+        }
+        
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 1rem 2rem;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            color: white;
+            text-decoration: none;
+            font-size: 1.5rem;
+            font-weight: 700;
+        }
+        
+        .logo img {
+            height: 50px;
+            transition: transform 0.5s ease;
+        }
+        
+        .logo:hover img {
+            transform: rotate(360deg);
+        }
+        
+        .logo span {
+            color: var(--secondary);
+        }
+        
+        .nav-links {
+            display: flex;
+            gap: 1.5rem;
+        }
+        
+        .nav-links a {
+            color: rgba(230, 241, 255, 0.8);
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 0.82rem;
+            text-transform: uppercase;
+            letter-spacing: 1.2px;
+            padding: 0.5rem 0.8rem;
+            position: relative;
+            transition: all 0.3s ease;
+        }
+        
+        .nav-links a::before {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: linear-gradient(90deg, var(--secondary), var(--cyber-purple));
+            transition: width 0.3s ease;
+        }
+        
+        .nav-links a:hover {
+            color: var(--cyber-blue);
+        }
+        
+        .nav-links a:hover::before {
+            width: 100%;
+        }
+        
+        .nav-links a.active {
+            color: var(--cyber-blue);
+        }
+        
+        .nav-links a.active::before {
+            width: 100%;
+        }
+        
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            color: white;
+            font-size: 1.5rem;
+            cursor: pointer;
+            z-index: 1001;
+        }
+        
+        /* Hero Section */
+        .hero {
+            height: 100vh;
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            padding: 0 2rem;
+        }
+        
+        .hero-video-container {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            z-index: -1;
+        }
+        
+        .hero-video {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            opacity: 0.3;
+        }
+        
+        .hero-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(
+                to bottom,
+                rgba(2, 12, 27, 0.8) 0%,
+                rgba(10, 25, 47, 0.5) 50%,
+                rgba(2, 12, 27, 0.8) 100%
+            );
+            z-index: -1;
+        }
+        
+        .hero-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            width: 100%;
+            padding-top: 80px;
+            animation: fadeIn 1s ease-out;
+        }
+        
+        .hero-text {
+            max-width: 800px;
+        }
+        
+        .hero h1 {
+            font-size: 3.5rem;
+            margin-bottom: 1.5rem;
+            line-height: 1.2;
+            background: linear-gradient(90deg, var(--cyber-blue), var(--light));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            text-shadow: 0 0 15px rgba(0, 247, 255, 0.3);
+        }
+        
+        .hero p {
+            font-size: 1.2rem;
+            margin-bottom: 2.5rem;
+            opacity: 0.9;
+            max-width: 700px;
+        }
+        
+        .hero-cta {
+            display: flex;
+            gap: 1.5rem;
+        }
+        
+        .btn {
+            padding: 0.9rem 2.5rem;
+            border-radius: 0;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            font-size: 0.95rem;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            position: relative;
+            overflow: hidden;
+            border: none;
+            font-family: 'Orbitron', sans-serif;
+        }
+        
+        .btn-primary {
+            background-color: transparent;
+            color: var(--cyber-blue);
+            border: 2px solid var(--secondary);
+            box-shadow: 0 0 15px rgba(0, 209, 255, 0.3);
+        }
+        
+        .btn-primary:hover {
+            background-color: rgba(0, 209, 255, 0.1);
+            box-shadow: 0 0 30px rgba(0, 209, 255, 0.6);
+            transform: translateY(-3px);
+        }
+        
+        .btn-primary::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(
+                90deg,
+                transparent,
+                rgba(0, 209, 255, 0.2),
+                transparent
+            );
+            transition: 0.5s;
+        }
+        
+        .btn-primary:hover::before {
+            left: 100%;
+        }
+        
+        .btn-outline {
+            background-color: transparent;
+            color: white;
+            border: 2px solid white;
+        }
+        
+        .btn-outline:hover {
+            background-color: rgba(255, 255, 255, 0.1);
+            box-shadow: 0 0 30px rgba(255, 255, 255, 0.3);
+            transform: translateY(-3px);
+        }
+        
+        /* Circuit Animation */
+        .circuit-animation {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            z-index: -1;
+            opacity: 0.1;
+        }
+        
+        .circuit-line {
+            position: absolute;
+            background-color: var(--secondary);
+            box-shadow: 0 0 5px var(--secondary);
+        }
+body {
+  padding-top: 100px;
+   }
+    body {
+      background-color: #020c1b;
+      color: #e6f1ff;
+      font-family: 'Roboto', sans-serif;
+      margin: 0;
+      padding: 0 1rem;
+    }
+    h2.cyber-title, h3, h4, h5 {
+      color: #00f7ff;
+      font-family: 'Orbitron', sans-serif;
+    }
+    img {
+      max-width: 100%;
+      border: 1px solid #00d1ff;
+      margin: 1rem 0;
+    }
+    .section-doc {
+      background-color: rgba(10, 25, 47, 0.4);
+      padding: 2rem;
+      border-radius: 10px;
+      margin-top: 2rem;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 1rem 0;
+    }
+    th, td {
+      padding: 0.5rem;
+      border: 1px solid #00d1ff;
+    }
+    a {
+      color: #00d1ff;
+      text-decoration: none;
+    }
+    a:hover {
+      color: #9452ff;
+      text-decoration: underline;
+    }
+    pre {
+      background-color: #0a192f;
+      padding: 1rem;
+      overflow-x: auto;
+      border-left: 4px solid #00f7ff;
+    }
+    code {
+      font-family: monospace;
+      color: #00f7ff;
+    }
+    .feature-card ul {
+      list-style: none;
+      padding-left: 0;
+    }
+    .feature-card ul li {
+      padding: 0.25rem 0;
+    }
+    .toc {
+      background-color: #081a2b;
+      padding: 1rem;
+      margin: 2rem 0;
+      border-left: 4px solid #00f7ff;
+    }
+    .toc h4 {
+      margin-top: 0;
+    }
+    .toc ul {
+      list-style: none;
+      padding-left: 0;
+    }
+    .toc ul li {
+      margin: 0.5rem 0;
+    }
+  </style>
+</head>
+<body>
+  <!-- Header -->
+    <header>
+        <nav class="navbar">
+            <a href="https://tekbot-robotics-challenge.github.io/2025-Team-UCAO-TECH-Docs" class="logo">
+                <img src="https://ucaotech.com/wp-content/uploads/2024/10/UCAO-TECH-1.png" alt="UCAO-TECH Logo">
+                <span>UCAO-TECH</span>
+            </a>
+            <ul class="nav-links">
+                <li><a href="https://tekbot-robotics-challenge.github.io/2025-Team-UCAO-TECH-Docs">Accueil</a></li>
+                <li><a href="https://tekbot-robotics-challenge.github.io/2025-Team-UCAO-TECH-Docs/#a-propos">À propos</a></li>
+                <li><a href="https://tekbot-robotics-challenge.github.io/2025-Team-UCAO-TECH-Docs/#equipe">Équipe</a></li>
+                <li><a href="https://tekbot-robotics-challenge.github.io/2025-Team-UCAO-TECH-Docs/#contact">Contact</a></li>
+                <li><a href="https://tekbot-robotics-challenge.github.io/2025-Team-UCAO-TECH-Docs/#documentation">Documentation</a></li>
+            </ul>
+        </nav>
+    </header>
+<!-- === Documentation === -->
+<main class="section-doc" id="documentation">
+  <h2 class="cyber-title">Documentation du projet : Afficheur 7 Servos</h2>
+
+  <!-- Table des matières -->
+  <div class="toc">
+    <h4>Table des matières</h4>
+    <ul>
+      <li><a href="#presentation">Présentation du projet</a></li>
+      <li><a href="#contraintes">Contraintes techniques</a></li>
+      <li><a href="#materiel">Matériel utilisé</a></li>
+      <li><a href="#schema">Schéma électronique</a></li>
+      <li><a href="#code">Code Arduino</a></li>
+      <li><a href="#video">Démonstration vidéo</a></li>
+    </ul>
+  </div>
+
+  <!-- Présentation -->
+  <section id="presentation">
+    <h3>Présentation du projet</h3>
+    <p>
+      Ce projet a pour but de concevoir un afficheur 7 segments mécanique innovant basé sur 7 servomoteurs,
+      chacun représentant un segment. L'objectif est d'afficher les chiffres de 0 à 9 puis de 9 à 0 de manière séquentielle
+      sans utiliser de composants lumineux.
+    </p>
+  </section>
+
+  <!-- Contraintes -->
+  <section id="contraintes">
+    <h3>Contraintes techniques</h3>
+    <ul>
+      <li>Utiliser 7 servomoteurs (un par segment)</li>
+      <li>Utiliser un microcontrôleur Atmega328P (sans carte Arduino)</li>
+      <li>Alimentation par batterie lithium</li>
+      <li>Pas de fonction bloquante comme <code>delay()</code></li>
+      <li>Pas d’utilisation de breadboard ni de carte Arduino dans le montage final</li>
+      <li>Utilisation possible du module PCA9685 pour la gestion des servos</li>
+    </ul>
+  </section>
+
+  <!-- Matériel utilisé -->
+  <section id="materiel">
+    <h3>Matériel utilisé</h3>
+    <table>
+      <thead>
+        <tr>
+          <th>Composant</th>
+          <th>Quantité</th>
+          <th>Description</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Servomoteur SG90</td>
+          <td>7</td>
+          <td>Pour chaque segment de l'afficheur</td>
+        </tr>
+        <tr>
+          <td>Atmega328P</td>
+          <td>1</td>
+          <td>Microcontrôleur principal</td>
+        </tr>
+        <tr>
+          <td>PCA9685</td>
+          <td>1</td>
+          <td>Module de pilotage des servos (optionnel mais recommandé)</td>
+        </tr>
+        <tr>
+          <td>Batterie lithium 7.4V</td>
+          <td>1</td>
+          <td>Alimentation autonome du circuit</td>
+        </tr>
+        <tr>
+          <td>Résistances, condensateurs</td>
+          <td>Varie</td>
+          <td>Pour la stabilité de l’alimentation et du MCU</td>
+        </tr>
+        <tr>
+          <td>Veroboard ou PCB</td>
+          <td>1</td>
+          <td>Montage propre et stable du circuit</td>
+        </tr>
+      </tbody>
+    </table>
+  </section>
+
+  <!-- Schéma -->
+  <section id="schema">
+    <h3>Schéma électronique et PCB</h3>
+    <p>Les schémas ont été réalisés avec KiCAD. Vous pouvez les consulter et télécharger via le lien ci-dessous :</p>
+    <a href="https://github.com/TonDepotGithubIci/tree/main/kicad" target="_blank">
+      📁 Accéder aux fichiers KICAD
+    </a>
+    <p>Rendu 3D du PCB :</p>
+    <img src="images/pcb-3d.png" alt="Rendu 3D du PCB">
+  </section>
+
+  <!-- Code Arduino -->
+  <section id="code">
+    <h3>Code Arduino</h3>
+    <p>Le code ci-dessous permet d'afficher les chiffres de 0 à 9 puis de 9 à 0 avec une temporisation sans <code>delay()</code>.</p>
+    <pre><code>// Espace du code
+
+    </code></pre>
+  </section>
+
+  <!-- Vidéo -->
+  <section id="video">
+    <h3>Démonstration vidéo</h3>
+    <p>La vidéo ci-dessous montre le projet en action :</p>
+    <video controls width="100%">
+      <source src="video/demo-afficheur.mp4" type="video/mp4">
+      Votre navigateur ne supporte pas la lecture vidéo.
+    </video>
+  </section>
+</main>
