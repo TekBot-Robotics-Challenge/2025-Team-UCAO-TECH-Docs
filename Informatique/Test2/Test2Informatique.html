@@ -1,4 +1,22 @@
-ter: blur(10px);
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Documentation Complète ROS2 - sensor_data_evaluation | UCAO-TECH</title>
+  <link rel="icon" href="https://ucaotech.com/wp-content/uploads/2024/10/UCAO-TECH-1.png" type="image/png">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;700;900&family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet" />
+  <style>
+    /* Header */
+    header {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        z-index: 1000;
+        background-color: rgba(2, 12, 27, 0.9);
+        backdrop-filter: blur(10px);
         border-bottom: 1px solid rgba(0, 209, 255, 0.2);
         transition: all 0.3s ease;
     }
@@ -192,6 +210,36 @@ ter: blur(10px);
     pre code { display: block; padding: 1rem; background: #0a192f; border-left: 4px solid #00f7ff; overflow-x: auto; font-family: monospace; }
     .tip { background: #0a192f; border-left: 4px solid #00f7ff; padding: 1em; margin: 1em 0; border-radius: 6px; }
     .warn { background: #fff3e0; border-left: 4px solid #ffa726; color: #222; padding: 1em; margin: 1em 0; border-radius: 6px; }
+
+    /* --- Correction responsive illustrations et cartes --- */
+    @media (max-width: 900px) {
+      .feature-card, .section-doc > div[style*="display:flex"] {
+        flex-direction: column !important;
+        max-width: 100% !important;
+      }
+      .feature-card > div, .section-doc > div[style*="display:flex"] > div {
+        max-width: 100% !important;
+        min-width: 0 !important;
+      }
+    }
+    @media (max-width: 600px) {
+      .section-doc, .feature-card, .section-doc > div[style*="display:flex"] {
+        padding: 1rem !important;
+      }
+      h2, h3, h4, h5 {
+        font-size: 1.1rem !important;
+      }
+      .toc {
+        font-size: 0.98rem !important;
+        padding: 0.5rem !important;
+      }
+    }
+
+    @keyframes rosfloat {
+      0% { transform: translateY(0); opacity: 1; }
+      60% { opacity: 1; }
+      100% { transform: translateY(-32px); opacity: 0.7; }
+    }
   </style>
 </head>
 <body>
@@ -213,45 +261,119 @@ ter: blur(10px);
     </nav>
   </header>
 
+  <div style="position:relative; width:100%; text-align:center; margin-top:3.5rem; margin-bottom:3.5rem;">
+          <span id="ros-float-title" style="display:inline-block; font-family:'Orbitron',sans-serif; font-size:4.5rem; font-weight:900; letter-spacing:0.2em; color:#00f7ff; text-shadow:0 4px 32px #00f7ff99,0 1px 0 #081a2b; animation:rosfloat 3.5s infinite alternate cubic-bezier(.4,0,.2,1); filter:drop-shadow(0 0 16px #00f7ff88); pointer-events:none;">
+            ROS2
+          </span>
+        </div>
+        <style>
+          @keyframes rosfloat {
+            0% { transform: translateY(16px); opacity: 1; }
+            60% { opacity: 1; }
+            100% { transform: translateY(-16px); opacity: 0.7; }
+          }
+          @media (max-width: 600px) {
+            #ros-float-title { font-size: 2.2rem; }
+          }
+        </style>
+        <div class="section-title" style="margin-top:2.5rem;">
+          <h2 class="cyber-title">Test 2 : Introduction à ROS2</h2>
+        </div>
+
   <main>
     <section class="section" id="informatique">
       <div class="section-container">
-        <div class="section-title">
-          <h2 class="cyber-title">Documentation complète : ROS2 - <code>sensor_data_evaluation</code></h2>
-        </div>
-
-        <div class="toc">
-          <h4>Sommaire</h4>
-          <ul>
-            <li><a href="#introduction">1. Introduction et objectifs</a></li>
-            <li><a href="#installation">2. Installation de ROS2 Humble</a></li>
-            <li><a href="#structure">3. Structure du dossier</a></li>
-            <li><a href="#illustrations">4. Illustrations clés</a></li>
-            <li><a href="#fonctionnalites">5. Fonctionnalités détaillées</a></li>
-            <li><a href="#code">6. Aperçu du code</a></li>
-            <li><a href="#schema">7. Schéma de fonctionnement</a></li>
-            <li><a href="#dashboard">8. Interface web</a></li>
-            <li><a href="#serveur">9. Serveur Flask</a></li>
-            <li><a href="#faq">10. FAQ & cas d'usage</a></li>
-            <li><a href="#references">11. Références</a></li>
-          </ul>
-        </div>
+        <!-- Suppression du titre Documentation complète : ROS2 - sensor_data_evaluation -->
+        <div class="section-title" style="margin-top:2.5rem;"></div>
+        <details id="toc-details" style="margin-bottom:2.5rem;">
+          <summary id="toc-summary" style="font-size:2.1rem; font-family:'Orbitron',sans-serif; color:#00f7ff; display:flex; align-items:center; gap:18px; cursor:pointer; font-weight:900; letter-spacing:0.08em; position:relative;">
+            <span style="display:inline-block; animation:tocpulse 1.2s infinite alternate;">
+              <svg width="32" height="32" viewBox="0 0 32 32"><circle cx="16" cy="16" r="16" fill="#0a192f"/><path d="M16 9v10" stroke="#00f7ff" stroke-width="2.8" stroke-linecap="round"/><circle cx="16" cy="23" r="2.3" fill="#00f7ff"/></svg>
+            </span>
+            <span id="sommaire-hover" style="position:relative;">
+              SOMMAIRE
+            </span>
+            <span id="toc-click-hint" style="font-size:1.1rem; color:#fff; background:#0a192f; border-left:4px solid #00f7ff; padding:0.2em 0.8em; border-radius:6px; margin-left:8px; animation:tocpulse 1.2s infinite alternate;">Cliquez ici !</span>
+          </summary>
+          <div class="toc">
+            <ul>
+              <li><a href="#introduction">1. Introduction et objectifs</a></li>
+              <li><a href="#installation">2. Installation de ROS2 Humble</a></li>
+              <li><a href="#structure">3. Structure du dossier</a></li>
+              <li><a href="#fonctionnalites">4. Fonctionnalités détaillées</a></li>
+              <li><a href="#schema">5. Schéma de fonctionnement</a></li>
+              <li><a href="#code">6. Aperçu du code</a></li>
+              <li><a href="#dashboard">7. Interface web</a></li>
+              <li><a href="#serveur">8. Serveur Flask</a></li>
+              <li><a href="#illustrations">9. Illustrations clés du projet</a></li>
+              <li><a href="#faq">10. FAQ & cas d'usage</a></li>
+              <li><a href="#references">11. Annexes & références</a></li>
+              <li><a href="#limites">12. Limites et perspectives</a></li>
+            </ul>
+          </div>
+        </details>
+        <script>
+          // Animation "ROS2" visible uniquement quand le sommaire est replié
+          const tocDetails = document.getElementById('toc-details');
+          const rosFloat = document.getElementById('ros-float-title');
+          const tocClickHint = document.getElementById('toc-click-hint');
+          function updateRosFloatAndHint() {
+            if (tocDetails.open) {
+              rosFloat.style.opacity = '0';
+              rosFloat.style.pointerEvents = 'none';
+              tocClickHint.style.display = 'none';
+            } else {
+              rosFloat.style.opacity = '1';
+              rosFloat.style.pointerEvents = 'none';
+              tocClickHint.style.display = 'inline-block';
+            }
+          }
+          tocDetails.addEventListener('toggle', updateRosFloatAndHint);
+          updateRosFloatAndHint();
+        </script>
 
         <div class="section-doc">
           <h3 id="introduction">1. Introduction et objectifs</h3>
           <p>
-            Ce projet ROS2 simule un système de capteurs (température, humidité, pression) et propose une chaîne complète de génération, vérification, enregistrement et analyse de données. Il est idéal pour l'apprentissage des mécanismes de topics, nodes, paramètres dynamiques et statistiques dans ROS2.
+            <strong>Introduction :</strong><br>
+            Ce projet s’inscrit dans le cadre d’un test d’initiation à ROS2, un framework moderne et puissant pour la robotique et les systèmes distribués. L’objectif est de découvrir, à travers une mise en pratique concrète, les mécanismes fondamentaux de ROS2 : la publication, la souscription et la communication inter-nodes via les topics.
+          </p>
+          <p>
+            <strong>Objectifs pédagogiques et techniques :</strong>
           </p>
           <ul>
-            <li>Simulation de données capteurs réalistes</li>
-            <li>Vérification automatique des plages de validité</li>
-            <li>Enregistrement et traçabilité des mesures</li>
-            <li>Statistiques en temps réel et visualisation web</li>
+            <li>Comprendre la structure d’un package ROS2 et les bonnes pratiques d’organisation du code.</li>
+            <li>Implémenter un <strong>node publisher</strong> qui génère et publie à intervalle régulier (0,5 s) des données simulées de capteurs (température, humidité, pression) sur un topic dédié.</li>
+            <li>Implémenter un <strong>node subscriber</strong> qui reçoit ces données, vérifie leur validité par rapport à des plages prédéfinies, et loggue le résultat (valide/hors plage).</li>
+            <li>Créer un <strong>fichier de lancement</strong> pour faciliter l’exécution simultanée des nodes.</li>
+            <li>Acquérir une première expérience concrète de la communication asynchrone et de la gestion des messages dans ROS2.</li>
           </ul>
+          <p>
+            Ce test constitue une base essentielle pour tout développement ultérieur en robotique ROS2, et permet d’acquérir les réflexes indispensables pour la conception de systèmes robustes, évolutifs et interopérables.
+          </p>
+          <p>
+            <em>Note :</em> Les fonctionnalités avancées (historique, statistiques, dashboard web, etc.) sont des ajouts personnels pour enrichir l’expérience, mais ne sont pas exigées dans le test de base.
+          </p>
 
           <div class="divider"></div>
 
-          <h3 id="installation">2. Installation de ROS2 Humble sur Ubuntu 22.04</h3>
+          <h3 id="installation">2. Installation de ROS2 Humble sur Ubuntu 22.04 (Étape indispensable)</h3>
+          <p>
+            <strong>Avant toute implémentation de code, il est impératif d’installer correctement ROS2 Humble sur Ubuntu 22.04.</strong>
+          </p>
+          <div class="tip">
+            <strong>Pourquoi cette étape est-elle cruciale ?</strong><br>
+            ROS2 est un framework complexe qui dépend fortement de la version du système d’exploitation et de la distribution installée. ROS2 Humble est officiellement supporté et testé sur Ubuntu 22.04. Toute tentative d’installer sur une autre version d’Ubuntu ou sur un autre OS peut entraîner des incompatibilités, des erreurs de compilation ou des dysfonctionnements des nodes et des outils ROS2.<br><br>
+            <span style="color:#00f7ff;">⚠️ Sans une installation propre de ROS2 Humble sur Ubuntu 22.04, il est impossible de garantir le bon fonctionnement des commandes <code>ros2</code>, de la compilation des packages, ou de la communication entre nodes.</span><br><br>
+            <strong>Cette étape conditionne la réussite de tout le projet :</strong>
+            <ul>
+              <li>Les nodes publisher et subscriber ne pourront pas être lancés si ROS2 n’est pas installé ou mal configuré.</li>
+              <li>Le fichier de lancement ne fonctionnera pas sans l’environnement ROS2 initialisé.</li>
+              <li>Les outils de build (<code>colcon</code>, <code>ament</code>) et les dépendances Python/C++ sont gérés par ROS2.</li>
+              <li>La documentation, les tutoriels et la communauté sont centrés sur cette version.</li>
+            </ul>
+            <strong>En résumé :</strong> <em>Commencez toujours par installer ROS2 Humble sur Ubuntu 22.04, vérifiez que la commande <code>ros2 --version</code> fonctionne, et sourcez bien l’environnement avant d’écrire ou d’exécuter le moindre code.</em>
+          </div>
           <ol>
             <li><strong>Mettez à jour votre système :</strong>
               <pre><code>sudo apt update && sudo apt upgrade -y</code></pre>
@@ -282,288 +404,94 @@ source ~/.bashrc</code></pre>
             </li>
           </ol>
           <div class="tip">
-            <strong>Astuce :</strong> Pour plus de détails, consultez la <a href="https://docs.ros.org/en/humble/Installation/Ubuntu-Install-Debians.html" target="_blank">documentation officielle ROS2 Humble</a>.
+            <strong>Astuce :</strong> Pour plus de détails, consultez la <a href="https://docs.ros.org/en/humble/Installation/Ubuntu-Install-Debians.html" target="_blank">documentation officielle ROS2 Humble</a>.<br>
+            <strong>En cas de problème :</strong> Consultez les forums ROS Answers, la documentation Ubuntu, ou demandez de l’aide à la communauté avant d’aller plus loin dans le développement.
           </div>
 
           <div class="divider"></div>
 
-          <h3 id="structure">3. Structure du dossier <code>ros</code></h3>
-          <pre><code>ros/
-├── dashboard_ros2.html           # Dashboard web (visualisation)
-├── documentation_ros2.html       # Documentation complète
-├── server.py                     # Serveur Flask pour accès aux CSV
-├── logs/                         # Dossiers et fichiers de logs CSV
-│   ├── sensor_data_log_*.csv     # Données brutes horodatées
-│   └── sensor_stats_log.csv      # Statistiques périodiques
-├── sensor_data_evaluation/       # Package ROS2 principal
+          <h3 id="structure">3. Structure du dossier <code>sensor_data_evaluation</code> (exemple réel du projet)</h3>
+          <p>
+            Voici la structure réelle du dossier <code>sensor_data_evaluation</code> dans ce projet, qui contient le package ROS2 et tous les fichiers associés :
+          </p>
+          <pre><code>sensor_data_evaluation/
+├── build/                         # Dossiers de build générés par colcon
+├── install/                       # Dossiers d'installation générés par colcon
+├── log/                           # Logs de build colcon
+├── logs/                          # Fichiers CSV de données et statistiques
+│   ├── sensor_data_received.csv
+│   └── sensor_stats_python.csv
+├── sensor_data_evaluation/        # Package ROS2 principal
 │   ├── package.xml
 │   ├── setup.py / setup.cfg
+│   ├── TEST.md                    # Documentation de test
+│   ├── web_monitor.py             # Backend Flask pour dashboard
 │   ├── launch/
-│   │   └── sensor_data_launch.py # Fichier de lancement ROS2
+│   │   └── sensor_data_launch.py  # Fichier de lancement ROS2
+│   ├── resource/
+│   │   └── sensor_data_evaluation # Fichier ressource ROS2
 │   ├── sensor_data_evaluation/
+│   │   ├── __init__.py
 │   │   ├── sensor_data_publisher.py   # Node publisher
 │   │   ├── sensor_data_subscriber.py  # Node subscriber
-│   │   └── sensor_stats_node.py       # Node stats
-│   └── test/
-│       └── test_sensor_nodes.py  # Tests unitaires
-├── build/                        # (auto) Fichiers de build ROS2
-├── install/                      # (auto) Fichiers d'installation ROS2
-└── log/                          # (auto) Logs de build ROS2
+│   │   └── sensor_stats_node.py       # Node statistiques
+│   ├── templates/
+│   │   └── monitor.html               # Dashboard web
+└── ... (autres dossiers générés automatiquement)
 </code></pre>
-          <p>Cette arborescence vous permet de repérer rapidement chaque composant du projet : scripts, dashboard, documentation, logs, tests, etc.</p>
-
-          <div class="divider"></div>
-
-          <h3 id="illustrations">4. Illustrations clés du projet</h3>
-          <div style="display:flex; flex-wrap:wrap; gap:24px; justify-content:space-between;">
-            <div style="flex:1 1 30%; min-width:220px; max-width:32%;">
-              <h4>3.1 Lancement des nodes ROS2</h4>
-              <div style="border:1px dashed #00f7ff; background:#0a192f; color:#aaa; text-align:center; margin:12px 0; padding:16px; border-radius:8px;"><img src="Images/publisher.png"/></div>
-              <div style="border:1px dashed #00f7ff; background:#0a192f; color:#aaa; text-align:center; margin:12px 0; padding:16px; border-radius:8px;"><img src="Images/subscriber.png"/></div>
-            </div>
-            <div style="flex:1 1 30%; min-width:220px; max-width:32%;">
-              <h4>3.2 Fichiers CSV générés</h4>
-              <div style="border:1px dashed #00f7ff; background:#0a192f; color:#aaa; text-align:center; margin:12px 0; padding:16px; border-radius:8px;"><img src="Images/csv.png"/></div>
-            </div>
-            <div style="flex:1 1 30%; min-width:220px; max-width:32%;">
-              <h4>3.3 Interface web (dashboard)</h4>
-              <div style="border:1px dashed #00f7ff; background:#0a192f; color:#aaa; text-align:center; margin:12px 0; padding:16px; border-radius:8px;"><img src="Images/interfaceweb.png"/></div>
-            </div>
-          </div>
-
-          <div class="divider"></div>
-
-          <h3 id="fonctionnalites">5. Fonctionnalités détaillées</h3>
-          <div style="display:flex; flex-wrap:wrap; gap:16px; justify-content:space-between;">
-            <div style="flex:1 1 22%; min-width:220px; max-width:24%;">
-              <h4>5.1 Génération et simulation de données</h4>
-              <p>Le node <strong>publisher</strong> simule des mesures de température, humidité et pression toutes les 0,5 s. Les valeurs sont générées aléatoirement : 80 % dans la plage normale, 20 % hors plage pour tester la robustesse du système. Cela permet de reproduire un environnement de capteurs réel, avec des anomalies ponctuelles.</p>
-            </div>
-            <div style="flex:1 1 22%; min-width:220px; max-width:24%;">
-              <h4>5.2 Vérification, log et enregistrement</h4>
-              <p>Le node <strong>subscriber</strong> reçoit chaque mesure, vérifie si elle est dans la plage (paramètres dynamiques modifiables à chaud), log "Valide" ou "Hors plage", et enregistre chaque donnée dans un fichier CSV horodaté. Cela assure la traçabilité et la détection immédiate des anomalies.</p>
-            </div>
-            <div style="flex:1 1 22%; min-width:220px; max-width:24%;">
-              <h4>5.3 Statistiques et analyse en temps réel</h4>
-              <p>Le node <strong>stats</strong> calcule en continu la moyenne, le min et le max pour chaque capteur, affiche les résultats dans les logs, et sauvegarde périodiquement les statistiques dans un CSV dédié. Cela permet une analyse rapide de l'état du système et une surveillance avancée.</p>
-            </div>
-            <div style="flex:1 1 22%; min-width:220px; max-width:24%;">
-              <h4>5.4 Visualisation web et accès distant</h4>
-              <p>Le <strong>dashboard web</strong> (Chart.js) affiche en temps réel les courbes des capteurs, un tableau des dernières valeurs, et permet l'export PNG. Les données sont servies par Flask, et peuvent être consultées à distance via ngrok. L'interface est moderne, responsive et personnalisable.</p>
-            </div>
-          </div>
-
-          <div class="divider"></div>
-
-          <h3 id="code">6. Aperçu du code des nodes principaux</h3>
-          <h4>6.1 Node publisher (<code>sensor_data_publisher.py</code>)</h4>
-          <pre><code>import rclpy
-from rclpy.node import Node
-from std_msgs.msg import Float32MultiArray
-import random
-
-class SensorDataPublisher(Node):
-    def __init__(self):
-        super().__init__('sensor_data_publisher')
-        self.publisher_ = self.create_publisher(Float32MultiArray, '/sensor_data', 10)
-        self.timer = self.create_timer(0.5, self.publish_sensor_data)
-        self.get_logger().info('SensorDataPublisher node started.')
-
-    def publish_sensor_data(self):
-        # 80% des cas : valeurs dans la plage normale, 20% : hors plage (±10%)
-        if random.random() < 0.8:
-            temperature = random.uniform(15, 35)
-            humidity = random.uniform(30, 70)
-            pressure = random.uniform(950, 1050)
-        else:
-            # Génère une valeur hors plage pour au moins un capteur
-            capteur = random.choice(['temperature', 'humidity', 'pressure'])
-            if capteur == 'temperature':
-                temperature = random.choice([
-                    random.uniform(13.5, 15),  # trop bas
-                    random.uniform(35, 38.5)   # trop haut
-                ])
-                humidity = random.uniform(30, 70)
-                pressure = random.uniform(950, 1050)
-            elif capteur == 'humidity':
-                temperature = random.uniform(15, 35)
-                humidity = random.choice([
-                    random.uniform(27, 30),    # trop bas
-                    random.uniform(70, 77)     # trop haut
-                ])
-                pressure = random.uniform(950, 1050)
-            else:
-                temperature = random.uniform(15, 35)
-                humidity = random.uniform(30, 70)
-                pressure = random.choice([
-                    random.uniform(855, 950),  # trop bas
-                    random.uniform(1050, 1155) # trop haut
-                ])
-        msg = Float32MultiArray()
-        msg.data = [temperature, humidity, pressure]
-        self.publisher_.publish(msg)
-        self.get_logger().info(f'Publié: Temp={temperature:.2f}°C, Hum={humidity:.2f}%, Press={pressure:.2f}hPa')
-
-def main(args=None):
-    rclpy.init(args=args)
-    node = SensorDataPublisher()
-    rclpy.spin(node)
-    node.destroy_node()
-    rclpy.shutdown()
-
-if __name__ == '__main__':
-    main()
-</code></pre>
-          <h4>6.2 Node subscriber (<code>sensor_data_subscriber.py</code>)</h4>
-          <pre><code>import rclpy
-from rclpy.node import Node
-from std_msgs.msg import Float32MultiArray
-import datetime
-import os
-
-class SensorDataSubscriber(Node):
-    def __init__(self):
-        super().__init__('sensor_data_subscriber')
-        self.declare_parameter('temperature_min', 15.0)
-        self.declare_parameter('temperature_max', 35.0)
-        self.declare_parameter('humidity_min', 30.0)
-        self.declare_parameter('humidity_max', 70.0)
-        self.declare_parameter('pressure_min', 950.0)
-        self.declare_parameter('pressure_max', 1050.0)
-        self.subscription = self.create_subscription(
-            Float32MultiArray,
-            '/sensor_data',
-            self.listener_callback,
-            10)
-        self.get_logger().info('SensorDataSubscriber node started.')
-        self.current_hour = datetime.datetime.now().strftime('%Y-%m-%d_%H')
-        self.filename = f'logs/sensor_data_log_{self.current_hour}.csv'
-        os.makedirs('logs', exist_ok=True)
-        header = 'Date,Heure,Température (°C),Humidité (%),Pression (hPa),Statut\n'
-        if not os.path.exists(self.filename):
-            with open(self.filename, 'w', encoding='utf-8') as f:
-                f.write(header)
-        self.file = open(self.filename, 'a', encoding='utf-8')
-
-    def listener_callback(self, msg):
-        # Sauvegarde périodique par heure
-        now = datetime.datetime.now()
-        hour_str = now.strftime('%Y-%m-%d_%H')
-        if hour_str != self.current_hour:
-            self.file.close()
-            self.current_hour = hour_str
-            self.filename = f'logs/sensor_data_log_{self.current_hour}.csv'
-            header = 'Date,Heure,Température (°C),Humidité (%),Pression (hPa),Statut\n'
-            self.file = open(self.filename, 'a', encoding='utf-8')
-            if os.stat(self.filename).st_size == 0:
-                self.file.write(header)
-        temperature, humidity, pressure = msg.data
-        # Paramètres dynamiques
-        temp_min = self.get_parameter('temperature_min').get_parameter_value().double_value
-        temp_max = self.get_parameter('temperature_max').get_parameter_value().double_value
-        hum_min = self.get_parameter('humidity_min').get_parameter_value().double_value
-        hum_max = self.get_parameter('humidity_max').get_parameter_value().double_value
-        press_min = self.get_parameter('pressure_min').get_parameter_value().double_value
-        press_max = self.get_parameter('pressure_max').get_parameter_value().double_value
-        temp_ok = temp_min <= temperature <= temp_max
-        hum_ok = hum_min <= humidity <= hum_max
-        press_ok = press_min <= pressure <= press_max
-        date_str = "'" + now.strftime('%Y-%m-%d')  # Ajoute un guillemet simple pour forcer le texte
-        time_str = now.strftime('%H:%M:%S')
-        statut = 'Valide' if temp_ok and hum_ok and press_ok else 'Hors plage'
-        self.file.write(f'{date_str},{time_str},{temperature:.2f},{humidity:.2f},{pressure:.2f},{statut}\n')
-        self.file.flush()
-        if statut == 'Valide':
-            self.get_logger().info(f'Valide: Temp={temperature:.2f}°C, Hum={humidity:.2f}%, Press={pressure:.2f}hPa')
-</code></pre>
-          <h4>6.3 Node statistiques (<code>sensor_stats_node.py</code>)</h4>
-          <pre><code>import rclpy
-from rclpy.node import Node
-from std_msgs.msg import Float32MultiArray
-import csv
-import time
-import os
-
-class SensorStatsNode(Node):
-    def __init__(self):
-        super().__init__('sensor_stats_node')
-        self.subscription = self.create_subscription(
-            Float32MultiArray,
-            '/sensor_data',
-            self.listener_callback,
-            10)
-        self.count = 0
-        self.temp_sum = 0.0
-        self.hum_sum = 0.0
-        self.press_sum = 0.0
-        self.temp_min = None
-        self.temp_max = None
-        self.hum_min = None
-        self.hum_max = None
-        self.press_min = None
-        self.press_max = None
-        self.last_save_time = time.time()
-        self.stats_filename = 'logs/sensor_stats_log.csv'
-        os.makedirs('logs', exist_ok=True)
-        if not os.path.exists(self.stats_filename):
-            with open(self.stats_filename, 'w', encoding='utf-8', newline='') as f:
-                writer = csv.writer(f)
-                writer.writerow(['Timestamp', 'Nb valeurs', 'Temp Moy', 'Temp Min', 'Temp Max', 'Hum Moy', 'Hum Min', 'Hum Max', 'Press Moy', 'Press Min', 'Press Max'])
-        self.get_logger().info('SensorStatsNode started.')
-
-    def listener_callback(self, msg):
-        temperature, humidity, pressure = msg.data
-        self.get_logger().info(f'Reçu: Temp={temperature:.2f}°C, Hum={humidity:.2f}%, Press={pressure:.2f}hPa')
-        self.count += 1
-        self.temp_sum += temperature
-        self.hum_sum += humidity
-        self.press_sum += pressure
-        self.temp_min = temperature if self.temp_min is None else min(self.temp_min, temperature)
-        self.temp_max = temperature if self.temp_max is None else max(self.temp_max, temperature)
-        self.hum_min = humidity if self.hum_min is None else min(self.hum_min, humidity)
-        self.hum_max = humidity if self.hum_max is None else max(self.hum_max, humidity)
-        self.press_min = pressure if self.press_min is None else min(self.press_min, pressure)
-        self.press_max = pressure if self.press_max is None else max(self.press_max, pressure)
-        self.get_logger().info(
-            f"Stats (n={self.count}):\n"
-            f"Température: Moy={self.temp_sum/self.count:.2f}°C, Min={self.temp_min:.2f}°C, Max={self.temp_max:.2f}°C\n"
-            f"Humidité: Moy={self.hum_sum/self.count:.2f}%, Min={self.hum_min:.2f}%, Max={self.hum_max:.2f}%\n"
-            f"Pression: Moy={self.press_sum/self.count:.2f}hPa, Min={self.press_min:.2f}hPa, Max={self.press_max:.2f}hPa"
-        )
-        self.save_stats_periodically()
-
-    def save_stats_periodically(self):
-        now = time.time()
-        if now - self.last_save_time > 10:  # Sauvegarde toutes les 10 secondes
-            with open(self.stats_filename, 'a', encoding='utf-8', newline='') as f:
-                writer = csv.writer(f)
-                writer.writerow([
-                    now,
-                    self.count,
-                    self.temp_sum/self.count if self.count > 0 else 0,
-                    self.temp_min if self.temp_min is not None else 0,
-                    self.temp_max if self.temp_max is not None else 0,
-                    self.hum_sum/self.count if self.count > 0 else 0,
-                    self.hum_min if self.hum_min is not None else 0,
-                    self.hum_max if self.hum_max is not None else 0,
-                    self.press_sum/self.count if self.count > 0 else 0,
-                    self.press_min if self.press_min is not None else 0,
-                    self.press_max if self.press_max is not None else 0
-                ])
-            self.last_save_time = now
-</code></pre>
-
-          <div class="divider"></div>
-
-          <h3 id="schema">7. Schéma de fonctionnement global</h3>
-          <p><strong>Architecture :</strong></p>
           <ul>
-            <li><strong>sensor_data_publisher</strong> → publie sur <code>/sensor_data</code> (topic ROS2)</li>
-            <li><strong>sensor_data_subscriber</strong> ← souscrit à <code>/sensor_data</code>, vérifie, log, enregistre CSV</li>
-            <li><strong>sensor_stats_node</strong> ← souscrit à <code>/sensor_data</code>, calcule stats, log, enregistre stats CSV</li>
-            <li><strong>Dashboard web</strong> ← lit les CSV via <strong>Flask</strong> (API HTTP)</li>
+            <li><strong>logs/</strong> : contient les fichiers CSV générés par les nodes (historique, statistiques).</li>
+            <li><strong>sensor_data_evaluation/</strong> : package ROS2 complet avec code source, launch, ressources, templates, documentation de test et backend web.</li>
+            <li><strong>build/, install/, log/</strong> : générés automatiquement lors de la compilation avec <code>colcon build</code>.</li>
           </ul>
-          <pre><code>+-------------------+        +---------------------+
+          <p>
+            <strong>Pourquoi cette structure ?</strong><br>
+            Cette organisation respecte les standards ROS2 : chaque package doit contenir un fichier <code>package.xml</code>, un <code>setup.py</code> (pour Python), un dossier <code>resource/</code> (pour l’enregistrement du package), et éventuellement <code>launch/</code> pour les fichiers de lancement. Cela garantit la compatibilité avec les outils ROS2 (<code>colcon build</code>, <code>ros2 run</code>, etc.), la portabilité et la maintenabilité du projet. Les dossiers <code>logs/</code> et <code>templates/</code> facilitent la traçabilité et l’interface web.
+          </p>
+
+          <div class="divider"></div>
+
+          <h3 id="fonctionnalites">4. Fonctionnalités détaillées</h3>
+          <div class="feature-card" style="display:flex; flex-wrap:wrap; gap:16px; justify-content:space-between;">
+            <div style="flex:1 1 22%; min-width:260px; max-width:24%; background:#0a192f; border-radius:10px; padding:1.2em; margin-bottom:1.5em; box-shadow:0 2px 8px #111;">
+              <h4>4.1 Node publisher</h4>
+              <p>
+                <strong>Rôle :</strong> Ce node simule un capteur en générant toutes les 0,5 s des valeurs aléatoires de température (14,8–35,2°C), humidité (29,8–70,2%) et pression (949,5–1050,5hPa), couvrant légèrement au-delà des plages normales pour tester la robustesse du système. Les valeurs sont publiées sur le topic <code>/sensor_data</code> sous forme de tableau de trois flottants.<br>
+                <strong>Utilité :</strong> Tester la chaîne ROS2 sans matériel réel, valider la détection d’anomalies et la réactivité du système.<br>
+                <strong>Points clés :</strong> Publication régulière, génération réaliste, extension volontaire des plages pour simuler des cas limites.
+              </p>
+            </div>
+            <div style="flex:1 1 22%; min-width:260px; max-width:24%; background:#0a192f; border-radius:10px; padding:1.2em; margin-bottom:1.5em; box-shadow:0 2px 8px #111;">
+              <h4>4.2 Node subscriber</h4>
+              <p>
+                <strong>Rôle :</strong> Reçoit chaque message, vérifie si chaque valeur est dans la plage attendue (15–35°C, 30–70%, 950–1050hPa), log « Valide » ou « Hors plage » dans la console, et enregistre chaque mesure dans <code>logs/sensor_data_received.csv</code> avec la date et l’heure.<br>
+                <strong>Utilité :</strong> Traçabilité, détection immédiate d’anomalies, constitution d’un historique exploitable.<br>
+                <strong>Points clés :</strong> Vérification automatique, log détaillé, enregistrement CSV, plages facilement modifiables dans le code.
+              </p>
+            </div>
+            <div style="flex:1 1 22%; min-width:260px; max-width:24%; background:#0a192f; border-radius:10px; padding:1.2em; margin-bottom:1.5em; box-shadow:0 2px 8px #111;">
+              <h4>4.3 Node statistiques</h4>
+              <p>
+                <strong>Rôle :</strong> Calcule en temps réel la moyenne, le min et le max pour chaque capteur à chaque nouvelle donnée reçue, et met à jour <code>logs/sensor_stats_python.csv</code>.<br>
+                <strong>Utilité :</strong> Vue synthétique de l’état du système, détection de dérives ou d’anomalies sur la durée.<br>
+                <strong>Points clés :</strong> Calculs automatiques, stockage CSV, stats séparées par capteur, facile à étendre.
+              </p>
+            </div>
+            <div style="flex:1 1 22%; min-width:260px; max-width:24%; background:#0a192f; border-radius:10px; padding:1.2em; margin-bottom:1.5em; box-shadow:0 2px 8px #111;">
+              <h4>4.4 Dashboard web Flask</h4>
+              <p>
+                <strong>Rôle :</strong> Interface web moderne affichant en temps réel les courbes, histogrammes, tableaux, statistiques et alertes (valeurs hors plage) à partir des CSV générés.<br>
+                <strong>Utilité :</strong> Visualisation à distance, identification rapide des anomalies, export des graphes, expérience utilisateur professionnelle.<br>
+                <strong>Points clés :</strong> Rafraîchissement automatique (WebSocket), mode sombre, responsive, signalement visuel, export PNG, facile à personnaliser.
+              </p>
+            </div>
+          </div>
+
+          <div class="divider"></div>
+
+          <h3 id="schema">5. Schéma de fonctionnement global</h3>
+          <div style="max-width:700px; margin:0 auto 2em auto; background:#081a2b; border-radius:10px; padding:1.5em; box-shadow:0 2px 8px #111; overflow-x:auto;">
+            <pre style="margin:0;"><code>+-------------------+        +---------------------+
 | sensor_data_      |        | sensor_data_        |
 | publisher (Node)  |----->  | subscriber (Node)   |
 |  (données aléa)   |        |  (vérif, log, CSV)  |
@@ -584,43 +512,335 @@ class SensorStatsNode(Node):
          v
 +-------------------+
 |  Flask server     |
-|  (server.py)      |
+|  (web_monitor.py) |
 +-------------------+
          |
          v
 +-------------------+
 | Dashboard Web     |
-| (dashboard_ros2)  |
+| (monitor.html)    |
 +-------------------+</code></pre>
-
-          <div class="divider"></div>
-
-          <h3 id="dashboard">8. Interface web (dashboard)</h3>
-          <video src="Videos/dashboard.webm" autoplay muted loop playsinline  type = video/webm></video>
-          <ul>
-            <li>Visualisation en temps réel des 3 capteurs (graphiques Chart.js dynamiques)</li>
-            <li>Tableau des 10 dernières valeurs reçues</li>
-            <li>Bouton d'export PNG des graphiques</li>
-            <li>Mise à jour automatique toutes les 2 s (AJAX)</li>
-            <li>Style moderne conforme à la charte UCAO-TECH (bleu, violet, sombre, police Orbitron/Roboto)</li>
-            <li>Facilement personnalisable (CSS, logo, couleurs)</li>
-          </ul>
-          <div class="tip">
-            <strong>Astuce :</strong> Pour adapter le style, modifiez les couleurs ou ajoutez votre logo dans le fichier <code>dashboard_ros2.html</code>.
           </div>
 
           <div class="divider"></div>
 
-          <h3 id="serveur">9. Serveur Flask & accès distant (ngrok)</h3>
+          <h3 id="code">6. Aperçu du code des nodes principaux</h3>
+          <div style="margin-bottom:2rem;">
+            <div style="display:flex;align-items:center;gap:12px;margin-bottom:1rem;">
+              <span style="font-size:1.3rem; color:#00f7ff; animation:clignote 1s infinite alternate;">👇</span>
+              <span style="font-size:1.1rem; color:#fff; background:#0a192f; border-left:4px solid #00f7ff; padding:0.5em 1em; border-radius:6px; animation:clignote 1s infinite alternate;">
+                Cliquez sur chaque titre pour afficher ou masquer le code correspondant !
+              </span>
+            </div>
+            <style>
+              @keyframes clignote {
+                0% { opacity: 1; }
+                100% { opacity: 0.4; }
+              }
+              @keyframes codepulse {
+                0% { transform: scale(1); opacity: 1; }
+                100% { transform: scale(1.18); opacity: 0.7; }
+              }
+            </style>
+            <details>
+              <summary style="font-size:1.1rem;cursor:pointer;display:flex;align-items:center;gap=10px;">
+                <span style="display:inline-block; animation:codepulse 1.2s infinite alternate;">
+                  <svg width="22" height="22" viewBox="0 0 22 22"><circle cx="11" cy="11" r="11" fill="#0a192f"/><path d="M11 6v7" stroke="#00f7ff" stroke-width="2.2" stroke-linecap="round"/><circle cx="11" cy="16" r="1.5" fill="#00f7ff"/></svg>
+                </span>
+                <strong>Code du node publisher (sensor_data_publisher.py)</strong>
+              </summary>
+              <pre><code>import rclpy
+from rclpy.node import Node
+from std_msgs.msg import Float32MultiArray
+import random
+
+class SensorDataPublisher(Node):
+    def __init__(self):
+        super().__init__('sensor_data_publisher')
+        self.publisher_ = self.create_publisher(Float32MultiArray, '/sensor_data', 10)
+        self.timer = self.create_timer(0.5, self.publish_sensor_data)
+        self.get_logger().info('SensorDataPublisher node started.')
+
+    def publish_sensor_data(self):
+        temperature = round(random.uniform(14.8, 35.2), 2)
+        humidity = round(random.uniform(29.8, 70.2), 2)
+        pressure = round(random.uniform(949.5, 1050.5), 2)
+        msg = Float32MultiArray()
+        msg.data = [temperature, humidity, pressure]
+        self.publisher_.publish(msg)
+        self.get_logger().info(f'Publié: Temp={temperature:.2f}°C, Hum={humidity:.2f}%, Press={pressure:.2f}hPa')
+
+def main(args=None):
+    rclpy.init(args=args)
+    node = SensorDataPublisher()
+    rclpy.spin(node)
+    node.destroy_node()
+    rclpy.shutdown()
+
+if __name__ == '__main__':
+    main()
+</code></pre>
+            </details>
+            <details>
+              <summary style="font-size:1.1rem;cursor:pointer;display:flex;align-items:center;gap=10px;">
+                <span style="display:inline-block; animation:codepulse 1.2s infinite alternate;">
+                  <svg width="22" height="22" viewBox="0 0 22 22"><circle cx="11" cy="11" r="11" fill="#0a192f"/><path d="M11 6v7" stroke="#00f7ff" stroke-width="2.2" stroke-linecap="round"/><circle cx="11" cy="16" r="1.5" fill="#00f7ff"/></svg>
+                </span>
+                <strong>Code du node subscriber (sensor_data_subscriber.py)</strong>
+              </summary>
+              <pre><code>import rclpy
+from rclpy.node import Node
+from std_msgs.msg import Float32MultiArray
+import os
+import csv
+from datetime import datetime
+
+class SensorDataSubscriber(Node):
+    def __init__(self):
+        super().__init__('sensor_data_subscriber')
+        self.subscription = self.create_subscription(
+            Float32MultiArray,
+            '/sensor_data',
+            self.listener_callback,
+            10)
+        self.get_logger().info('SensorDataSubscriber node started.')
+        self.csv_file = 'logs/sensor_data_received.csv'
+        os.makedirs('logs', exist_ok=True)
+        if not os.path.exists(self.csv_file):
+            with open(self.csv_file, 'w', newline='', encoding='utf-8') as f:
+                writer = csv.writer(f)
+                writer.writerow(['Date', 'Heure', 'Temperature', 'Humidity', 'Pressure'])
+
+    def listener_callback(self, msg):
+        temperature, humidity, pressure = msg.data
+        temperature = float(f"{temperature:.2f}")
+        humidity = float(f"{humidity:.2f}")
+        pressure = float(f"{pressure:.2f}")
+        now = datetime.now()
+        date_str = now.strftime('%Y-%m-%d');
+        time_str = now.strftime('%H:%M:%S');
+        temp_ok = 15.0 <= temperature <= 35.0
+        hum_ok = 30.0 <= humidity <= 70.0
+        press_ok = 950.0 <= pressure <= 1050.0
+        if temp_ok and hum_ok and press_ok:
+            self.get_logger().info(f'Valide: Temp={temperature:.2f}°C, Hum={humidity:.2f}%, Press={pressure:.2f}hPa')
+        else:
+            self.get_logger().warn(f'Valeur hors plage! Temp={temperature:.2f}°C, Hum={humidity:.2f}%, Press={pressure:.2f}hPa')
+        # Sauvegarde dans le CSV
+        with open(self.csv_file, 'a', newline='', encoding='utf-8') as f:
+            writer = csv.writer(f)
+            writer.writerow([date_str, time_str, temperature, humidity, pressure])
+</code></pre>
+            </details>
+            <details>
+              <summary style="font-size:1.1rem;cursor:pointer;display:flex;align-items:center;gap=10px;">
+                <span style="display:inline-block; animation:codepulse 1.2s infinite alternate;">
+                  <svg width="22" height="22" viewBox="0 0 22 22"><circle cx="11" cy="11" r="11" fill="#0a192f"/><path d="M11 6v7" stroke="#00f7ff" stroke-width="2.2" stroke-linecap="round"/><circle cx="11" cy="16" r="1.5" fill="#00f7ff"/></svg>
+                </span>
+                <strong>Code du node statistiques (sensor_stats_node.py)</strong>
+              </summary>
+              <pre><code>import rclpy
+from rclpy.node import Node
+from std_msgs.msg import Float32MultiArray
+import os
+import csv
+from datetime import datetime
+
+class SensorStatsNode(Node):
+    def __init__(self):
+        super().__init__('sensor_stats_node')
+        self.subscription = self.create_subscription(
+            Float32MultiArray,
+            '/sensor_data',
+            self.listener_callback,
+            10)
+        self.count = 0
+        self.temp_sum = 0.0
+        self.hum_sum = 0.0
+        self.press_sum = 0.0
+        self.temp_min = None
+        self.temp_max = None
+        self.hum_min = None
+        self.hum_max = None
+        self.press_min = None
+        self.press_max = None
+        self.csv_file = 'logs/sensor_stats_python.csv'
+        os.makedirs('logs', exist_ok=True)
+        if not os.path.exists(self.csv_file):
+            with open(self.csv_file, 'w', newline='', encoding='utf-8') as f:
+                writer = csv.writer(f)
+                writer.writerow(['Date', 'Heure', 'Nb valeurs', 'Temp Moy', 'Temp Min', 'Temp Max', 'Hum Moy', 'Hum Min', 'Hum Max', 'Press Moy', 'Press Min', 'Press Max'])
+
+    def listener_callback(self, msg):
+        temperature, humidity, pressure = msg.data
+        self.count += 1
+        self.temp_sum += temperature
+        self.hum_sum += humidity
+        self.press_sum += pressure
+        self.temp_min = temperature if self.temp_min is None else min(self.temp_min, temperature)
+        self.temp_max = temperature if self.temp_max is None else max(self.temp_max, temperature)
+        self.hum_min = humidity if self.hum_min is None else min(self.hum_min, humidity)
+        self.hum_max = humidity if self.hum_max is None else max(self.hum_max, humidity)
+        self.press_min = pressure if self.press_min is None else min(self.press_min, pressure)
+        self.press_max = pressure if self.press_max is None else max(self.press_max, pressure)
+        now = datetime.now()
+        date_str = now.strftime('%Y-%m-%d');
+        time_str = now.strftime('%H:%M:%S');
+        with open(self.csv_file, 'a', newline='', encoding='utf-8') as f:
+            writer = csv.writer(f)
+            writer.writerow([
+                date_str, time_str, self.count,
+                round(self.temp_sum/self.count,2), round(self.temp_min,2), round(self.temp_max,2),
+                round(self.hum_sum/self.count,2), round(self.hum_min,2), round(self.hum_max,2),
+                round(self.press_sum/self.count,2), round(self.press_min,2), round(self.press_max,2)
+            ])
+</code></pre>
+            </details>
+            <details>
+              <summary style="font-size:1.1rem;cursor:pointer;display:flex;align-items:center;gap=10px;">
+                <span style="display:inline-block; animation:codepulse 1.2s infinite alternate;">
+                  <svg width="22" height="22" viewBox="0 0 22 22"><circle cx="11" cy="11" r="11" fill="#0a192f"/><path d="M11 6v7" stroke="#00f7ff" stroke-width="2.2" stroke-linecap="round"/><circle cx="11" cy="16" r="1.5" fill="#00f7ff"/></svg>
+                </span>
+                <strong>Code du dashboard web (web_monitor.py)</strong>
+              </summary>
+              <pre><code>from flask import Flask, render_template, jsonify
+from flask_socketio import SocketIO, emit
+import pandas as pd
+import os
+
+app = Flask(__name__)
+socketio = SocketIO(app, cors_allowed_origins="*")
+
+@app.route('/')
+def index():
+    return render_template('monitor.html')
+
+@app.route('/data')
+def data():
+    # Lecture de la dernière ligne du CSV sensor_data_received.csv
+    csv_path = os.path.join(os.path.dirname(__file__), '..', 'logs', 'sensor_data_received.csv')
+    try:
+        with open(csv_path, 'r') as f:
+            lines = f.readlines()
+            if len(lines) < 2:
+                return jsonify({'temperature': None, 'humidity': None, 'pressure': None})
+            last = lines[-1].strip().split(',')
+            # Format: date,heure,temp,hum,pres
+            return jsonify({
+                'temperature': float(last[2]),
+                'humidity': float(last[3]),
+                'pressure': float(last[4])
+            })
+    except Exception as e:
+        return jsonify({'temperature': None, 'humidity': None, 'pressure': None})
+
+@socketio.on('request_data')
+def handle_request_data():
+    csv_path = os.path.join(os.path.dirname(__file__), '..', 'logs', 'sensor_data_received.csv')
+    try:
+        with open(csv_path, 'r') as f:
+            lines = f.readlines()
+            if len(lines) < 2:
+                emit('sensor_data', {'temperature': None, 'humidity': None, 'pressure': None})
+                return
+            last = lines[-1].strip().split(',')
+            emit('sensor_data', {
+                'temperature': float(last[2]),
+                'humidity': float(last[3]),
+                'pressure': float(last[4])
+            })
+    except Exception as e:
+        emit('sensor_data', {'temperature': None, 'humidity': None, 'pressure': None})
+</code></pre>
+            </details>
+          </div>
+
+          <div class="divider"></div>
+
+          <h3 id="dashboard">7. Interface web (dashboard)</h3>
+          <p>
+            L’<strong>interface web</strong> du projet, accessible via <code>web_monitor.py</code>, offre un tableau de bord moderne et interactif pour la visualisation en temps réel des données capteurs et des statistiques. Elle a été conçue pour une expérience utilisateur professionnelle, accessible sur PC, tablette ou smartphone.
+          </p>
           <ul>
-            <li>Le serveur <code>server.py</code> expose les CSV via HTTP (API REST simple)</li>
-            <li>Permet au dashboard d'accéder aux données même à distance</li>
-            <li>Pour ouvrir l'accès à Internet : <code>ngrok http 5000</code> (nécessite <a href="https://ngrok.com/" target="_blank">ngrok</a>)</li>
-            <li>URL publique générée par ngrok à partager pour consultation externe</li>
-            <li><strong>Sécurité :</strong> Pour un usage public, ajoutez une authentification ou limitez l'accès par IP</li>
+            <li><strong>Visualisation temps réel</strong> : courbes, histogrammes et tableaux se mettent à jour automatiquement grâce à WebSocket (SocketIO).</li>
+            <li><strong>Alertes visuelles</strong> : toute valeur hors plage est signalée par un code couleur et une animation.</li>
+            <li><strong>Statistiques dynamiques</strong> : affichage des moyennes, min, max, nombre de mesures, etc.</li>
+            <li><strong>Export</strong> : possibilité d’exporter les graphiques au format PNG et de télécharger les CSV.</li>
+            <li><strong>Responsive</strong> : affichage optimisé pour tous les écrans.</li>
+            <li><strong>Personnalisation facile</strong> : couleurs, seuils, types de graphiques modifiables dans le code.</li>
           </ul>
-          <div class="warn">
-            <strong>Conseil sécurité :</strong> Ne laissez pas un tunnel ngrok ouvert sans surveillance sur un réseau public.
+          <div style="display:flex; flex-wrap:wrap; gap:24px; justify-content:space-between;">
+            <div style="flex:1 1 45%; min-width:320px; background:#0a192f; border-radius:10px; padding:1em; margin-bottom:1.5em; box-shadow:0 2px 8px #111;">
+              <h4>Exemple d’interface (capture d’écran)</h4>
+              <div style="background:#081a2b; border-radius:10px; border:2px dashed #00f7ff; padding:18px; display:flex; align-items:center; justify-content:center; min-height:120px;">
+                <span style="color:#00f7ff;">[Capture d’écran à insérer ici]</span>
+              </div>
+            </div>
+          </div>
+          <div class="tip">
+            <strong>Astuce :</strong> Pour personnaliser l’interface, modifiez <code>templates/monitor.html</code> (HTML/JS) et <code>web_monitor.py</code> (Flask backend).
+          </div>
+
+          <div class="divider"></div>
+
+          <h3 id="serveur">8. Serveur Flask (backend)</h3>
+          <p>
+            Le <strong>serveur Flask</strong> (<code>web_monitor.py</code>) fait le lien entre les fichiers CSV générés par les nodes ROS2 et l’interface web. Pour démarrer le serveur et accéder au dashboard en temps réel, utilisez la commande suivante dans un terminal&nbsp;:
+          </p>
+          <pre><code>python3 web_monitor.py</code></pre>
+          <p>
+            Une fois le serveur lancé, ouvrez <code>http://localhost:5000</code> dans votre navigateur pour accéder à l’interface de supervision.
+          </p>
+          <ul>
+            <li><strong>Lecture des CSV</strong> : le backend lit les fichiers <code>logs/sensor_data_received.csv</code> et <code>logs/sensor_stats_python.csv</code> pour fournir les données à l’interface.</li>
+            <li><strong>API REST</strong> : des routes comme <code>/data</code> ou <code>/stats</code> renvoient les dernières valeurs ou statistiques au format JSON.</li>
+            <li><strong>WebSocket (SocketIO)</strong> : permet la mise à jour instantanée des graphiques sans recharger la page.</li>
+            <li><strong>Sécurité</strong> : par défaut, l’accès est ouvert en local. Pour un usage distant, il est recommandé d’ajouter une authentification et de passer en HTTPS.</li>
+            <li><strong>Extensibilité</strong> : il est facile d’ajouter de nouvelles routes (API, téléchargement CSV, etc.) ou de connecter d’autres sources de données.</li>
+            <li><strong>Démarrage</strong> : lancer le serveur avec <code>python3 web_monitor.py</code> puis ouvrir <code>http://localhost:5000</code> dans un navigateur.</li>
+          </ul>
+          <div class="tip">
+            <strong>Bonnes pratiques :</strong> Séparez bien la logique backend (Flask) de la présentation (HTML/JS). Utilisez des environnements virtuels Python pour isoler les dépendances.
+          </div>
+
+          <div class="divider"></div>
+
+          <h3 id="illustrations">9. Illustrations clés du projet</h3>
+          <div style="display:flex; flex-wrap:wrap; gap:24px; justify-content:space-between;">
+            <div style="flex:1 1 30%; min-width:320px; max-width:48%; background:#0a192f; border-radius:10px; padding:1em; margin-bottom:1.5em; box-shadow:0 2px 8px #111;">
+              <h4>9.1 Lancement des nodes ROS2</h4>
+              <div style="display:flex; gap:18px; align-items:center;">
+                <div style="flex:1 1 50%; background:#081a2b; border-radius:10px; border:2px dashed #00f7ff; padding:18px; display:flex; align-items:center; justify-content:center; min-height:90px;">
+                  <span style="color:#00f7ff;">[Photo à insérer ici]</span>
+                </div>
+                <div style="flex:1 1 50%; background:#081a2b; border-radius:10px; border:2px dashed #9452ff; padding:18px; display:flex; align-items:center; justify-content:center; min-height:90px;">
+                  <span style="color:#9452ff;">[Vidéo à insérer ici]</span>
+                </div>
+              </div>
+            </div>
+            <div style="flex:1 1 30%; min-width:320px; max-width:48%; background:#0a192f; border-radius:10px; padding:1em; margin-bottom:1.5em; box-shadow:0 2px 8px #111;">
+              <h4>9.2 Fichiers CSV générés</h4>
+              <div style="display:flex; gap:18px; align-items:center;">
+                <div style="flex:1 1 50%; background:#081a2b; border-radius:10px; border:2px dashed #00f7ff; padding:18px; display:flex; align-items:center; justify-content:center; min-height:90px;">
+                  <span style="color:#00f7ff;">[Photo à insérer ici]</span>
+                </div>
+                <div style="flex:1 1 50%; background:#081a2b; border-radius:10px; border:2px dashed #9452ff; padding:18px; display:flex; align-items:center; justify-content:center; min-height:90px;">
+                  <span style="color:#9452ff;">[Vidéo à insérer ici]</span>
+                </div>
+              </div>
+            </div>
+            <div style="flex:1 1 30%; min-width:320px; max-width:48%; background:#0a192f; border-radius:10px; padding:1em; margin-bottom:1.5em; box-shadow:0 2px 8px #111;">
+              <h4>9.3 Interface web (dashboard)</h4>
+              <div style="background:#081a2b; border-radius:10px; border:2px dashed #9452ff; padding:18px; display:flex; align-items:center; justify-content:center; min-height:90px;">
+                <span style="color:#9452ff;">[Vidéo à insérer ici]</span>
+              </div>
+            </div>
+            <div style="flex:1 1 30%; min-width:320px; max-width:48%; background:#0a192f; border-radius:10px; padding:1em; margin-bottom:1.5em; box-shadow:0 2px 8px #111; display:flex; flex-direction:column; justify-content:center; align-items:center;">
+              <h4 style="color:#00f7ff; text-align:center;">Vidéo récapitulative de toutes les fonctionnalités</h4>
+              <div style="background:#081a2b; border-radius:10px; border:2px dashed #9452ff; padding:24px; margin:18px auto; min-height:120px; max-width:600px; display:flex; align-items:center; justify-content:center;">
+                <span style="color:#9452ff; font-size:1.1em;">[Vidéo à insérer ici]</span>
+              </div>
+            </div>
           </div>
 
           <div class="divider"></div>
@@ -642,14 +862,127 @@ class SensorStatsNode(Node):
 
           <div class="divider"></div>
 
-          <h3 id="references">11. Références</h3>
+          <h3 id="references">11. Annexes & références</h3>
           <ul>
-            <li><a href="https://docs.ros.org/en/humble/index.html" target="_blank">Documentation ROS2 Humble</a></li>
-            <li><a href="https://docs.ros.org/en/humble/Tutorials.html" target="_blank">Tutoriels ROS2 Python</a></li>
+            <li><a href="https://docs.ros.org/en/humble/index.html" target="_blank">Documentation officielle ROS2 Humble</a></li>
+            <li><a href="https://husarion.com/tutorials/ros2-tutorials/" target="_blank">Tutoriels ROS2 Husarion</a></li>
+            <li><a href="https://flask.palletsprojects.com/" target="_blank">Documentation Flask</a></li>
+            <li><a href="https://socket.io/docs/v4/" target="_blank">Documentation Flask-SocketIO</a></li>
+            <li><a href="https://pandas.pydata.org/" target="_blank">Documentation Pandas</a></li>
+            <li><a href="https://www.chartjs.org/docs/latest/" target="_blank">Documentation Chart.js</a></li>
+            <li><a href="https://github.com/ros2/ros2" target="_blank">GitHub ROS2</a></li>
+            <li><a href="https://tekbot-robotics-challenge.github.io/2025-Team-UCAO-TECH-Docs" target="_blank">Docs UCAO-TECH</a></li>
+            <li><strong>Annexes :</strong> Fichiers CSV (<code>logs/</code>), code source Python, schémas et exemples de configuration dans le dépôt.</li>
+          </ul>
+
+          <div class="divider"></div>
+
+          <h3 id="limites">12. Limites et perspectives</h3>
+          <ul>
+            <li><strong>Limites techniques :</strong> Ce projet est conçu pour un usage pédagogique et une démonstration locale. Il n’est pas optimisé pour la haute disponibilité, la sécurité réseau, ni la gestion de très grands volumes de données.</li>
+            <li><strong>Scalabilité :</strong> L’architecture actuelle fonctionne pour quelques capteurs et un usage mono-machine. Pour un déploiement industriel ou multi-capteurs, il faudrait adapter la gestion des topics, la persistance des données et la supervision.</li>
+            <li><strong>Sécurité :</strong> L’accès distant via Flask/ngrok n’est pas sécurisé par défaut. Pour un usage en production, il est recommandé d’ajouter une authentification, du chiffrement (HTTPS), et des restrictions d’accès.</li>
+            <li><strong>Perspectives :</strong> Possibilité d’ajouter d’autres types de capteurs, d’intégrer une base de données, d’exporter vers le cloud, ou d’ajouter des modules d’analyse avancée (IA, détection d’anomalies, alertes automatiques, etc.).</li>
+            <li><strong>Améliorations possibles :</strong> Ajout de tests automatisés, interface d’administration, gestion multi-utilisateurs, internationalisation, monitoring distribué, etc.</li>
+          </ul>
+          <h3 id="perspectives">Pour aller plus loin</h3>
+          <ul>
+            <li><strong>Sécurité :</strong> Ajouter une authentification, passer en HTTPS, restreindre l’accès distant.</li>
+            <li><strong>Déploiement :</strong> Tester sur Raspberry Pi, conteneuriser avec Docker, héberger sur un cloud.</li>
+            <li><strong>Scalabilité :</strong> Gérer plusieurs capteurs, topics dynamiques, base de données pour l’historique.</li>
+            <li><strong>Analyse avancée :</strong> Intégrer des modules IA, détection d’anomalies, alertes automatiques.</li>
+            <li><strong>Interface :</strong> Ajouter des graphiques avancés, exporter vers Excel, internationaliser la documentation.</li>
+            <li><strong>Tests :</strong> Mettre en place des tests automatisés, CI/CD, monitoring distribué.</li>
           </ul>
         </div>
       </div>
     </section>
   </main>
+
+  <div style="text-align:center; margin:2em 0 1em 0;">
+    <a href="https://github.com/ros2/ros2" target="_blank" style="margin:0 0.5em;">
+      <img src="https://img.shields.io/badge/ROS2-Humble-blue?logo=ros" alt="ROS2 Humble" style="vertical-align:middle; height:28px;"/>
+    </a>
+    <a href="https://github.com/ton-projet" target="_blank" style="margin:0 0.5em;">
+      <img src="https://img.shields.io/badge/GitHub-Code-black?logo=github" alt="GitHub" style="vertical-align:middle; height:28px;"/>
+    </a>
+    <a href="/alade.zip" download style="margin:0 0.5em;">
+      <img src="https://img.shields.io/badge/Télécharger-ZIP-00d1ff?logo=archive&logoColor=white" alt="Télécharger ZIP" style="vertical-align:middle; height:28px;"/>
+    </a>
+    <a href="#contact" style="margin:0 0.5em;">
+      <img src="https://img.shields.io/badge/Contact-Formulaire-9452ff?logo=gmail&logoColor=white" alt="Contact" style="vertical-align:middle; height:28px;"/>
+    </a>
+  </div>
+
+  <h3 id="tableau-commandes">Tableau récapitulatif des commandes principales</h3>
+          <table>
+            <thead>
+              <tr>
+                <th>Commande</th>
+                <th>Description</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><code>colcon build --packages-select sensor_data_evaluation</code></td>
+                <td>Compiler le package ROS2</td>
+              </tr>
+              <tr>
+                <td><code>source install/setup.bash</code></td>
+                <td>Activer l’environnement ROS2</td>
+              </tr>
+              <tr>
+                <td><code>ros2 launch sensor_data_evaluation sensor_data_launch.py</code></td>
+                <td>Lancer tous les nodes via le fichier de lancement</td>
+              </tr>
+              <tr>
+                <td><code>ros2 run sensor_data_evaluation sensor_data_publisher</code></td>
+                <td>Lancer le node publisher seul</td>
+              </tr>
+              <tr>
+                <td><code>ros2 run sensor_data_evaluation sensor_data_subscriber</code></td>
+                <td>Lancer le node subscriber seul</td>
+              </tr>
+              <tr>
+                <td><code>ros2 run sensor_data_evaluation sensor_stats_node</code></td>
+                <td>Lancer le node statistiques seul</td>
+              </tr>
+              <tr>
+                <td><code>python3 web_monitor.py</code></td>
+                <td>Lancer le serveur web Flask (dashboard)</td>
+              </tr>
+            </tbody>
+          </table>
+
+  <button onclick="window.scrollTo({top:0,behavior:'smooth'});" style="position:fixed;bottom:32px;right:32px;z-index:999;background:#00f7ff;color:#0a192f;font-weight:bold;border:none;border-radius:50%;width:48px;height:48px;box-shadow:0 2px 8px #111;cursor:pointer;font-size:1.7rem;display:none;" id="btnTop" title="Retour en haut">↑</button>
+  <script>
+    // Affichage du bouton retour en haut
+    window.addEventListener('scroll', function() {
+      document.getElementById('btnTop').style.display = (window.scrollY > 300) ? 'block' : 'none';
+    });
+  </script>
+  <script>
+          // Animation du sommaire déroulant
+          document.querySelectorAll('.toc ul li').forEach(function(item) {
+            item.addEventListener('click', function(e) {
+              const href = item.querySelector('a')?.getAttribute('href');
+              if(href && href.startsWith('#')) {
+                e.preventDefault();
+                const section = document.querySelector(href);
+                if(section) {
+                  section.scrollIntoView({behavior:'smooth'});
+                  section.classList.add('highlight-section');
+                  setTimeout(()=>section.classList.remove('highlight-section'), 1200);
+                }
+              }
+            });
+          });
+        </script>
+        <style>
+          .highlight-section {
+            box-shadow: 0 0 0 4px #00f7ff99;
+            transition: box-shadow 0.3s;
+          }
+        </style>
 </body>
 </html>
