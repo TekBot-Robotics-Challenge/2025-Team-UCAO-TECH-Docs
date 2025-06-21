@@ -296,6 +296,24 @@
       <h2>Test 2 : Boîte Noire - Communication et Contrôle</h2>
       <h3>Durée : 1 semaine</h3>
 
+      <div class="toc">
+        <h4>Sommaire</h4>
+        <ul>
+          <li><a href="#introduction">Introduction</a></li>
+          <li><a href="#objectifs">Objectifs du test</a></li>
+          <li><a href="#composants">Liste des composants utilisés</a></li>
+          <li><a href="#architecture">Architecture du système</a></li>
+          <li><a href="#schemas">Schémas électroniques</a></li>
+          <li><a href="#pcb">Circuit imprimé</a></li>
+          <li><a href="#simulation">Simulation dans Proteus</a></li>
+          <li><a href="#codes">Codes</a></li>
+          <li><a href="#contraintes">Contraintes et recommandations</a></li>
+          <li><a href="#video">Vidéo de démonstration</a></li>
+          <li><a href="#evaluation">Critères d'évaluation</a></li>
+          <li><a href="#conclusion">Conclusion</a></li>
+        </ul>
+      </div>
+      
       <h4>Introduction</h4>
       <p>Dans les secteurs de l'aéronautique, de l'automobile ou du ferroviaire, les boîtes noires sont essentielles pour l'enregistrement des données de fonctionnement. Inspirés de ces systèmes, nous avons conçu un dispositif capable d'enregistrer et de transmettre en temps réel les données de mouvement d'un robot grâce à un capteur MPU6050 (accéléromètre + gyroscope) intégré dans une boîte cubique.</p>
 
@@ -447,6 +465,41 @@
   <i class="fa fa-download"></i> Télécharger le dossier KiCad complet (RAR)
 </a>
 
+      <h4 id="simulation">Simulation dans Proteus</h4>
+      <p>Le module <strong>MPU6050</strong> n'étant pas présent dans la bibliothèque officielle de Proteus, nous avons simulé son comportement en injectant directement des données constantes dans le microcontrôleur maître (ATmega328P). Cela permet de vérifier le bon fonctionnement du bus I2C, la transmission des données et l'affichage sur l'écran LCD.</p>
+
+      <h5>Structure du dossier de simulation</h5>
+      <pre><code>📁 Simulation_Proteus_Boite_Noire
+├── 📁 maitre
+│   ├── main_maitre.c
+│   ├── i2c_master.c
+│   ├── i2c_master.h
+│   └── simulation.hex
+├── 📁 esclave
+│   ├── main_esclave.c
+│   ├── lcd.c
+│   ├── lcd.h
+│   ├── i2c_slave.c
+│   ├── i2c_slave.h
+│   └── esclave.hex
+└── 📁 proteus
+    └── SimulationBoiteNoire.pdsprj
+</code></pre>
+
+      <h5>Téléchargement du dossier complet</h5>
+      <a href="Simulation/boite_noire_i2c.zip" download class="download-btn" aria-label="Télécharger le projet de simulation Proteus">
+        <i class="fa fa-download"></i> Télécharger le projet de simulation (.zip)
+      </a>
+
+      <h5 id="video">Vidéo de démonstration de la simulation</h5>
+      <div class="video-container">
+        <video controls>
+          <source src="Simulation/video_simulation.mp4" type="video/mp4">
+          Votre navigateur ne supporte pas la lecture de cette vidéo.
+        </video>
+      </div>
+
+      
       <h4>Codes</h4>
       <h5>Côté "boîte noire" (maître I2C, avec MPU6050</h5>
       <pre><code>// MPU6050 + ATmega328P - Maître I2C
