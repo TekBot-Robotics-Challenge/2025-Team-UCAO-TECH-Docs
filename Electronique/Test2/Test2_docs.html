@@ -348,41 +348,6 @@
           <img src="Images/CONDENSATEUR100nF.jpg" class="component-img">
           <img src="Images/quartz16mhZ.webp" class="component-img">
         </div>
-
-        <!-- Circuit imprimé -->
-        <div class="component-card">
-          <h5>PCB</h5>
-<p>Support physique du circuit :</p>
-<ul>
-  <p>PCB personnalisé pour chaque module : alimentation, boîte noire et station de contrôle</p>
- 
-</ul>
-
-
-<div class="pcb-gallery">
-  <div class="pcb-section">
-    <h6>Carte d'alimentation</h6>
-    
-    <img src="Images/img_PCBAlimentation.PNG" alt="Carte alimentation" class="component-img">
-    <img src="Images/img_PCB_3D_Alimentation.PNG" alt="Carte alimentation" class="component-img">
-  </div>
-
-  <div class="pcb-section">
-    <h6>Carte de la boîte noire</h6>
-    <img src="Images/img_PCB_2D_boite_noire.PNG" alt="Carte boîte noire" class="component-img">
-    <img src="Images/img_PCB_3D_boite_noire.PNG" alt="Carte boîte noire" class="component-img">
-  </div>
-
-  <div class="pcb-section">
-    <h6>Carte de la station de contrôle</h6>
-    <img src="Images/imgSC_PCB.PNG" alt="Carte station de contrôle" class="component-img">
-     <img src="Images/imgSC_3D_front.PNG" alt="Carte station de contrôle" class="component-img">
-  </div>
-</div>
-
-        
-      </div>
-
       <h4>Architecture du système</h4>
       <p>Le système est réparti en deux modules :</p>
       <ul>
@@ -408,62 +373,105 @@
     <img src="Images/img_Circuit_Station.PNG" alt="Schéma station de contrôle" class="component-img">
   </div>
 </div>
+ <h4>Circuit imprimé</h4>
+<p>Support physique du circuit : PCB personnalisé pour chaque module : alimentation, boîte noire et station de contrôle</p>
+
+<div class="pcb-gallery">
+
+  <!-- Carte alimentation -->
+  <div class="pcb-section">
+    <h6>Carte d'alimentation</h6>
+    <img src="Images/img_PCBAlimentation.PNG" alt="Carte alimentation 2D">
+    <img src="Images/img_PCB_3D_Alimentation.PNG" alt="Carte alimentation 3D">
+  </div>
+
+  <!-- Carte boîte noire -->
+  <div class="pcb-section">
+    <h6>Carte de la boîte noire</h6>
+    <img src="Images/img_PCB_2D_boite_noire.PNG" alt="Carte boîte noire 2D">
+    <img src="Images/img_PCB_3D_boite_noire.PNG" alt="Carte boîte noire 3D">
+  </div>
+
+  <!-- Carte station de contrôle -->
+  <div class="pcb-section">
+    <h6>Carte de la station de contrôle</h6>
+    <img src="Images/imgSC_PCB.PNG" alt="Carte station de contrôle 2D">
+    <img src="Images/imgSC_3D_front.PNG" alt="Carte station de contrôle 3D">
+  </div>
+
+</div>
 
       <h4>Codes</h4>
       <h5>Côté "boîte noire" (maître I2C, avec MPU6050</h5>
       <pre><code>// MPU6050 + ATmega328P - Maître I2C
-#include <util/delay.h>
-#include "i2c_master.h"
-#include "mpu6050.h"
+#include <util/delay.h>         // Bibliothèque pour les délais
+#include "i2c_master.h"         // Fichier pour fonctions I2C en maître
+#include "mpu6050.h"            // Fichier pour gérer le capteur MPU6050
 
 void main(void) {
-    int16_t ax, ay, az, gx, gy, gz;
+    int16_t ax, ay, az, gx, gy, gz; // Variables pour stocker les données d'accéléromètre et gyroscope
 
-    i2c_init(); // Initialisation I2C
-    mpu6050_init(); // Initialisation du MPU6050
+    i2c_init();         // Initialisation du bus I2C en mode maître
+    mpu6050_init();     // Initialisation du capteur MPU6050
 
     while (1) {
+        // Lecture des données de l'accéléromètre
         mpu6050_read_accel(&ax, &ay, &az);
+
+        // Lecture des données du gyroscope (non utilisées ici mais disponibles)
         mpu6050_read_gyro(&gx, &gy, &gz);
 
-        i2c_start(0x10); // Esclave station de contrôle
-        i2c_write(ax >> 8); i2c_write(ax & 0xFF);
-        i2c_write(ay >> 8); i2c_write(ay & 0xFF);
-        i2c_write(az >> 8); i2c_write(az & 0xFF);
-        i2c_stop();
+        // Démarre la communication I2C avec l'esclave à l'adresse 0x10
+        i2c_start(0x10);
 
-        _delay_ms(500);
+        // Envoi des données de l’accéléromètre Ax, Ay, Az sous forme de 16 bits (haut puis bas)
+        i2c_write(ax >> 8);     // Octet de poids fort de ax
+        i2c_write(ax & 0xFF);   // Octet de poids faible de ax
+        i2c_write(ay >> 8);
+        i2c_write(ay & 0xFF);
+        i2c_write(az >> 8);
+        i2c_write(az & 0xFF);
+
+        i2c_stop();             // Fin de transmission I2C
+
+        _delay_ms(500);        // Attente de 500 ms avant la prochaine lecture
     }
 }
-}</code></pre>
+</code></pre>
 
       <h5>Côté "station de contrôle" (esclave I2C + LCD 4 bits)</h5>
       <pre><code>// ATmega328P - Esclave I2C + Afficheur LCD 4 bits
-#include "i2c_slave.h"
-#include "lcd.h"
+#include "i2c_slave.h"     // Bibliothèque I2C en mode esclave
+#include "lcd.h"           // Bibliothèque de gestion d’afficheur LCD (mode 4 bits)
 
-volatile uint8_t buffer[6];
-volatile uint8_t index = 0;
+volatile uint8_t buffer[6];   // Tableau pour stocker les 6 octets reçus (ax, ay, az)
+volatile uint8_t index = 0;   // Index pour le tableau de réception
 
+// Fonction appelée à chaque octet reçu via I2C
 void receive_event(uint8_t data) {
-    buffer[index++] = data;
-    if (index >= 6) {
-        lcd_gotoxy(0, 0);
-        lcd_printf("Ax:%d", (buffer[0] << 8) | buffer[1]);
-        lcd_gotoxy(0, 1);
-        lcd_printf("Ay:%d", (buffer[2] << 8) | buffer[3]);
-        index = 0;
+    buffer[index++] = data;   // Stockage de l’octet reçu
+
+    if (index >= 6) {         // Une fois 6 octets reçus (2 par axe)
+        lcd_gotoxy(0, 0);     // Se positionner ligne 1, colonne 0
+        lcd_printf("Ax:%d", (buffer[0] << 8) | buffer[1]); // Affiche ax
+
+        lcd_gotoxy(0, 1);     // Se positionner ligne 2, colonne 0
+        lcd_printf("Ay:%d", (buffer[2] << 8) | buffer[3]); // Affiche ay
+
+        index = 0;            // Réinitialise l’index pour la prochaine série
     }
 }
 
 int main(void) {
-    lcd_init();
-    lcd_clear();
+    lcd_init();             // Initialisation de l'afficheur LCD
+    lcd_clear();            // Efface l'afficheur
 
-    i2c_slave_init(0x10);
-    i2c_set_receive_callback(receive_event);
+    i2c_slave_init(0x10);   // Initialise le microcontrôleur comme esclave I2C avec l’adresse 0x10
+    i2c_set_receive_callback(receive_event);  // Définition de la fonction à appeler à chaque octet reçu
 
-    while (1) { /* boucle vide, tout est géré via interruptions */ }
+    while (1) {
+        // Boucle vide : tout est géré via interruptions et fonctions de rappel (callback)
+    }
 }
 </code></pre>
 
