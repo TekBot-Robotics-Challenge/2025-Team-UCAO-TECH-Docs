@@ -168,6 +168,69 @@
     .toc ul li a:hover {
       text-decoration: underline;
     }
+
+    .component-card {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2rem;
+  background-color: rgba(2, 12, 27, 0.6);
+  padding: 1.5rem;
+  border-radius: 10px;
+  margin: 2rem auto;
+  max-width: 900px;
+  align-items: center;
+  border-left: 4px solid #00f7ff;
+  box-shadow: 0 0 10px rgba(0, 209, 255, 0.1);
+}
+
+.component-img {
+  flex: 1 1 40%;
+  max-width: 300px;
+  height: auto;
+  border-radius: 8px;
+  border: 1px solid #00d1ff;
+  display: block;
+  margin: 0 auto;
+}
+
+.component-desc {
+  flex: 1 1 55%;
+}
+
+.pcb-gallery, .schematic-gallery {
+  display: grid;
+  gap: 2rem;
+  margin-top: 2rem;
+}
+
+.pcb-section, .schematic-section {
+  background-color: rgba(2, 12, 27, 0.6);
+  padding: 1rem;
+  border-radius: 8px;
+  border-left: 4px solid #00d1ff;
+  box-shadow: 0 0 5px rgba(0, 209, 255, 0.1);
+}
+
+.pcb-section img, .schematic-section img {
+  display: block;
+  margin: 0.8rem auto;
+  max-width: 90%;
+  height: auto;
+  border-radius: 6px;
+  border: 1px solid #00d1ff;
+}
+
+@media (max-width: 768px) {
+  .component-card {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .component-img, .component-desc {
+    flex: 1 1 100%;
+  }
+}
+
   </style>
 </head>
 <body>
@@ -207,20 +270,19 @@
       <h4>Liste des composants utilisés</h4>
       <div class="component-grid">
         <!-- ATmega328P -->
-        <div class="component-card">
-          
-          <div class="component-desc">
-            <h5>2 × ATmega328P</h5>
-            <p>Cœur du système, ces microcontrôleurs 8-bit gèrent :</p>
-            <ul>
-              <li>La communication I2C entre modules</li>
-              <li>Le traitement des données du capteur</li>
-              <li>L'affichage sur l'écran LCD</li>
-            </ul>
-            <p>Caractéristiques : 32KB Flash, 2KB SRAM, 16MHz</p>
-          </div>
-          <img src="Images/ATMEGA328P.jpg" alt="ATmega328P" class="component-img">
-        </div>
+<div class="component-card">
+  <img src="Images/ATMEGA328P.jpg" alt="ATmega328P" class="component-img">
+  <div class="component-desc">
+    <h5>2 × ATmega328P</h5>
+    <p>Cœur du système, ces microcontrôleurs 8-bit gèrent :</p>
+    <ul>
+      <li>La communication I2C entre modules</li>
+      <li>Le traitement des données du capteur</li>
+      <li>L'affichage sur l'écran LCD</li>
+    </ul>
+    <p>Caractéristiques : 32KB Flash, 2KB SRAM, 16MHz</p>
+  </div>
+</div>
 
         <!-- MPU6050 -->
         <div class="component-card">
@@ -289,7 +351,7 @@
 
         <!-- Circuit imprimé -->
         <div class="component-card">
-          <h5>Veroboard ou PCB</h5>
+          <h5>PCB</h5>
 <p>Support physique du circuit :</p>
 <ul>
   <p>PCB personnalisé pour chaque module : alimentation, boîte noire et station de contrôle</p>
