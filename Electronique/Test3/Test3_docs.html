@@ -253,7 +253,7 @@
     <div class="subsection">
       <h3>3.2 Schéma électronique</h3>
       <div class="component-card">
-        <img src="images/schema-complet.jpg" alt="Schéma électronique complet" class="component-img"/>
+        <img src="Images/circuit.PNG" alt="Schéma électronique complet" class="component-img"/>
         <div>
           <p><strong>Description :</strong></p>
           <ul>
@@ -268,7 +268,7 @@
         <h4>Alimentation</h4>
         <p>Le système d'alimentation comprend :</p>
         <ul>
-          <li><strong>Batterie Li-ion 7.4V</strong> : Source d'énergie principale</li>
+          <li><strong>Batterie Li-ion 7.4V 2S </strong> : Source d'énergie principale</li>
           <li><strong>Régulateur LM7805</strong> : Stabilisation à 5V pour les composants</li>
           <li><strong>Condensateurs de filtrage</strong> : 100nF et 10μF pour lisser l'alimentation</li>
         </ul>
@@ -277,7 +277,8 @@
     <div class="subsection">
         <h3>3.3 Réalisation des PCB</h3>
         <div class="component-card">
-          <img src="images/pcb-realisation.jpg" alt="PCB réalisé" class="component-img"/>
+          <img src="images/pcb_test3_front.PNG" alt="PCB réalisé" class="component-img"/>
+           <img src="images/pcb_test3_back.PNG" alt="PCB réalisé" class="component-img"/>
           <div>
             <p><strong>Caractéristiques :</strong></p>
             <ul>
@@ -286,7 +287,7 @@
               <li>Pistes de 0.6 mm</li>
               <li>Espacement optimisé pour les connecteurs</li>
             </ul>
-            <a href="fichiers/pcb-design.zip" class="download-btn">
+            <a href="Kicad/7seg_circuit_electronique.rar" class="download-btn">
               <i class="fas fa-download"></i> Télécharger les fichiers PCB
             </a>
           </div>
@@ -313,7 +314,7 @@
         }
        } 
         </code></pre>
-        <a href="code/afficheur7servos.ino" class="download-btn">
+        <a href="CodeSource/7segment_servo.rar" class="download-btn">
           <i class="fas fa-download"></i> Télécharger le code complet
         </a>
       </div>
@@ -336,7 +337,7 @@
       <div class="subsection">
         <h3>4.1 Architecture prévue</h3>
         <div class="component-card">
-          <img src="images/schema-theorique.png" alt="Schéma théorique" class="component-img"/>
+          <img src="Images/img_simulation.PNG" alt="Schéma théorique" class="component-img"/>
           <div>
             <p><strong>Composants clés :</strong></p>
             <ul>
@@ -396,7 +397,7 @@ L’ATmega328P répète cette séquence pour chaque segment : </p>
         <h3>4.2 Simulation Proteus</h3>
         <div class="video-container">
           <video controls>
-            <source src="videos/simulation-proteus.mp4" type="video/mp4">
+            <source src="Videos/Videosimulation.mp4" type="video/mp4">
             Votre navigateur ne supporte pas la vidéo.
           </video>
         </div>
@@ -410,7 +411,7 @@ L’ATmega328P répète cette séquence pour chaque segment : </p>
 
       <div class="subsection">
         <p>Télécharger le dossier comportant le code arduino et le fichier du schéma sous proteus </p>
-      <a href="fichiers/pcb-design.zip" class="download-btn">
+      <a href="ProteusSimulation/doc_simulation.rar" class="download-btn">
       <i class="fas fa-download"></i> Télécharger le document complet
       </a>
       </div>
@@ -478,7 +479,7 @@ L’ATmega328P répète cette séquence pour chaque segment : </p>
         <li>L'approche avec circuits intégrés permet une optimisation significative des ressources</li>
         <li>La consommation énergétique reste le principal défi pour les applications embarquées</li>
       </ul>
-      <p><strong>Perspectives :</strong> Intégration d'un module Bluetooth pour le contrôle à distance et développement d'une version 4 digits.</p>
+      
     </section>
   </main>
   <script>
