@@ -75,13 +75,24 @@
       border: 1px solid #00d1ff;
     }
     .component-img {
-      width: 100%;
-      max-width: 300px;
+      max-width: 100%;
       height: auto;
       border-radius: 8px;
       border: 1px solid #00d1ff;
       margin: 0 auto;
       display: block;
+      object-fit: contain;
+    }
+    .img-container {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1rem;
+      justify-content: center;
+      margin: 1rem 0;
+    }
+    .img-container img {
+      max-width: calc(50% - 0.5rem);
+      height: auto;
     }
     .download-btn {
       display: inline-block;
@@ -104,6 +115,7 @@
     }
     video {
       max-width: 100%;
+      max-height: 500px;
       border-radius: 8px;
       border: 1px solid #00d1ff;
     }
@@ -122,6 +134,9 @@
       }
       .component-card {
         flex-direction: column;
+      }
+      .img-container img {
+        max-width: 100%;
       }
     }
    .toc {
@@ -200,7 +215,7 @@
       <p>Ce projet s'inscrit dans le cadre du développement d'interfaces visuelles tangibles pour applications industrielles. L'afficheur mécanique 7 segments offre une alternative robuste aux afficheurs électroniques traditionnels, particulièrement adaptée aux environnements exigeants.</p>
       
       <div class="component-card">
-        <img src="Images/image1.jpg" alt="Concept initial" class="component-img"/>
+        <img src="Images/image1.jpg" alt="Concept initial" class="component-img" style="max-height: 300px;"/>
         <div>
           <p><strong>Origine du projet :</strong></p>
           <ul>
@@ -253,7 +268,7 @@
     <div class="subsection">
       <h3>3.2 Schéma électronique</h3>
       <div class="component-card">
-        <img src="Images/circuit.PNG" alt="Schéma électronique complet" class="component-img"/>
+        <img src="Images/circuit.PNG" alt="Schéma électronique complet" class="component-img" style="max-height: 400px;"/>
         <div>
           <p><strong>Description :</strong></p>
           <ul>
@@ -263,9 +278,9 @@
           </ul>
         </div>
       </div>
-      <div class="subsection">
-         <img src="Images/image2.jpg" alt="Schéma physique" class="component-img"/>
-          <img src="Images/image3.jpg" alt="Schéma physique" class="component-img"/>
+      <div class="img-container">
+        <img src="Images/image2.jpg" alt="Schéma physique" class="component-img"/>
+        <img src="Images/image3.jpg" alt="Schéma physique" class="component-img"/>
       </div>
       <div class="power-section">
         <h4>Alimentation</h4>
@@ -280,8 +295,8 @@
     <div class="subsection">
         <h3>3.3 Réalisation des PCB</h3>
         <div class="component-card">
-          <img src="Images/pcb_test3_front.PNG" alt="PCB réalisé" class="component-img"/>
-           <img src="Images/pcb_test3_back.PNG" alt="PCB réalisé" class="component-img"/>
+          <img src="Images/pcb_test3_front.PNG" alt="PCB réalisé" class="component-img" style="max-height: 300px;"/>
+          <img src="Images/pcb_test3_back.PNG" alt="PCB réalisé" class="component-img" style="max-height: 300px;"/>
           <div>
             <p><strong>Caractéristiques :</strong></p>
             <ul>
@@ -325,7 +340,7 @@
       <div class="subsection">
         <h3>3.5 Vidéo de démonstration</h3>
         <div class="video-container">
-          <video controls>
+          <video controls style="max-width: 800px;">
             <source src="Videos/videodemonstration.mp4" type="video/mp4">
             Votre navigateur ne supporte pas la vidéo.
           </video>
@@ -340,7 +355,7 @@
       <div class="subsection">
         <h3>4.1 Architecture prévue</h3>
         <div class="component-card">
-          <img src="Images/img_simulation.PNG" alt="Schéma théorique" class="component-img"/>
+          <img src="Images/img_simulation.PNG" alt="Schéma théorique" class="component-img" style="max-height: 400px;"/>
           <div>
             <p><strong>Composants clés :</strong></p>
             <ul>
@@ -354,10 +369,10 @@
         
         <h4>Fonctionnement du système</h4>
         <p>
-Ce système met en œuvre un afficheur 7 segments mécanique à base de servomoteurs, contrôlé avec un minimum de broches du microcontrôleur grâce à l’utilisation combinée de deux circuits intégrés : le décodeur <strong>74HC138</strong> et le registre à verrouillage <strong>74HC574</strong>.
+Ce système met en œuvre un afficheur 7 segments mécanique à base de servomoteurs, contrôlé avec un minimum de broches du microcontrôleur grâce à l'utilisation combinée de deux circuits intégrés : le décodeur <strong>74HC138</strong> et le registre à verrouillage <strong>74HC574</strong>.
 </p>
 <p>
-L'ATmega328P utilise une seule sortie PWM (la broche D6) pour générer les impulsions de contrôle destinées aux servos. Chaque segment de l’afficheur est associé à un servomoteur, soit un total de 7 servos pour les 7 segments (A à G).
+L'ATmega328P utilise une seule sortie PWM (la broche D6) pour générer les impulsions de contrôle destinées aux servos. Chaque segment de l'afficheur est associé à un servomoteur, soit un total de 7 servos pour les 7 segments (A à G).
 </p>
 <p>
 Le <strong>74HC138</strong> est un décodeur 3 vers 8 : à partir de 3 lignes d'adresse (A0, A1, A2), il active une seule sortie parmi Y0 à Y7. Dans ce projet, seules les sorties Y0 à Y6 sont utilisées, chacune correspondant à un segment (donc un servo). Ces sorties du 74HC138 ne peuvent pas directement commuter le signal PWM , elles sont donc reliées à des transistors NPN via des résistances de base.
@@ -369,7 +384,7 @@ Le <strong>74HC138</strong> est un décodeur 3 vers 8 : à partir de 3 lignes d'
   digitalWrite(SELECTION_C, (inverse >> 2) & 0x01);
 }</code></pre>
 <p>
-Le <strong>74HC574</strong> est un registre à verrouillage qui capture l’état des entrées D0 à D6 au moment où une impulsion est appliquée sur sa broche d’horloge (latch). Lorsqu’un segment est sélectionné par le 138, le microcontrôleur envoie une impulsion PWM. Cette impulsion est transférée via le transistor vers l'entrée Dx du 74HC574, et une impulsion d’horloge permet de verrouiller cette valeur à la sortie Qx du registre, laquelle est reliée au servomoteur correspondant.
+Le <strong>74HC574</strong> est un registre à verrouillage qui capture l'état des entrées D0 à D6 au moment où une impulsion est appliquée sur sa broche d'horloge (latch). Lorsqu'un segment est sélectionné par le 138, le microcontrôleur envoie une impulsion PWM. Cette impulsion est transférée via le transistor vers l'entrée Dx du 74HC574, et une impulsion d'horloge permet de verrouiller cette valeur à la sortie Qx du registre, laquelle est reliée au servomoteur correspondant.
 </p>
 <pre><code>// Génère une impulsion PWM et verrouille
 void envoyerImpulsionEtVerrouiller(uint16_t dureeImpulsion) {
@@ -388,18 +403,18 @@ void verrouiller() {
   digitalWrite(HORLOGE_VERROU, LOW);
 }</code></pre>
 <p>
-L’ATmega328P répète cette séquence pour chaque segment : </p>
+L'ATmega328P répète cette séquence pour chaque segment : </p>
 <div>
   <li>Sélection avec le 138</li>
   <li>Envoi du PWM</li>
   <li>Verrouillage via le 574</li>
 </div>
-<p>Les servos étant rafraîchis périodiquement (toutes les 20 ms), l’affichage reste stable. Ce montage permet de piloter 7 servos avec une seule broche PWM, tout en minimisant l’utilisation des ressources de l’ATmega328P.</p>
+<p>Les servos étant rafraîchis périodiquement (toutes les 20 ms), l'affichage reste stable. Ce montage permet de piloter 7 servos avec une seule broche PWM, tout en minimisant l'utilisation des ressources de l'ATmega328P.</p>
 
       <div class="subsection">
         <h3>4.2 Simulation Proteus</h3>
         <div class="video-container">
-          <video controls>
+          <video controls style="max-width: 800px;">
             <source src="Videos/Videosimulation.mp4" type="video/mp4">
             Votre navigateur ne supporte pas la vidéo.
           </video>
