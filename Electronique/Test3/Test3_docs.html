@@ -7,7 +7,80 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
   <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Roboto:wght@300;400;700&display=swap" rel="stylesheet" />
   <style>
-    
+
+      header {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      z-index: 1000;
+      background-color: rgba(2, 12, 27, 0.9);
+      backdrop-filter: blur(10px);
+      border-bottom: 1px solid rgba(0, 209, 255, 0.2);
+    }
+    .navbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 1rem 2rem;
+    }
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+      color: white;
+      text-decoration: none;
+      font-size: 1.5rem;
+      font-weight: 700;
+    }
+    .logo img {
+      height: 50px;
+      transition: transform 0.5s ease;
+      cursor: pointer;
+    }
+    .logo:hover img {
+      transform: rotate(360deg);
+    }
+    .logo span {
+      color: #00d1ff;
+    }
+    .nav-links {
+      display: flex;
+      gap: 1.5rem;
+    }
+    .nav-links a {
+      color: rgba(230, 241, 255, 0.8);
+      text-decoration: none;
+      font-weight: 500;
+      font-size: 0.82rem;
+      text-transform: uppercase;
+      letter-spacing: 1.2px;
+      padding: 0.5rem 0.8rem;
+      position: relative;
+      transition: all 0.3s ease;
+    }
+    .nav-links a::before {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 0;
+      height: 2px;
+      background: linear-gradient(90deg, #00d1ff, #9452ff);
+      transition: width 0.3s ease;
+    }
+    .nav-links a:hover {
+      color: #00d1ff;
+    }
+    .nav-links a:hover::before,
+    .nav-links a.active::before {
+      width: 100%;
+    }
+    .nav-links a.active {
+      color: #00d1ff;
+    }
     * {
       box-sizing: border-box;
       margin: 0;
