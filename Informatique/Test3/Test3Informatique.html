@@ -1,0 +1,761 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Documentation Complète ROS2 - Algorithme Pathfinding | UCAO-TECH</title>
+  <link rel="icon" href="https://ucaotech.com/wp-content/uploads/2024/10/UCAO-TECH-1.png" type="image/png">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;700;900&family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet" />
+  <style>
+    /* Header */
+    header {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        z-index: 1000;
+        background-color: rgba(2, 12, 27, 0.9);
+        backdrop-filter: blur(10px);
+        border-bottom: 1px solid rgba(0, 209, 255, 0.2);
+        transition: all 0.3s ease;
+    }
+    
+    .navbar {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        max-width: 1400px;
+        margin: 0 auto;
+        padding: 1rem 2rem;
+    }
+    
+    .logo {
+        display: flex;
+        align-items: center;
+        gap: 15px;
+        color: white;
+        text-decoration: none;
+        font-size: 1.5rem;
+        font-weight: 700;
+    }
+    
+    .logo img {
+        height: 50px;
+        transition: transform 0.5s ease;
+    }
+    
+    .logo:hover img {
+        transform: rotate(360deg);
+    }
+    
+    .logo span {
+        color: var(--secondary);
+    }
+    
+    .nav-links {
+        display: flex;
+        gap: 1.5rem;
+    }
+    
+    .nav-links a {
+        color: rgba(230, 241, 255, 0.8);
+        text-decoration: none;
+        font-weight: 500;
+        font-size: 0.82rem;
+        text-transform: uppercase;
+        letter-spacing: 1.2px;
+        padding: 0.5rem 0.8rem;
+        position: relative;
+        transition: all 0.3s ease;
+    }
+    
+    .nav-links a::before {
+        content: '';
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 0;
+        height: 2px;
+        background: linear-gradient(90deg, var(--secondary), var(--cyber-purple));
+        transition: width 0.3s ease;
+    }
+    
+    .nav-links a:hover {
+        color: var(--cyber-blue);
+    }
+    
+    .nav-links a:hover::before {
+        width: 100%;
+    }
+    
+    .nav-links a.active {
+        color: var(--cyber-blue);
+    }
+    
+    .nav-links a.active::before {
+        width: 100%;
+    }
+    
+    .mobile-menu-btn {
+        display: none;
+        background: none;
+        border: none;
+        color: white;
+        font-size: 1.5rem;
+        cursor: pointer;
+        z-index: 1001;
+    }
+    
+    /* Main Content */
+    body {
+      background-color: #020c1b;
+      color: #e6f1ff;
+      font-family: 'Roboto', sans-serif;
+      margin: 0;
+      padding: 100px 1rem 1rem 1rem;
+    }
+
+    .section #informatique {
+      margin-top: 5em;
+    }
+    
+    h2.cyber-title, h2, h3, h4, h5 {
+      color: #00f7ff;
+      font-family: 'Orbitron', sans-serif;
+    }
+    
+    img {
+      max-width: 100%;
+      border: 1px solid #00d1ff;
+      margin: 1rem 0;
+    }
+    
+    .section-doc {
+      background-color: rgba(10, 25, 47, 0.4);
+      padding: 2rem;
+      border-radius: 10px;
+      margin-top: 2rem;
+    }
+    
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 1rem 0;
+    }
+    
+    th, td {
+      padding: 0.5rem;
+      border: 1px solid #00d1ff;
+    }
+    
+    a {
+      color: #00d1ff;
+      text-decoration: none;
+    }
+    
+    a:hover {
+      color: #9452ff;
+      text-decoration: underline;
+    }
+    
+    pre {
+      background-color: #0a192f;
+      padding: 1rem;
+      overflow-x: auto;
+      border-left: 4px solid #00f7ff;
+    }
+    
+    code {
+      font-family: monospace;
+      color: #00f7ff;
+    }
+    
+    .feature-card ul {
+      list-style: none;
+      padding-left: 0;
+    }
+    
+    .feature-card ul li {
+      padding: 0.25rem 0;
+    }
+    
+    .toc {
+      background-color: #081a2b;
+      padding: 1rem;
+      margin: 2rem 0;
+      border-left: 4px solid #00f7ff;
+    }
+    
+    .toc h4 {
+      margin-top: 0;
+    }
+    
+    .toc ul {
+      list-style: none;
+      padding-left: 0;
+    }
+    
+    .toc ul li {
+      margin: 0.5rem 0;
+    }
+    
+    .divider {
+      border-top: 2px dashed #00d1ff;
+      margin: 2rem 0;
+    }
+    
+    /* Specific styles from original doc */
+    ul, ol { margin-left: 1.5rem; }
+    pre code { display: block; padding: 1rem; background: #0a192f; border-left: 4px solid #00f7ff; overflow-x: auto; font-family: monospace; }
+    .tip { background: #0a192f; border-left: 4px solid #00f7ff; padding: 1em; margin: 1em 0; border-radius: 6px; }
+    .warn { background: #fff3e0; border-left: 4px solid #ffa726; color: #222; padding: 1em; margin: 1em 0; border-radius: 6px; }
+
+    /* --- Correction responsive illustrations et cartes --- */
+    @media (max-width: 900px) {
+      .feature-card, .section-doc > div[style*="display:flex"] {
+        flex-direction: column !important;
+        max-width: 100% !important;
+      }
+      .feature-card > div, .section-doc > div[style*="display:flex"] > div {
+        max-width: 100% !important;
+        min-width: 0 !important;
+      }
+    }
+    @media (max-width: 600px) {
+      .section-doc, .feature-card, .section-doc > div[style*="display:flex"] {
+        padding: 1rem !important;
+      }
+      h2, h3, h4, h5 {
+        font-size: 1.1rem !important;
+      }
+      .toc {
+        font-size: 0.98rem !important;
+        padding: 0.5rem !important;
+      }
+    }
+
+    @keyframes rosfloat {
+      0% { transform: translateY(0); opacity: 1; }
+      60% { opacity: 1; }
+      100% { transform: translateY(-32px); opacity: 0.7; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Header -->
+  <header>
+    <nav class="navbar">
+      <a href="https://tekbot-robotics-challenge.github.io/2025-Team-UCAO-TECH-Docs" class="logo">
+        <img src="https://ucaotech.com/wp-content/uploads/2024/10/UCAO-TECH-1.png" alt="UCAO-TECH Logo">
+        <span>UCAO-TECH</span>
+      </a>
+      <ul class="nav-links">
+        <li><a href="https://tekbot-robotics-challenge.github.io/2025-Team-UCAO-TECH-Docs">Accueil</a></li>
+        <li><a href="https://tekbot-robotics-challenge.github.io/2025-Team-UCAO-TECH-Docs/#a-propos">À propos</a></li>
+        <li><a href="https://tekbot-robotics-challenge.github.io/2025-Team-UCAO-TECH-Docs/#equipe">Équipe</a></li>
+        <li><a href="https://tekbot-robotics-challenge.github.io/2025-Team-UCAO-TECH-Docs/#contact">Contact</a></li>
+        <li><a href="https://tekbot-robotics-challenge.github.io/2025-Team-UCAO-TECH-Docs/#documentation">Documentation</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <div style="position:relative; width:100%; text-align:center; margin-top:3.5rem; margin-bottom:3.5rem;">
+          <span id="ros-float-title" style="display:inline-block; font-family:'Orbitron',sans-serif; font-size:4.5rem; font-weight:900; letter-spacing:0.2em; color:#00f7ff; text-shadow:0 4px 32px #00f7ff99,0 1px 0 #081a2b; animation:rosfloat 3.5s infinite alternate cubic-bezier(.4,0,.2,1); filter:drop-shadow(0 0 16px #00f7ff88); pointer-events:none;">
+            PATHFINDING
+          </span>
+        </div>
+        <style>
+          @keyframes rosfloat {
+            0% { transform: translateY(16px); opacity: 1; }
+            60% { opacity: 1; }
+            100% { transform: translateY(-16px); opacity: 0.7; }
+          }
+          @media (max-width: 600px) {
+            #ros-float-title { font-size: 2.2rem; }
+          }
+        </style>
+        <div class="section-title" style="margin-top:2.5rem;">
+          <h2 class="cyber-title">Documentation Complète : Algorithme Pathfinding (ROS2 Humble)</h2>
+        </div>
+
+  <main>
+    <section class="section" id="informatique">
+      <div class="section-container">
+        <details id="toc-details" style="margin-bottom:2.5rem;">
+          <summary id="toc-summary" style="font-size:2.1rem; font-family:'Orbitron',sans-serif; color:#00f7ff; display:flex; align-items:center; gap:18px; cursor:pointer; font-weight:900; letter-spacing:0.08em; position:relative;">
+            <span style="display:inline-block; animation:tocpulse 1.2s infinite alternate;">
+              <svg width="32" height="32" viewBox="0 0 32 32"><circle cx="16" cy="16" r="16" fill="#0a192f"/><path d="M16 9v10" stroke="#00f7ff" stroke-width="2.8" stroke-linecap="round"/><circle cx="16" cy="23" r="2.3" fill="#00f7ff"/></svg>
+            </span>
+            <span id="sommaire-hover" style="position:relative;">
+              SOMMAIRE
+            </span>
+            <span id="toc-click-hint" style="font-size:1.1rem; color:#fff; background:#0a192f; border-left:4px solid #00f7ff; padding:0.2em 0.8em; border-radius:6px; margin-left:8px; animation:tocpulse 1.2s infinite alternate;">Cliquez ici !</span>
+          </summary>
+          <div class="toc">
+            <ul>
+              <li><a href="#introduction">1. Introduction et objectifs</a></li>
+              <li><a href="#installation">2. Prérequis et installation</a></li>
+              <li><a href="#structure">3. Architecture du projet</a></li>
+              <li><a href="#fonctionnalites">4. Fonctionnalités principales</a></li>
+              <li><a href="#utilisation">5. Guide d'utilisation</a></li>
+              <li><a href="#exemples">6. Exemples pratiques</a></li>
+              <li><a href="#api">7. Référence API</a></li>
+              <li><a href="#troubleshooting">8. Dépannage</a></li>
+              <li><a href="#contribution">9. Guide de contribution</a></li>
+              <li><a href="#licence">10. Licence et crédits</a></li>
+            </ul>
+          </div>
+        </details>
+        <script>
+          // Animation "ROS2" visible uniquement quand le sommaire est replié
+          const tocDetails = document.getElementById('toc-details');
+          const rosFloat = document.getElementById('ros-float-title');
+          const tocClickHint = document.getElementById('toc-click-hint');
+          function updateRosFloatAndHint() {
+            if (tocDetails.open) {
+              rosFloat.style.opacity = '0';
+              rosFloat.style.pointerEvents = 'none';
+              tocClickHint.style.display = 'none';
+            } else {
+              rosFloat.style.opacity = '1';
+              rosFloat.style.pointerEvents = 'none';
+              tocClickHint.style.display = 'inline-block';
+            }
+          }
+          tocDetails.addEventListener('toggle', updateRosFloatAndHint);
+          updateRosFloatAndHint();
+        </script>
+
+        <!-- ICI COMMENCE LE CONTENU SPÉCIFIQUE À TEKBOT_SIM -->
+        <div class="section-doc">
+          <h3 id="introduction">1. Introduction et objectifs</h3>
+          <p>
+            <strong>L'Algorithme Pathfinding</strong> est un système de planification de trajectoire pour robots autonomes, conçu pour optimiser la navigation dans des environnements complexes. Ce module utilise des algorithmes de pathfinding éprouvés et des outils de navigation ROS2 pour garantir une navigation sûre et efficace.
+          </p>
+          <p>
+            <strong>Objectifs :</strong>
+          </p>
+          <ul>
+            <li>🎯 Fournir des algorithmes de pathfinding optimaux pour la navigation robotique</li>
+            <li>🗺️ Intégrer SLAM et Nav2 pour la cartographie et navigation autonome</li>
+            <li>⚡ Permettre le calcul de trajectoires rapides et sûres</li>
+            <li>🔬 Offrir une plateforme de test pour les algorithmes de navigation classiques</li>
+            <li>🤖 Assurer une compatibilité parfaite avec l'écosystème ROS2</li>
+          </ul>
+        </div>
+
+        <div class="section-doc">
+          <h3 id="installation">2. Prérequis et installation</h3>
+          <ol>
+            <li><strong>ROS2 Humble</strong> sur Ubuntu 22.04</li>
+            <li><strong>Gazebo Fortress</strong> ou version ultérieure</li>
+            <li><strong>Dépendances :</strong>
+              <pre><code>sudo apt install ros-humble-gazebo-ros-pkgs \
+ros-humble-nav2-bringup \
+ros-humble-slam-toolbox \
+ros-humble-nav2-planner \
+ros-humble-nav2-controller</code></pre>
+            </li>
+            <li><strong>Installation du package Pathfinding :</strong>
+              <pre><code>mkdir -p ~/pathfinding_ws/src
+cd ~/pathfinding_ws/src
+git clone https://github.com/ucaotech/pathfinding_algorithm.git
+cd ~/pathfinding_ws
+colcon build --symlink-install</code></pre>
+            </li>
+          </ol>
+        </div>
+
+        <div class="section-doc">
+          <h3 id="structure">3. Architecture du projet</h3>
+          <pre><code>pathfinding_algorithm/
+├── algorithms/        # Implémentations des algorithmes de pathfinding
+│   ├── astar/        # Algorithme A* et ses variantes
+│   ├── dijkstra/     # Algorithme de Dijkstra
+│   ├── rrt/          # Rapidly-exploring Random Tree
+│   └── hybrid/       # Algorithmes hybrides
+├── config/           # Fichiers de configuration
+├── launch/           # Fichiers de lancement ROS2
+├── maps/             # Cartes pour la navigation
+├── params/           # Paramètres des algorithmes
+├── rviz/             # Configurations RViz
+├── scripts/          # Scripts utilitaires
+├── src/              # Code source principal
+├── tests/            # Tests unitaires
+├── worlds/           # Environnements de simulation
+├── package.xml       # Métadonnées du package
+└── CMakeLists.txt    # Configuration de build</code></pre>
+        </div>
+
+        <div class="section-doc">
+          <h3 id="fonctionnalites">4. Fonctionnalités principales</h3>
+          <div class="feature-card" style="display:flex; flex-wrap:wrap; gap:16px; justify-content:space-between;">
+            <div style="flex:1 1 22%; min-width:260px; max-width:24%; background:#0a192f; border-radius:10px; padding:1.2em; margin-bottom:1.5em; box-shadow:0 2px 8px #111;">
+              <h4>4.1 Algorithmes Avancés</h4>
+              <p>
+                Implémentation optimisée des meilleurs algorithmes de pathfinding : A*, Dijkstra, RRT*, et algorithmes hybrides.
+              </p>
+            </div>
+            <div style="flex:1 1 22%; min-width:260px; max-width:24%; background:#0a192f; border-radius:10px; padding:1.2em; margin-bottom:1.5em; box-shadow:0 2px 8px #111;">
+              <h4>4.2 Navigation Avancée</h4>
+              <p>
+                Intégration avec Nav2 pour SLAM, localisation et planification de trajectoire avec optimisation des coûts.
+              </p>
+            </div>
+            <div style="flex:1 1 22%; min-width:260px; max-width:24%; background:#0a192f; border-radius:10px; padding:1.2em; margin-bottom:1.5em; box-shadow:0 2px 8px #111;">
+              <h4>4.3 Visualisation Temps Réel</h4>
+              <p>
+                Interface RViz pour visualiser les algorithmes en action, les trajectoires calculées et les métriques de performance.
+              </p>
+            </div>
+            <div style="flex:1 1 22%; min-width:260px; max-width:24%; background:#0a192f; border-radius:10px; padding:1.2em; margin-bottom:1.5em; box-shadow:0 2px 8px #111;">
+              <h4>4.4 Benchmarking</h4>
+              <p>
+                Outils de comparaison et d'évaluation des performances des différents algorithmes de pathfinding.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <div class="section-doc">
+          <h3 id="utilisation">5. Guide d'utilisation</h3>
+          <h4>5.1 Lancer l'algorithme de pathfinding</h4>
+          <pre><code>ros2 launch pathfinding_algorithm pathfinding.launch.py</code></pre>
+          
+          <h4>5.2 Contrôle et test manuel</h4>
+          <pre><code>ros2 run teleop_twist_keyboard teleop_twist_keyboard</code></pre>
+          
+          <h4>5.3 Navigation autonome avec pathfinding</h4>
+          <pre><code>ros2 launch pathfinding_algorithm navigation.launch.py</code></pre>
+        </div>
+
+        <div class="section-doc">
+          <h3 id="outils">6. Outils et Technologies Avancées</h3>
+          <div style="background:#0a192f; border-left:4px solid #00f7ff; padding:1.5em; margin:1.5em 0; border-radius:6px;">
+            <h4>🛠️ Stack Technologique Avancée</h4>
+            <table style="width:100%; margin-top:1em;">
+              <thead>
+                <tr>
+                  <th style="background:#081a2b; width:20%;">Technologie</th>
+                  <th style="background:#081a2b; width:25%;">Catégorie</th>
+                  <th style="background:#081a2b; width:40%;">Description Avancée</th>
+                  <th style="background:#081a2b; width:15%;">Performance</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><strong>🧠 SLAM Toolbox</strong></td>
+                  <td>Cartographie</td>
+                  <td>Simultaneous Localization and Mapping pour cartographie en temps réel et localisation précise</td>
+                  <td><span style="color:#00f7ff;">⭐⭐⭐⭐⭐</span></td>
+                </tr>
+                <tr>
+                  <td><strong>🚀 Nav2</strong></td>
+                  <td>Navigation</td>
+                  <td>Stack de navigation complète avec planificateurs de chemins, contrôleurs et recovery behaviors</td>
+                  <td><span style="color:#00f7ff;">⭐⭐⭐⭐⭐</span></td>
+                </tr>
+                <tr>
+                  <td><strong>🎮 Téléopération</strong></td>
+                  <td>Contrôle Manuel</td>
+                  <td>Interface de contrôle manuel avec feedback en temps réel et safety features</td>
+                  <td><span style="color:#9452ff;">⭐⭐⭐⭐</span></td>
+                </tr>
+                <tr>
+                  <td><strong>🎯 Algorithme A*</strong></td>
+                  <td>Pathfinding</td>
+                  <td>Algorithme classique de recherche de chemin optimal avec heuristiques personnalisables</td>
+                  <td><span style="color:#00f7ff;">⭐⭐⭐⭐⭐</span></td>
+                </tr>
+                <tr>
+                  <td><strong>🌟 RRT*</strong></td>
+                  <td>Planification</td>
+                  <td>Rapidly-exploring Random Tree optimal pour planification dans espaces complexes</td>
+                  <td><span style="color:#00d1ff;">⭐⭐⭐</span></td>
+                </tr>
+                <tr>
+                  <td><strong>👁️ RViz2</strong></td>
+                  <td>Visualisation</td>
+                  <td>Outil de visualisation 3D pour debugging, monitoring et analyse des données robotiques</td>
+                  <td><span style="color:#9452ff;">⭐⭐⭐⭐</span></td>
+                </tr>
+                <tr>
+                  <td><strong>🌍 Gazebo</strong></td>
+                  <td>Simulation</td>
+                  <td>Simulateur robotique avec physique réaliste et environnements configurables</td>
+                  <td><span style="color:#00f7ff;">⭐⭐⭐⭐⭐</span></td>
+                </tr>
+                <tr>
+                  <td><strong>📊 RQt</strong></td>
+                  <td>Outils Graphiques</td>
+                  <td>Suite d'outils graphiques pour monitoring, configuration et debug des systèmes ROS</td>
+                  <td><span style="color:#00d1ff;">⭐⭐⭐⭐</span></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <h4>6.1 Algorithmes de Pathfinding</h4>
+          <div style="display:flex; flex-wrap:wrap; gap:16px; justify-content:space-between;">
+            <div style="flex:1 1 30%; min-width:280px; background:#0a192f; border-radius:10px; padding:1.2em; margin-bottom:1.5em; box-shadow:0 2px 8px #111; border-left:4px solid #9452ff;">
+              <h5>🎯 Algorithmes Classiques</h5>
+              <ul style="font-size:0.9em;">
+                <li><strong>A* :</strong> Recherche heuristique optimale</li>
+                <li><strong>Dijkstra :</strong> Plus court chemin garanti</li>
+                <li><strong>D* Lite :</strong> Replanification dynamique</li>
+                <li><strong>Theta* :</strong> Chemins any-angle</li>
+              </ul>
+            </div>
+            <div style="flex:1 1 30%; min-width:280px; background:#0a192f; border-radius:10px; padding:1.2em; margin-bottom:1.5em; box-shadow:0 2px 8px #111; border-left:4px solid #00f7ff;">
+              <h5>� Algorithmes Sampling</h5>
+              <ul style="font-size:0.9em;">
+                <li><strong>RRT :</strong> Rapidly-exploring Random Tree</li>
+                <li><strong>RRT* :</strong> Version asymptotiquement optimale</li>
+                <li><strong>PRM :</strong> Probabilistic Road Map</li>
+                <li><strong>EST :</strong> Expansive Space Trees</li>
+              </ul>
+            </div>
+            <div style="flex:1 1 30%; min-width:280px; background:#0a192f; border-radius:10px; padding:1.2em; margin-bottom:1.5em; box-shadow:0 2px 8px #111; border-left:4px solid #00d1ff;">
+              <h5>⚡ Optimisations</h5>
+              <ul style="font-size:0.9em;">
+                <li><strong>Smoothing :</strong> Lissage de trajectoires</li>
+                <li><strong>Cost Maps :</strong> Cartes de coût adaptatives</li>
+                <li><strong>Multi-resolution :</strong> Planification hiérarchique</li>
+                <li><strong>Parallel Processing :</strong> Calcul parallèle</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <div class="section-doc">
+          <h3 id="exemples">7. Exemples Pratiques et Médias</h3>
+          
+          <h4>7.1 Cartographie SLAM</h4>
+          <div style="display:flex; flex-wrap:wrap; gap:24px; justify-content:space-between; margin:1.5em 0;">
+            <div style="flex:1 1 45%; min-width:320px; background:#0a192f; border-radius:10px; padding:1em; margin-bottom:1.5em; box-shadow:0 2px 8px #111;">
+              <h5>Commandes de lancement</h5>
+              <pre><code># Lancement SLAM avec Toolbox
+ros2 launch pathfinding_algorithm slam.launch.py
+
+# Sauvegarde de carte
+ros2 run nav2_map_server map_saver_cli \
+  -f ~/maps/my_map
+
+# Navigation avec carte existante
+ros2 launch pathfinding_algorithm navigation.launch.py \
+  map:=~/maps/my_map.yaml</code></pre>
+            </div>
+            
+            <div style="flex:1 1 45%; min-width:320px; background:#081a2b; border:2px dashed #00f7ff; border-radius:10px; padding:1.5em; margin-bottom:1.5em; text-align:center;">
+              <h5>📸 Carte Générée par SLAM</h5>
+              <div style="background:#0a192f; border-radius:8px; padding:2em; margin:1em 0; min-height:200px; display:flex; align-items:center; justify-content:center; border:1px solid #00d1ff;">
+                <div style="color:#9452ff; font-size:3em;">🗺️</div>
+              </div>
+              <p style="font-style:italic; color:#9452ff;">
+                <strong>Emplacement réservé :</strong><br>
+                Photo de la carte 2D générée lors de la phase de cartographie SLAM<br>
+                <em>Format recommandé : PNG, résolution minimale 800x600px</em>
+              </p>
+            </div>
+          </div>
+
+          <h4>7.2 Téléopération et Contrôle Manuel</h4>
+          <div style="display:flex; flex-wrap:wrap; gap:24px; justify-content:space-between; margin:1.5em 0;">
+            <div style="flex:1 1 45%; min-width:320px; background:#0a192f; border-radius:10px; padding:1em; margin-bottom:1.5em; box-shadow:0 2px 8px #111;">
+              <h5>Contrôle manuel</h5>
+              <pre><code># Téléopération par clavier
+ros2 run teleop_twist_keyboard teleop_twist_keyboard
+
+# Téléopération par joystick (optionnel)
+ros2 launch pathfinding_algorithm joy_teleop.launch.py</code></pre>
+              
+              <div class="tip">
+                <strong>🎮 Contrôles :</strong><br>
+                • <kbd>WASD</kbd> : Mouvement directionnel<br>
+                • <kbd>Q/E</kbd> : Rotation gauche/droite<br>
+                • <kbd>Shift</kbd> + mouvement : Mode précision<br>
+                • <kbd>Espace</kbd> : Arrêt d'urgence<br>
+                • <kbd>X</kbd> : Arrêt progressif
+              </div>
+            </div>
+            
+            <div style="flex:1 1 45%; min-width:320px; background:#081a2b; border:2px dashed #00f7ff; border-radius:10px; padding:1.5em; margin-bottom:1.5em; text-align:center;">
+              <h5>🎥 Démonstration Téléopération</h5>
+              <div style="background:#0a192f; border-radius:8px; padding:2em; margin:1em 0; min-height:200px; display:flex; align-items:center; justify-content:center; border:1px solid #00d1ff;">
+                <div style="color:#9452ff; font-size:3em;">▶️</div>
+              </div>
+              <p style="font-style:italic; color:#9452ff;">
+                <strong>Emplacement réservé :</strong><br>
+                Vidéo montrant le déplacement du robot en mode téléopération<br>
+                <em>Format recommandé : MP4, durée 30-60 secondes, résolution 720p minimum</em>
+              </p>
+            </div>
+          </div>
+
+          <h4>7.3 Navigation Autonome avec A*</h4>
+          <div style="display:flex; flex-wrap:wrap; gap:24px; justify-content:space-between;">
+            <div style="flex:1 1 45%; min-width:320px; background:#0a192f; border-radius:10px; padding:1em; margin-bottom:1.5em; box-shadow:0 2px 8px #111;">
+              <h5>Lancement navigation autonome</h5>
+              <pre><code># Navigation avec A*
+ros2 launch pathfinding_algorithm navigation.launch.py \
+  global_planner:=astar \
+  local_planner:=dwa
+
+# Navigation avec RRT*
+ros2 launch pathfinding_algorithm navigation.launch.py \
+  global_planner:=rrt_star \
+  local_planner:=teb</code></pre>
+              
+              <h5>Suivi de waypoints</h5>
+              <pre><code># Waypoint follower simple
+ros2 run pathfinding_algorithm smart_waypoint_follower \
+  --optimization_mode continuous \
+ros2 run pathfinding_algorithm waypoint_follower \
+  --waypoints_file ~/waypoints.yaml \
+  --replanning_frequency 10.0</code></pre>
+            </div>
+            
+            <div style="flex:1 1 45%; min-width:320px; background:#0a192f; border-radius:10px; padding:1em; margin-bottom:1.5em; box-shadow:0 2px 8px #111;">
+              <h5>Algorithmes Pathfinding - Analyse Détaillée</h5>
+              <ul style="font-size:0.9em;">
+                <li><strong>🎯 Entrées :</strong> Position, objectif, carte statique, contraintes cinématiques</li>
+                <li><strong>⚙️ Processus :</strong> 
+                  <br>• Phase 1: Planification globale (A* ou RRT*)
+                  <br>• Phase 2: Optimisation locale (DWA ou TEB)
+                  <br>• Phase 3: Lissage trajectoire (splines)
+                  <br>• Phase 4: Validation sécurité (collision checking)
+                </li>
+                <li><strong>📈 Sorties :</strong> Trajectoire optimisée, commandes vitesse, métriques performance</li>
+                <li><strong>🔄 Fonctionnalités :</strong> 
+                  <br>• Replanification dynamique en cas d'obstacle
+                  <br>• Adaptation aux contraintes du robot
+                  <br>• Optimisation multi-critères (temps, énergie, sécurité)
+                  <br>• Support différents types d'environnements
+                </li>
+                <li><strong>⚡ Performance :</strong> < 100ms pour replanification, < 10ms pour ajustements locaux</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <div class="section-doc">
+          <h3 id="api">7. Référence API</h3>
+          <table>
+            <thead>
+              <tr>
+                <th>Topic</th>
+                <th>Type</th>
+                <th>Description</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>/cmd_vel</td>
+                <td>geometry_msgs/Twist</td>
+                <td>Commande de vitesse</td>
+              </tr>
+              <tr>
+                <td>/scan</td>
+                <td>sensor_msgs/LaserScan</td>
+                <td>Données LiDAR</td>
+              </tr>
+              <tr>
+                <td>/camera/image_raw</td>
+                <td>sensor_msgs/Image</td>
+                <td>Flux vidéo</td>
+              </tr>
+              <tr>
+                <td>/odom</td>
+                <td>nav_msgs/Odometry</td>
+                <td>Odometrie</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="section-doc">
+          <h3 id="troubleshooting">8. Dépannage</h3>
+          <div class="warn">
+            <strong>Problème :</strong> Gazebo ne se lance pas<br>
+            <strong>Solution :</strong> Vérifiez les variables d'environnement et les dépendances
+            <pre><code>export GAZEBO_MODEL_PATH=$GAZEBO_MODEL_PATH:~/pathfinding_ws/src/pathfinding_algorithm/models</code></pre>
+          </div>
+          
+          <div class="tip">
+            <strong>Astuce :</strong> Pour des performances optimales, utilisez Gazebo en mode headless pour les tests automatisés :
+            <pre><code>ros2 launch pathfinding_algorithm gazebo.launch.py headless:=true</code></pre>
+          </div>
+        </div>
+
+        <div class="section-doc">
+          <h3 id="contribution">9. Guide de contribution</h3>
+          <ol>
+            <li>Forkez le dépôt GitHub</li>
+            <li>Créez une branche pour votre fonctionnalité</li>
+            <li>Soumettre une Pull Request avec :
+              <ul>
+                <li>Description des changements</li>
+                <li>Tests unitaires</li>
+                <li>Documentation mise à jour</li>
+              </ul>
+            </li>
+          </ol>
+        </div>
+
+        <div class="section-doc">
+          <h3 id="licence">10. Licence et crédits</h3>
+          <p>
+            <strong>Licence :</strong> Apache 2.0<br>
+            <strong>Équipe :</strong> UCAO-TECH 2025<br>
+            <strong>Contributeurs :</strong> Liste complète dans CONTRIBUTORS.md
+          </p>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <div style="text-align:center; margin:2em 0 1em 0;">
+    <a href="https://github.com/ros2/ros2" target="_blank" style="margin:0 0.5em;">
+      <img src="https://img.shields.io/badge/ROS2-Humble-blue?logo=ros" alt="ROS2 Humble" style="vertical-align:middle; height:28px;"/>
+    </a>
+    <a href="https://github.com/tekbot-robotics-challenge/pathfinding_algorithm" target="_blank" style="margin:0 0.5em;">
+      <img src="https://img.shields.io/badge/GitHub-Pathfinding-black?logo=github" alt="GitHub" style="vertical-align:middle; height:28px;"/>
+    </a>
+    <a href="#contact" style="margin:0 0.5em;">
+      <img src="https://img.shields.io/badge/Contact-Formulaire-9452ff?logo=gmail&logoColor=white" alt="Contact" style="vertical-align:middle; height:28px;"/>
+    </a>
+  </div>
+
+  <button onclick="window.scrollTo({top:0,behavior:'smooth'});" style="position:fixed;bottom:32px;right:32px;z-index:999;background:#00f7ff;color:#0a192f;font-weight:bold;border:none;border-radius:50%;width:48px;height:48px;box-shadow:0 2px 8px #111;cursor:pointer;font-size:1.7rem;display:none;" id="btnTop" title="Retour en haut">↑</button>
+  <script>
+    // Affichage du bouton retour en haut
+    window.addEventListener('scroll', function() {
+      document.getElementById('btnTop').style.display = (window.scrollY > 300) ? 'block' : 'none';
+    });
+
+    // Animation du sommaire déroulant
+    document.querySelectorAll('.toc ul li').forEach(function(item) {
+      item.addEventListener('click', function(e) {
+        const href = item.querySelector('a')?.getAttribute('href');
+        if(href && href.startsWith('#')) {
+          e.preventDefault();
+          const section = document.querySelector(href);
+          if(section) {
+            section.scrollIntoView({behavior:'smooth'});
+            section.classList.add('highlight-section');
+            setTimeout(()=>section.classList.remove('highlight-section'), 1200);
+          }
+        }
+      });
+    });
+  </script>
+  <style>
+    .highlight-section {
+      box-shadow: 0 0 0 4px #00f7ff99;
+      transition: box-shadow 0.3s;
+    }
+  </style>
+</body>
+</html>
