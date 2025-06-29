@@ -8,6 +8,15 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
   <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;700;900&family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet" />
   <style>
+    :root {
+      --cyber-blue: #00f7ff;
+      --cyber-purple: #9452ff;
+      --secondary: #00d1ff;
+      --dark-bg: #020c1b;
+      --card-bg: #0a192f;
+      --highlight: #00f7ff99;
+    }
+    
     /* Header */
     header {
         position: fixed;
@@ -56,6 +65,8 @@
     .nav-links {
         display: flex;
         gap: 1.5rem;
+        list-style: none;
+        padding: 0;
     }
     
     .nav-links a {
@@ -109,11 +120,12 @@
     
     /* Main Content */
     body {
-      background-color: #020c1b;
+      background-color: var(--dark-bg);
       color: #e6f1ff;
       font-family: 'Roboto', sans-serif;
       margin: 0;
       padding: 100px 1rem 1rem 1rem;
+      line-height: 1.6;
     }
 
     .section #informatique {
@@ -121,14 +133,15 @@
     }
     
     h2.cyber-title, h2, h3, h4, h5 {
-      color: #00f7ff;
+      color: var(--cyber-blue);
       font-family: 'Orbitron', sans-serif;
     }
     
     img {
       max-width: 100%;
-      border: 1px solid #00d1ff;
+      border: 1px solid var(--secondary);
       margin: 1rem 0;
+      border-radius: 6px;
     }
     
     .section-doc {
@@ -136,6 +149,7 @@
       padding: 2rem;
       border-radius: 10px;
       margin-top: 2rem;
+      border: 1px solid rgba(0, 209, 255, 0.2);
     }
     
     table {
@@ -145,30 +159,39 @@
     }
     
     th, td {
-      padding: 0.5rem;
-      border: 1px solid #00d1ff;
+      padding: 0.75rem;
+      border: 1px solid var(--secondary);
+      text-align: left;
+    }
+    
+    th {
+      background-color: #081a2b;
+      color: var(--cyber-blue);
     }
     
     a {
-      color: #00d1ff;
+      color: var(--secondary);
       text-decoration: none;
+      transition: color 0.3s ease;
     }
     
     a:hover {
-      color: #9452ff;
+      color: var(--cyber-purple);
       text-decoration: underline;
     }
     
     pre {
-      background-color: #0a192f;
+      background-color: var(--card-bg);
       padding: 1rem;
       overflow-x: auto;
-      border-left: 4px solid #00f7ff;
+      border-left: 4px solid var(--cyber-blue);
+      border-radius: 6px;
+      margin: 1rem 0;
     }
     
     code {
-      font-family: monospace;
-      color: #00f7ff;
+      font-family: 'Roboto Mono', monospace;
+      color: var(--cyber-blue);
     }
     
     .feature-card ul {
@@ -182,9 +205,10 @@
     
     .toc {
       background-color: #081a2b;
-      padding: 1rem;
+      padding: 1.5rem;
       margin: 2rem 0;
-      border-left: 4px solid #00f7ff;
+      border-left: 4px solid var(--cyber-blue);
+      border-radius: 6px;
     }
     
     .toc h4 {
@@ -197,48 +221,167 @@
     }
     
     .toc ul li {
-      margin: 0.5rem 0;
+      margin: 0.75rem 0;
+      padding-left: 1rem;
+      position: relative;
+    }
+    
+    .toc ul li:before {
+      content: "→";
+      position: absolute;
+      left: 0;
+      color: var(--cyber-blue);
     }
     
     .divider {
-      border-top: 2px dashed #00d1ff;
+      border-top: 2px dashed var(--secondary);
       margin: 2rem 0;
+      opacity: 0.5;
     }
     
     /* Specific styles from original doc */
     ul, ol { margin-left: 1.5rem; }
-    pre code { display: block; padding: 1rem; background: #0a192f; border-left: 4px solid #00f7ff; overflow-x: auto; font-family: monospace; }
-    .tip { background: #0a192f; border-left: 4px solid #00f7ff; padding: 1em; margin: 1em 0; border-radius: 6px; }
+    pre code { display: block; padding: 1rem; background: var(--card-bg); border-left: 4px solid var(--cyber-blue); overflow-x: auto; font-family: monospace; }
+    .tip { background: var(--card-bg); border-left: 4px solid var(--cyber-blue); padding: 1em; margin: 1em 0; border-radius: 6px; }
     .warn { background: #fff3e0; border-left: 4px solid #ffa726; color: #222; padding: 1em; margin: 1em 0; border-radius: 6px; }
+    kbd {
+      background-color: #eee;
+      border-radius: 3px;
+      border: 1px solid #b4b4b4;
+      box-shadow: 0 1px 1px rgba(0, 0, 0, 0.2);
+      color: #333;
+      display: inline-block;
+      font-family: monospace;
+      font-size: 0.85em;
+      line-height: 1;
+      padding: 2px 4px;
+      white-space: nowrap;
+    }
 
-    /* --- Correction responsive illustrations et cartes --- */
+    /* Cards and responsive layout */
+    .card-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 1.5rem;
+      margin: 1.5rem 0;
+    }
+    
+    .card {
+      background: var(--card-bg);
+      border-radius: 10px;
+      padding: 1.5rem;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    
+    .card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+    }
+    
+    .card h4, .card h5 {
+      margin-top: 0;
+    }
+    
+    .media-placeholder {
+      background: var(--card-bg);
+      border-radius: 8px;
+      padding: 2em;
+      margin: 1em 0;
+      min-height: 200px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      border: 1px solid var(--secondary);
+      text-align: center;
+    }
+    
+    .media-placeholder i {
+      color: var(--cyber-purple);
+      font-size: 3em;
+      margin-bottom: 0.5rem;
+    }
+    
+    .media-caption {
+      font-style: italic;
+      color: var(--cyber-purple);
+      margin-top: 1rem;
+      font-size: 0.9em;
+    }
+
+    /* Responsive adjustments */
     @media (max-width: 900px) {
       .feature-card, .section-doc > div[style*="display:flex"] {
         flex-direction: column !important;
-        max-width: 100% !important;
       }
-      .feature-card > div, .section-doc > div[style*="display:flex"] > div {
-        max-width: 100% !important;
-        min-width: 0 !important;
+      .card-grid {
+        grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
       }
     }
+    
     @media (max-width: 600px) {
       .section-doc, .feature-card, .section-doc > div[style*="display:flex"] {
         padding: 1rem !important;
       }
       h2, h3, h4, h5 {
-        font-size: 1.1rem !important;
+        font-size: 1.2rem !important;
       }
       .toc {
-        font-size: 0.98rem !important;
-        padding: 0.5rem !important;
+        font-size: 0.95rem !important;
+        padding: 1rem !important;
+      }
+      .navbar {
+        padding: 1rem;
+      }
+      .nav-links {
+        display: none;
+      }
+      .mobile-menu-btn {
+        display: block;
       }
     }
 
+    /* Animations */
     @keyframes rosfloat {
-      0% { transform: translateY(0); opacity: 1; }
+      0% { transform: translateY(16px); opacity: 1; }
       60% { opacity: 1; }
-      100% { transform: translateY(-32px); opacity: 0.7; }
+      100% { transform: translateY(-16px); opacity: 0.7; }
+    }
+    
+    @keyframes tocpulse {
+      0% { transform: scale(1); }
+      100% { transform: scale(1.05); }
+    }
+    
+    .highlight-section {
+      box-shadow: 0 0 0 4px var(--highlight);
+      transition: box-shadow 0.3s;
+    }
+    
+    /* Back to top button */
+    #btnTop {
+      position: fixed;
+      bottom: 32px;
+      right: 32px;
+      z-index: 999;
+      background: var(--cyber-blue);
+      color: var(--dark-bg);
+      font-weight: bold;
+      border: none;
+      border-radius: 50%;
+      width: 48px;
+      height: 48px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+      cursor: pointer;
+      font-size: 1.5rem;
+      display: none;
+      transition: all 0.3s ease;
+    }
+    
+    #btnTop:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
     }
   </style>
 </head>
@@ -258,33 +401,27 @@
         <li><a href="https://tekbot-robotics-challenge.github.io/2025-Team-UCAO-TECH-Docs/#contact">Contact</a></li>
         <li><a href="https://tekbot-robotics-challenge.github.io/2025-Team-UCAO-TECH-Docs/#documentation">Documentation</a></li>
       </ul>
+      <button class="mobile-menu-btn">
+        <i class="fas fa-bars"></i>
+      </button>
     </nav>
   </header>
 
   <div style="position:relative; width:100%; text-align:center; margin-top:3.5rem; margin-bottom:3.5rem;">
-          <span id="ros-float-title" style="display:inline-block; font-family:'Orbitron',sans-serif; font-size:4.5rem; font-weight:900; letter-spacing:0.2em; color:#00f7ff; text-shadow:0 4px 32px #00f7ff99,0 1px 0 #081a2b; animation:rosfloat 3.5s infinite alternate cubic-bezier(.4,0,.2,1); filter:drop-shadow(0 0 16px #00f7ff88); pointer-events:none;">
-            PATHFINDING
-          </span>
-        </div>
-        <style>
-          @keyframes rosfloat {
-            0% { transform: translateY(16px); opacity: 1; }
-            60% { opacity: 1; }
-            100% { transform: translateY(-16px); opacity: 0.7; }
-          }
-          @media (max-width: 600px) {
-            #ros-float-title { font-size: 2.2rem; }
-          }
-        </style>
-        <div class="section-title" style="margin-top:2.5rem;">
-          <h2 class="cyber-title">Documentation Complète : Algorithme Pathfinding (ROS2 Humble)</h2>
-        </div>
+    <span id="ros-float-title" style="display:inline-block; font-family:'Orbitron',sans-serif; font-size:4.5rem; font-weight:900; letter-spacing:0.2em; color:#00f7ff; text-shadow:0 4px 32px #00f7ff99,0 1px 0 #081a2b; animation:rosfloat 3.5s infinite alternate cubic-bezier(.4,0,.2,1); filter:drop-shadow(0 0 16px #00f7ff88); pointer-events:none;">
+      PATHFINDING
+    </span>
+  </div>
 
   <main>
     <section class="section" id="informatique">
       <div class="section-container">
+        <div class="section-title" style="margin-top:2.5rem;">
+          <h2 class="cyber-title">Documentation Complète : Algorithme Pathfinding (ROS2 Humble)</h2>
+        </div>
+
         <details id="toc-details" style="margin-bottom:2.5rem;">
-          <summary id="toc-summary" style="font-size:2.1rem; font-family:'Orbitron',sans-serif; color:#00f7ff; display:flex; align-items:center; gap:18px; cursor:pointer; font-weight:900; letter-spacing:0.08em; position:relative;">
+          <summary id="toc-summary" style="font-size:1.8rem; font-family:'Orbitron',sans-serif; color:#00f7ff; display:flex; align-items:center; gap:18px; cursor:pointer; font-weight:900; letter-spacing:0.08em; position:relative;">
             <span style="display:inline-block; animation:tocpulse 1.2s infinite alternate;">
               <svg width="32" height="32" viewBox="0 0 32 32"><circle cx="16" cy="16" r="16" fill="#0a192f"/><path d="M16 9v10" stroke="#00f7ff" stroke-width="2.8" stroke-linecap="round"/><circle cx="16" cy="23" r="2.3" fill="#00f7ff"/></svg>
             </span>
@@ -300,19 +437,22 @@
               <li><a href="#structure">3. Architecture du projet</a></li>
               <li><a href="#fonctionnalites">4. Fonctionnalités principales</a></li>
               <li><a href="#utilisation">5. Guide d'utilisation</a></li>
-              <li><a href="#exemples">6. Exemples pratiques</a></li>
-              <li><a href="#api">7. Référence API</a></li>
-              <li><a href="#troubleshooting">8. Dépannage</a></li>
-              <li><a href="#contribution">9. Guide de contribution</a></li>
-              <li><a href="#licence">10. Licence et crédits</a></li>
+              <li><a href="#outils">6. Outils et Technologies Avancées</a></li>
+              <li><a href="#exemples">7. Exemples Pratiques et Médias</a></li>
+              <li><a href="#api">8. Référence API</a></li>
+              <li><a href="#troubleshooting">9. Dépannage</a></li>
+              <li><a href="#contribution">10. Guide de contribution</a></li>
+              <li><a href="#licence">11. Licence et crédits</a></li>
             </ul>
           </div>
         </details>
+
         <script>
           // Animation "ROS2" visible uniquement quand le sommaire est replié
           const tocDetails = document.getElementById('toc-details');
           const rosFloat = document.getElementById('ros-float-title');
           const tocClickHint = document.getElementById('toc-click-hint');
+          
           function updateRosFloatAndHint() {
             if (tocDetails.open) {
               rosFloat.style.opacity = '0';
@@ -324,11 +464,29 @@
               tocClickHint.style.display = 'inline-block';
             }
           }
+          
           tocDetails.addEventListener('toggle', updateRosFloatAndHint);
           updateRosFloatAndHint();
+          
+          // Mobile menu toggle
+          const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
+          const navLinks = document.querySelector('.nav-links');
+          
+          mobileMenuBtn.addEventListener('click', () => {
+            navLinks.style.display = navLinks.style.display === 'flex' ? 'none' : 'flex';
+          });
+          
+          // Update mobile menu on resize
+          window.addEventListener('resize', () => {
+            if (window.innerWidth > 600) {
+              navLinks.style.display = 'flex';
+            } else {
+              navLinks.style.display = 'none';
+            }
+          });
         </script>
 
-        <!-- ICI COMMENCE LE CONTENU SPÉCIFIQUE À TEKBOT_SIM -->
+        <!-- Contenu principal -->
         <div class="section-doc">
           <h3 id="introduction">1. Introduction et objectifs</h3>
           <p>
@@ -391,26 +549,26 @@ colcon build --symlink-install</code></pre>
 
         <div class="section-doc">
           <h3 id="fonctionnalites">4. Fonctionnalités principales</h3>
-          <div class="feature-card" style="display:flex; flex-wrap:wrap; gap:16px; justify-content:space-between;">
-            <div style="flex:1 1 22%; min-width:260px; max-width:24%; background:#0a192f; border-radius:10px; padding:1.2em; margin-bottom:1.5em; box-shadow:0 2px 8px #111;">
+          <div class="card-grid">
+            <div class="card">
               <h4>4.1 Algorithmes Avancés</h4>
               <p>
                 Implémentation optimisée des meilleurs algorithmes de pathfinding : A*, Dijkstra, RRT*, et algorithmes hybrides.
               </p>
             </div>
-            <div style="flex:1 1 22%; min-width:260px; max-width:24%; background:#0a192f; border-radius:10px; padding:1.2em; margin-bottom:1.5em; box-shadow:0 2px 8px #111;">
+            <div class="card">
               <h4>4.2 Navigation Avancée</h4>
               <p>
                 Intégration avec Nav2 pour SLAM, localisation et planification de trajectoire avec optimisation des coûts.
               </p>
             </div>
-            <div style="flex:1 1 22%; min-width:260px; max-width:24%; background:#0a192f; border-radius:10px; padding:1.2em; margin-bottom:1.5em; box-shadow:0 2px 8px #111;">
+            <div class="card">
               <h4>4.3 Visualisation Temps Réel</h4>
               <p>
                 Interface RViz pour visualiser les algorithmes en action, les trajectoires calculées et les métriques de performance.
               </p>
             </div>
-            <div style="flex:1 1 22%; min-width:260px; max-width:24%; background:#0a192f; border-radius:10px; padding:1.2em; margin-bottom:1.5em; box-shadow:0 2px 8px #111;">
+            <div class="card">
               <h4>4.4 Benchmarking</h4>
               <p>
                 Outils de comparaison et d'évaluation des performances des différents algorithmes de pathfinding.
@@ -433,15 +591,15 @@ colcon build --symlink-install</code></pre>
 
         <div class="section-doc">
           <h3 id="outils">6. Outils et Technologies Avancées</h3>
-          <div style="background:#0a192f; border-left:4px solid #00f7ff; padding:1.5em; margin:1.5em 0; border-radius:6px;">
+          <div class="card" style="border-left: 4px solid var(--cyber-blue);">
             <h4>🛠️ Stack Technologique Avancée</h4>
-            <table style="width:100%; margin-top:1em;">
+            <table>
               <thead>
                 <tr>
-                  <th style="background:#081a2b; width:20%;">Technologie</th>
-                  <th style="background:#081a2b; width:25%;">Catégorie</th>
-                  <th style="background:#081a2b; width:40%;">Description Avancée</th>
-                  <th style="background:#081a2b; width:15%;">Performance</th>
+                  <th>Technologie</th>
+                  <th>Catégorie</th>
+                  <th>Description Avancée</th>
+                  <th>Performance</th>
                 </tr>
               </thead>
               <tbody>
@@ -449,77 +607,59 @@ colcon build --symlink-install</code></pre>
                   <td><strong>🧠 SLAM Toolbox</strong></td>
                   <td>Cartographie</td>
                   <td>Simultaneous Localization and Mapping pour cartographie en temps réel et localisation précise</td>
-                  <td><span style="color:#00f7ff;">⭐⭐⭐⭐⭐</span></td>
+                  <td><span style="color:var(--cyber-blue);">⭐⭐⭐⭐⭐</span></td>
                 </tr>
                 <tr>
                   <td><strong>🚀 Nav2</strong></td>
                   <td>Navigation</td>
                   <td>Stack de navigation complète avec planificateurs de chemins, contrôleurs et recovery behaviors</td>
-                  <td><span style="color:#00f7ff;">⭐⭐⭐⭐⭐</span></td>
+                  <td><span style="color:var(--cyber-blue);">⭐⭐⭐⭐⭐</span></td>
                 </tr>
                 <tr>
                   <td><strong>🎮 Téléopération</strong></td>
                   <td>Contrôle Manuel</td>
                   <td>Interface de contrôle manuel avec feedback en temps réel et safety features</td>
-                  <td><span style="color:#9452ff;">⭐⭐⭐⭐</span></td>
+                  <td><span style="color:var(--cyber-purple);">⭐⭐⭐⭐</span></td>
                 </tr>
                 <tr>
                   <td><strong>🎯 Algorithme A*</strong></td>
                   <td>Pathfinding</td>
                   <td>Algorithme classique de recherche de chemin optimal avec heuristiques personnalisables</td>
-                  <td><span style="color:#00f7ff;">⭐⭐⭐⭐⭐</span></td>
+                  <td><span style="color:var(--cyber-blue);">⭐⭐⭐⭐⭐</span></td>
                 </tr>
                 <tr>
                   <td><strong>🌟 RRT*</strong></td>
                   <td>Planification</td>
                   <td>Rapidly-exploring Random Tree optimal pour planification dans espaces complexes</td>
-                  <td><span style="color:#00d1ff;">⭐⭐⭐</span></td>
-                </tr>
-                <tr>
-                  <td><strong>👁️ RViz2</strong></td>
-                  <td>Visualisation</td>
-                  <td>Outil de visualisation 3D pour debugging, monitoring et analyse des données robotiques</td>
-                  <td><span style="color:#9452ff;">⭐⭐⭐⭐</span></td>
-                </tr>
-                <tr>
-                  <td><strong>🌍 Gazebo</strong></td>
-                  <td>Simulation</td>
-                  <td>Simulateur robotique avec physique réaliste et environnements configurables</td>
-                  <td><span style="color:#00f7ff;">⭐⭐⭐⭐⭐</span></td>
-                </tr>
-                <tr>
-                  <td><strong>📊 RQt</strong></td>
-                  <td>Outils Graphiques</td>
-                  <td>Suite d'outils graphiques pour monitoring, configuration et debug des systèmes ROS</td>
-                  <td><span style="color:#00d1ff;">⭐⭐⭐⭐</span></td>
+                  <td><span style="color:var(--secondary);">⭐⭐⭐</span></td>
                 </tr>
               </tbody>
             </table>
           </div>
 
           <h4>6.1 Algorithmes de Pathfinding</h4>
-          <div style="display:flex; flex-wrap:wrap; gap:16px; justify-content:space-between;">
-            <div style="flex:1 1 30%; min-width:280px; background:#0a192f; border-radius:10px; padding:1.2em; margin-bottom:1.5em; box-shadow:0 2px 8px #111; border-left:4px solid #9452ff;">
+          <div class="card-grid">
+            <div class="card" style="border-left:4px solid var(--cyber-purple);">
               <h5>🎯 Algorithmes Classiques</h5>
-              <ul style="font-size:0.9em;">
+              <ul>
                 <li><strong>A* :</strong> Recherche heuristique optimale</li>
                 <li><strong>Dijkstra :</strong> Plus court chemin garanti</li>
                 <li><strong>D* Lite :</strong> Replanification dynamique</li>
                 <li><strong>Theta* :</strong> Chemins any-angle</li>
               </ul>
             </div>
-            <div style="flex:1 1 30%; min-width:280px; background:#0a192f; border-radius:10px; padding:1.2em; margin-bottom:1.5em; box-shadow:0 2px 8px #111; border-left:4px solid #00f7ff;">
-              <h5>� Algorithmes Sampling</h5>
-              <ul style="font-size:0.9em;">
+            <div class="card" style="border-left:4px solid var(--cyber-blue);">
+              <h5>🌐 Algorithmes Sampling</h5>
+              <ul>
                 <li><strong>RRT :</strong> Rapidly-exploring Random Tree</li>
                 <li><strong>RRT* :</strong> Version asymptotiquement optimale</li>
                 <li><strong>PRM :</strong> Probabilistic Road Map</li>
                 <li><strong>EST :</strong> Expansive Space Trees</li>
               </ul>
             </div>
-            <div style="flex:1 1 30%; min-width:280px; background:#0a192f; border-radius:10px; padding:1.2em; margin-bottom:1.5em; box-shadow:0 2px 8px #111; border-left:4px solid #00d1ff;">
+            <div class="card" style="border-left:4px solid var(--secondary);">
               <h5>⚡ Optimisations</h5>
-              <ul style="font-size:0.9em;">
+              <ul>
                 <li><strong>Smoothing :</strong> Lissage de trajectoires</li>
                 <li><strong>Cost Maps :</strong> Cartes de coût adaptatives</li>
                 <li><strong>Multi-resolution :</strong> Planification hiérarchique</li>
@@ -533,8 +673,8 @@ colcon build --symlink-install</code></pre>
           <h3 id="exemples">7. Exemples Pratiques et Médias</h3>
           
           <h4>7.1 Cartographie SLAM</h4>
-          <div style="display:flex; flex-wrap:wrap; gap:24px; justify-content:space-between; margin:1.5em 0;">
-            <div style="flex:1 1 45%; min-width:320px; background:#0a192f; border-radius:10px; padding:1em; margin-bottom:1.5em; box-shadow:0 2px 8px #111;">
+          <div class="card-grid">
+            <div class="card">
               <h5>Commandes de lancement</h5>
               <pre><code># Lancement SLAM avec Toolbox
 ros2 launch pathfinding_algorithm slam.launch.py
@@ -548,23 +688,23 @@ ros2 launch pathfinding_algorithm navigation.launch.py \
   map:=~/maps/my_map.yaml</code></pre>
             </div>
             
-            <div style="flex:1 1 45%; min-width:320px; background:#081a2b; border:2px dashed #00f7ff; border-radius:10px; padding:1.5em; margin-bottom:1.5em; text-align:center;">
+            <div class="card">
               <h5>📸 Carte Générée par SLAM</h5>
-              <div style="background:#0a192f; border-radius:8px; padding:2em; margin:1em 0; min-height:200px; display:flex; align-items:center; justify-content:center; border:1px solid #00d1ff;">
-                <div style="color:#9452ff; font-size:3em;">🗺️</div>
-              <div>
-  <p style="font-style:italic; color:#9452ff;">
-    <strong>Emplacement réservé :</strong><br>
-    <img src="Images/Capture d’écran du 2025-06-28 16-21-22.png" alt="Carte 2D générée lors de la phase de cartographie SLAM">
-    Photo de la carte 2D générée lors de la phase de cartographie SLAM<br>
-    <em>Format recommandé : PNG, résolution minimale 800x600px</em>
-  </p>
-</div>
+              <div class="media-placeholder">
+                <i class="fas fa-map"></i>
+                <p style="font-style:italic; color:var(--cyber-purple);">
+                  <strong>Emplacement réservé :</strong><br>
+                  <img src="Images/Capture_d_écran_du_2025-06-28_16-21-22.png" alt="Carte 2D générée lors de la phase de cartographie SLAM">
+                  Photo de la carte 2D générée lors de la phase de cartographie SLAM<br>
+                  <em>Format recommandé : PNG, résolution minimale 800x600px</em>
+                </p>
+              </div>
+            </div>
           </div>
 
           <h4>7.2 Téléopération et Contrôle Manuel</h4>
-          <div style="display:flex; flex-wrap:wrap; gap:24px; justify-content:space-between; margin:1.5em 0;">
-            <div style="flex:1 1 45%; min-width:320px; background:#0a192f; border-radius:10px; padding:1em; margin-bottom:1.5em; box-shadow:0 2px 8px #111;">
+          <div class="card-grid">
+            <div class="card">
               <h5>Contrôle manuel</h5>
               <pre><code># Téléopération par clavier
 ros2 run teleop_twist_keyboard teleop_twist_keyboard
@@ -582,25 +722,25 @@ ros2 launch pathfinding_algorithm joy_teleop.launch.py</code></pre>
               </div>
             </div>
             
-            <div style="flex:1 1 45%; min-width:320px; background:#081a2b; border:2px dashed #00f7ff; border-radius:10px; padding:1.5em; margin-bottom:1.5em; text-align:center;">
+            <div class="card">
               <h5>🎥 Démonstration Téléopération</h5>
-              <div style="background:#0a192f; border-radius:8px; padding:2em; margin:1em 0; min-height:200px; display:flex; align-items:center; justify-content:center; border:1px solid #00d1ff;">
-                <div style="color:#9452ff; font-size:3em;">▶️</div>
-              <div>
-  <p style="font-style:italic; color:#9452ff;">
-    <strong>Emplacement réservé :</strong><br>
-    <video controls width="800">
-      <source src="Videos/Capture_video_du_06-28-2025_12-35-41_PM.webm" type="video/webm">
-      Vidéo montrant le déplacement du robot en mode téléopération
-    </video><br>
-    <em>Format recommandé : MP4, durée 30-60 secondes, résolution 720p minimum</em>
-  </p>
-</div>
+              <div class="media-placeholder">
+                <i class="fas fa-video"></i>
+                <p style="font-style:italic; color:var(--cyber-purple);">
+                  <strong>Emplacement réservé :</strong><br>
+                  <video controls width="100%">
+                    <source src="Videos/Capture_video_du_06-28-2025_12-35-41_PM.webm" type="video/webm">
+                    Vidéo montrant le déplacement du robot en mode téléopération
+                  </video><br>
+                  <em>Format recommandé : MP4, durée 30-60 secondes, résolution 720p minimum</em>
+                </p>
+              </div>
+            </div>
           </div>
 
           <h4>7.3 Navigation Autonome avec A*</h4>
-          <div style="display:flex; flex-wrap:wrap; gap:24px; justify-content:space-between;">
-            <div style="flex:1 1 45%; min-width:320px; background:#0a192f; border-radius:10px; padding:1em; margin-bottom:1.5em; box-shadow:0 2px 8px #111;">
+          <div class="card-grid">
+            <div class="card">
               <h5>Lancement navigation autonome</h5>
               <pre><code># Navigation avec A*
 ros2 launch pathfinding_algorithm navigation.launch.py \
@@ -621,9 +761,9 @@ ros2 run pathfinding_algorithm waypoint_follower \
   --replanning_frequency 10.0</code></pre>
             </div>
             
-            <div style="flex:1 1 45%; min-width:320px; background:#0a192f; border-radius:10px; padding:1em; margin-bottom:1.5em; box-shadow:0 2px 8px #111;">
+            <div class="card">
               <h5>Algorithmes Pathfinding - Analyse Détaillée</h5>
-              <ul style="font-size:0.9em;">
+              <ul>
                 <li><strong>🎯 Entrées :</strong> Position, objectif, carte statique, contraintes cinématiques</li>
                 <li><strong>⚙️ Processus :</strong> 
                   <br>• Phase 1: Planification globale (A* ou RRT*)
@@ -645,7 +785,7 @@ ros2 run pathfinding_algorithm waypoint_follower \
         </div>
 
         <div class="section-doc">
-          <h3 id="api">7. Référence API</h3>
+          <h3 id="api">8. Référence API</h3>
           <table>
             <thead>
               <tr>
@@ -680,7 +820,7 @@ ros2 run pathfinding_algorithm waypoint_follower \
         </div>
 
         <div class="section-doc">
-          <h3 id="troubleshooting">8. Dépannage</h3>
+          <h3 id="troubleshooting">9. Dépannage</h3>
           <div class="warn">
             <strong>Problème :</strong> Gazebo ne se lance pas<br>
             <strong>Solution :</strong> Vérifiez les variables d'environnement et les dépendances
@@ -694,7 +834,7 @@ ros2 run pathfinding_algorithm waypoint_follower \
         </div>
 
         <div class="section-doc">
-          <h3 id="contribution">9. Guide de contribution</h3>
+          <h3 id="contribution">10. Guide de contribution</h3>
           <ol>
             <li>Forkez le dépôt GitHub</li>
             <li>Créez une branche pour votre fonctionnalité</li>
@@ -709,7 +849,7 @@ ros2 run pathfinding_algorithm waypoint_follower \
         </div>
 
         <div class="section-doc">
-          <h3 id="licence">10. Licence et crédits</h3>
+          <h3 id="licence">11. Licence et crédits</h3>
           <p>
             <strong>Licence :</strong> Apache 2.0<br>
             <strong>Équipe :</strong> UCAO-TECH 2025<br>
