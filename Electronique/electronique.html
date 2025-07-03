@@ -357,4 +357,29 @@
     </section>
   </main>
 </body>
+  <style>
+    .section-container {
+        max-width: 1400px;
+        margin: 0 auto;
+        padding: 0 2rem;
+    }
+    
+    .features-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 2rem;
+        margin-top: 2rem;
+    }
+    header {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        z-index: 1000;
+        background-color: rgba(2, 12, 27, 0.9);
+        backdrop-filter: blur(10px);
+        border-bottom: 1px solid rgba(0, 209, 255, 0.2);
+        transition: all 0.3s ease;
+    }
+</style>
 </html>
