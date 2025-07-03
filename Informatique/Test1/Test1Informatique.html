@@ -1,1 +1,1109 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Test 1 - Classe Robot | TRC 2025 | UCAO-TECH</title>
+  <link rel="icon" href="https://ucaotech.com/wp-content/uploads/2024/10/UCAO-TECH-1.png" type="image/png">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;700;900&family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet" />
+  <style>
+
+/* Header */
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 1000;
+            background-color: rgba(2, 12, 27, 0.9);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(0, 209, 255, 0.2);
+            transition: all 0.3s ease;
+        }
+        
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 1rem 2rem;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            color: white;
+            text-decoration: none;
+            font-size: 1.5rem;
+            font-weight: 700;
+        }
+        
+        .logo img {
+            height: 50px;
+            transition: transform 0.5s ease;
+        }
+        
+        .logo:hover img {
+            transform: rotate(360deg);
+        }
+        
+        .logo span {
+            color: var(--secondary);
+        }
+        
+        .nav-links {
+            display: flex;
+            gap: 1.5rem;
+        }
+        
+        .nav-links a {
+            color: rgba(230, 241, 255, 0.8);
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 0.82rem;
+            text-transform: uppercase;
+            letter-spacing: 1.2px;
+            padding: 0.5rem 0.8rem;
+            position: relative;
+            transition: all 0.3s ease;
+        }
+        
+        .nav-links a::before {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: linear-gradient(90deg, var(--secondary), var(--cyber-purple));
+            transition: width 0.3s ease;
+        }
+        
+        .nav-links a:hover {
+            color: var(--cyber-blue);
+        }
+        
+        .nav-links a:hover::before {
+            width: 100%;
+        }
+        
+        .nav-links a.active {
+            color: var(--cyber-blue);
+        }
+        
+        .nav-links a.active::before {
+            width: 100%;
+        }
+        
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            color: white;
+            font-size: 1.5rem;
+            cursor: pointer;
+            z-index: 1001;
+        }
+        
+        /* Hero Section */
+        .hero {
+            height: 100vh;
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            padding: 0 2rem;
+        }
+        
+        .hero-video-container {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            z-index: -1;
+        }
+        
+        .hero-video {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            opacity: 0.3;
+        }
+        
+        .hero-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(
+                to bottom,
+                rgba(2, 12, 27, 0.8) 0%,
+                rgba(10, 25, 47, 0.5) 50%,
+                rgba(2, 12, 27, 0.8) 100%
+            );
+            z-index: -1;
+        }
+        
+        .hero-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            width: 100%;
+            padding-top: 80px;
+            animation: fadeIn 1s ease-out;
+        }
+        
+        .hero-text {
+            max-width: 800px;
+        }
+        
+        .hero h1 {
+            font-size: 3.5rem;
+            margin-bottom: 1.5rem;
+            line-height: 1.2;
+            background: linear-gradient(90deg, var(--cyber-blue), var(--light));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            text-shadow: 0 0 15px rgba(0, 247, 255, 0.3);
+        }
+        
+        .hero p {
+            font-size: 1.2rem;
+            margin-bottom: 2.5rem;
+            opacity: 0.9;
+            max-width: 700px;
+        }
+        
+        .hero-cta {
+            display: flex;
+            gap: 1.5rem;
+        }
+        
+        .btn {
+            padding: 0.9rem 2.5rem;
+            border-radius: 0;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            font-size: 0.95rem;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            position: relative;
+            overflow: hidden;
+            border: none;
+            font-family: 'Orbitron', sans-serif;
+        }
+        
+        .btn-primary {
+            background-color: transparent;
+            color: var(--cyber-blue);
+            border: 2px solid var(--secondary);
+            box-shadow: 0 0 15px rgba(0, 209, 255, 0.3);
+        }
+        
+        .btn-primary:hover {
+            background-color: rgba(0, 209, 255, 0.1);
+            box-shadow: 0 0 30px rgba(0, 209, 255, 0.6);
+            transform: translateY(-3px);
+        }
+        
+        .btn-primary::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(
+                90deg,
+                transparent,
+                rgba(0, 209, 255, 0.2),
+                transparent
+            );
+            transition: 0.5s;
+        }
+        
+        .btn-primary:hover::before {
+            left: 100%;
+        }
+        
+        .btn-outline {
+            background-color: transparent;
+            color: white;
+            border: 2px solid white;
+        }
+        
+        .btn-outline:hover {
+            background-color: rgba(255, 255, 255, 0.1);
+            box-shadow: 0 0 30px rgba(255, 255, 255, 0.3);
+            transform: translateY(-3px);
+        }
+        
+        /* Circuit Animation */
+        .circuit-animation {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            z-index: -1;
+            opacity: 0.1;
+        }
+        
+        .circuit-line {
+            position: absolute;
+            background-color: var(--secondary);
+            box-shadow: 0 0 5px var(--secondary);
+        }
+   /* Fin */
+    body {
+      padding-top: 0px;
+    }
+    body {
+      background-color: #020c1b;
+      color: #e6f1ff;
+      font-family: 'Roboto', sans-serif;
+      margin: 0;
+      padding: 0 1rem;
+    }
+
+    .section #informatique {
+      margin-top: 5em;
+    }
+    h2.cyber-title, h3, h4, h5 {
+      color: #00f7ff;
+      font-family: 'Orbitron', sans-serif;
+    }
+    img {
+      max-width: 100%;
+      border: 1px solid #00d1ff;
+      margin: 1rem 0;
+    }
+    .section-doc {
+      background-color: rgba(10, 25, 47, 0.4);
+      padding: 2rem;
+      border-radius: 10px;
+      margin-top: 2rem;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 1rem 0;
+    }
+    th, td {
+      padding: 0.5rem;
+      border: 1px solid #00d1ff;
+    }
+    a {
+      color: #00d1ff;
+      text-decoration: none;
+    }
+    a:hover {
+      color: #9452ff;
+      text-decoration: underline;
+    }
+    pre {
+      background-color: #0a192f;
+      padding: 1rem;
+      overflow-x: auto;
+      border-left: 4px solid #00f7ff;
+    }
+    code {
+      font-family: monospace;
+      color: #00f7ff;
+    }
+    .feature-card ul {
+      list-style: none;
+      padding-left: 0;
+    }
+    .feature-card ul li {
+      padding: 0.25rem 0;
+    }
+    .toc {
+      background-color: #081a2b;
+      padding: 1rem;
+      margin: 2rem 0;
+      border-left: 4px solid #00f7ff;
+    }
+    .toc h4 {
+      margin-top: 0;
+    }
+    .toc ul {
+      list-style: none;
+      padding-left: 0;
+    }
+    .toc ul li {
+      margin: 0.5rem 0;
+    }
+    .divider {
+      border-top: 2px dashed #00d1ff;
+      margin: 2rem 0;
+    }
+  /* Zoom modal pour les diagrammes */
+  .zoom-modal {
+    display: none;
+    position: fixed;
+    z-index: 9999;
+    left: 0;
+    top: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0,0,0,0.85);
+    justify-content: center;
+    align-items: center;
+    cursor: zoom-out;
+  }
+  .zoom-modal img {
+    max-width: 90vw;
+    max-height: 90vh;
+    border: 4px solid #00d1ff;
+    border-radius: 12px;
+    background: #fff;
+    box-shadow: 0 0 40px #00d1ff55;
+  }
+  </style>
+</head>
+<body>
+
+  <!-- Header -->
+    <header>
+        <nav class="navbar">
+            <a href="https://tekbot-robotics-challenge.github.io/2025-Team-UCAO-TECH-Docs" class="logo">
+                <img src="https://ucaotech.com/wp-content/uploads/2024/10/UCAO-TECH-1.png" alt="UCAO-TECH Logo">
+                <span>UCAO-TECH</span>
+            </a>
+            <ul class="nav-links">
+                <li><a href="https://tekbot-robotics-challenge.github.io/2025-Team-UCAO-TECH-Docs">Accueil</a></li>
+                <li><a href="https://tekbot-robotics-challenge.github.io/2025-Team-UCAO-TECH-Docs/#a-propos">À propos</a></li>
+                <li><a href="https://tekbot-robotics-challenge.github.io/2025-Team-UCAO-TECH-Docs/#equipe">Équipe</a></li>
+                <li><a href="https://tekbot-robotics-challenge.github.io/2025-Team-UCAO-TECH-Docs/#contact">Contact</a></li>
+                <li><a href="https://tekbot-robotics-challenge.github.io/2025-Team-UCAO-TECH-Docs/#documentation">Documentation</a></li>
+            </ul>
+        </nav>
+    </header>
+    <!--  -->
+  <main>
+    <section class="section" id="informatique">
+      <div class="section-container">
+
+
+
+        <!-- Grand espace vide pour décaler le test sous l'en-tête -->
+        <div style="height:120px;"></div>
+
+        <!-- Introduction du test, sans cadre -->
+        <h2 style="color:#00f7ff;font-family:'Orbitron',sans-serif;margin-top:0;margin-bottom:0.7em;font-size:1.5em;">Test 1 – Création d’une classe pour un robot</h2>
+        <p style="color:#ccd6f6;font-size:1.13em;margin-bottom:2em;">Ce test porte sur la conception, l’implémentation et la documentation d’une architecture orientée objet autour d’une classe <strong>Robot</strong> principale, socle de l’ensemble des développements robotiques du projet TEKBOT. Vous trouverez ci-dessous le contexte, les objectifs, la structure du projet, les diagrammes UML, les extraits de code et la justification détaillée de chaque classe.</p>
+
+        <div class="toc">
+          <h4>Sommaire</h4>
+          <ul>
+            <li><a href="#contexte-concours">1. Contexte du concours</a></li>
+            <li><a href="#objectifs">2. Objectifs du Test 1</a></li>
+            <li><a href="#structure-projet">3. Structure du projet</a></li>
+            <li><a href="#poo-principes">4. Programmation Orientée Objet</a></li>
+            <li><a href="#technologies">5. Technologies utilisées</a></li>
+            <li><a href="#diagrammes">6. Diagrammes UML</a></li>
+            <li><a href="#architecture">7. Architecture des classes</a></li>
+            <li><a href="#implementation">8. Extraits de code</a></li>
+            <li><a href="#simulation">9. Simulation visuelle</a></li>
+            <li><a href="#references">10. Références</a></li>
+          </ul>
+        </div>
+
+        <div class="section-doc">
+          <h3 id="contexte-concours">1. Contexte</h3>
+
+          <p>La robotique occupe aujourd’hui une place centrale dans l’innovation technologique, combinant informatique, électronique et mécanique pour concevoir des systèmes intelligents capables d’interagir avec leur environnement. Ce projet s’inscrit dans le cadre du Tekbot Robotics Challenge 2025 et constitue l’épreuve d’introduction à la partie informatique du concours. Il s’agit de concevoir et d’implémenter une architecture orientée objet autour d’une classe <strong>Robot</strong> principale, qui servira de base à l’ensemble des développements robotiques à venir. La démarche vise à initier les étudiants à la modélisation logicielle, à la structuration de code et à la réflexion sur l’architecture logicielle dans un contexte robotique. L’accent est mis sur la compréhension des concepts fondamentaux de la programmation orientée objet et leur application concrète dans un projet technique.</p>
+
+          <h3 id="objectifs">2. Objectifs</h3>
+          <p>Les objectifs sont :</p>
+          <ul>
+            <li>Concevoir une classe <strong>Robot</strong> respectant les principes de la programmation orientée objet : encapsulation, héritage, polymorphisme.</li>
+            <li>Implémenter au moins deux sous-classes spécialisées dérivées de la classe Robot.</li>
+            <li>Redéfinir la méthode <code>move()</code> dans les sous-classes pour illustrer le polymorphisme.</li>
+            <li>Assurer une encapsulation correcte des attributs (attributs privés, getters/setters).</li>
+            <li>Fournir une documentation UML claire et conforme.</li>
+          </ul>
+          
+          
+
+
+
+          <div class="divider"></div>
+
+          <h3 id="structure-projet">3. Structure du projet</h3>
+          <p>Le projet TEKBOT est organisé selon une architecture modulaire fidèle à l’arborescence réelle du dossier :</p>
+<ul>
+  <li><strong>tekbot_classes/</strong>
+    <ul>
+      <li>__init__.py</li>
+      <li><strong>action/</strong>
+        <ul>
+          <li>__init__.py</li>
+          <li>actionneur.py</li>
+          <li>action_system.py</li>
+          <li>bras_robotique.py</li>
+          <li>moteur.py</li>
+        </ul>
+      </li>
+      <li><strong>core/</strong>
+        <ul>
+          <li>__init__.py</li>
+          <li>position.py</li>
+          <li>robot.py</li>
+          <li>robot_mobile.py</li>
+        </ul>
+      </li>
+      <li><strong>gestion_dechets/</strong>
+        <ul>
+          <li>__init__.py</li>
+          <li>dechet.py</li>
+          <li>gestionnaire_stockage.py</li>
+        </ul>
+      </li>
+      <li><strong>intelligence/</strong>
+        <ul>
+          <li>__init__.py</li>
+          <li>gestionnaire_energie.py</li>
+          <li>ia.py</li>
+          <li>intelligence_system.py</li>
+          <li>systeme_navigation.py</li>
+        </ul>
+      </li>
+      <li><strong>perception/</strong>
+        <ul>
+          <li>__init__.py</li>
+          <li>camera.py</li>
+          <li>capteur.py</li>
+          <li>gyroscope.py</li>
+          <li>perception_system.py</li>
+          <li>temperature.py</li>
+        </ul>
+      </li>
+      <li><strong>ui/</strong>
+        <ul>
+          <li>__init__.py</li>
+          <li>ihm.py</li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+</ul>
+
+
+          <div class="divider"></div>
+
+          <h3 id="poo-principes">4. Programmation Orientée Objet - Implémentation Complète</h3>
+          <p>Le projet TEKBOT illustre les grands principes de la POO à travers une architecture modulaire et réaliste. Voici une explication pédagogique de chaque concept, accompagnée d’exemples concrets issus du code du projet.</p>
+
+          <div class="feature-card">
+            <h4>4.0 LE CONSTRUCTEUR – Initialisation des Objets</h4>
+            <p><strong>Définition détaillée :</strong> Le constructeur est une méthode spéciale d’une classe (en Python, <code>__init__</code>) qui est appelée automatiquement lors de la création d’un nouvel objet. Il permet d’initialiser les attributs de l’objet avec des valeurs de départ, garantissant que chaque instance commence dans un état cohérent.</p>
+            <p><strong>Exemple dans le projet :</strong></p>
+            <pre><code>class Robot:
+    def __init__(self, nom: str, energie: float = 100.0):
+        self._nom = nom
+        self._energie = energie
+        self._etat = "prêt"
+</code></pre>
+            <p>Le constructeur <code>__init__</code> initialise ici le nom, l’énergie et l’état du robot dès sa création.</p>
+          </div>
+
+          <div class="feature-card">
+            <h4>4.1 ENCAPSULATION – Protection et Contrôle</h4>
+            <p><strong>Définition détaillée :</strong> L’encapsulation est le principe qui consiste à regrouper les données (attributs) et les méthodes qui manipulent ces données au sein d’une même entité (la classe). Elle protège l’état interne de l’objet en rendant certains attributs privés (préfixe <code>_</code> ou <code>__</code>), accessibles uniquement via des méthodes publiques appelées accesseurs (getters) et mutateurs (setters). Cela permet de contrôler la modification des données et d’éviter les incohérences.</p>
+            <p><strong>Exemple dans le projet :</strong></p>
+            <pre><code>class Capteur(ABC):
+    def __init__(self, id_capteur: str, type_capteur: str):
+        self._id = id_capteur.strip()      # Attribut privé
+        self._type = type_capteur.strip()  # Attribut privé
+        self._valeur = 0.0                 # Attribut privé
+
+    def get_valeur(self) -> float:
+        return self._valeur
+
+    def set_valeur(self, v: float):
+        if v >= 0:
+            self._valeur = v
+        else:
+            raise ValueError("Valeur invalide")
+</code></pre>
+            <p>Ici, les attributs sont protégés et l’accès se fait via des méthodes dédiées, garantissant la cohérence des valeurs.</p>
+          </div>
+
+          <div class="feature-card">
+            <h4>4.2 HÉRITAGE – Réutilisation et Spécialisation</h4>
+            <p><strong>Définition détaillée :</strong> L’héritage permet de créer une nouvelle classe (dite « fille » ou « dérivée ») à partir d’une classe existante (dite « mère » ou « de base »). La classe fille hérite des attributs et méthodes de la classe mère, ce qui favorise la réutilisation du code et la spécialisation. Elle peut aussi redéfinir ou étendre certains comportements.</p>
+            <p><strong>Exemple dans le projet :</strong></p>
+            <pre><code>class Robot(ABC):
+    # Classe abstraite de base
+
+class RobotMobile(Robot):
+    def __init__(self, nom: str, vitesse: float):
+        super().__init__(nom)  # Appel du constructeur parent
+        self._vitesse_max = float(vitesse)
+</code></pre>
+            <p>La classe <code>RobotMobile</code> hérite de <code>Robot</code> et ajoute des fonctionnalités spécifiques liées à la mobilité.</p>
+          </div>
+
+          <div class="feature-card">
+            <h4>4.3 POLYMORPHISME – Flexibilité et Extensibilité</h4>
+            <p><strong>Définition détaillée :</strong> Le polymorphisme permet d’utiliser la même interface (méthode ou attribut) pour des objets de types différents. Chaque sous-classe peut redéfinir la méthode héritée pour adapter son comportement. Ainsi, le même appel de méthode peut produire des effets différents selon l’objet ciblé.</p>
+            <p><strong>Exemple dans le projet :</strong></p>
+            <pre><code>class Capteur(ABC):
+    @abstractmethod
+    def lire_valeur(self):
+        pass
+
+class Camera(Capteur):
+    def lire_valeur(self):
+        # Spécifique à la caméra
+
+class Gyroscope(Capteur):
+    def lire_valeur(self):
+        # Spécifique au gyroscope
+
+# Utilisation polymorphique
+capteurs = [Camera(...), Gyroscope(...)]
+for capteur in capteurs:
+    capteur.lire_valeur()  # Appelle la méthode adaptée à chaque type
+</code></pre>
+            <p>La même méthode (<code>lire_valeur</code>) est appelée sur chaque objet, mais le comportement dépend de la sous-classe concrète.</p>
+          </div>
+
+          <div class="feature-card">
+            <h4>4.4 ABSTRACTION – Simplification et Modularité</h4>
+            <p><strong>Définition détaillée :</strong> L’abstraction consiste à définir des classes ou méthodes sans implémentation concrète (classes ou méthodes abstraites). Elle impose un contrat aux sous-classes, qui devront fournir leur propre implémentation. Cela permet de structurer le code et de clarifier les responsabilités de chaque classe.</p>
+            <p><strong>Exemple dans le projet :</strong></p>
+            <pre><code>from abc import ABC, abstractmethod
+
+class Robot(ABC):
+    @abstractmethod
+    def move(self):
+        pass  # Doit être redéfinie dans les sous-classes
+</code></pre>
+            <p>La classe <code>Robot</code> impose la présence de la méthode <code>move()</code> dans ses sous-classes, sans en donner le détail.</p>
+          </div>
+
+          <div class="feature-card">
+            <h4>4.5 COMPOSITION & AGRÉGATION – Construction d’objets complexes</h4>
+            <p><strong>Définition détaillée :</strong> La composition et l’agrégation sont des relations qui permettent de construire des objets complexes à partir d’autres objets. La composition implique que l’objet composé possède et gère le cycle de vie de ses composants ; l’agrégation indique une relation plus souple, où les objets peuvent exister indépendamment.</p>
+            <p><strong>Exemple dans le projet :</strong></p>
+            <pre><code>class ActionSystem:
+    def __init__(self):
+        self._actionneurs: Dict[str, Actionneur] = {}
+        self._moteurs: List[Moteur] = []
+        self._bras_robotiques: List[BrasRobotique] = []
+</code></pre>
+            <p>La classe <code>ActionSystem</code> est composée d’objets <code>Moteur</code>, <code>BrasRobotique</code> et <code>Actionneur</code> : elle orchestre leur fonctionnement. De même, <code>RobotMobile</code> possède des sous-systèmes comme <code>GestionnaireStockage</code> ou <code>IA</code> (composition/agrégation).</p>
+          </div>
+
+          <div class="divider"></div>
+
+          <h3 id="technologies">5. Technologies et Outils Utilisés</h3>
+          <div style="display: flex; gap: 2rem; flex-wrap: wrap; margin-bottom: 2rem;">
+            <div style="flex: 1 1 340px; min-width: 280px; background: rgba(10,25,47,0.7); border: 2px solid #00d1ff; border-radius: 10px; padding: 1.2rem 1rem 1rem 1rem; box-shadow: 0 0 12px #00d1ff33;">
+              <h4 style="margin-top:0;">5.1 Langages et Outils de Développement</h4>
+              <ul>
+                <li><strong>Python 3.11+</strong> — Langage principal pour l’architecture orientée objet et la logique métier</li>
+                <li><strong>Pygame 2.6+</strong> — Simulation graphique interactive et visualisation robotique</li>
+                <li><strong>VS Code</strong> — Environnement de développement moderne et modulaire</li>
+                <li><strong>Git</strong> — Gestion de versions et collaboration</li>
+              </ul>
+            </div>
+            <div style="flex: 1 1 340px; min-width: 280px; background: rgba(10,25,47,0.7); border: 2px solid #00d1ff; border-radius: 10px; padding: 1.2rem 1rem 1rem 1rem; box-shadow: 0 0 12px #00d1ff33;">
+              <h4 style="margin-top:0;">5.2 Architecture, Modélisation et Organisation</h4>
+              <ul>
+                <li><strong>PlantUML</strong> — Génération de diagrammes UML (classes, séquence, activités, cas d’utilisation)</li>
+                <li><strong>Design Patterns</strong> — Singleton, Observer, Strategy, State pour la robustesse logicielle</li>
+                <li><strong>Architecture modulaire</strong> — Séparation claire des responsabilités en packages Python</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="divider"></div>
+
+          <h3 id="diagrammes">6. Collection Complète des Diagrammes UML</h3>
+          <p>La modélisation UML du projet TEKBOT s’appuie sur plusieurs types de diagrammes, chacun ayant un objectif précis dans la compréhension et la documentation du système. Voici la définition de chaque type de diagramme utilisé, suivie de son illustration et de ses points clés.<br><br>
+          <strong>Astuce :</strong> Cliquez sur chaque diagramme pour l’agrandir et zoomer dessus (fonctionnalité de zoom intégrée ci-dessous).</p>
+
+          <div class="feature-card">
+            <h4>6.1 Diagramme de Classes Principal (avec packages)</h4>
+            <p><strong>Définition :</strong> Le diagramme de classes UML représente la structure statique du système : il montre les classes, leurs attributs, méthodes, ainsi que les relations (héritage, composition, agrégation, associations) entre elles. Il permet de visualiser l’architecture orientée objet et la répartition des responsabilités.</p>
+            <p><strong>Objectif :</strong> Offrir une vue d’ensemble de l’architecture logicielle, faciliter la compréhension des interactions entre modules et guider l’implémentation du code.</p>
+            <a href="diagramme_simple.svg" target="_blank" class="zoomable-diagram"><img src="diagramme_simple.svg" alt="Diagramme de Classes TEKBOT - Architecture POO Complète" style="max-width: 100%; border: 2px solid #00d1ff; border-radius: 10px; cursor: zoom-in;" /></a>
+            <p><strong>Points clés illustrés :</strong></p>
+            <ul>
+              <li><strong>Héritage</strong> : Robot → RobotMobile, BrasRobotique</li>
+              <li><strong>Composition</strong> : Robot contient PerceptionSystem, ActionSystem</li>
+              <li><strong>Agrégation</strong> : Robot utilise Navigation, GestionnaireStockage</li>
+              <li><strong>Polymorphisme</strong> : Méthodes virtuelles redéfinies</li>
+              <li><strong>Encapsulation</strong> : Attributs privés + méthodes publiques</li>
+            </ul>
+          </div>
+
+          <div class="feature-card">
+            <h4>6.2 Diagramme de Classes (sans packages)</h4>
+            <p><strong>Définition :</strong> Ce diagramme de classes simplifié présente uniquement les classes principales et leurs relations, sans la structure de packages, pour une lecture plus directe des liens POO.</p>
+            <p><strong>Objectif :</strong> Permettre une compréhension rapide des relations d’héritage, de composition et d’agrégation entre les classes majeures du projet.</p>
+            <a href="diagramme_simple_sans_package.svg" target="_blank" class="zoomable-diagram"><img src="diagramme_simple_sans_package.svg" alt="Diagramme de Classes TEKBOT - Sans packages" style="max-width: 100%; border: 2px solid #00d1ff; border-radius: 10px; cursor: zoom-in;" /></a>
+          </div>
+          </div>
+
+          <div class="feature-card">
+            <h4>6.3 Diagramme de Séquence - Interaction Dynamique</h4>
+            <p><strong>Définition :</strong> Le diagramme de séquence UML décrit l’enchaînement temporel des messages échangés entre objets lors d’un scénario précis. Il met en avant l’ordre des interactions, les appels de méthodes et la synchronisation entre les composants.</p>
+            <p><strong>Objectif :</strong> Illustrer le déroulement dynamique d’un cas d’utilisation, clarifier la logique d’exécution et détecter d’éventuels problèmes de synchronisation ou de conception.</p>
+            <a href="diagramme_sequence.svg" target="_blank" class="zoomable-diagram"><img src="diagramme_sequence.svg" alt="Diagramme de Séquence TEKBOT - Interactions entre objets" style="max-width: 100%; border: 2px solid #00d1ff; border-radius: 10px; cursor: zoom-in;" /></a>
+            <p><strong>Séquence illustrée :</strong></p>
+            <ul>
+              <li>1⃣ <strong>Initialisation</strong> du robot et des systèmes</li>
+              <li>2⃣ <strong>Perception</strong> de l'environnement via capteurs</li>
+              <li>3⃣ <strong>Analyse IA</strong> et prise de décision</li>
+              <li>4⃣ <strong>Navigation</strong> vers le déchet détecté</li>
+              <li>5⃣ <strong>Collecte</strong> via le bras robotique</li>
+              <li>6⃣ <strong>Stockage</strong> et tri automatique</li>
+            </ul>
+          </div>
+
+          <div class="feature-card">
+            <h4>6.4 Diagramme d'Activités - Flux de Traitement</h4>
+            <p><strong>Définition :</strong> Le diagramme d’activités UML modélise les flux de contrôle et de données d’un processus métier ou d’un algorithme. Il met en évidence les étapes, les décisions, les boucles et les conditions qui structurent le déroulement d’une mission ou d’une fonctionnalité.</p>
+            <p><strong>Objectif :</strong> Comprendre et optimiser les processus, identifier les points de décision et les alternatives, et documenter les scénarios complexes.</p>
+            <div style="display: flex; flex-direction: row; gap: 2rem; align-items: flex-start;">
+              <div style="flex:2; min-width:0; display: flex; flex-direction: column; justify-content: stretch; height: 100%;">
+                <div style="height: 100%; min-height: 0; display: flex; align-items: stretch;">
+                  <div style="height: 100%; min-height: 350px; max-height: 520px; overflow: hidden; position: relative; border-radius: 10px; border: 2px solid #00d1ff; margin-bottom: 0.7em; width: 100%; display: flex; align-items: stretch;">
+                    <a href="diagramme_activites.svg" target="_blank" class="zoomable-diagram" style="width: 100%; display: flex; align-items: stretch; height: 100%;">
+                      <img src="diagramme_activites.svg" alt="Diagramme d'Activités TEKBOT - Flux de traitement" style="width: 100%; height: 100%; object-fit: cover; max-width: none; max-height: 520px; display: block; cursor: zoom-in; filter: brightness(0.98);" />
+                    </a>
+                  </div>
+                </div>
+              </div>
+              <div style="flex:1; min-width:220px; max-width:350px; background:rgba(10,25,47,0.7); border:2px solid #00d1ff; border-radius:10px; padding:1.2rem 1rem 1rem 1rem; box-shadow:0 0 12px #00d1ff33; margin-top:0; display: flex; flex-direction: column; justify-content: stretch; height: 100%;">
+                <h4 style="margin-top:0; margin-bottom:0.5em; color:#00f7ff; font-family:'Orbitron',sans-serif;">À retenir</h4>
+                <div style="margin-top:0.2em; color:#8892b0; font-size:0.98em;">Astuce : Cliquez sur le diagramme pour l’agrandir.</div>
+                <div style="margin-top:0.8em; color:#ccd6f6; font-size:1em; line-height:1.6;">
+                  <strong>Commentaire sur le diagramme d'activités :</strong><br>
+                  Ce diagramme d’activités illustre le déroulement complet d’une mission du robot TEKBOT, depuis l’initialisation jusqu’à la collecte et la gestion intelligente des déchets. Il met en avant les différentes étapes clés : démarrage, exploration, gestion de l’énergie, collecte priorisée et conditions d’arrêt. Les flèches et les branches conditionnelles permettent de visualiser les choix possibles et les boucles de traitement, ce qui facilite la compréhension des scénarios réels et la validation des algorithmes avant leur implémentation. Ce type de diagramme est particulièrement utile pour anticiper les cas particuliers, optimiser les processus et assurer la robustesse du système face aux imprévus.
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="feature-card">
+            <h4>6.5 Diagramme de Cas d'Utilisation - Interactions Utilisateur</h4>
+            <p><strong>Définition :</strong> Le diagramme de cas d’utilisation UML présente les différents acteurs (utilisateurs ou systèmes externes) et les fonctionnalités principales auxquelles ils ont accès. Il met en lumière les interactions possibles et les scénarios d’utilisation du système.</p>
+            <p><strong>Objectif :</strong> Identifier les besoins fonctionnels, clarifier le périmètre du système et faciliter la communication entre les parties prenantes (développeurs, utilisateurs, clients).</p>
+            <a href="diagramme_cas_utilisation.svg" target="_blank" class="zoomable-diagram"><img src="diagramme_cas_utilisation.svg" alt="Diagramme de Cas d'Utilisation TEKBOT" style="max-width: 100%; border: 2px solid #00d1ff; border-radius: 10px; cursor: zoom-in;" /></a>
+            <p><strong>Acteurs et cas d'usage :</strong></p>
+            <ul>
+              <li><strong>Opérateur</strong> : Lancer mission, surveiller état, arrêter robot</li>
+              <li><strong>Technicien</strong> : Configurer paramètres, maintenance, diagnostics</li>
+              <li><strong>Superviseur</strong> : Analyser performances, générer rapports</li>
+              <li><strong>Robot (Acteur système)</strong> : Exécution autonome des tâches</li>
+            </ul>
+          </div>
+
+          <div class="divider"></div>
+
+          <h3 id="architecture">7. Justification détaillée et rôle stratégique des 19 classes du projet</h3>
+          <p>La conception du projet TEKBOT repose sur une architecture orientée objet rigoureuse, où chaque classe joue un rôle précis et indispensable dans la robustesse, la modularité et l’intelligence du système. La pertinence de chaque classe s’explique par sa contribution directe à la séparation des responsabilités, à la réutilisabilité du code et à la capacité d’évolution du robot. Ce choix réfléchi permet d’assurer une architecture claire, évolutive et adaptée aux défis de la robotique moderne. Vous trouverez ci-dessous, pour chaque classe, une justification détaillée de son existence et de son utilité concrète dans l’architecture TEKBOT.</p>
+          <style>
+          .classes-flex {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+          }
+          .class-card {
+            background: rgba(10,25,47,0.7);
+            border: 2px solid #00d1ff;
+            border-radius: 10px;
+            flex: 1 1 28%;
+            min-width: 260px;
+            max-width: 32%;
+            margin-bottom: 1.5rem;
+            padding: 1.1rem 1rem 0.7rem 1rem;
+            box-shadow: 0 0 12px #00d1ff33;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+          }
+          .class-card h5 {
+            margin: 0 0 0.5em 0;
+            color: #00f7ff;
+            font-size: 1.1em;
+            font-family: 'Orbitron', sans-serif;
+          }
+          .class-card p {
+            margin: 0 0 0.5em 0;
+            font-size: 0.98em;
+          }
+          @media (max-width: 900px) {
+            .classes-flex { flex-direction: column; }
+            .class-card { max-width: 100%; min-width: 0; }
+          }
+          </style>
+          <div class="classes-flex">
+            <div class="class-card">
+              <h5>Robot (Abstraite)</h5>
+              <p>Sert de socle à toute l’architecture : elle définit les attributs et méthodes essentiels (identité, énergie, état, interface de mouvement) et impose un contrat commun à toutes les variantes de robots. Elle garantit la cohérence, la sécurité et la possibilité d’extension par héritage, tout en favorisant le polymorphisme et la factorisation du code.</p>
+            </div>
+            <div class="class-card">
+              <h5>RobotMobile</h5>
+              <p>Spécialise la classe Robot pour la mobilité : elle gère la navigation autonome, la planification de chemin, l’orientation et la gestion dynamique de la vitesse. Elle illustre l’héritage, la redéfinition de méthodes et permet d’intégrer des algorithmes avancés de déplacement (A*, évitement d’obstacles, etc.).</p>
+            </div>
+            <div class="class-card">
+              <h5>BrasRobotique</h5>
+              <p>Représente le sous-système de manipulation : elle encapsule la logique de préhension, de collecte et de tri des objets. Sa séparation permet d’ajouter ou de modifier les capacités de manipulation sans impacter le cœur du robot, illustrant la composition et l’extensibilité matérielle.</p>
+            </div>
+          </div>
+          <div class="classes-flex">
+            <div class="class-card">
+              <h5>Actionneur</h5>
+              <p>Abstraction de tout dispositif effectuant une action physique (moteur, pince, bras, etc.). Elle favorise la réutilisation, la maintenance et l’ajout de nouveaux actionneurs, tout en garantissant une interface commune pour le contrôle des éléments matériels.</p>
+            </div>
+            <div class="class-card">
+              <h5>Moteur</h5>
+              <p>Spécialise l’actionneur pour la propulsion : elle gère la vitesse, le sens de rotation et la puissance. Elle permet d’isoler la logique de déplacement mécanique et d’optimiser la gestion énergétique du robot.</p>
+            </div>
+            <div class="class-card">
+              <h5>ActionSystem</h5>
+              <p>Centralise et orchestre tous les actionneurs : elle applique le pattern façade pour simplifier l’interface de contrôle, permet de coordonner plusieurs dispositifs physiques et d’assurer la cohérence des actions du robot.</p>
+            </div>
+          </div>
+          <div class="classes-flex">
+            <div class="class-card">
+              <h5>PerceptionSystem</h5>
+              <p>Système central de gestion des capteurs : il réalise la fusion des données, la détection d’événements et l’analyse de l’environnement. Il permet d’ajouter facilement de nouveaux capteurs et d’optimiser la perception globale du robot.</p>
+            </div>
+            <div class="class-card">
+              <h5>Camera</h5>
+              <p>Capteur spécialisé pour la vision : elle gère la capture d’images, la détection d’objets et l’analyse visuelle. Elle est essentielle pour la navigation intelligente et la reconnaissance de l’environnement.</p>
+            </div>
+            <div class="class-card">
+              <h5>Gyroscope</h5>
+              <p>Capteur d’orientation : il mesure les rotations, stabilise la navigation et permet au robot de s’adapter aux changements de direction ou de terrain.</p>
+            </div>
+          </div>
+          <div class="classes-flex">
+            <div class="class-card">
+              <h5>Temperature</h5>
+              <p>Capteur thermique : il surveille la température de l’environnement ou des composants internes, permettant la détection de surchauffe ou d’anomalies, et contribue à la sécurité du robot.</p>
+            </div>
+            <div class="class-card">
+              <h5>Capteur</h5>
+              <p>Classe abstraite pour tous les capteurs : elle impose une interface commune, garantit la cohérence des lectures et facilite l’ajout de nouveaux types de capteurs sans modifier le reste du système.</p>
+            </div>
+            <div class="class-card">
+              <h5>IntelligenceSystem</h5>
+              <p>Cerveau décisionnel du robot : il analyse les données, planifie les missions, applique des stratégies d’IA et prend des décisions en temps réel pour optimiser le comportement du robot.</p>
+            </div>
+          </div>
+          <div class="classes-flex">
+            <div class="class-card">
+              <h5>IA</h5>
+              <p>Module d’intelligence artificielle : il permet d’expérimenter différentes approches (systèmes experts, apprentissage, adaptation) et d’implémenter des comportements évolués pour le robot.</p>
+            </div>
+            <div class="class-card">
+              <h5>SystemeNavigation</h5>
+              <p>Système dédié à la planification de chemin, à l’évitement d’obstacles et à la gestion des déplacements complexes. Il rend la navigation autonome, fiable et optimisée.</p>
+            </div>
+            <div class="class-card">
+              <h5>GestionnaireEnergie</h5>
+              <p>Supervise la consommation, la recharge et l’optimisation de l’autonomie énergétique : il permet au robot d’adapter son comportement en fonction de son niveau d’énergie et d’éviter les pannes.</p>
+            </div>
+          </div>
+          <div class="classes-flex">
+            <div class="class-card">
+              <h5>Dechet</h5>
+              <p>Modélise chaque déchet détecté : elle stocke ses propriétés (type, position, état), permet le tri, la gestion intelligente et la traçabilité des déchets collectés par le robot.</p>
+            </div>
+            <div class="class-card">
+              <h5>GestionnaireStockage</h5>
+              <p>Gère le stockage, le tri et la capacité des déchets collectés : elle optimise la logistique embarquée, prévient les débordements et assure la bonne organisation des déchets.</p>
+            </div>
+            <div class="class-card">
+              <h5>IHM</h5>
+              <p>Interface Homme-Machine : elle permet l’interaction utilisateur, la visualisation en temps réel et le contrôle du robot, rendant le système accessible et pilotable.</p>
+            </div>
+          </div>
+          <div class="classes-flex">
+            <div class="class-card" style="min-width:260px;max-width:32%;">
+              <h5>Position</h5>
+              <p>Représente la position spatiale : elle est utilisée pour la navigation, la détection, la gestion des déplacements et la simulation graphique. Elle constitue la base de toute logique spatiale dans le projet.</p>
+            </div>
+          </div>
+
+          
+
+          <div class="divider"></div>
+
+
+
+
+          <h3 id="implementation">8. Extraits de code interactifs des classes principales</h3>
+
+          <div class="collapsible-code">
+            <div class="collapsible-header">Classe Robot (core/robot.py)</div>
+            <!-- Aperçu supprimé car doublon inutile -->
+            <div class="collapsible-content"><pre><code class="language-python">class Robot(ABC):
+    """
+    Classe abstraite Robot - Classe mère pour tous les types de robots.
+    
+    Énumération intégrée EtatRobot selon le diagramme UML.
+    Utilise les principes d'abstraction et de composition.
+    """
+    class EtatRobot(Enum):
+        """
+        Énumération des états possibles du robot intégrée dans la classe Robot.
+        """
+        ARRET = auto()
+        ACTIF = auto()
+        COLLECTE = auto()
+        TRI = auto()
+        LIVRAISON = auto()
+        MAINTENANCE = auto()
+        ECONOMIE_ENERGIE = auto()
+        def __str__(self) -> str:
+            return self.name
+        def is_operational(self) -> bool:
+            return self in [Robot.EtatRobot.ACTIF, Robot.EtatRobot.COLLECTE, 
+                          Robot.EtatRobot.TRI, Robot.EtatRobot.LIVRAISON]
+    def __init__(self, nom: str):
+        if not nom or not isinstance(nom, str):
+            raise ValueError("Le nom du robot doit être une chaîne non vide")
+        self._nom = nom.strip()
+        self._etat = Robot.EtatRobot.ARRET
+        self._energie = 100.0
+        self._mode_manuelle = False
+        self._perception_system = None
+        self._action_system = None
+        self._systeme_navigation = None
+        self._gestionnaire_energie = None
+        self._ihm = None
+        from .position import Position
+        self._position = Position(0.0, 0.0, 0.0)
+    # === GETTERS ET SETTERS (Encapsulation) ===
+    def get_nom(self) -> str:
+        return self._nom
+    def set_nom(self, nom: str) -> None:
+        if not nom or not isinstance(nom, str):
+            raise ValueError("Le nom doit être une chaîne non vide")
+        self._nom = nom.strip()
+    def get_etat(self) -> 'Robot.EtatRobot':
+        return self._etat
+    def set_etat(self, etat: 'Robot.EtatRobot') -> None:
+        if not isinstance(etat, Robot.EtatRobot):
+            raise ValueError("L'état doit être de type Robot.EtatRobot")
+        self._etat = etat
+    def get_energie(self) -> float:
+        return self._energie
+    def set_energie(self, energie: float) -> None:
+        if not isinstance(energie, (int, float)):
+            raise ValueError("L'énergie doit être un nombre")
+        self._energie = max(0.0, min(100.0, float(energie)))
+    def is_mode_manuelle(self) -> bool:
+        return self._mode_manuelle
+    def set_mode_manuelle(self, mode: bool) -> None:
+        self._mode_manuelle = bool(mode)
+    def get_position(self):
+        return self._position
+    def set_position(self, position) -> None:
+        from .position import Position
+        if not isinstance(position, Position):
+            raise ValueError("La position doit être de type Position")
+        self._position = position
+    # === GETTERS POUR LES SYSTÈMES (Composition) ===
+    def get_perception_system(self):
+        return self._perception_system
+    def get_action_system(self):
+        return self._action_system
+    def get_systeme_navigation(self):
+        return self._systeme_navigation
+    def get_gestionnaire_energie(self):
+        return self._gestionnaire_energie
+    def get_ihm(self):
+        return self._ihm
+    # === MÉTHODES SELON LE DIAGRAMME UML ===
+    def demarrer(self) -> None:
+        if self._etat == Robot.EtatRobot.ARRET:
+            self._etat = Robot.EtatRobot.ACTIF
+            if self._perception_system:
+                self._perception_system.activer_perception()
+            if self._ihm:
+                self._ihm.logger_evenement(f"Robot {self._nom} démarré")
+        else:
+            raise RuntimeError(f"Impossible de démarrer le robot - état actuel: {self._etat}")
+    def arreter(self) -> None:
+        self._etat = Robot.EtatRobot.ARRET
+        if self._perception_system:
+            self._perception_system.desactiver_perception()
+        if self._action_system:
+            self._action_system.arreter_urgence()
+        if self._ihm:
+            self._ihm.logger_evenement(f"Robot {self._nom} arrêté")
+    def optimiser(self) -> None:
+        if self._gestionnaire_energie:
+            self._gestionnaire_energie.optimiser_consommation()
+        if self._perception_system:
+            self._perception_system.optimiser_algorithmes_detection()
+        if self._action_system:
+            self._action_system.optimiser_energie()
+        if self._ihm:
+            self._ihm.logger_evenement(f"Optimisation du robot {self._nom} terminée")
+    @abstractmethod
+    def move(self) -> None:
+        pass
+</code></pre></div>
+          </div>
+          <div class="note-code" style="margin-bottom:1.5em;">
+            <strong>Note :</strong> Le code complet de cette classe et des autres classes du projet est disponible dans le dossier <code>tekbot_classes/core/</code> du dépôt, ou sur demande auprès de l'équipe enseignante.
+          </div>
+
+          <script>
+          // Collapsible code blocks
+          document.addEventListener('DOMContentLoaded', function() {
+            document.querySelectorAll('.collapsible-header').forEach(function(header) {
+              header.addEventListener('click', function() {
+                header.classList.toggle('active');
+                // Fermer les autres
+                document.querySelectorAll('.collapsible-header').forEach(function(other) {
+                  if (other !== header) other.classList.remove('active');
+                });
+              });
+            });
+          });
+          </script>
+
+          <div class="divider"></div>
+
+
+          <h3 id="simulation">9. Simulation visuelle et prise en main</h3>
+          <div class="simulation-flex-cards" style="display: flex; gap: 2rem; align-items: stretch; margin-bottom: 1.5em; min-height: 420px;">
+            <div style="flex: 1 1 380px; min-width: 320px; max-width: 480px; display: flex; flex-direction: column; gap: 1.5rem;">
+              <div class="simulation-card" style="margin-bottom: 0;">
+                <h4 style="margin-top:0;">Objectif pédagogique</h4>
+                <p>La simulation TEKBOT permet d’expérimenter et de visualiser le comportement du robot dans un environnement virtuel interactif. Elle favorise la compréhension concrète des algorithmes de navigation, de collecte et de gestion d’énergie.</p>
+              </div>
+              <div class="simulation-card" style="margin-top: 0;">
+                <h4 style="margin-top:0;">Comment lancer et utiliser la simulation&nbsp;?</h4>
+                <ol>
+                  <li>Assurez-vous d’avoir <strong>Python 3.11+</strong> et <strong>Pygame</strong> installés (voir section 5).</li>
+                  <li>Ouvrez un terminal dans le dossier du projet.</li>
+                  <li>Lancez la simulation avec&nbsp;:<br>
+                    <code>python tekbot_simple.py</code><br>
+                    ou<br>
+                    <code>python main_tekbot_simulation.py</code>
+                  </li>
+                  <li>Interagissez avec la simulation&nbsp;:
+                    <ul>
+                      <li><strong>Flèches directionnelles</strong> : déplacer le robot (mode manuel)</li>
+                      <li><strong>Espace</strong> : pause/reprise</li>
+                      <li><strong>R</strong> : réinitialiser la simulation</li>
+                      <li><strong>D</strong> : activer/désactiver le mode debug</li>
+                    </ul>
+                  </li>
+                  <li>Observez l’évolution de la mission, la collecte des déchets et la gestion de l’énergie en temps réel.</li>
+                </ol>
+              </div>
+            </div>
+            <div class="simulation-card" style="flex: 2 1 480px; min-width: 320px; display: flex; flex-direction: column; justify-content: stretch; padding-bottom: 0.5rem;">
+              <div style="flex: 1 1 auto; display: flex; align-items: center; justify-content: center; height: 100%; min-height: 0; margin: 0;">
+                <div style="background: #081a2b; border: 2px solid #00d1ff; border-radius: 12px; width: 100%; height: 95%; min-height: 220px; min-width: 0; display: flex; align-items: center; justify-content: center; box-sizing: border-box;">
+                  <!-- Intégrez ici votre vidéo YouTube ou MP4 -->
+                  <span style="color: #8892b0; font-size: 1.08em;">[Espace réservé pour la vidéo de démonstration]</span>
+                </div>
+              </div>
+            </div>
+            <!-- Fin du quiz supprimé : la section Simulation est maintenant propre -->
+          <style>
+          .simulation-flex-cards {
+            display: flex;
+            flex-wrap: nowrap;
+            gap: 2rem;
+            margin-bottom: 1.5em;
+            align-items: stretch;
+            min-height: 420px;
+          }
+          .simulation-card {
+            background: rgba(10,25,47,0.7);
+            border: 2px solid #00d1ff;
+            border-radius: 10px;
+            padding: 1.2rem 1rem 1rem 1rem;
+            box-shadow: 0 0 12px #00d1ff33;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            min-height: 120px;
+            box-sizing: border-box;
+          }
+          .simulation-card h4 {
+            margin-top: 0;
+            color: #00f7ff;
+            font-family: 'Orbitron', sans-serif;
+          }
+          @media (max-width: 1100px) {
+            .simulation-flex-cards { flex-direction: column; }
+            .simulation-card { max-width: 100%; min-width: 0; }
+            .simulation-flex-cards > div { max-width: 100% !important; min-width: 0 !important; }
+          }
+          </style>
+              </div>
+            </div>
+          </div>
+
+
+
+
+          <div class="divider"></div>
+
+          <h3 id="references">12. Références et Ressources</h3>
+
+          <div style="display: flex; gap: 2rem; flex-wrap: wrap; margin-bottom: 2rem;">
+            <div style="flex: 1 1 340px; min-width: 280px; background: rgba(10,25,47,0.7); border: 2px solid #00d1ff; border-radius: 10px; padding: 1.2rem 1rem 1rem 1rem; box-shadow: 0 0 12px #00d1ff33;">
+              <h4 style="margin-top:0;">Documentation Technique</h4>
+              <ul>
+                <li><a href="https://docs.python.org/3/"> Documentation Python 3</a> - Référence officielle du langage</li>
+                <li><a href="https://www.pygame.org/docs/">Documentation Pygame</a> - Bibliothèque graphique utilisée</li>
+                <li><a href="https://plantuml.com/">PlantUML Guide</a> - Outil de génération des diagrammes UML</li>
+              </ul>
+            </div>
+            <div style="flex: 1 1 340px; min-width: 280px; background: rgba(10,25,47,0.7); border: 2px solid #00d1ff; border-radius: 10px; padding: 1.2rem 1rem 1rem 1rem; box-shadow: 0 0 12px #00d1ff33;">
+              <h4 style="margin-top:0;">Ressources Pédagogiques</h4>
+              <ul>
+                <li><a href="https://openclassrooms.com/fr/courses/7150616-apprenez-la-programmation-orientee-objet-avec-python"> POO avec Python - OpenClassrooms</a></li>
+                <li><a href="https://www.uml-diagrams.org/"> UML Diagrams Reference</a> - Guide complet UML</li>
+                <li><a href="https://realpython.com/python3-object-oriented-programming/"> Real Python - OOP Guide</a></li>
+              </ul>
+            </div>
+          </div>
+
+
+          <hr style="margin: 3rem 0; border: none; height: 2px; background: linear-gradient(90deg, transparent, #00d1ff, transparent);">
+
+          <div style="text-align: center; padding: 2rem; background: linear-gradient(135deg, #0a192f, #112240); border-radius: 15px; margin: 2rem 0;">
+            <h4 style="color: #00f7ff; margin-bottom: 1rem;"> TEKBOT Robotics Challenge 2025</h4>
+            <p style="color: #ccd6f6; font-size: 1.1rem; margin-bottom: 1.5rem;">
+              <strong>Équipe UCAO-TECH</strong> - Démonstration d'excellence en Programmation Orientée Objet
+            </p>
+            <p style="color: #8892b0; font-style: italic;">
+              "La robotique de demain se construit avec les fondamentaux d'aujourd'hui"
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+</body>
+</html>
 
