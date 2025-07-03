@@ -8,9 +8,72 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
   <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;700;900&family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <!-- Header -->
+    <header>
+        <nav class="navbar">
+            <a href="https://tekbot-robotics-challenge.github.io/2025-Team-UCAO-TECH-Docs" class="logo">
+                <img src="https://ucaotech.com/wp-content/uploads/2024/10/UCAO-TECH-1.png" alt="UCAO-TECH Logo">
+                <span>UCAO-TECH</span>
+            </a>
+            <ul class="nav-links">
+                <li><a href="https://tekbot-robotics-challenge.github.io/2025-Team-UCAO-TECH-Docs">Accueil</a></li>
+                <li><a href="https://tekbot-robotics-challenge.github.io/2025-Team-UCAO-TECH-Docs/#a-propos">À propos</a></li>
+                <li><a href="https://tekbot-robotics-challenge.github.io/2025-Team-UCAO-TECH-Docs/#equipe">Équipe</a></li>
+                <li><a href="https://tekbot-robotics-challenge.github.io/2025-Team-UCAO-TECH-Docs/#contact">Contact</a></li>
+                <li><a href="https://tekbot-robotics-challenge.github.io/2025-Team-UCAO-TECH-Docs/#documentation">Documentation</a></li>
+            </ul>
+        </nav>
+    </header>
+    <!--  -->
+  <main>  
+    <section class="section" id="informatique-tests">
+      <div class="section-container">
+        <div class="section-title">
+          <h2 class="cyber-title">Informatique - Tests</h2>
+          <p>Algorithmes de navigation, ROS2, intelligence embarquée et automatisation.</p>
+        </div>
+        <div class="features-grid">
+          <div class="feature-card holographic-card">
+            <h3>Test 1 : Réalisation d’un système de classe de gestion d’un Robot </h3>
+            <ul>
+              <li><a href="Test1/Test1Informatique.html">📄 Documentation</a></li>
+              <li><a href="Test1/GalerieTest1Informatique.html">🖼️ Galerie</a></li>
+            </ul>
+          </div>
+          <div class="feature-card holographic-card">
+            <h3>Test 2 : Introduction à ROS2 </h3>
+            <ul>
+              <li><a href="Test2/Test2Informatique.html">📄 Documentation</a></li>
+              <li><a href="Test2/GalerieTest2Informatique.html">🖼️ Galerie</a></li>
+            </ul>
+          </div>
+          <div class="feature-card holographic-card">
+            <h3>Test 3 : Création d’un Algorithme de Pathfinding </h3>
+            <ul>
+              <li><a href="Test3/Test3Informatique.html">📄 Documentation</a></li>
+              <li><a href="Test3/GalerieTest3Informatique.html">🖼️ Galerie</a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+     </main>
+</body>
   <style>
-
-    /* Header */
+    .section-container {
+        max-width: 1400px;
+        margin: 0 auto;
+        padding: 0 2rem;
+    }
+    
+    .features-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 2rem;
+        margin-top: 2rem;
+    }
         header {
             position: fixed;
             top: 0;
@@ -305,84 +368,6 @@
     .feature-card:hover {
       transform: translateY(-5px);
       box-shadow: 0 0 20px rgba(0, 209, 255, 0.3);
-    }
-  </style>
-</head>
-<body>
-  <!-- Header -->
-    <header>
-        <nav class="navbar">
-            <a href="https://tekbot-robotics-challenge.github.io/2025-Team-UCAO-TECH-Docs" class="logo">
-                <img src="https://ucaotech.com/wp-content/uploads/2024/10/UCAO-TECH-1.png" alt="UCAO-TECH Logo">
-                <span>UCAO-TECH</span>
-            </a>
-            <ul class="nav-links">
-                <li><a href="https://tekbot-robotics-challenge.github.io/2025-Team-UCAO-TECH-Docs">Accueil</a></li>
-                <li><a href="https://tekbot-robotics-challenge.github.io/2025-Team-UCAO-TECH-Docs/#a-propos">À propos</a></li>
-                <li><a href="https://tekbot-robotics-challenge.github.io/2025-Team-UCAO-TECH-Docs/#equipe">Équipe</a></li>
-                <li><a href="https://tekbot-robotics-challenge.github.io/2025-Team-UCAO-TECH-Docs/#contact">Contact</a></li>
-                <li><a href="https://tekbot-robotics-challenge.github.io/2025-Team-UCAO-TECH-Docs/#documentation">Documentation</a></li>
-            </ul>
-        </nav>
-    </header>
-    <!--  -->
-  <main>  
-    <section class="section" id="informatique-tests">
-      <div class="section-container">
-        <div class="section-title">
-          <h2 class="cyber-title">Informatique - Tests</h2>
-          <p>Algorithmes de navigation, ROS2, intelligence embarquée et automatisation.</p>
-        </div>
-        <div class="features-grid">
-          <div class="feature-card holographic-card">
-            <h3>Test 1 : Réalisation d’un système de classe de gestion d’un Robot </h3>
-            <ul>
-              <li><a href="Test1/Test1Informatique.html">📄 Documentation</a></li>
-              <li><a href="Test1/GalerieTest1Informatique.html">🖼️ Galerie</a></li>
-            </ul>
-          </div>
-          <div class="feature-card holographic-card">
-            <h3>Test 2 : Introduction à ROS2 </h3>
-            <ul>
-              <li><a href="Test2/Test2Informatique.html">📄 Documentation</a></li>
-              <li><a href="Test2/GalerieTest2Informatique.html">🖼️ Galerie</a></li>
-            </ul>
-          </div>
-          <div class="feature-card holographic-card">
-            <h3>Test 3 : Création d’un Algorithme de Pathfinding </h3>
-            <ul>
-              <li><a href="Test3/Test3Informatique.html">📄 Documentation</a></li>
-              <li><a href="Test3/GalerieTest3Informatique.html">🖼️ Galerie</a></li>
-            </ul>
-          </div>
-        </div>
-      </div>
-    </section>
-     </main>
-</body>
-  <style>
-    .section-container {
-        max-width: 1400px;
-        margin: 0 auto;
-        padding: 0 2rem;
-    }
-    
-    .features-grid {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-        gap: 2rem;
-        margin-top: 2rem;
-    }
-    header {
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        z-index: 1000;
-        background-color: rgba(2, 12, 27, 0.9);
-        backdrop-filter: blur(10px);
-        border-bottom: 1px solid rgba(0, 209, 255, 0.2);
-        transition: all 0.3s ease;
     }
 </style>
 </html>
