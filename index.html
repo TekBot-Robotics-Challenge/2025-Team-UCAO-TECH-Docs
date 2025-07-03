@@ -1302,12 +1302,64 @@
             </div>
             <div class="contact-flex" style="display:flex;align-items:stretch;gap:3rem;flex-wrap:wrap;">
                 <!-- Carte à gauche, encadrée et alignée -->
-                <div class="contact-media contact-align" style="flex:1 1 480px;min-width:340px;max-width:600px;display:flex;flex-direction:column;justify-content:stretch;">
-                    <div class="contact-card" style="background:rgba(10,25,47,0.92);border-radius:18px;box-shadow:0 4px 32px #00d1ff33;padding:1.5rem;height:100%;display:flex;flex-direction:column;align-items:center;justify-content:flex-start;">
-                        <h3 style="color:#00f7ff;margin-bottom:1rem;">Localisation</h3>
-                        <iframe src="https://www.google.com/maps/place/UCAO-UUC/@6.357073,2.39794,14z/data=!4m6!3m5!1s0x10235434f70b1b67:0x54a068596be0378c!8m2!3d6.3570728!4d2.3979405!16s%2Fg%2F11c54b882f?hl=fr&entry=ttu&g_ep=EgoyMDI1MDYzMC4wIKXMDSoASAFQAw%3D%3D" width="100%" height="380" style="border:0;border-radius:12px;min-height:320px;max-width:100%;flex:1;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
-                    </div>
-                </div>
+<div class="contact-media contact-align" style="
+    flex: 1 1 480px;
+    min-width: 340px;
+    max-width: 600px;
+    display: flex;
+    flex-direction: column;
+    justify-content: stretch;
+">
+    <div class="contact-card" style="
+        background: rgba(10, 25, 47, 0.92);
+        border-radius: 18px;
+        box-shadow: 0 4px 32px rgba(0, 209, 255, 0.2);
+        padding: 1.5rem;
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        gap: 1.5rem;
+    ">
+        <h3 style="
+            color: #00f7ff;
+            margin: 0;
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.5rem;
+            text-align: center;
+            text-shadow: 0 0 8px rgba(0, 247, 255, 0.3);
+        ">
+            Localisation
+        </h3>
+        
+        <div style="
+            width: 100%;
+            height: 0;
+            padding-bottom: 75%; /* Ratio personnalisé */
+            position: relative;
+            overflow: hidden;
+            border-radius: 12px;
+            border: 1px solid rgba(0, 209, 255, 0.3);
+            box-shadow: 0 0 15px rgba(0, 209, 255, 0.1);
+        ">
+            <iframe 
+                src="https://www.google.com/maps/place/UCAO-UUC/@6.357073,2.39794,14z/data=!4m6!3m5!1s0x10235434f70b1b67:0x54a068596be0378c!8m2!3d6.3570728!4d2.3979405!16s%2Fg%2F11c54b882f?hl=fr&entry=ttu&g_ep=EgoyMDI1MDYzMC4wIKXMDSoASAFQAw%3D%3D" 
+                style="
+                    position: absolute;
+                    top: 0;
+                    left: 0;
+                    width: 100%;
+                    height: 100%;
+                    border: none;
+                " 
+                allowfullscreen 
+                loading="lazy" 
+                referrerpolicy="no-referrer-when-downgrade"
+                title="Localisation UCAO-UUC sur Google Maps"
+                aria-label="Carte interactive de localisation UCAO-UUC"
+            ></iframe>
+        </div>
+    </div>
+</div>
                 <!-- Deux cadres séparés à droite, largeur égale à gauche -->
                 <div style="flex:1 1 480px;min-width:340px;max-width:600px;display:flex;flex-direction:column;gap:2rem;justify-content:stretch;">
                     <div class="contact-card" style="background:rgba(10,25,47,0.92);border-radius:18px;box-shadow:0 4px 32px #00d1ff33;padding:1.5rem;display:flex;flex-direction:column;justify-content:flex-start;">
