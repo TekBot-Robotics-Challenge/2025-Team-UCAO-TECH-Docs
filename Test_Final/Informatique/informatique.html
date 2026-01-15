@@ -1,0 +1,2368 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Documentation IT - Convoyeur Intelligent</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;700;900&family=Roboto:wght@300;400;500;700&display=swap"
+        rel="stylesheet">
+    <!-- Mermaid.js pour diagrammes dynamiques -->
+    <script type="module">
+        import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
+        mermaid.initialize({ startOnLoad: true });
+    </script>
+    <style>
+        :root {
+            --primary: #020c1b;
+            --secondary: #00f7ff;
+            --accent: #ff2e63;
+            --light: #eaf6fb;
+            --dark: #181f2a;
+            --success: #2eff91;
+            --cyber-blue: #00f7ff;
+            --cyber-purple: #b342ff;
+            --text-light: #eaf6fb;
+            --text-dark: #181f2a;
+            --gradient-cyber: linear-gradient(135deg, #00f7ff, #b342ff);
+            --shadow-neon: 0 0 10px rgba(0, 247, 255, 0.5);
+        }
+
+        body {
+            background-color: var(--primary);
+            color: var(--dark);
+            font-family: 'Roboto', Arial, sans-serif;
+            line-height: 1.6;
+        }
+
+        /* Titres */
+        h1,
+        h2,
+        h3,
+        h4,
+        .logo,
+        .nav-links a {
+            font-family: 'Orbitron', sans-serif;
+            letter-spacing: 1px;
+        }
+
+        .cyber-title {
+            color: var(--cyber-blue);
+            font-size: 2.2em;
+            font-weight: 700;
+            margin-bottom: 18px;
+            text-shadow: 0 0 15px rgba(0, 247, 255, 0.4);
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .cyber-title:hover {
+            text-shadow: 0 0 20px rgba(0, 247, 255, 0.6);
+            letter-spacing: 2px;
+        }
+
+        h2,
+        h3 {
+            position: relative;
+            transition: all 0.3s ease;
+        }
+
+        h2:hover,
+        h3:hover {
+            transform: translateX(10px);
+            text-shadow: 0 0 15px rgba(0, 247, 255, 0.4);
+        }
+
+        h2::after,
+        h3::after {
+            content: '';
+            position: absolute;
+            left: -20px;
+            top: 50%;
+            width: 10px;
+            height: 2px;
+            background: var(--cyber-blue);
+            transform: scaleX(0);
+            transition: transform 0.3s ease;
+        }
+
+        h2:hover::after,
+        h3:hover::after {
+            transform: scaleX(1);
+        }
+
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes slideInLeft {
+            from {
+                opacity: 0;
+                transform: translateX(-30px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        /* Liens */
+        .nav-link {
+            color: var(--text-light);
+            text-decoration: none;
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 1.2px;
+            transition: all 0.3s ease;
+            position: relative;
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+        }
+
+        .nav-link:hover {
+            color: var(--cyber-blue);
+            background: rgba(0, 247, 255, 0.1);
+            box-shadow: 0 0 10px rgba(0, 247, 255, 0.2);
+        }
+
+        .nav-link::after {
+            content: "";
+            position: absolute;
+            left: 50%;
+            bottom: 0;
+            width: 0;
+            height: 2px;
+            background: var(--cyber-blue);
+            transition: all 0.3s ease;
+            transform: translateX(-50%);
+        }
+
+        .nav-link:hover::after {
+            width: 80%;
+        }
+
+        /* Boutons */
+        .btn {
+            padding: 0.9rem 2.5rem;
+            font-weight: 600;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            font-family: 'Orbitron', sans-serif;
+            background: transparent;
+            color: var(--cyber-blue);
+            border: 2px solid var(--cyber-blue);
+            border-radius: 8px;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.3s ease;
+            z-index: 1;
+            box-shadow: 0 0 15px rgba(0, 247, 255, 0.2);
+        }
+
+        .btn::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 300%;
+            height: 300%;
+            background: var(--gradient-cyber);
+            transition: all 0.5s ease;
+            transform: translate(-50%, -50%) rotate(45deg) translateY(100%);
+            z-index: -1;
+            opacity: 0;
+        }
+
+        .btn:hover {
+            color: var(--dark);
+            border-color: transparent;
+            box-shadow: 0 0 30px rgba(0, 247, 255, 0.4);
+            transform: translateY(-2px);
+        }
+
+        .btn:hover::before {
+            transform: translate(-50%, -50%) rotate(45deg) translateY(0);
+            opacity: 1;
+        }
+
+        /* Cartes / Sections */
+        .section-card {
+            background: rgba(0, 247, 255, 0.05);
+            border: 1px solid rgba(0, 247, 255, 0.2);
+            border-radius: 16px;
+            padding: 32px;
+            margin-bottom: 32px;
+            box-shadow: 0 0 20px rgba(0, 247, 255, 0.1);
+            animation: fadeInUp 0.6s ease forwards;
+            backdrop-filter: blur(10px);
+            transition: all 0.3s ease;
+        }
+
+        .section-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 30px rgba(0, 247, 255, 0.2);
+            border-color: var(--cyber-blue);
+        }
+
+        /* Important */
+        .important {
+            color: var(--secondary);
+            font-weight: bold;
+            position: relative;
+            padding: 0 4px;
+        }
+
+        .important::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            height: 4px;
+            background: var(--gradient-cyber);
+            opacity: 0.3;
+            border-radius: 2px;
+        }
+
+        /* Liens sommaire */
+        .sommaire-link {
+            display: flex;
+            align-items: center;
+            color: var(--text-light);
+            text-decoration: none;
+            font-family: 'Orbitron', sans-serif;
+            font-size: 0.95em;
+            padding: 8px 12px;
+            border-radius: 6px;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            margin: 4px 0;
+        }
+
+        .sommaire-link i {
+            color: var(--cyber-blue);
+            font-size: 1em;
+            margin-right: 10px;
+            transition: all 0.3s ease;
+        }
+
+        .sommaire-link:hover {
+            color: var(--cyber-blue);
+            background: rgba(0, 247, 255, 0.1);
+            box-shadow: 0 0 15px rgba(0, 247, 255, 0.15);
+            transform: translateX(5px);
+        }
+
+        .sommaire-link:hover i {
+            transform: scale(1.2);
+            color: var(--secondary);
+        }
+
+        .sommaire-link::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            height: 100%;
+            width: 3px;
+            background: var(--cyber-blue);
+            transform: scaleY(0);
+            transition: transform 0.3s ease;
+        }
+
+        .sommaire-link:hover::before {
+            transform: scaleY(1);
+        }
+
+        .active-sommaire {
+            color: var(--secondary) !important;
+            background: rgba(0, 247, 255, 0.15) !important;
+            box-shadow: 0 0 20px rgba(0, 247, 255, 0.2) !important;
+        }
+
+        .active-sommaire::before {
+            transform: scaleY(1);
+        }
+
+        .sommaire-sous {
+            animation: slideInLeft 0.3s ease forwards;
+        }
+    </style>
+</head>
+
+<body class="bg-dark text-light">
+    <!-- Header sur toute la largeur en haut -->
+    <header class="fixed top-0 left-0 w-full z-50 transition-all duration-300"
+        style="background:rgba(2,12,27,0.95); backdrop-filter:blur(10px); border-bottom:2px solid rgba(0,247,255,0.2); box-shadow: 0 0 20px rgba(0,247,255,0.15);">
+        <div class="container mx-auto px-4 py-4 flex justify-between items-center">
+            <a href="#" class="logo flex items-center transition-all duration-300 hover:transform hover:scale-105">
+                <img src="https://ucaotech.com/wp-content/uploads/2024/10/UCAO-TECH-1.png" alt="UCAO-TECH Logo"
+                    class="h-10 mr-3" style="filter: drop-shadow(0 0 10px rgba(0,247,255,0.3));">
+                <span class="text-xl font-bold cyberpunk-text"
+                    style="color: var(--secondary); text-shadow: 0 0 10px rgba(0,247,255,0.5);">UCAO-TECH</span>
+            </a>
+            <nav class="hidden md:flex space-x-6">
+                <a href="https://tekbot-robotics-challenge.github.io/2025-Team-UCAO-TECH-Docs/Test_Final/Test_Final.html"
+                    class="nav-link transition-all duration-300">Test-Final</a>
+                <a href="#" class="nav-link transition-all duration-300">
+                    <i
+                        class="fa-solid fa-computer mr-1 transition-transform duration-300 transform group-hover:scale-110"></i>IT</a>
+                <a href="../Dashboad/dashboad.html" class="nav-link transition-all duration-300">Dashboard</a>
+                <a href="https://github.com/TekBot-Robotics-Challenge/2025-Team-UCAO-TECH-Docs" target="_blank"
+                    class="nav-link transition-all duration-300">
+                    <i
+                        class="fab fa-github mr-1 transition-transform duration-300 transform group-hover:scale-110"></i>Github</a>
+            </nav>
+            <button id="menuBtn"
+                class="md:hidden text-cyber-blue text-2xl transition-all duration-300 hover:text-secondary hover:transform hover:scale-110"
+                style="text-shadow: 0 0 10px rgba(0,247,255,0.5);">
+                <i class="fas fa-bars"></i>
+            </button>
+            <div id="mobile-menu"
+                class="hidden md:hidden fixed top-16 left-0 right-0 bg-gray-900/95 backdrop-blur-xl z-40"
+                style="border-bottom: 2px solid rgba(0,247,255,0.2); box-shadow: 0 5px 20px rgba(0,247,255,0.15);">
+                <nav class="flex flex-col items-center py-4 space-y-4">
+                    <a href="https://tekbot-robotics-challenge.github.io/2025-Team-UCAO-TECH-Docs/Test_Final/Test_Final.html"
+                        class="w-full text-center text-cyber-blue hover:text-secondary hover:bg-cyber-blue/10 py-3 px-4 transition-all duration-300"
+                        style="text-shadow: 0 0 8px rgba(0,247,255,0.3);">
+                        Test-Final
+                    </a>
+                    <a href="#"
+                        class="w-full text-center text-cyber-blue hover:text-secondary hover:bg-cyber-blue/10 py-3 px-4 transition-all duration-300"
+                        style="text-shadow: 0 0 8px rgba(0,247,255,0.3);">
+                        <i
+                            class="fa-solid fa-computer mr-1 transition-transform duration-300 transform group-hover:scale-110"></i>IT
+                    </a>
+                    <a href="../Dashboad/dashboad.html"
+                        class="w-full text-center text-cyber-blue hover:text-secondary hover:bg-cyber-blue/10 py-3 px-4 transition-all duration-300"
+                        style="text-shadow: 0 0 8px rgba(0,247,255,0.3);">
+                        Dashboard
+                    </a>
+                    <a href="https://github.com/TekBot-Robotics-Challenge/2025-Team-UCAO-TECH-Docs" target="_blank"
+                        class="w-full text-center text-cyber-blue hover:text-secondary hover:bg-cyber-blue/10 py-3 px-4 transition-all duration-300"
+                        style="text-shadow: 0 0 8px rgba(0,247,255,0.3);">
+                        <i
+                            class="fab fa-github mr-1 transition-transform duration-300 transform group-hover:scale-110"></i>Github
+                    </a>
+                </nav>
+            </div>
+
+            <script>
+                const menuBtn = document.getElementById('menuBtn');
+                const mobileMenu = document.getElementById('mobile-menu');
+                const body = document.body;
+
+                menuBtn.addEventListener('click', () => {
+                    mobileMenu.classList.toggle('hidden');
+                    if (!mobileMenu.classList.contains('hidden')) {
+                        body.style.overflow = 'hidden'; // Empêche le défilement quand le menu est ouvert
+                    } else {
+                        body.style.overflow = ''; // Réactive le défilement quand le menu est fermé
+                    }
+                });
+
+                // Ferme le menu mobile quand on clique à l'extérieur
+                document.addEventListener('click', (e) => {
+                    if (!mobileMenu.classList.contains('hidden') &&
+                        !mobileMenu.contains(e.target) &&
+                        !menuBtn.contains(e.target)) {
+                        mobileMenu.classList.add('hidden');
+                        body.style.overflow = '';
+                    }
+                });
+            </script>
+        </div>
+    </header>
+    <!-- Layout principal avec sommaire fixe à gauche -->
+    <div style="display:flex; margin-top:100px; min-height:100vh;">
+        <!-- Sommaire latéral fixe sous le header -->
+        <aside
+            style="width:260px; background:rgba(0,209,255,0.08); border-right:2px solid rgba(0,209,255,0.2); box-shadow:0 0 10px rgba(0,209,255,0.12); position:fixed; top:80px; left:0; bottom:0; padding:32px 18px 32px 18px; z-index:99; height:calc(100vh - 80px); overflow-y:auto;">
+            <h2 style="font-family:'Orbitron'; color:var(--cyber-blue); font-size:1.2em; margin-bottom:18px;">Sommaire
+                IT</h2>
+            <ul style="list-style:none; padding:0;">
+                <li style="margin-bottom:12px;"><a class="sommaire-link" href="#intro"><i
+                            class="fa-solid fa-circle-info mr-2"></i>Introduction</a>
+                    <ul class="sommaire-sous" style="margin-left:18px;">
+                        <li><a class="sommaire-link" href="#contexte"><i class="fa-solid fa-globe mr-2"></i>Contexte</a>
+                        </li>
+                        <li><a class="sommaire-link" href="#vision"><i class="fa-solid fa-eye mr-2"></i>Vision et
+                                perspectives</a></li>
+                        <li><a class="sommaire-link" href="#approche"><i class="fa-solid fa-book mr-2"></i>Approche
+                                documentaire</a></li>
+                    </ul>
+                </li>
+                <li style="margin-bottom:12px;"><a class="sommaire-link" href="#presentation"><i
+                            class="fa-solid fa-lightbulb mr-2"></i>Description du système</a>
+                    <ul class="sommaire-sous" style="margin-left:18px;">
+                        <li><a class="sommaire-link" href="#presentation-generale"><i
+                                    class="fa-solid fa-rectangle-list mr-2"></i>Présentation générale</a></li>
+                        <li><a class="sommaire-link" href="#enjeux"><i class="fa-solid fa-chart-line mr-2"></i>Enjeux et
+                                perspectives</a></li>
+                        <li><a class="sommaire-link" href="#objectifs-systeme"><i
+                                    class="fa-solid fa-bullseye mr-2"></i>Objectifs du système</a></li>
+                        <li><a class="sommaire-link" href="#fonctionnement-general"><i
+                                    class="fa-solid fa-gears mr-2"></i>Fonctionnement général</a></li>
+                        <li><a class="sommaire-link" href="#avantages"><i class="fa-solid fa-star mr-2"></i>Avantages du
+                                système</a></li>
+                    </ul>
+                </li>
+                <!-- Section Architecture logicielle supprimée du sommaire -->
+                <li style="margin-bottom:12px;"><a class="sommaire-link" href="#capteurs"><i
+                            class="fa-solid fa-microchip mr-2"></i>Détection intelligente</a>
+                    <ul class="sommaire-sous" style="margin-left:18px;">
+                        <li><a class="sommaire-link" href="#detection-couleurs"><i
+                                    class="fa-solid fa-palette mr-2"></i>Détection de couleurs</a></li>
+                        <li><a class="sommaire-link" href="#detection-presence"><i
+                                    class="fa-solid fa-eye mr-2"></i>Détection de présence</a></li>
+                        <li><a class="sommaire-link" href="#astuces-complementarite"><i
+                                    class="fa-solid fa-magic mr-2"></i>Astuces&nbsp;: complémentarité entre capteurs</a>
+                        </li>
+                    </ul>
+                </li>
+                <li class="automatisation-section" style="margin-bottom:12px;"><a class="sommaire-link"
+                        href="#automatisation"><i class="fa-solid fa-robot mr-2"></i>Automatisation du convoyeur</a>
+                    <ul class="sommaire-sous" style="margin-left:18px;">
+                        <li><a class="sommaire-link" href="#architecture-automatisation"><i
+                                    class="fa-solid fa-diagram-project mr-2"></i>Architecture de l’automatisation</a>
+                        </li>
+                        <li><a class="sommaire-link" href="#cas-particuliers"><i
+                                    class="fa-solid fa-triangle-exclamation mr-2"></i>Gestion d'erreurs</a></li>
+                        <li><a class="sommaire-link" href="#code-arduino"><i
+                                    class="fa-solid fa-code mr-2"></i>algorithme</a></li>
+                    </ul>
+                </li>
+                <li class="interface-section" style="margin-bottom:12px;"><a class="sommaire-link" href="#interface"><i
+                            class="fa-solid fa-display mr-2"></i>Interface web</a>
+                    <ul class="sommaire-sous" style="margin-left:18px;">
+                        <li><a class="sommaire-link" href="#dashboard"><i
+                                    class="fa-solid fa-table-columns mr-2"></i>Présentation du dashboard</a></li>
+                        <li><a class="sommaire-link" href="#fonctionnalites"><i
+                                    class="fa-solid fa-list-check mr-2"></i>Fonctionnalités principales</a></li>
+                        <li><a class="sommaire-link" href="#secu-acces"><i class="fa-solid fa-lock mr-2"></i>Sécurité et
+                                gestion des accès</a></li>
+                        <li><a class="sommaire-link" href="#logos"><i class="fa-solid fa-image mr-2"></i>Intégration des
+                                logos et personnalisation</a></li>
+                    </ul>
+                </li>
+                <li style="margin-bottom:12px;"><a class="sommaire-link" href="#conclusion"><i
+                            class="fa-solid fa-flag-checkered mr-2"></i>Conclusion et perspectives</a>
+                    <ul class="sommaire-sous" style="margin-left:18px;">
+                        <li><a class="sommaire-link" href="#synthese"><i
+                                    class="fa-solid fa-lightbulb mr-2"></i>Synthèse</a></li>
+                        <li><a class="sommaire-link" href="#evolutions"><i
+                                    class="fa-solid fa-forward-step mr-2"></i>Prochaines évolutions</a></li>
+                        <li><a class="sommaire-link" href="#remerciements"><i
+                                    class="fa-solid fa-hands-clapping mr-2"></i>Remerciements</a></li>
+                    </ul>
+                </li>
+            </ul>
+        </aside>
+
+        <!-- Contenu principal -->
+        <main style="flex:1; margin-left:260px; padding:32px 0;">
+            <div style="max-width:1400px; margin:0 auto;">
+                <h1 class="cyber-title text-center mb-10" id="intro">Documentation IT<br>Système de Convoyeur
+                    Intelligent</h1>
+
+                <div class="p-8 mb-8">
+                    <h2 class="text-2xl font-bold mb-4 flex items-center" style="color:var(--secondary);">
+                        <i class="fa-solid fa-circle-info mr-3 text-cyber-blue text-2xl"></i>
+                        Introduction
+                    </h2>
+                    <h3 id="contexte" class="font-bold text-lg mb-2" style="color:var(--cyber-blue);"><i
+                            class="fa-solid fa-globe mr-2"></i>Contexte</h3>
+                    <p class="mb-4 text-lg" style="text-align:justify;">
+                        Dans un monde où la gestion durable des déchets devient un enjeu majeur pour les villes
+                        industrielles, TEKBOT CITY souhaite se doter d’un système innovant pour optimiser le tri et la
+                        valorisation des déchets. L’automatisation du tri, la traçabilité des flux et l’intégration
+                        d’outils numériques sont désormais essentiels pour répondre aux exigences environnementales,
+                        économiques et réglementaires. Ce projet s’inscrit dans cette dynamique, en associant
+                        électronique, informatique et mécanique pour concevoir un convoyeur intelligent, évolutif et
+                        reproductible.
+                    </p>
+                    <h3 id="vision" class="font-bold text-lg mb-2" style="color:var(--cyber-blue);"><i
+                            class="fa-solid fa-eye mr-2"></i>Vision et perspectives</h3>
+                    <p class="mb-4 text-lg" style="text-align:justify;">
+                        L’ambition de ce projet est de démontrer comment l’innovation technologique peut transformer la
+                        gestion des déchets industriels. À court terme, il s’agit de mettre en place un système fiable,
+                        automatisé et connecté, capable de trier différents types de déchets en temps réel. À plus long
+                        terme, la solution vise à s’intégrer dans des réseaux urbains intelligents, à exploiter
+                        l’intelligence artificielle pour anticiper les besoins et à servir de base à d’autres
+                        applications industrielles ou environnementales. Ce projet ouvre la voie à une gestion plus
+                        responsable, collaborative et évolutive des ressources.
+                    </p>
+                    <h3 id="approche" class="font-bold text-lg mb-2" style="color:var(--cyber-blue);"><i
+                            class="fa-solid fa-book mr-2"></i>Approche documentaire</h3>
+                    <p class="mb-4 text-lg" style="text-align:justify;">
+                        Cette documentation a été conçue pour garantir la transparence, la reproductibilité et
+                        l’amélioration continue du projet. Elle détaille chaque étape de la conception, des choix
+                        techniques aux méthodes de développement, en passant par les retours d’expérience. Illustrée de
+                        schémas, de codes et de recommandations pratiques, elle s’adresse à tous les acteurs du projet :
+                        développeurs, administrateurs, équipes mécaniques et électroniques. L’objectif est de faciliter
+                        la compréhension, le transfert de compétences et l’innovation collective autour du convoyeur
+                        intelligent.
+                    </p>
+                </div>
+
+                <hr style="border: none; border-top: 2px solid var(--cyber-blue); margin: 48px 0 32px 0; opacity: 0.4;">
+
+
+                <div class="p-8 mb-8" id="presentation">
+                    <h2 class="text-2xl font-bold mb-4 flex items-center" style="color:var(--cyber-blue);">
+                        <i class="fa-solid fa-lightbulb mr-3 text-cyber-blue text-2xl"></i>
+                        Description du système
+                    </h2>
+                    <h3 id="presentation-generale" class="font-bold text-lg mb-2" style="color:var(--cyber-blue);"><i
+                            class="fa-solid fa-rectangle-list mr-2"></i>Présentation générale</h3>
+                    <p class="mb-0 text-lg" style="text-align:justify;">
+                        Le système de convoyeur intelligent présenté ici est une solution innovante de tri automatisé
+                        des déchets, conçue pour répondre aux enjeux de l’industrie 4.0 et du développement durable. Il
+                        s’appuie sur une architecture modulaire intégrant des capteurs de présence et de couleur, un
+                        microcontrôleur embarqué, ainsi qu’une interface web de supervision. Cette plateforme permet
+                        d’identifier, de trier et de tracer chaque objet de manière fiable, tout en offrant une grande
+                        flexibilité d’évolution. Le projet met l’accent sur la reproductibilité, l’ouverture
+                        technologique et l’intégration facilitée dans des environnements industriels variés.
+                    </p>
+                    <div class="flex justify-center my-6">
+                        <div class="w-full flex flex-col items-center justify-center">
+                            <div style="width:100%; max-width:1100px; min-width:320px; margin:0 auto;">
+                                <div style="position:relative;">
+                                    <div
+                                        style="display:flex; align-items:center; justify-content:space-between; margin-bottom:4px;">
+                                        <span
+                                            style="font-size:0.95em; color:#00f7ff; font-family:'Orbitron',sans-serif; letter-spacing:1px;">Diagramme
+                                            de séquence&nbsp;: Fonctionnement du système</span>
+                                        <button onclick="openMermaidFullscreen(this)"
+                                            style="background:var(--cyber-blue); color:#181f2a; border:none; border-radius:6px; padding:2px 12px; font-size:0.95em; font-family:'Orbitron',sans-serif; font-weight:600; cursor:pointer; box-shadow:0 0 8px #00f7ff55; margin-left:8px;">Plein
+                                            écran</button>
+                                    </div>
+                                    <div class="mermaid-container"
+                                        style="height:340px; max-height:60vh; min-width:320px; width:100%; overflow-y:auto; overflow-x:auto; background:#f8fafc; border-radius:10px; box-shadow:0 0 8px #00f7ff33; padding:8px;">
+                                        <pre class="mermaid"
+                                            style="font-size:0.95em; background:none; border:none; margin:0; padding:0; width:100vw; max-width:100vw;">
+sequenceDiagram
+    participant Operateur as "Opérateur"
+    participant Objet as "Déchet (cube coloré)"
+    participant CapteurPresence as "Capteur de présence"
+    participant Convoyeur as "Convoyeur"
+    participant CapteurCouleur as "Capteur de couleur"
+    participant Microcontroleur as "Microcontrôleur"
+    participant InterfaceWeb as "Interface web"
+    participant Collecteur as "Collecteur (opérateur)"
+
+    Operateur->>Objet: Dépose le déchet sur le convoyeur
+    Objet->>CapteurPresence: Passage détecté
+    CapteurPresence-->>Microcontroleur: Signal de présence
+    Microcontroleur->>Convoyeur: Démarrage de la bande
+    Convoyeur->>Objet: Transport vers la zone d’analyse
+    Objet->>CapteurCouleur: Arrivée sous le capteur
+    CapteurCouleur-->>Microcontroleur: Mesure de la couleur (vert, jaune, rouge, bleu)
+    Microcontroleur->>InterfaceWeb: Mise à jour du compteur par couleur
+    Convoyeur->>Objet: Arrêt en fin de parcours
+    Collecteur->>Objet: Récupère le déchet
+    Collecteur->>Corbeille: Dépose dans la benne correspondant à la couleur
+                                        </pre>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <h3 id="enjeux" class="font-bold text-lg mb-2" style="color:var(--cyber-blue);"><i
+                            class="fa-solid fa-chart-line mr-2"></i>Enjeux et perspectives</h3>
+                    <p class="mb-4 text-lg" style="text-align:justify;">
+                        Ce projet répond à plusieurs enjeux stratégiques&nbsp;: automatiser le tri pour améliorer la
+                        valorisation des déchets, fiabiliser la collecte de données pour piloter l’optimisation des
+                        flux, et préparer l’intégration de technologies avancées (intelligence artificielle, maintenance
+                        prédictive, interconnexion IoT). Les perspectives incluent l’extension à d’autres types de tri,
+                        l’adaptation à de nouveaux contextes industriels, et la contribution à la transition écologique
+                        par l’innovation technologique. Le système vise à devenir une brique de référence pour la
+                        modernisation des chaînes de tri et la gestion intelligente des ressources.
+                    </p>
+                    <div class="bg-gray-900 bg-opacity-70 border border-cyber-blue rounded-lg p-4 mb-4">
+                        <h3 id="objectifs-systeme" class="font-bold text-lg mb-2" style="color:var(--cyber-blue);"><i
+                                class="fa-solid fa-bullseye mr-2"></i>Objectifs du système</h3>
+                        <ul class="list-disc ml-6 mb-0">
+                            <li>Détecter automatiquement la présence et la couleur des objets sur le convoyeur.</li>
+                            <li>Classer et trier les déchets de façon autonome selon des critères configurables.</li>
+                            <li>Assurer la traçabilité complète des opérations et l’archivage des données de tri.</li>
+                            <li>Fournir une interface web de supervision et de paramétrage accessible à distance.</li>
+                        </ul>
+                    </div>
+
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-4">
+                        <div class="bg-gray-900 bg-opacity-70 border border-cyber-blue rounded-lg p-4">
+                            <h3 id="fonctionnement-general" class="font-bold text-lg mb-2"
+                                style="color:var(--cyber-blue);"><i class="fa-solid fa-gears mr-2"></i>Fonctionnement
+                                général</h3>
+                            <ol class="list-decimal ml-6 mb-0">
+                                <li>Un objet est déposé sur le convoyeur par l’opérateur.</li>
+                                <li>Le capteur de présence détecte automatiquement l’arrivée de l’objet et déclenche la
+                                    mise en marche du convoyeur.</li>
+                                <li>L’objet est transporté jusqu’à la zone de détection, où le capteur de couleur
+                                    identifie précisément sa teinte.</li>
+                                <li>Selon la couleur détectée, le système oriente l’objet vers le bac de tri approprié
+                                    grâce à une logique embarquée.</li>
+                                <li>Toutes les opérations (détection, tri, comptage) sont enregistrées et affichées en
+                                    temps réel sur l’interface web, permettant un suivi précis et une analyse des
+                                    performances.</li>
+                            </ol>
+                        </div>
+                        <div class="bg-gray-900 bg-opacity-70 border border-cyber-blue rounded-lg p-4">
+                            <h3 id="avantages" class="font-bold text-lg mb-2" style="color:var(--cyber-blue);"><i
+                                    class="fa-solid fa-star mr-2"></i>Avantages du système</h3>
+                            <ul class="list-disc ml-6 mb-0">
+                                <li>Tri automatisé, rapide et fiable, réduisant considérablement les erreurs humaines.
+                                </li>
+                                <li>Adaptabilité à différents types de déchets et scénarios industriels grâce à une
+                                    architecture modulaire.</li>
+                                <li>Diminution des interventions manuelles, ce qui optimise le temps de travail des
+                                    opérateurs.</li>
+                                <li>Collecte et analyse de données pour améliorer en continu les performances du tri.
+                                </li>
+                                <li>Contribution active à la transition écologique par la valorisation et le recyclage
+                                    intelligent des déchets.</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <hr style="border: none; border-top: 2px solid var(--cyber-blue); margin: 48px 0 32px 0; opacity: 0.4;">
+                <div class="p-8 mb-8" id="capteurs">
+                    <h2 class="text-xl font-bold mb-3 flex items-center" style="color:var(--cyber-blue);">
+                        <i class="fa-solid fa-microchip mr-3 text-cyber-blue text-2xl"></i>
+                        Détection intelligente
+                    </h2>
+                    <p class="mb-6 text-lg" style="text-align:justify;">
+                        La détection intelligente s’appuie sur deux piliers essentiels&nbsp;: l’identification
+                        instantanée de la présence d’un objet sur le convoyeur et la reconnaissance fiable de sa
+                        couleur. Cette double détection permet d’automatiser le suivi de chaque déchet, d’optimiser le
+                        tri en temps réel et de garantir la traçabilité des opérations. Les technologies et méthodes
+                        employées pour atteindre ce niveau de précision sont détaillées dans la suite de cette section.
+                    </p>
+                    <div class="mb-6">
+                        <h3 id="detection-couleurs" class="font-bold text-lg mb-2" style="color:var(--cyber-blue);"><i
+                                class="fa-solid fa-palette mr-2"></i>Détection de couleurs</h3>
+                        <div class="mb-3">
+                            <b>Qu’est-ce qu’un capteur de couleur&nbsp;?</b> Il s’agit d’un composant électronique
+                            capable d’identifier la couleur d’un objet en analysant la lumière qu’il réfléchit. En
+                            décomposant cette lumière selon ses composantes (rouge, vert, bleu), le capteur détermine la
+                            teinte dominante ou la nuance précise de l’objet. Cette technologie, essentielle pour
+                            automatiser le tri, le contrôle qualité ou la reconnaissance d’objets, offre rapidité,
+                            fiabilité et adaptabilité dans l’industrie. Pour ce projet, le choix s’est porté sur le
+                            modèle <span style="color:#00f7ff; font-weight:bold;">TCS34725</span>, reconnu pour sa
+                            précision et sa facilité d’intégration.
+
+                        </div>
+
+
+                        <div class="mb-3 flex flex-col md:flex-row md:items-center md:space-x-6">
+                            <div class="flex flex-col md:flex-row md:items-start md:space-x-6 w-full">
+                                <div class="w-full md:w-1/2 mt-4 md:mt-0" style="min-width:320px; max-width:600px;">
+                                    <div style="position:relative;">
+                                        <div
+                                            style="display:flex; align-items:center; justify-content:space-between; margin-bottom:4px;">
+                                            <span style="font-size:0.95em; color:#00f7ff;">Diagramme de séquence&nbsp;:
+                                                fonctionnement du capteur</span>
+                                            <button onclick="openMermaidFullscreen(this)"
+                                                style="background:var(--cyber-blue); color:#181f2a; border:none; border-radius:6px; padding:2px 12px; font-size:0.95em; font-family:'Orbitron',sans-serif; font-weight:600; cursor:pointer; box-shadow:0 0 8px #00f7ff55; margin-left:8px;">Plein
+                                                écran</button>
+                                        </div>
+                                        <div class="mermaid-container"
+                                            style="height:340px; max-height:60vh; min-width:320px; max-width:600px; overflow-y:auto; overflow-x:auto; background:#f8fafc; border-radius:10px; box-shadow:0 0 8px #00f7ff33; padding:8px;">
+                                            <pre class="mermaid"
+                                                style="font-size:0.95em; background:none; border:none; margin:0; padding:0;">
+sequenceDiagram
+ participant Arduino
+    participant Registres as Registres TCS34725
+    participant ADC as Convertisseur ADC
+    participant Photodiodes
+    participant I2C as Interface I2C
+    participant LED
+
+    Arduino->>Registres: Configuration initiale
+    Note over Arduino,Registres: SET PON=1 (Power ON)
+    Registres-->>Arduino: ACK
+    Arduino->>Registres: SET AEN=1 (ADC Enable)
+    Registres-->>Arduino: ACK
+    Arduino->>LED: Activation (si nécessaire)
+    LED->>Photodiodes: Éclairage objet
+    
+    loop Cycle de mesure
+        Arduino->>Registres: SET ATIME et GAIN
+        Registres-->>Arduino: ACK
+        
+        activate Photodiodes
+        Photodiodes->>Photodiodes: Intégration lumière (154ms)
+        deactivate Photodiodes
+        
+        Photodiodes->>ADC: Courants analogiques (R,G,B,C)
+        activate ADC
+        ADC->>ADC: Conversion ΣΔ 16 bits (1.8ms)
+        ADC->>Registres: Valeurs numériques
+        deactivate ADC
+        
+        Registres->>Registres: Correction IR
+        Note over Registres: R_corr = R - 0.8*(R+G+B-C)
+        
+        Arduino->>I2C: Demande lecture (START, 0x29 W)
+        I2C->>Registres: Pointeur 0x14
+        Arduino->>I2C: RESTART, 0x29 R
+        I2C->>Arduino: Envoi octets (LSB/MSB Clear)
+        I2C->>Arduino: Envoi octets (LSB/MSB Rouge)
+        I2C->>Arduino: Envoi octets (LSB/MSB Vert)
+        I2C->>Arduino: Envoi octets (LSB/MSB Bleu)
+        Arduino->>I2C: STOP
+        
+        activate Arduino
+        Arduino->>Arduino: Normalisation RGB
+        Note over Arduino: r_norm = (r_raw/c_raw)*255
+        Arduino->>Arduino: Identification couleur
+        deactivate Arduino
+        Arduino->>Registres: SET AEN=0 (Arrêt ADC)
+        Registres-->>Arduino: ACK
+        Arduino->>Registres: SET PON=0 (Power OFF)
+        Registres-->>Arduino: ACK
+    end
+    
+    Arduino->>LED: Désactivation (si nécessaire)
+   
+                    </pre>
+                                            <!-- Étape 3 : Lecture brute des valeurs du capteur -->
+                                            <h4 class="font-bold text-md mb-2" style="color:var(--cyber-blue);">Étape
+                                                3&nbsp;: Lecture des valeurs brutes</h4>
+                                            <p class="mb-2 text-lg" style="text-align:justify;">
+                                                Une fois le capteur initialisé, on peut lire les valeurs brutes des
+                                                composantes Rouge, Vert, Bleu et Clair (lumière totale). Ces mesures
+                                                servent de base pour la calibration et l’identification des
+                                                couleurs.<br>
+                                                On utilise la fonction <b>getRawData()</b> de la bibliothèque pour
+                                                récupérer ces valeurs.
+                                            </p>
+                                            <pre
+                                                style="background:#181f2a; color:#00f7ff; border-radius:8px; padding:12px; font-size:1em; margin-bottom:18px;">
+// Variables pour stocker les mesures
+uint16_t r, g, b, c;
+
+void loop() {
+    // Lecture des valeurs brutes du capteur
+    tcs.getRawData(&r, &g, &b, &c);
+    // Affichage des valeurs sur le moniteur série
+    Serial.print("Rouge : "); Serial.print(r);
+    Serial.print("\tVert : "); Serial.print(g);
+    Serial.print("\tBleu : "); Serial.print(b);
+    Serial.print("\tClair : "); Serial.println(c);
+    delay(500); // Attente entre deux mesures
+}
+            </pre>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="w-full md:w-1/2 mt-4 md:mt-0" style="min-width:320px; max-width:600px;">
+                                    <div style="position:relative;">
+                                        <div
+                                            style="display:flex; align-items:center; justify-content:space-between; margin-bottom:4px;">
+                                            <span style="font-size:0.95em; color:#00f7ff;">Diagramme fonctionnel&nbsp;:
+                                                chaîne de mesures</span>
+                                            <button onclick="openMermaidFullscreen(this)"
+                                                style="background:var(--cyber-blue); color:#181f2a; border:none; border-radius:6px; padding:2px 12px; font-size:0.95em; font-family:'Orbitron',sans-serif; font-weight:600; cursor:pointer; box-shadow:0 0 8px #00f7ff55; margin-left:8px;">Plein
+                                                écran</button>
+                                        </div>
+                                        <div class="mermaid-container"
+                                            style="height:340px; max-height:60vh; min-width:320px; max-width:600px; overflow-y:auto; overflow-x:auto; background:#181f2a; border-radius:10px; box-shadow:0 0 8px #00f7ff33; padding:8px;">
+                                            <pre class="mermaid"
+                                                style="font-size:0.95em; background:none; border:none; margin:0; padding:0;">
+flowchart TD
+    A[Alimentation 3.3V-5V] --> B[Régulateur 2.4V]
+    B --> C[Circuit Logique]
+    C --> D[Config Registres I2C]
+    D --> E[ENABLE: PON=1]
+    E --> F[Attente 2.4ms]
+    F --> G[ENABLE: AEN=1]
+    G --> H{LED activée?}
+    H -->|Oui| I[Allumage LED]
+    H -->|Non| J[Utilise lumière ambiante]
+    I --> K[Éclairage objet]
+    J --> K
+    K --> L[Lumière réfléchie]
+    L --> M[Filtrage optique]
+    M --> N[Photodiodes]
+    N --> O[Conversion lumière → courant]
+    O --> P[Amplificateur transimpédance]
+    P --> Q{Réglage gain}
+    Q -->|1x| R1[Rfb=24kΩ]
+    Q -->|4x| R2[Rfb=96kΩ]
+    Q -->|16x| R3[Rfb=384kΩ]
+    Q -->|60x| R4[Rfb=1.44MΩ]
+    R1 --> S[Filtre RC 1kHz]
+    R2 --> S
+    R3 --> S
+    R4 --> S
+    S --> T[Multiplexeur 4:1]
+    T --> U[ADC Σ-Δ 16 bits]
+    U --> V[Intégration charge]
+    V --> W[Comparaison référence]
+    W --> X[Comptage 16 bits]
+    X --> Y[Stockage registres]
+    Y --> Z[Correction IR]
+    Z --> AA[Interface I2C]
+    AA --> AB[START + Adr 0x29 W]
+    AB --> AC[Pointeur 0x14]
+    AC --> AD[RESTART + Adr 0x29 R]
+    AD --> AE[Lecture octets]
+    AE --> AF[STOP]
+    AF --> AG[Arduino]
+    AG --> AH[Lecture valeurs brutes]
+    AH --> AI[Normalisation RGB]
+    AI --> AJ[Identification couleur]
+    
+    subgraph Capteur TCS34725
+        A --> Y
+    end
+    
+    subgraph Traitement Arduino
+        AG --> AJ
+    end
+                                            </pre>
+                                        </div>
+                                    </div>
+                                    <script>
+                                        // Scrollspy général pour toutes les sections principales
+                                        document.addEventListener('DOMContentLoaded', function () {
+                                            function updateSommaireSections() {
+                                                // Désactive toutes les sections principales
+                                                document.querySelectorAll('aside ul > li').forEach(function (li) {
+                                                    li.classList.remove('active-section');
+                                                    var link = li.querySelector('a.sommaire-link');
+                                                    if (link) link.classList.remove('active-sommaire');
+                                                });
+                                                // Liste des IDs des grandes sections
+                                                var mainSections = [
+                                                    'intro',
+                                                    'presentation',
+                                                    'capteurs',
+                                                    'automatisation',
+                                                    'interface',
+                                                    'communication',
+                                                    'conclusion'
+                                                ];
+                                                // Détection de la section active par scroll
+                                                var activeId = null;
+                                                for (var i = 0; i < mainSections.length; i++) {
+                                                    var el = document.getElementById(mainSections[i]);
+                                                    if (el) {
+                                                        var rect = el.getBoundingClientRect();
+                                                        if (rect.top < 180 && rect.bottom > 80) {
+                                                            activeId = mainSections[i];
+                                                            break;
+                                                        }
+                                                    }
+                                                }
+                                                // Fallback sur le hash si aucun scroll détecté
+                                                if (!activeId && window.location.hash) {
+                                                    activeId = window.location.hash.replace('#', '');
+                                                }
+                                                // Active la section correspondante et affiche ses sous-sections
+                                                if (activeId) {
+                                                    document.querySelectorAll('aside ul > li').forEach(function (li) {
+                                                        var link = li.querySelector('a.sommaire-link');
+                                                        if (link && link.getAttribute('href') === '#' + activeId) {
+                                                            li.classList.add('active-section');
+                                                            link.classList.add('active-sommaire');
+                                                        }
+                                                    });
+                                                }
+                                            }
+                                            window.addEventListener('hashchange', updateSommaireSections);
+                                            window.addEventListener('scroll', updateSommaireSections);
+                                            updateSommaireSections();
+                                        });
+                                        // Fonction pour afficher le diagramme Mermaid en plein écran (utilisée partout)
+                                        function openMermaidFullscreen(btn) {
+                                            // Trouver le conteneur parent du diagramme
+                                            var container = btn.closest('div').parentElement.querySelector('.mermaid-container');
+                                            if (!container) {
+                                                // Cas fallback : cherche dans le parent direct
+                                                container = btn.closest('div').querySelector('.mermaid-container');
+                                            }
+                                            if (container.requestFullscreen) {
+                                                container.requestFullscreen();
+                                            } else if (container.webkitRequestFullscreen) {
+                                                container.webkitRequestFullscreen();
+                                            } else if (container.msRequestFullscreen) {
+                                                container.msRequestFullscreen();
+                                            }
+                                        }
+                                    </script>
+                                    </pre>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="bg-gray-900 bg-opacity-70 border border-cyber-blue rounded-lg p-4 mt-4">
+                            <h4 class="font-bold text-md mb-2 text-center" style="color:var(--cyber-blue);">Avantages et
+                                inconvénients du capteur TCS34725</h4>
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                <div>
+                                    <b>Avantages&nbsp;:</b>
+                                    <ul class="list-disc ml-6 mb-2">
+                                        <li>Très bonne précision de détection des couleurs grâce à l’ADC 16 bits et la
+                                            correction IR intégrée.</li>
+                                        <li>Facilité d’intégration (I2C, LED embarquée).</li>
+                                        <li>Réglages adaptables (gain, temps d’intégration) pour s’ajuster à différents
+                                            contextes.</li>
+                                    </ul>
+                                </div>
+                                <div>
+                                    <b>Inconvénients&nbsp;:</b>
+                                    <ul class="list-disc ml-6 mb-2">
+                                        <li>Sensible à la lumière ambiante et aux objets atypiques (transparents,
+                                            brillants, très sombres).</li>
+                                        <li>Calibration indispensable pour garantir la fiabilité des mesures.</li>
+                                        <li>Temps de mesure non instantané (intégration typique &gt; 100 ms).</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="mt-6"></div>
+                        <div class="bg-gray-900 bg-opacity-70 border border-cyber-blue rounded-lg p-4 mb-4">
+                            <h5 class="font-bold text-md mb-2" style="color:var(--cyber-blue);">Bonnes pratiques pour
+                                une détection de couleur fiable</h5>
+                            <ul class="list-disc ml-6 mb-0">
+                                <li>Activer la LED intégrée à chaque mesure pour un éclairage constant.</li>
+                                <li>Effectuer une calibration régulière avec des échantillons de référence adaptés à
+                                    l’environnement réel.</li>
+                                <li>Optimiser le gain et le temps d’intégration selon la luminosité et la couleur des
+                                    objets à détecter.</li>
+                                <li>Protéger le capteur des sources lumineuses parasites et des poussières.</li>
+                                <li>Répéter la calibration si l’environnement lumineux ou les objets changent.</li>
+                            </ul>
+                        </div>
+                        <!-- Cadres image et vidéo côte à côte -->
+                        <!-- Début documentation progressive détection couleur -->
+                        <h4 class="font-bold text-md mb-2" style="color:var(--cyber-blue);">Étape 1&nbsp;: Bibliothèques
+                            utilisées</h4>
+                        <p class="mb-2 text-lg" style="text-align:justify;">
+                            Pour piloter le capteur de couleur <b>TCS34725</b> avec Arduino, on utilise la bibliothèque
+                            <b>Adafruit_TCS34725</b>. Elle facilite la communication I2C, la configuration du capteur et
+                            la lecture des mesures couleur.<br>
+                            Il faut également inclure la bibliothèque <b>Wire</b> pour la gestion du bus I2C.
+                        </p>
+                        <pre
+                            style="background:#181f2a; color:#00f7ff; border-radius:8px; padding:12px; font-size:1em; margin-bottom:18px;">
+// Inclusion des bibliothèques nécessaires
+#include &lt;Wire.h&gt;
+#include &lt;Adafruit_TCS34725.h&gt;
+            </pre>
+
+                        <!-- Étape 2 : Initialisation du capteur TCS34725 -->
+                        <h4 class="font-bold text-md mb-2" style="color:var(--cyber-blue);">Étape 2&nbsp;:
+                            Initialisation du capteur</h4>
+                        <p class="mb-2 text-lg" style="text-align:justify;">
+                            Avant toute mesure, il faut créer un objet capteur et vérifier que la communication I2C
+                            fonctionne correctement. On initialise le capteur avec les paramètres de gain et de temps
+                            d’intégration adaptés à l’application.<br>
+                            L’initialisation permet aussi de détecter si le capteur est bien connecté.
+                        </p>
+                        <pre
+                            style="background:#181f2a; color:#00f7ff; border-radius:8px; padding:12px; font-size:1em; margin-bottom:18px;">
+// Création de l’objet capteur avec gain et temps d’intégration
+Adafruit_TCS34725 tcs = Adafruit_TCS34725(
+    TCS34725_INTEGRATIONTIME_154MS, // Temps d’intégration (précision)
+    TCS34725_GAIN_4X                // Gain (sensibilité)
+);
+
+void setup() {
+    Serial.begin(9600); // Initialisation de la communication série
+    if (tcs.begin()) {
+        Serial.println("Capteur TCS34725 détecté !");
+    } else {
+        Serial.println("Erreur : capteur TCS34725 non détecté.");
+        while (1); // Arrêt du programme si capteur absent
+    }
+}
+            </pre>
+
+                        <!-- Étape 3 : Lecture brute des valeurs du capteur -->
+                        <h4 class="font-bold text-md mb-2" style="color:var(--cyber-blue);">Étape 3&nbsp;: Lecture des
+                            valeurs brutes</h4>
+                        <p class="mb-2 text-lg" style="text-align:justify;">
+                            Une fois le capteur initialisé, on peut lire les valeurs brutes des composantes Rouge, Vert,
+                            Bleu et Clair (lumière totale). Ces mesures servent de base pour la calibration et
+                            l’identification des couleurs.<br>
+                            On utilise la fonction <b>getRawData()</b> de la bibliothèque pour récupérer ces valeurs.
+                        </p>
+                        <pre
+                            style="background:#181f2a; color:#00f7ff; border-radius:8px; padding:12px; font-size:1em; margin-bottom:18px;">
+// Variables pour stocker les mesures
+uint16_t r, g, b, c;
+
+void loop() {
+    // Lecture des valeurs brutes du capteur
+    tcs.getRawData(&r, &g, &b, &c);
+    // Affichage des valeurs sur le moniteur série
+    Serial.print("Rouge : "); Serial.print(r);
+    Serial.print("\tVert : "); Serial.print(g);
+    Serial.print("\tBleu : "); Serial.print(b);
+    Serial.print("\tClair : "); Serial.println(c);
+    delay(500); // Attente entre deux mesures
+}
+</pre>
+
+                        <!-- Étape 4 : Normalisation des valeurs RGB -->
+                        <h4 class="font-bold text-md mb-2" style="color:var(--cyber-blue);">Étape 4&nbsp;: Normalisation
+                            des valeurs RGB</h4>
+                        <p class="mb-2 text-lg" style="text-align:justify;">
+                            Les valeurs brutes dépendent de la luminosité ambiante et de la distance de l’objet. Pour
+                            comparer les couleurs de façon fiable, on normalise chaque composante (rouge, vert, bleu)
+                            par rapport à la composante « clair » (c).<br>
+                            La formule est&nbsp;: <b>valeur_normalisée = (valeur_brute / clair) × 255</b>. On obtient
+                            ainsi des valeurs sur 0–255, indépendantes de l’intensité lumineuse.<br>
+                            <span style="color:#ff2e63;">Attention&nbsp;:</span> il faut vérifier que la composante «
+                            clair » n’est pas nulle pour éviter une division par zéro.
+                        </p>
+                        <pre
+                            style="background:#181f2a; color:#00f7ff; border-radius:8px; padding:12px; font-size:1em; margin-bottom:18px;">
+// Variables pour stocker les valeurs normalisées
+uint8_t r_norm, g_norm, b_norm;
+
+void loop() {
+    tcs.getRawData(&r, &g, &b, &c);
+    if (c > 0) {
+        r_norm = (uint32_t)r * 255 / c;
+        g_norm = (uint32_t)g * 255 / c;
+        b_norm = (uint32_t)b * 255 / c;
+    } else {
+        r_norm = g_norm = b_norm = 0;
+    }
+    Serial.print("R norm : "); Serial.print(r_norm);
+    Serial.print("\tG norm : "); Serial.print(g_norm);
+    Serial.print("\tB norm : "); Serial.println(b_norm);
+    delay(500);
+}
+</pre>
+                        <!-- Étape 5 : Correction gamma des valeurs RGB -->
+                        <h4 class="font-bold text-md mb-2" style="color:var(--cyber-blue);">Étape 5&nbsp;: Correction
+                            gamma des valeurs RGB</h4>
+                        <p class="mb-2 text-lg" style="text-align:justify;">
+                            Même après normalisation, la perception humaine des couleurs n'est pas linéaire&nbsp;: l'œil
+                            est plus sensible aux faibles intensités. Pour obtenir des couleurs plus fidèles à la vision
+                            humaine, on applique une <b>correction gamma</b> (généralement avec un gamma de 2,5).<br>
+                            Cette opération consiste à transformer chaque composante normalisée selon la formule&nbsp;:
+                            <b>valeur_corrigée = pow(valeur_normalisée / 255.0, 1 / gamma) × 255</b>.<br>
+                            On utilise la fonction <b>pow()</b> d'Arduino pour effectuer cette correction sur chaque
+                            composante.
+                        </p>
+                        <pre
+                            style="background:#181f2a; color:#00f7ff; border-radius:8px; padding:12px; font-size:1em; margin-bottom:18px;">
+// Variables pour stocker les valeurs corrigées gamma
+uint8_t r_gamma, g_gamma, b_gamma;
+const float gamma = 2.5;
+
+void loop() {
+    // Supposons que r_norm, g_norm, b_norm ont déjà été calculés à l'étape 4
+    r_gamma = pow(r_norm / 255.0, 1.0 / gamma) * 255.0;
+    g_gamma = pow(g_norm / 255.0, 1.0 / gamma) * 255.0;
+    b_gamma = pow(b_norm / 255.0, 1.0 / gamma) * 255.0;
+    Serial.print("R gamma : "); Serial.print(r_gamma);
+    Serial.print("\tG gamma : "); Serial.print(g_gamma);
+    Serial.print("\tB gamma : "); Serial.println(b_gamma);
+    delay(500);
+}
+</pre>
+                        <!-- Étape 6 : Identification de la couleur -->
+                        <h4 class="font-bold text-md mb-2" style="color:var(--cyber-blue);">Étape 6&nbsp;:
+                            Identification de la couleur</h4>
+                        <p class="mb-2 text-lg" style="text-align:justify;">
+                            Après correction gamma, il est possible d’identifier la couleur dominante de l’objet
+                            détecté. On compare les valeurs corrigées (r_gamma, g_gamma, b_gamma) pour déterminer la
+                            couleur la plus représentée. Une méthode simple consiste à utiliser des seuils ou à comparer
+                            la composante la plus élevée.<br>
+                            Exemple&nbsp;: si r_gamma est nettement supérieur aux autres, l’objet est rouge. On peut
+                            affiner la détection avec des plages de tolérance pour chaque couleur (rouge, vert, bleu,
+                            jaune, etc.).
+                        </p>
+                        <pre
+                            style="background:#181f2a; color:#00f7ff; border-radius:8px; padding:12px; font-size:1em; margin-bottom:18px;">
+// Fonction pour identifier la couleur dominante
+
+// Fonction pour identifier la couleur dominante (seulement Rouge, Vert, Bleu, Jaune)
+String detectColor(uint8_t r, uint8_t g, uint8_t b) {
+    if (r > 180 && g < 120 && b < 120) return "Rouge";
+    if (g > 180 && r < 120 && b < 120) return "Vert";
+    if (b > 180 && r < 120 && g < 120) return "Bleu";
+    if (r > 180 && g > 180 && b < 120) return "Jaune";
+    return "Inconnu";
+}
+
+// Supposons que r_gamma, g_gamma, b_gamma sont déjà calculés aux étapes précédentes
+void loop() {
+    String couleur = detectColor(r_gamma, g_gamma, b_gamma);
+    Serial.print("Couleur détectée : ");
+    Serial.println(couleur);
+    delay(500);
+}
+</pre>
+
+                        <!-- Étape 7 : Calibration du capteur de couleur -->
+                        <h4 class="font-bold text-md mb-2" style="color:var(--cyber-blue);">Étape 7&nbsp;: Calibration
+                            du capteur de couleur</h4>
+                        <p class="mb-2 text-lg" style="text-align:justify;">
+                            La calibration est essentielle pour garantir la fiabilité de la détection des couleurs dans
+                            différents environnements lumineux. Elle consiste à mesurer les valeurs du capteur avec des
+                            objets de référence (rouge, vert, bleu, jaune, blanc, noir) dans les conditions réelles
+                            d’utilisation, puis à ajuster les seuils utilisés pour l’identification.<br>
+                        <ul class="list-disc ml-6 mb-2">
+                            <li>Placez un objet de couleur connue sous le capteur et notez les valeurs normalisées et
+                                corrigées gamma obtenues.</li>
+                            <li>Répétez l’opération pour chaque couleur à détecter.</li>
+                            <li>Adaptez les seuils dans la fonction <code>detectColor()</code> en fonction des résultats
+                                mesurés.</li>
+                            <li>Réalisez la calibration à chaque changement d’environnement lumineux ou de type d’objet.
+                            </li>
+                        </ul>
+                        <b>Conseil&nbsp;:</b> Conservez une trace des valeurs de référence pour faciliter les
+                        ajustements futurs et garantir la robustesse du tri.
+                        </p>
+
+                        </p>
+                        <!-- Code complet Arduino pour la détection des 4 couleurs -->
+                        <h4 class="font-bold text-md mb-2" style="color:var(--cyber-blue);">Fonction dédiée : détection
+                            de couleur (Arduino + TCS34725)</h4>
+                        <div
+                            style="background:#181f2a; color:#00f7ff; border-radius:8px; padding:12px; font-size:1em; margin-bottom:18px; max-height:420px; overflow:auto;">
+                            <pre style="white-space:pre; margin:0;">
+
+#include &lt;Wire.h&gt;
+#include &lt;Adafruit_TCS34725.h&gt;
+
+Adafruit_TCS34725 tcs = Adafruit_TCS34725();
+
+// Fonction qui gère toute la détection et retourne le nom de la couleur
+String detectColorTCS34725() {
+  uint16_t r, g, b, c;
+  uint8_t r_norm, g_norm, b_norm;
+  uint8_t r_gamma, g_gamma, b_gamma;
+  const float gamma = 2.5;
+
+  tcs.getRawData(&r, &g, &b, &c);
+
+  // Normalisation
+  if (c > 0) {
+    r_norm = (uint32_t)r * 255 / c;
+    g_norm = (uint32_t)g * 255 / c;
+    b_norm = (uint32_t)b * 255 / c;
+  } else {
+    r_norm = g_norm = b_norm = 0;
+  }
+
+  // Correction gamma
+  r_gamma = pow(r_norm / 255.0, 1.0 / gamma) * 255.0;
+  g_gamma = pow(g_norm / 255.0, 1.0 / gamma) * 255.0;
+  b_gamma = pow(b_norm / 255.0, 1.0 / gamma) * 255.0;
+
+  // Identification de la couleur
+  if (r_gamma > 180 && g_gamma < 120 && b_gamma < 120) return "Rouge";
+  if (g_gamma > 180 && r_gamma < 120 && b_gamma < 120) return "Vert";
+  if (b_gamma > 180 && r_gamma < 120 && g_gamma < 120) return "Bleu";
+  if (r_gamma > 180 && g_gamma > 180 && b_gamma < 120) return "Jaune";
+  return "Inconnu";
+}
+
+void setup() {
+  Serial.begin(9600);
+  if (tcs.begin()) {
+    Serial.println("Capteur TCS34725 détecté !");
+  } else {
+    Serial.println("Erreur capteur TCS34725");
+    while (1);
+  }
+}
+
+void loop() {
+  String couleur = detectColorTCS34725();
+  Serial.print("Couleur détectée : ");
+  Serial.println(couleur);
+  delay(500);
+}
+</pre>
+                        </div>
+                        </p>
+                        <div class="grid grid-cols-2 gap-0 mb-8">
+                            <div class="w-full h-full flex items-center justify-center" style="padding:0;">
+                                <img src="https://europe1.discourse-cdn.com/arduino/original/4X/0/6/c/06c78b5a5c0b79a0087c14fc3843296a7c1eb36d.jpeg"
+                                    alt="Schéma de câblage du capteur de couleur TCS34725"
+                                    class="w-full h-auto object-contain"
+                                    style="border-radius:10px; box-shadow:0 0 8px #00f7ff33; margin-bottom:0;" />
+                            </div>
+                            <div class="w-full h-full flex items-center justify-center" style="padding:0;">
+                                <video controls class="w-full h-full object-cover rounded-lg shadow-lg"
+                                    style="min-height:220px; height:100%;">
+                                    <source src="Images/couleur.mp4" type="video/mp4">
+                                    Votre navigateur ne supporte pas la vidéo HTML5.
+                                </video>
+                            </div>
+                        </div>
+
+
+                        <h3 id="detection-presence" class="font-bold text-lg mb-2" style="color:var(--cyber-blue);"><i
+                                class="fa-solid fa-eye mr-2"></i>Détection de présence</h3>
+                        <b>Qu’est-ce qu’un capteur de présence&nbsp;?</b> Un capteur de présence est un composant
+                        électronique qui permet de savoir si un objet ou une personne se trouve dans une zone précise.
+                        Il fonctionne en détectant une modification de l’environnement, comme une coupure de lumière, un
+                        changement de champ magnétique ou une variation sonore. Dès qu’un objet entre dans la zone
+                        surveillée, le capteur réagit et envoie un signal au système pour déclencher une action (par
+                        exemple, démarrer un moteur ou compter un passage).<br>
+                        Dans notre convoyeur, nous utilisons un duo <span style="color:#00f7ff; font-weight:bold;">laser
+                            KY-008</span> et <span style="color:#00f7ff; font-weight:bold;">photorésistance</span> :
+                        quand un objet coupe le faisceau lumineux, la présence est détectée instantanément, ce qui
+                        permet un tri rapide et fiable des déchets.
+                        </p>
+                    </div>
+                    <div class="mb-3 flex flex-col md:flex-row md:items-center md:space-x-6">
+                        <div class="flex flex-col md:flex-row md:items-start md:space-x-6 w-full">
+                            <div class="w-full md:w-1/2 mt-4 md:mt-0" style="min-width:320px; max-width:600px;">
+                                <div style="position:relative;">
+                                    <div
+                                        style="display:flex; align-items:center; justify-content:space-between; margin-bottom:4px;">
+                                        <span style="font-size:0.95em; color:#00f7ff;">Diagramme de séquence&nbsp;:
+                                            fonctionnement du capteur</span>
+                                        <button onclick="openMermaidFullscreen(this)"
+                                            style="background:var(--cyber-blue); color:#181f2a; border:none; border-radius:6px; padding:2px 12px; font-size:0.95em; font-family:'Orbitron',sans-serif; font-weight:600; cursor:pointer; box-shadow:0 0 8px #00f7ff55; margin-left:8px;">Plein
+                                            écran</button>
+                                    </div>
+                                    <div class="mermaid-container"
+                                        style="height:340px; max-height:60vh; min-width:320px; max-width:600px; overflow-y:auto; overflow-x:auto; background:#f8fafc; border-radius:10px; box-shadow:0 0 8px #00f7ff33; padding:8px;">
+                                        <pre class="mermaid"
+                                            style="font-size:0.95em; background:none; border:none; margin:0; padding:0;">
+sequenceDiagram
+    box Système Laser
+        participant KY-008 as Laser KY-008
+        participant LDR as Photorésistance
+    end
+    box Contrôleur
+        participant µC as Microcontrôleur
+        participant Actionneur
+    end
+
+    Note over KY-008,LDR: Phase stable - Laser actif
+    loop Toutes les 20ms
+        KY-008->>LDR: Faisceau laser (λ=650nm)
+        LDR->>µC: Signal analogique (V₀ = 4.8V)
+        µC->>µC: Filtrage (moyenne mobile)
+        µC->>µC: Comparaison SEUIL_HAUT=4.3V
+    end
+
+    Objet->>LDR: Interruption du faisceau
+    LDR->>µC: Chute brutale (V₁ = 0.5V)
+    µC->>µC: Validation temporelle (3x20ms)
+    µC->>Actionneur: GPIO HIGH + PWM Buzzer(1kHz)
+    Actionneur->>Environnement: Alarme sonore/lumineuse
+
+    Note over µC: Gestion des erreurs
+    alt Détection > 2s
+        µC->>KY-008: Arrêt d'urgence (GPIO LOW)
+    end
+                    </pre>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="w-full md:w-1/2 mt-4 md:mt-0" style="min-width:320px; max-width:600px;">
+                                <div style="position:relative;">
+                                    <div
+                                        style="display:flex; align-items:center; justify-content:space-between; margin-bottom:4px;">
+                                        <span style="font-size:0.95em; color:#00f7ff;">Diagramme fonctionnel&nbsp;:
+                                            chaîne de mesures</span>
+                                        <button onclick="openMermaidFullscreen(this)"
+                                            style="background:var(--cyber-blue); color:#181f2a; border:none; border-radius:6px; padding:2px 12px; font-size:0.95em; font-family:'Orbitron',sans-serif; font-weight:600; cursor:pointer; box-shadow:0 0 8px #00f7ff55; margin-left:8px;">Plein
+                                            écran</button>
+                                    </div>
+                                    <div class="mermaid-container"
+                                        style="height:340px; max-height:60vh; min-width:320px; max-width:600px; overflow-y:auto; overflow-x:auto; background:#181f2a; border-radius:10px; box-shadow:0 0 8px #00f7ff33; padding:8px;">
+                                        <pre class="mermaid"
+                                            style="font-size:0.95em; background:none; border:none; margin:0; padding:0;">
+flowchart TB
+    A[Alimentation 5V] --> B[Initialisation KY-008]
+    B --> C[Activation diode laser]
+    C --> D[Émission faisceau laser 650nm]
+    D --> E{Environnement}
+    E -->|Air| F[Transmission optique]
+    E -->|Poussières| G[Diffusion lumineuse]
+    F --> H[Photorésistance CdS]
+    G --> H
+    
+    H --> I[Absorption photons]
+    I --> J[Génération paires e⁻-trou]
+    J --> K[Augmentation conductivité]
+    K --> L[Circuit pont diviseur]
+    L --> M[Conversion tension VA0]
+    
+    M --> N[Acquisition Arduino]
+    N --> O[Filtrage analogique RC]
+    O --> P[Conversion ADC 10-bit]
+    P --> Q[Traitement numérique]
+    
+    Q --> R[Filtrage IIR]
+    R --> S[Calcul baseline dynamique]
+    S --> T{Objet détecté ?}
+    T -->|Oui| U[Validation détection]
+    T -->|Non| Q
+    
+    U --> V[Inc. compteur objets]
+    V --> W[Envoi données série]
+    W --> X[Compensation thermique]
+    X --> Y[Lecture température]
+    Y --> Z[Ajustement baseline]
+    Z --> Q
+    
+    Q --> AA[Gestion inertie CdS]
+    AA --> AB[Calibration auto]
+    AB --> AC[Ajustement paramètres]
+    AC --> Q
+                    </pre>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="border border-cyber-blue rounded-lg p-4 mt-4" style="background:rgba(2,12,27,0.7);">
+                        <h4 class="font-bold mb-2 text-center" style="color:var(--cyber-blue); font-size:1.05em;">
+                            Avantages et inconvénients du capteur de présence (KY-008 + photorésistance)</h4>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <div>
+                                <b>Avantages&nbsp;:</b>
+                                <ul class="list-disc ml-6 mb-2">
+                                    <li>Détection très rapide et fiable grâce à l’interruption directe du faisceau
+                                        lumineux.</li>
+                                    <li>Solution économique, simple à mettre en œuvre et à intégrer sur un convoyeur.
+                                    </li>
+                                    <li>Faible consommation d’énergie et compatibilité avec la plupart des
+                                        microcontrôleurs.</li>
+                                </ul>
+                            </div>
+                            <div>
+                                <b>Inconvénients&nbsp;:</b>
+                                <ul class="list-disc ml-6 mb-2">
+                                    <li>Sensibilité aux perturbations lumineuses ambiantes et à la poussière.</li>
+                                    <li>Nécessite un alignement précis entre le laser et la photorésistance.</li>
+                                    <li>Moins efficace pour détecter des objets transparents ou très petits.</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="bg-gray-900 bg-opacity-70 border border-cyber-blue rounded-lg p-4 mt-4">
+                        <h5 class="font-bold text-md mb-2" style="color:var(--cyber-blue);">Bonnes pratiques pour une
+                            détection de présence fiable</h5>
+                        <ul class="list-disc ml-6 mb-2">
+                            <li>Vérifier régulièrement l’alignement du laser et de la photorésistance pour éviter les
+                                erreurs de détection.</li>
+                            <li>Protéger le capteur et le faisceau contre la poussière, les projections et la lumière
+                                parasite.</li>
+                            <li>Adapter le seuil de détection selon l’environnement lumineux réel.</li>
+                            <li>Tester le système à intervalles réguliers et remplacer la photorésistance en cas de
+                                dérive ou de lenteur.</li>
+                            <li>Prévoir une alerte en cas de détection prolongée (objet bloqué, laser désaligné) pour
+                                garantir la sécurité et la fiabilité du tri.</li>
+                        </ul>
+                    </div>
+
+
+
+
+                    <b><span style="color:var(--cyber-blue);">Étape 1 : Définition et initialisation des
+                            broches</span></b> :
+                    <ul class="list-disc ml-6">
+                        <li>Définir la broche du laser (sortie) et celle de la LDR (entrée analogique).</li>
+                        <li>Initialiser ces broches dans <code>setup()</code>.</li>
+                    </ul>
+                    <pre
+                        style="background:#181f2a; color:#00f7ff; border-radius:8px; padding:12px; font-size:1em; margin-bottom:18px;">
+#define LASER_PIN 8         // Broche digitale pour le laser
+#define LDR_PIN   A0        // Broche analogique pour la LDR
+
+void setup() {
+  pinMode(LASER_PIN, OUTPUT);
+  pinMode(LDR_PIN, INPUT);
+}
+            </pre>
+                    </li>
+                    <span style="color:var(--cyber-blue);">Étape 2 : Activation du laser</span></b> :
+                    <ul class="list-disc ml-6">
+                        <li>Allumer le laser dans <code>setup()</code> ou au début de <code>loop()</code> pour garantir
+                            un faisceau constant.</li>
+                    </ul>
+                    <pre
+                        style="background:#181f2a; color:#00f7ff; border-radius:8px; padding:12px; font-size:1em; margin-bottom:18px;">
+void setup() {
+  pinMode(LASER_PIN, OUTPUT);
+  digitalWrite(LASER_PIN, HIGH); // Activation du laser
+  Serial.begin(9600);
+}
+            </pre>
+                    </li>
+                    <span style="color:var(--cyber-blue);">Étape 3 : Lecture de la valeur brute de la LDR</span></b> :
+                    <ul class="list-disc ml-6">
+                        <li>Lire la valeur analogique de la photorésistance avec <code>analogRead()</code>.</li>
+                    </ul>
+                    <pre
+                        style="background:#181f2a; color:#00f7ff; border-radius:8px; padding:12px; font-size:1em; margin-bottom:18px;">
+void loop() {
+  int ldrValue = analogRead(LDR_PIN);
+  Serial.print("Valeur LDR : ");
+  Serial.println(ldrValue);
+  delay(100);
+}
+            </pre>
+                    </li>
+                    <span style="color:var(--cyber-blue);">Étape 4 : Détermination du seuil de détection</span></b> :
+                    <ul class="list-disc ml-6">
+                        <li>Définir un seuil expérimental (calibration) pour distinguer la présence ou l’absence du
+                            faisceau.</li>
+                    </ul>
+                    <pre
+                        style="background:#181f2a; color:#00f7ff; border-radius:8px; padding:12px; font-size:1em; margin-bottom:18px;">
+int seuil = 400; // À ajuster selon l’environnement
+
+void loop() {
+  int ldrValue = analogRead(LDR_PIN);
+  if (ldrValue < seuil) {
+    Serial.println("Présence détectée !");
+  }
+  delay(100);
+}
+            </pre>
+                    </li>
+                    <span style="color:var(--cyber-blue);">Étape 5 : Détection de la présence (coupure du
+                        faisceau)</span></b> :
+                    <ul class="list-disc ml-6">
+                        <li>Comparer la valeur lue au seuil : si la valeur chute, un objet coupe le faisceau → présence
+                            détectée.</li>
+                    </ul>
+                    <pre
+                        style="background:#181f2a; color:#00f7ff; border-radius:8px; padding:12px; font-size:1em; margin-bottom:18px;">
+if (ldrValue < seuil) {
+  // Action à réaliser lors de la détection
+  Serial.println("Objet détecté !");
+}
+            </pre>
+                    </li>
+                    <span style="color:var(--cyber-blue);">Étape 6 : Filtrage logiciel et action</span></b> :
+                    <ul class="list-disc ml-6">
+                        <li>Valider la détection sur plusieurs mesures pour éviter les faux positifs.</li>
+                        <li>Déclencher l’action souhaitée (compteur, moteur, alarme…)</li>
+                    </ul>
+                    <pre
+                        style="background:#181f2a; color:#00f7ff; border-radius:8px; padding:12px; font-size:1em; margin-bottom:18px;">
+int compteur = 0;
+if (ldrValue < seuil) {
+  compteur++;
+  if (compteur > 3) { // Validation sur plusieurs mesures
+    Serial.println("Présence confirmée !");
+    compteur = 0; // Remise à zéro après détection
+  }
+} else {
+  compteur = 0;
+}
+            </pre>
+                    </li>
+                    <span style="color:var(--cyber-blue);">Étape 7 : Calibration et ajustement</span></b> :
+                    <ul class="list-disc ml-6">
+                        <li>Ajuster le seuil selon l’environnement lumineux réel.</li>
+                        <li>Tester avec différents objets pour fiabiliser la détection.</li>
+                    </ul>
+                    <pre
+                        style="background:#181f2a; color:#00f7ff; border-radius:8px; padding:12px; font-size:1em; margin-bottom:18px;">
+// Pour calibrer, afficher la valeur de la LDR sans objet et avec objet
+// puis ajuster la variable seuil en conséquence.
+// Exemple :
+void loop() {
+  int ldrValue = analogRead(LDR_PIN);
+  Serial.println(ldrValue);
+  delay(200);
+}
+// Observer les valeurs affichées pour choisir un seuil fiable.
+            </pre>
+                    </li>
+                    </ol>
+
+                    <div class="mt-8"></div>
+
+                    <!-- Fonction complète Arduino pour la détection de présence (KY-008 + LDR) -->
+                    <h4 class="font-bold text-md mb-2" style="color:var(--cyber-blue);">Fonction dédiée : détection de
+                        présence (Arduino + KY-008 + LDR)</h4>
+                    <div
+                        style="background:#181f2a; color:#00f7ff; border-radius:8px; padding:12px; font-size:1em; margin-bottom:18px; max-height:420px; overflow:auto;">
+                        <pre style="white-space:pre; margin:0;">
+#define LASER_PIN 8         // Broche digitale pour le laser
+#define LDR_PIN   A0        // Broche analogique pour la LDR
+#define SEUIL     400       // Seuil à ajuster selon l’environnement
+
+// Fonction qui regroupe toutes les étapes de la détection de présence
+bool detectPresence(int ldrPin, int seuil, int nbValidations = 3) {
+  int compteur = 0;
+  for (int i = 0; i < nbValidations; i++) {
+    int ldrValue = analogRead(ldrPin); // Étape 3 : Lecture de la LDR
+    if (ldrValue < seuil) {            // Étape 4 : Comparaison au seuil
+      compteur++;
+    }
+    delay(20); // Étape 6 : Filtrage logiciel (validation temporelle)
+  }
+  return (compteur == nbValidations); // Étape 5 : Validation de la présence
+}
+
+void setup() {
+  pinMode(LASER_PIN, OUTPUT);         // Étape 1 : Initialisation laser
+  pinMode(LDR_PIN, INPUT);            // Étape 1 : Initialisation LDR
+  digitalWrite(LASER_PIN, HIGH);      // Étape 2 : Activation du laser
+  Serial.begin(9600);
+}
+
+void loop() {
+  if (detectPresence(LDR_PIN, SEUIL)) {
+    Serial.println("Présence confirmée !");
+    // Action à réaliser lors de la détection
+  }
+  delay(100);
+}
+</pre>
+                    </div>
+                    <p class="mb-2 text-lg" style="text-align:justify;">
+                        <b>Explication&nbsp;:</b> Cette fonction <code>detectPresence()</code> reprend toutes les étapes
+                        détaillées ci-dessus : lecture de la LDR, comparaison au seuil, filtrage logiciel (validation
+                        sur plusieurs mesures), et retour d’un booléen indiquant la présence ou non d’un objet. Elle
+                        permet d’intégrer facilement la détection de présence dans un algorithme Arduino.
+                    </p>
+
+                    <!-- Cadres image et vidéo côte à côte -->
+
+                    <div class="grid grid-cols-2 gap-0 mb-8">
+                        <div class="w-full h-full flex items-center justify-center" style="padding:0;">
+                            <img src="data:image/webp;base64,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"
+                                alt="Schéma de câblage KY-008" class="w-full h-auto object-contain"
+                                style="border-radius:10px; box-shadow:0 0 8px #00f7ff33; margin-bottom:0;" />
+                        </div>
+                        <div class="w-full h-full flex items-center justify-center" style="padding:0;">
+                            <video controls class="w-full h-full object-cover rounded-lg shadow-lg"
+                                style="min-height:220px; height:100%;">
+                                <source src="Images/presence .mp4" type="video/mp4">
+                                Votre navigateur ne supporte pas la vidéo HTML5.
+                            </video>
+                        </div>
+                    </div>
+
+
+                    <h3 id="astuces-complementarite" class="font-bold text-lg mb-2"
+                        style="color:var(--cyber-blue); margin-top:32px;"><i
+                            class="fa-solid fa-magic mr-2"></i>Astuces&nbsp;: complémentarité entre capteurs de présence
+                        et capteur de couleur</h3>
+                    <div style="display:flex; flex-wrap:wrap; gap:24px; margin-bottom:18px;">
+                        <!-- Bloc Principe et Avantages -->
+                        <div
+                            style="flex:1 1 320px; min-width:280px; max-width:520px; background:#181f2a; border-left:4px solid #00f7ff; color:#eaf6fb; border-radius:10px; box-shadow:0 0 8px #00f7ff33; padding:18px 18px 12px 18px; margin-bottom:0;">
+                            <span style="color:#00f7ff; font-weight:bold;">Principe&nbsp;:</span> Pour optimiser la
+                            détection et éviter les mesures inutiles, on utilise deux capteurs de présence (début et fin
+                            du convoyeur) en complément du capteur de couleur TCS34725.<br>
+                            <span style="color:#00f7ff; font-weight:bold;">Avantages&nbsp;:</span>
+                            <ul style="margin-left:18px;">
+                                <li>Économie d’énergie et réduction des fausses mesures.</li>
+                                <li>Synchronisation parfaite entre détection de présence et analyse de couleur.</li>
+                                <li>Possibilité d’utiliser la broche <b>INT</b> du TCS34725 pour activer/désactiver le
+                                    capteur selon la présence détectée.</li>
+                            </ul>
+                        </div>
+                        <!-- Bloc Astuce utilisée -->
+                        <div
+                            style="flex:1 1 320px; min-width:280px; max-width:520px; background:#181f2a; border-left:4px solid #00f7ff; color:#eaf6fb; border-radius:10px; box-shadow:0 0 8px #00f7ff33; padding:18px 18px 12px 18px; margin-bottom:0;">
+                            <span style="color:#00f7ff; font-weight:bold;">Astuce utilisée&nbsp;:</span>
+                            <ul style="margin-left:18px;">
+                                <li>Un capteur de présence placé au <b>début</b> du convoyeur détecte l’arrivée d’un
+                                    objet et <b>active</b> le capteur de couleur (via la broche <b>INT</b> du TCS34725).
+                                </li>
+                                <li>Le capteur de couleur effectue la mesure uniquement lorsqu’un objet est détecté.
+                                </li>
+                                <li>Un second capteur de présence, placé à la <b>fin</b> du convoyeur, détecte le
+                                    passage de l’objet et <b>désactive</b> le capteur de couleur, indiquant que
+                                    l’analyse a été réalisée.</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <span style="color:#00f7ff; font-weight:bold;">Schéma de fonctionnement&nbsp;:</span>
+                    <div style="background:#fff; border-radius:8px; padding:16px 12px 12px 12px; margin:12px 0 18px 0;">
+                        <pre class="mermaid" style="background:#fff; color:#222; font-size:1em; border:none; margin:0;">
+sequenceDiagram
+    participant CapteurDebut as Capteur présence (début)
+    participant Couleur as Capteur couleur (TCS34725)
+    participant Arduino as Arduino
+    participant CapteurFin as Capteur présence (fin)
+    participant Objet as Objet
+
+    Objet->>CapteurDebut: Arrivée sur le convoyeur
+    CapteurDebut->>Arduino: Présence détectée
+    Arduino->>Couleur: Activation (via INT)
+    Couleur->>Arduino: Mesure couleur
+    Arduino->>CapteurFin: Attente détection fin
+    Objet->>CapteurFin: Passage devant capteur fin
+    CapteurFin->>Arduino: Présence détectée
+    Arduino->>Couleur: Désactivation (via INT)
+    Arduino->>Actionneur: Tri selon couleur
+    Note over Arduino: Synchronisation et économie d'énergie
+    </pre>
+                    </div>
+                </div>
+                <hr style="border: none; border-top: 2px solid var(--cyber-blue); margin: 48px 0 32px 0; opacity: 0.4;">
+                <!-- Section Automatisation du convoyeur -->
+                <div class="p-8 mb-8" id="automatisation">
+                    <!-- Introduction améliorée de la section automatisation -->
+                    <h2 class="text-xl font-bold mb-3 flex items-center" style="color:var(--cyber-blue);">
+                        <i class="fa-solid fa-robot mr-3 text-cyber-blue text-2xl"></i>
+                        Automatisation du convoyeur
+                    </h2>
+                    <p class="mb-4 text-lg" style="text-align:justify;">
+                        L’automatisation du convoyeur repose sur une intelligence embarquée qui pilote l’ensemble du
+                        processus de tri : détection, identification, orientation et suivi. Grâce à l’intégration de
+                        capteurs et d’actionneurs, le système fonctionne de façon autonome, optimise le flux des déchets
+                        et garantit la sécurité. Cette automatisation permet :
+                    </p>
+                    <ul class="list-disc ml-6 mb-4">
+                        <li>Un tri instantané et sans interruption.</li>
+                        <li>Une adaptation à différents types de déchets et cadences.</li>
+                        <li>Une gestion proactive des incidents et de la sécurité.</li>
+                        <li>Un contrôle et une traçabilité accessibles à tout moment via l’interface web.</li>
+                    </ul>
+                    <p class="mb-4 text-lg" style="text-align:justify;">
+                        Le convoyeur automatisé incarne ainsi la modernisation du tri industriel, alliant performance,
+                        fiabilité et évolutivité.
+                    </p>
+
+                    <!-- Diagramme de séquence actualisé : tri en continu -->
+                    <!-- 2. Schéma fonctionnel de l’automatisation -->
+
+                    <p class="mb-6 text-lg" style="text-align:justify;">
+                        <!-- Paragraphe et liste supprimés pour ne garder que le contenu spécifique au scénario réel -->
+                    <div>
+                        <h3 id="architecture-automatisation" class="font-bold text-lg mb-2"
+                            style="color:var(--cyber-blue);"><i
+                                class="fa-solid fa-diagram-project mr-2"></i>Architecture de l’automatisation</h3>
+                        <p class="mb-2 text-lg" style="text-align:justify;">
+                            L’architecture du système repose sur les composants suivants :
+                        </p>
+                        <ul class="list-disc ml-6 mb-0">
+                            <li><b>Microcontrôleur</b> : Arduino Nano, cœur du système, gère la logique de tri, les
+                                entrées/sorties et la communication avec l’interface web via un module WiFi (ex :
+                                ESP8266).</li>
+                            <li><b>Capteurs de présence</b> : module laser KY-008 + photorésistance, placés au début et
+                                à la fin du convoyeur pour détecter l’arrivée et la sortie des cubes
+                                (activation/désactivation du tapis).</li>
+                            <li><b>Capteur de couleur</b> : TCS34725, placé au-dessus du tapis pour identifier la
+                                couleur du cube à la volée.</li>
+                            <li><b>Actionneurs</b> : moteur pas à pas pour entraîner le tapis du convoyeur, deux
+                                servomoteurs pour orienter les cubes vers le bac adapté selon la couleur détectée.</li>
+                        </ul>
+
+                        <p class="mb-4 text-lg" style="text-align:justify;">
+                            Cette architecture assure un tri automatique, rapide et fiable, avec activation du tapis
+                            uniquement à la détection d’un déchet, identification à la volée, orientation dynamique, et
+                            arrêt du tapis dès la sortie du cube.
+                        </p>
+                        <span style="color:#00f7ff; font-weight:bold;"></span>
+                        <div
+                            style="background:#fff; border-radius:8px; padding:16px 12px 12px 12px; margin:12px 0 18px 0;">
+                            <pre class="mermaid"
+                                style="background:#fff; color:#222; font-size:1em; border:none; margin:0;">
+sequenceDiagram
+    participant CapteurDebut as Capteur présence début
+    participant Microcontroleur as Microcontrôleur
+    participant Moteur as Moteur du tapis
+    participant CapteurCouleur as Capteur de couleur
+    participant Servomoteur as Servomoteur d’aiguillage
+    participant CapteurFin as Capteur présence fin
+    participant InterfaceWeb as Interface web
+
+    CapteurDebut->>Microcontroleur: Détection d’un cube (laser interrompu)
+    Microcontroleur->>Moteur: Démarrage du tapis
+    Moteur->>CapteurCouleur: Transport du cube
+    CapteurCouleur-->>Microcontroleur: Détection couleur à la volée
+    Microcontroleur->>Servomoteur: Anticipation de la consigne de tri
+    Moteur->>CapteurFin: Transport du cube jusqu’à la sortie
+    CapteurFin-->>Microcontroleur: Cube sorti (laser interrompu)
+    Microcontroleur->>Moteur: Arrêt du tapis
+    Microcontroleur->>InterfaceWeb: Mise à jour des compteurs
+                    </pre>
+                        </div>
+                    </div>
+                    <h3 id="cas-particuliers" class="font-bold text-lg mb-2" style="color:var(--cyber-blue);"><i
+                            class="fa-solid fa-triangle-exclamation mr-2"></i>Gestion des cas particuliers et erreurs
+                    </h3>
+                    <p class="mb-4 text-lg" style="text-align:justify;">
+                        Pour garantir la robustesse du système, l’automatisation intègre la gestion des cas
+                        particuliers&nbsp;:
+                    <ul class="list-disc ml-6 mb-2">
+                        <li><b>Absence d’objet&nbsp;:</b> Si aucun objet n’est détecté par le capteur de présence, le
+                            convoyeur reste à l’arrêt et le système attend un nouvel événement. Cela évite tout
+                            fonctionnement inutile ou accidentel.</li>
+                        <li><b>Erreur de détection couleur&nbsp;:</b> Si le capteur de couleur ne parvient pas à
+                            identifier la teinte (valeur «&nbsp;Inconnu&nbsp;»), l’objet est orienté vers un bac de tri
+                            spécial «&nbsp;erreur&nbsp;» et une alerte est affichée sur l’interface web. Cette mesure
+                            permet d’éviter le mélange des déchets et d’assurer la traçabilité des anomalies.</li>
+                        <li><b>Objets atypiques ou non conformes&nbsp;:</b> Les objets trop petits, trop grands ou
+                            transparents peuvent ne pas être détectés correctement. Le système prévoit une validation
+                            temporelle et des seuils pour filtrer ces cas et éviter les erreurs de tri.</li>
+                        <li><b>Sécurité&nbsp;:</b> En cas de détection prolongée ou d’obstruction du convoyeur (objet
+                            bloqué, capteur activé > 2s), un arrêt d’urgence est déclenché et une alarme
+                            sonore/lumineuse est activée pour prévenir l’opérateur.</li>
+                        <li><b>Absence de capteur ou défaut matériel&nbsp;:</b> Si le microcontrôleur ne détecte pas la
+                            présence d’un capteur lors de l’initialisation, le système se met en sécurité et affiche une
+                            erreur sur l’interface web.</li>
+                    </ul>
+                    Ces mécanismes assurent la fiabilité du tri, la sécurité des opérateurs et la maintenance préventive
+                    du système.
+                    </p>
+
+
+
+                    <!-- 3. Capteurs et actionneurs : synthèse et focus sur le servomoteur -->
+
+                    <h3 class="font-bold text-lg mb-2" style="color:var(--cyber-blue);"><i
+                            class="fa-solid fa-code mr-2"></i>Code Arduino du système automatisé</h3>
+                    <div id="code-arduino"
+                        style="background:#181f2a; color:#00f7ff; border-radius:8px; padding:18px; font-size:1em; margin-bottom:18px; max-width:100%; max-height:480px; overflow-y:auto;">
+                        <pre style="white-space:pre; margin:0; min-width:700px;">
+#include &lt;Wire.h&gt;
+#include &lt;Adafruit_TCS34725.h&gt;
+#include &lt;Servo.h&gt;
+
+// --- Définition des broches ---
+// Capteurs de présence
+#define LASER_ENTREE_PIN   2      // Capteur laser entrée
+#define LDR_ENTREE_PIN     A0     // Photorésistance entrée
+#define LASER_SORTIE_PIN   3      // Capteur laser sortie
+#define LDR_SORTIE_PIN     A1     // Photorésistance sortie
+
+// Moteur pas à pas (driver à 4 broches)
+#define DRIVER_IN1_PIN     4
+#define DRIVER_IN2_PIN     5
+#define DRIVER_IN3_PIN     6
+#define DRIVER_IN4_PIN     7
+
+// Servomoteurs pour le tri
+#define SERVO_TRI1_PIN     8
+#define SERVO_TRI2_PIN     9
+
+// LED indicatrices
+#define LED_ROUGE_PIN      10
+#define LED_VERTE_PIN      11
+#define LED_BLEUE_PIN      12
+#define LED_JAUNE_PIN      13
+#define LED_BLANCHE_PIN    A2     // LED état système
+
+// Capteur de couleur
+#define TCS_INT_PIN        A3     // Broche INT pour activer/désactiver le capteur
+// SDA = A4, SCL = A5 (fixes sur Arduino Nano)
+
+// --- Objets capteurs et actionneurs ---
+Adafruit_TCS34725 tcs = Adafruit_TCS34725();
+Servo servoTri1;
+Servo servoTri2;
+
+// --- Initialisation ---
+void setup() {
+    // Initialisation des broches capteurs
+    pinMode(LASER_ENTREE_PIN, INPUT);
+    pinMode(LDR_ENTREE_PIN, INPUT);
+    pinMode(LASER_SORTIE_PIN, INPUT);
+    pinMode(LDR_SORTIE_PIN, INPUT);
+
+    // Initialisation des broches moteur pas à pas
+    pinMode(DRIVER_IN1_PIN, OUTPUT);
+    pinMode(DRIVER_IN2_PIN, OUTPUT);
+    pinMode(DRIVER_IN3_PIN, OUTPUT);
+    pinMode(DRIVER_IN4_PIN, OUTPUT);
+
+    // Initialisation des servomoteurs
+    servoTri1.attach(SERVO_TRI1_PIN);
+    servoTri2.attach(SERVO_TRI2_PIN);
+
+    // Initialisation des LED
+    pinMode(LED_ROUGE_PIN, OUTPUT);
+    pinMode(LED_VERTE_PIN, OUTPUT);
+    pinMode(LED_BLEUE_PIN, OUTPUT);
+    pinMode(LED_JAUNE_PIN, OUTPUT);
+    pinMode(LED_BLANCHE_PIN, OUTPUT);
+
+    // Initialisation INT capteur couleur
+    pinMode(TCS_INT_PIN, OUTPUT);
+    digitalWrite(TCS_INT_PIN, LOW); // Capteur couleur désactivé au démarrage
+
+    // Initialisation du capteur de couleur
+    if (tcs.begin()) {
+        digitalWrite(LED_BLANCHE_PIN, HIGH); // Système prêt
+    } else {
+        digitalWrite(LED_BLANCHE_PIN, LOW);  // Système non prêt
+    }
+
+    // Initialisation communication série (vers ESP8266)
+    Serial.begin(9600);
+}
+
+// --- Boucle principale ---
+void loop() {
+    // Détection de présence au début
+    if (detectPresenceDebut()) {
+        activerConvoyeur();
+        digitalWrite(TCS_INT_PIN, HIGH); // Activation capteur couleur
+
+        // Détection couleur
+        String couleur = detectColor();
+        showColorLED(couleur);
+        trierObjet(couleur);
+
+        // Envoi des données à l'ESP8266
+        envoyerDonnees(couleur, "EN_MARCHE");
+    }
+
+    // Détection de présence à la fin
+    if (detectPresenceFin()) {
+        arreterConvoyeur();
+        digitalWrite(TCS_INT_PIN, LOW); // Désactivation capteur couleur
+
+        // Envoi état arrêt à l'ESP8266
+        envoyerDonnees("AUCUNE", "ARRET");
+    }
+
+    // Gestion des erreurs et sécurité
+    handleError();
+}
+
+// --- Fonctions principales (à implémenter) ---
+bool detectPresenceDebut() {
+    // Détection présence début convoyeur
+}
+
+bool detectPresenceFin() {
+    // Détection présence fin convoyeur
+}
+
+void activerConvoyeur() {
+    // Activation moteur pas à pas via driver (4 broches)
+}
+
+void arreterConvoyeur() {
+    // Arrêt moteur pas à pas via driver (4 broches)
+}
+
+String detectColor() {
+    // Détection couleur avec TCS34725
+}
+
+void showColorLED(String couleur) {
+    // Allume la LED correspondant à la couleur détectée
+}
+
+void trierObjet(String couleur) {
+    // Orientation de l’objet avec les servomoteurs
+}
+
+void handleError() {
+    // Gestion des erreurs et sécurité
+}
+
+void envoyerDonnees(String couleur, String etat) {
+    // Envoi des données à l'ESP8266 via Serial
+    Serial.print("COULEUR:");
+    Serial.print(couleur);
+    Serial.print(";ETAT:");
+    Serial.println(etat);
+}
+</pre>
+                    </div>
+                    </p>
+                </div>
+                <hr style="border: none; border-top: 2px solid var(--cyber-blue); margin: 48px 0 32px 0; opacity: 0.4;">
+                <!-- SECTION INTERFACE WEB -->
+                <div class="p-8 mb-8" id="interface">
+                    <h2 class="text-2xl font-bold mb-4 flex items-center" style="color:var(--cyber-blue);">
+                        <i class="fa-solid fa-display mr-3 text-cyber-blue text-2xl"></i>
+                        Interface web
+                    </h2>
+
+                    <!-- Section Interface web -->
+                    <div>
+                        <h2 class="text-2xl font-bold mb-4 flex items-center" style="color:var(--cyber-blue);">
+                            <i class="fa-solid fa-display mr-3 text-cyber-blue text-2xl"></i>
+                            Interface web&nbsp;: suivi en temps réel
+                        </h2>
+                        <p class="mb-4 text-lg" style="text-align:justify;">
+                            Le développement de l’interface web pour le convoyeur intelligent s’est déroulé en deux
+                            grandes étapes, chacune illustrant une approche technique différente pour le suivi en temps
+                            réel des déchets triés.<br>
+                            <b>Première étape&nbsp;:</b> une première version de l’interface a été conçue avec une
+                            méthode de transfert de données qui n’a pas permis d’obtenir la fiabilité attendue.<br>
+                            <b>Seconde étape&nbsp;:</b> après analyse des difficultés rencontrées, une nouvelle
+                            interface web a été développée, intégrant une solution de communication plus robuste et
+                            adaptée aux besoins du projet.<br>
+                            Cette section présente ces deux volets, les choix techniques réalisés, les enseignements
+                            tirés et la solution finale retenue pour le suivi en temps réel des opérations de tri.
+                        </p>
+                        <!-- Première version de l’interface web -->
+                        <div>
+                            <h3 class="text-xl font-bold mb-4 flex items-center" style="color:var(--cyber-blue);">
+                                <i class="fa-solid fa-code mr-3 text-cyber-blue text-xl"></i>
+                                Première version&nbsp;: interface web avec MQTT et InfluxDB
+                            </h3>
+                            <p class="mb-4 text-lg" style="text-align:justify;">
+                                La première version de l’interface web du convoyeur intelligent a été développée avec
+                                les technologies <b>HTML, CSS et JavaScript</b>, dans une logique de supervision en
+                                temps réel des opérations de tri. Pour assurer la communication entre le microcontrôleur
+                                et le serveur, le protocole <b>MQTT</b> a été choisi&nbsp;: l’Arduino publie les données
+                                vers un <b>broker MQTT</b>, tandis que le backend s’abonne pour recevoir et traiter ces
+                                informations.<br>
+                                Les données collectées sont ensuite stockées dans une base <b>InfluxDB</b>, optimisée
+                                pour la gestion de séries temporelles et l’analyse statistique.<br>
+                                <b>Architecture technique&nbsp;:</b> le microcontrôleur joue le rôle de
+                                <i>publisher</i>, le backend agit comme <i>subscriber</i>, et l’interface web interroge
+                                la base pour afficher les statistiques en temps réel.
+                            </p>
+                            <p class="mb-4 text-lg" style="text-align:justify;">
+                                <b>Principales difficultés rencontrées&nbsp;:</b><br>
+                                - <span class="important">Bibliothèques Arduino</span>&nbsp;: l’intégration du client
+                                MQTT sur Arduino a nécessité l’installation et la configuration de plusieurs
+                                bibliothèques spécifiques, parfois incompatibles ou instables selon la version du
+                                microcontrôleur.<br>
+                                - <span class="important">Configuration du broker</span>&nbsp;: le paramétrage du broker
+                                MQTT (adresse, port, sécurité) a demandé de nombreux ajustements pour garantir la
+                                fiabilité des échanges.<br>
+                                - <span class="important">Gestion de la base InfluxDB</span>&nbsp;: la connexion entre
+                                le backend et InfluxDB, ainsi que la structuration des données, ont posé des défis en
+                                termes de performance et de robustesse.<br>
+                                Malgré ces efforts, la solution n’a pas permis d’atteindre le niveau de fiabilité et de
+                                simplicité attendu pour le suivi en temps réel, ce qui a motivé le développement d’une
+                                seconde version plus adaptée.
+                            </p>
+                            <div class="grid grid-cols-2 gap-0 mb-8">
+                                <div class="w-full h-full flex items-center justify-center" style="padding:0;">
+                                    <img src="Images/web.jpg" alt="" class="w-full h-auto object-contain"
+                                        style="border-radius:10px; box-shadow:0 0 8px #00f7ff33; margin-bottom:0;" />
+                                </div>
+                                <div class="w-full h-full flex items-center justify-center" style="padding:0;">
+                                    <video controls class="w-full h-full object-cover rounded-lg shadow-lg"
+                                        style="min-height:220px; height:100%;">
+                                        <source src="Images/video_demo.mp4" type="video/mp4">
+                                        Votre navigateur ne supporte pas la vidéo HTML5.
+                                    </video>
+                                </div>
+                            </div>
+                            <!-- Seconde version de l’interface web -->
+                            <div>
+                                <h3 class="text-xl font-bold mb-4 flex items-center" style="color:var(--cyber-blue);">
+                                    <i class="fa-solid fa-rocket mr-3 text-cyber-blue text-xl"></i>
+                                    Seconde version&nbsp;: interface web avec Bootstrap et Firebase
+                                </h3>
+                                <p class="mb-4 text-lg" style="text-align:justify;">
+                                    <b>Introduction&nbsp;:</b><br>
+                                    Après avoir constaté les limites de la première version (complexité du protocole
+                                    MQTT, instabilité de la base InfluxDB, difficultés d’intégration), le choix s’est
+                                    porté sur une solution plus moderne et intégrée&nbsp;: <span
+                                        class="important">Firebase</span>.<br>
+                                    Firebase propose une plateforme complète pour le développement d’applications
+                                    connectées, regroupant la base de données, l’authentification, la synchronisation en
+                                    temps réel et la gestion des accès.<br>
+                                    Cette approche répond parfaitement aux besoins du projet&nbsp;: <b>simplicité
+                                        d’intégration</b>, <b>fiabilité de la communication</b> et <b>actualisation
+                                        instantanée</b> des données sur l’interface web.<br>
+                                    Le passage à Firebase a permis de&nbsp;:
+                                <ul class="list-disc ml-6 mb-2">
+                                    <li>Centraliser toutes les fonctionnalités dans une seule plateforme.</li>
+                                    <li>Faciliter la connexion entre le microcontrôleur (ESP8266/Arduino) et la page
+                                        web.</li>
+                                    <li>Garantir la précision du comptage et l’affichage en temps réel des opérations de
+                                        tri.</li>
+                                    <li>Réduire les risques d’erreurs et accélérer le développement.</li>
+                                </ul>
+                                Cette section détaille l’architecture de la page, les technologies utilisées, les
+                                fonctionnalités principales et les avantages concrets apportés par Firebase dans le
+                                suivi industriel.
+                                </p>
+                                <p class="mb-4 text-lg" style="text-align:justify;">
+                                    <b>Architecture de la page et technologies utilisées&nbsp;:</b><br>
+                                    L’interface web développée avec <span class="important">HTML, CSS, JavaScript</span>
+                                    et le framework <span class="important">Bootstrap</span> offre une expérience
+                                    utilisateur moderne, fluide et responsive.<br>
+                                <ul class="list-disc ml-6 mb-2">
+                                    <li><b>Structure de la page&nbsp;:</b> Un dashboard central affiche les statistiques
+                                        de tri, le comptage par couleur, et l’état du système en temps réel. Des
+                                        sections dédiées permettent la visualisation des historiques, la gestion des
+                                        accès et la personnalisation de l’interface.</li>
+                                    <li><b>Technologies front-end&nbsp;:</b> HTML pour la structure, CSS pour le style,
+                                        Bootstrap pour la mise en page responsive et les composants interactifs,
+                                        JavaScript pour la logique dynamique et la connexion à Firebase.</li>
+                                    <li><b>Connexion à Firebase&nbsp;:</b> La bibliothèque <span
+                                            class="important">Firebase JS</span> est utilisée côté web pour interagir
+                                        avec la base de données, récupérer les données en temps réel et actualiser
+                                        l’affichage sans rechargement de la page.</li>
+                                    <li><b>Organisation du code&nbsp;:</b> Le code est structuré en modules (dashboard,
+                                        statistiques, gestion des accès), facilitant la maintenance et l’évolution du
+                                        projet.</li>
+                                </ul>
+                                <b>Fonctionnalités principales&nbsp;:</b><br>
+                                <ul class="list-disc ml-6 mb-2">
+                                    <li>Affichage en temps réel du comptage des déchets triés par couleur.</li>
+                                    <li>Actualisation automatique des données dès qu’un nouvel objet est détecté et
+                                        trié.</li>
+                                    <li>Gestion des utilisateurs et des accès (authentification Firebase, si activée).
+                                    </li>
+                                    <li>Personnalisation de l’interface (logos, couleurs, thèmes).</li>
+                                    <li>Visualisation des historiques et export des données pour analyse.</li>
+                                </ul>
+                                <div class="grid grid-cols-2 gap-0 mb-8">
+                                    <div class="w-full h-full flex items-center justify-center" style="padding:0;">
+                                        <img src="Images/web2.jpeg" alt="" class="w-full h-auto object-contain"
+                                            style="border-radius:10px; box-shadow:0 0 8px #00f7ff33; margin-bottom:0;" />
+                                    </div>
+                                    <div class="w-full h-full flex items-center justify-center" style="padding:0;">
+                                        <video controls class="w-full h-full object-cover rounded-lg shadow-lg"
+                                            style="min-height:220px; height:100%;">
+                                            <source src="Images/version2.jpeg" type="video/mp4">
+                                            Votre navigateur ne supporte pas la vidéo HTML5.
+                                        </video>
+                                    </div>
+                                </div>
+
+                                <!-- Protocole Firebase et intégration -->
+                                <div>
+                                    <h4 class="font-bold text-md mb-2" style="color:var(--cyber-blue);">Protocole
+                                        Firebase&nbsp;: avantages et intégration pratique</h4>
+                                    <p class="mb-2 text-lg" style="text-align:justify;">
+                                        <b>Firebase</b> est une plateforme cloud développée par Google, idéale pour les
+                                        applications web et IoT nécessitant une gestion en temps réel des données, une
+                                        authentification sécurisée et une synchronisation instantanée entre plusieurs
+                                        clients. Contrairement à une base de données classique, Firebase propose une
+                                        <b>base de données temps réel</b> (Realtime Database ou Firestore), qui permet
+                                        de recevoir et d’envoyer des données instantanément, sans serveur intermédiaire.
+                                    </p>
+                                    <ul class="list-disc ml-6 mb-2">
+                                        <li><b>Avantages principaux&nbsp;:</b></li>
+                                        <ul class="list-disc ml-6 mb-2">
+                                            <li>Synchronisation instantanée des données entre microcontrôleur et
+                                                interface web.</li>
+                                            <li>Pas de serveur à maintenir&nbsp;: hébergement et sécurité gérés par
+                                                Google.</li>
+                                            <li>Scalabilité et fiabilité pour les applications connectées.</li>
+                                            <li>API simple pour JavaScript, Arduino/ESP8266, et autres langages.</li>
+                                            <li>Gestion native des utilisateurs et des droits d’accès.</li>
+                                        </ul>
+                                    </ul>
+                                    <h5 class="font-bold text-md mb-2" style="color:var(--cyber-blue);">Étapes pour
+                                        créer et utiliser Firebase dans le projet</h5>
+                                    <ol class="list-decimal ml-6 mb-2">
+                                        <li><b>Création du projet Firebase</b><br>
+                                            <ul class="list-disc ml-6 mb-2">
+                                                <li>Se rendre sur <a href="https://console.firebase.google.com/"
+                                                        style="color:var(--cyber-blue); text-decoration:underline;">console.firebase.google.com</a>
+                                                </li>
+                                                <li>Créer un nouveau projet (nom, région, options Google Analytics
+                                                    facultatives)</li>
+                                                <li>Activer la <b>Realtime Database</b> ou <b>Firestore</b> selon le
+                                                    besoin</li>
+                                                <li>Définir les règles de sécurité (lecture/écriture, authentification)
+                                                </li>
+                                            </ul>
+                                        </li>
+                                        <li><b>Connexion de l’interface web à Firebase</b><br>
+                                            <ul class="list-disc ml-6 mb-2">
+                                                <li>Ajouter le SDK Firebase à votre projet HTML&nbsp;:<br>
+                                                    <pre
+                                                        style="background:#181f2a; color:#00f7ff; border-radius:8px; padding:12px; font-size:1em; margin-bottom:8px;">&lt;script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js"&gt;&lt;/script&gt;
+&lt;script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-database.js"&gt;&lt;/script&gt;</pre>
+                                                </li>
+                                                <li>Initialiser Firebase avec les clés du projet&nbsp;:<br>
+                                                    <pre
+                                                        style="background:#181f2a; color:#00f7ff; border-radius:8px; padding:12px; font-size:1em; margin-bottom:8px;">const firebaseConfig = {
+  apiKey: \"...\",
+  authDomain: \"...\",
+  databaseURL: \"...\",
+  projectId: \"...\",
+  storageBucket: \"...\",
+  messagingSenderId: \"...\",
+  appId: \"...\"
+};
+const app = firebase.initializeApp(firebaseConfig);
+const db = firebase.database();</pre>
+                                                </li>
+                                                <li>Lire et écrire des données en temps réel&nbsp;:<br>
+                                                    <pre
+                                                        style="background:#181f2a; color:#00f7ff; border-radius:8px; padding:12px; font-size:1em; margin-bottom:8px;">// Écriture
+firebase.database().ref('compteurs/rouge').set(12);
+// Lecture
+firebase.database().ref('compteurs/rouge').on('value', (snapshot) => {
+  const val = snapshot.val();
+  console.log('Compteur rouge:', val);
+});</pre>
+                                                </li>
+                                            </ul>
+                                        </li>
+                                        <li><b>Connexion du microcontrôleur (ESP8266) à Firebase</b><br>
+                                            <ul class="list-disc ml-6 mb-2">
+                                                <li>Utiliser la bibliothèque <b>Firebase ESP8266</b> (disponible via le
+                                                    gestionnaire de bibliothèques Arduino)</li>
+                                                <li>Configurer le WiFi et les clés Firebase dans le code
+                                                    Arduino&nbsp;:<br>
+                                                    <pre
+                                                        style="background:#181f2a; color:#00f7ff; border-radius:8px; padding:12px; font-size:1em; margin-bottom:8px;">#include &lt;ESP8266WiFi.h&gt;
+#include &lt;FirebaseESP8266.h&gt;
+
+#define FIREBASE_HOST \"votre-projet.firebaseio.com\"
+#define FIREBASE_AUTH \"votre_clé_secrète\"
+
+FirebaseData fbData;
+
+void setup() {
+  WiFi.begin(\"SSID\", \"motdepasse\");
+  Firebase.begin(FIREBASE_HOST, FIREBASE_AUTH);
+}
+
+void loop() {
+  // Écriture d'une valeur
+  Firebase.setInt(fbData, \"/compteurs/rouge\", 12);
+  // Lecture d'une valeur
+  if (Firebase.getInt(fbData, \"/compteurs/rouge\")) {
+    int val = fbData.intData();
+    Serial.println(val);
+  }
+  delay(1000);
+}
+</pre>
+                                                </li>
+                                                <li>Synchronisation automatique&nbsp;: toute modification côté
+                                                    microcontrôleur ou web est instantanément répercutée sur l’autre
+                                                    interface.</li>
+                                            </ul>
+                                        </li>
+                                        <li><b>Conseils de sécurité et bonnes pratiques</b><br>
+                                            <ul class="list-disc ml-6 mb-2">
+                                                <li>Utiliser l’authentification Firebase pour restreindre l’accès aux
+                                                    données sensibles.</li>
+                                                <li>Limiter les droits d’écriture/lecture dans les règles de la base de
+                                                    données.</li>
+                                                <li>Ne jamais exposer les clés secrètes dans le code public ou sur
+                                                    GitHub.</li>
+                                                <li>Surveiller l’utilisation et les quotas via la console Firebase.</li>
+                                            </ul>
+                                        </li>
+                                    </ol>
+                                    <b>En résumé&nbsp;:</b> Firebase simplifie la communication et la synchronisation
+                                    des données entre le microcontrôleur et l’interface web, tout en offrant sécurité,
+                                    évolutivité et facilité de maintenance. Ce choix technologique a permis de surmonter
+                                    les limites rencontrées avec MQTT/InfluxDB et d’obtenir une solution robuste et
+                                    professionnelle pour le suivi du tri des déchets.
+                                </div>
+                                <!-- Synchronisation microcontrôleur ↔ interface web via Firebase -->
+                                <div>
+                                    <h4 class="font-bold text-md mb-2" style="color:var(--cyber-blue);">Flux de
+                                        données&nbsp;: de l’objet détecté à l’affichage en temps réel</h4>
+                                    <p class="mb-2 text-lg" style="text-align:justify;">
+                                        Lorsqu’un objet est détecté et trié par le microcontrôleur, l’information
+                                        (ex&nbsp;: couleur détectée) est immédiatement envoyée à la base de données
+                                        Firebase. L’interface web, connectée à la même base, reçoit la mise à jour en
+                                        temps réel et affiche instantanément le nouveau compteur ou l’état du tri sur le
+                                        dashboard.<br>
+                                        <b>Exemple de scénario&nbsp;:</b> Un cube rouge passe sous le capteur&nbsp;:
+                                    </p>
+                                    <ol class="list-decimal ml-6 mb-2">
+                                        <li>Le microcontrôleur détecte la couleur et incrémente le compteur
+                                            «&nbsp;rouge&nbsp;» dans Firebase.</li>
+                                        <li>Firebase synchronise la donnée sur le cloud.</li>
+                                        <li>L’interface web reçoit l’événement et met à jour l’affichage du compteur
+                                            rouge en direct.</li>
+                                    </ol>
+                                    <span style="color:#00f7ff; font-weight:bold;"></span>
+                                    <div
+                                        style="background:#fff; border-radius:8px; padding:16px 12px 12px 12px; margin:12px 0 18px 0;">
+                                        <pre class="mermaid"
+                                            style="font-size:0.95em; background:none; border:none; margin:0; padding:0;">
+flowchart LR
+    %% Colonne gauche
+    A1[Capteurs] --> B1[Microcontrôleur]
+    B1 --> C1[Traitement]
+    C1 --> D1[Transmission]
+    D1 --> E1[(BD Historique)]
+
+    %% Colonne droite
+    A2[Microcontrôleur] --> B2[Cloud]
+    B2 --> C2[(BD Historique)]
+    C2 --> D2>Interface]
+    D2 -->|Config| A2
+    B2 -.->|Alertes| D2
+
+    %% Séparation visuelle
+    E1 ~~~ F[ ]:::invisible
+    F ~~~ A2
+    
+    classDef invisible fill:#0000,stroke:#0000,color:#0000;
+</pre>
+                                    </div>
+                                </div>
+                                <h5 class="font-bold text-md mb-2" style="color:var(--cyber-blue);">Conseils pratiques
+                                    et évolutivité</h5>
+                                <ul class="list-disc ml-6 mb-2">
+                                    <li>Utiliser des chemins structurés dans la base (ex&nbsp;:
+                                        <code>/compteurs/rouge</code>, <code>/logs/</code>) pour faciliter l’analyse et
+                                        l’extension.
+                                    </li>
+                                    <li>Ajouter des logs d’événements pour l’audit ou le débogage (ex&nbsp;: date, type
+                                        d’action, utilisateur).</li>
+                                    <li>Superviser l’état de la connexion (microcontrôleur et web) pour détecter les
+                                        coupures réseau.</li>
+                                    <li>Prévoir la migration vers Firestore si le volume de données ou la complexité
+                                        augmente.</li>
+                                    <li>Documenter les règles de sécurité et tester les accès avec différents profils
+                                        utilisateurs.</li>
+                                </ul>
+                                <b>Astuce&nbsp;:</b> Pour le débogage, utiliser la console Firebase pour visualiser les
+                                changements en direct et simuler des écritures/lectures sans modifier le code.
+                            </div>
+                        </div>
+                        <hr
+                            style="border: none; border-top: 2px solid var(--cyber-blue); margin: 48px 0 32px 0; opacity: 0.4;">
+                        <div id="conclusion" style="margin-bottom:2.5rem;">
+                            <h2 class="text-2xl font-bold mb-4" style="color:var(--cyber-blue);">
+                                <i class="fa-solid fa-flag-checkered mr-3 text-cyber-blue text-2xl"></i>
+                                Conclusion et perspectives
+                            </h2>
+                            <p class="mb-4 text-lg" style="text-align:justify;">
+                                Ce projet de convoyeur intelligent a permis de démontrer la faisabilité d’un tri
+                                automatisé, fiable et connecté des déchets, en intégrant des technologies modernes
+                                (capteurs, microcontrôleur, interface web, cloud). L’évolution vers une solution basée
+                                sur Firebase a apporté robustesse, simplicité de maintenance et synchronisation en temps
+                                réel, répondant aux besoins d’industrialisation et de supervision à distance.
+                            </p>
+                            <p class="mb-4 text-lg" style="text-align:justify;">
+                                Les principaux objectifs ont été atteints : automatisation du tri, traçabilité des
+                                opérations, visualisation en temps réel et évolutivité de l’architecture. Ce travail
+                                ouvre la voie à de nombreuses perspectives :
+                            </p>
+                            <ul class="list-disc ml-6 mb-4">
+                                <li>Intégration de nouveaux types de capteurs (poids, RFID, etc.) pour enrichir le tri.
+                                </li>
+                                <li>Exploitation de l’intelligence artificielle pour l’optimisation et la maintenance
+                                    prédictive.</li>
+                                <li>Déploiement à plus grande échelle dans des environnements industriels réels.</li>
+                                <li>Amélioration de la sécurité, de la gestion des accès et de la personnalisation de
+                                    l’interface.</li>
+                                <li>Ouverture vers d’autres applications (logistique, recyclage, smart city).</li>
+                            </ul>
+                            <p class="mb-4 text-lg" style="text-align:justify;">
+                                Ce projet constitue une base solide pour l’innovation et l’évolution continue des
+                                systèmes de tri intelligents, au service de la transition écologique et de l’industrie.
+                            </p>
+                        </div>
+
+                        <script>
+                            // Menu responsive (si besoin)
+                            document.querySelector('.md\\:hidden').addEventListener('click', function () {
+                                alert('Menu mobile à implémenter si besoin.');
+                            });
+
+                            // Scrollspy basé sur les cadres (cyber-box et section-card)
+                            const sectionIds = [
+                                'intro', 'presentation', 'architecture', 'capteurs', 'algorithmes', 'interface', 'communication', 'schema', 'conclusion'
+                            ];
+                            const links = sectionIds.map(id => document.querySelector(`.sommaire-link[href="#${id}"]`));
+                            const headerHeight = document.querySelector('header').offsetHeight;
+
+                            // Récupérer tous les cadres principaux
+                            function getSectionFrames() {
+                                return sectionIds.map(id => {
+                                    // Cherche le cadre correspondant à l'ID
+                                    let frame = document.getElementById(id);
+                                    // Si le cadre n'a pas l'ID, cherche le div.section-card ou div.cyber-box qui le contient
+                                    if (!frame) {
+                                        frame = document.querySelector(`.section-card[id="${id}"]`) || document.querySelector(`.cyber-box[id="${id}"]`);
+                                    }
+                                    return { id, frame };
+                                }).filter(obj => obj.frame);
+                            }
+
+                            function activateSommaire() {
+                                const scrollPosition = window.scrollY || window.pageYOffset;
+                                const frames = getSectionFrames();
+                                let activeSection = null;
+
+                                // Si on est en bas de page, active la dernière section
+                                if (window.innerHeight + scrollPosition >= document.body.offsetHeight - 50) {
+                                    activeSection = sectionIds[sectionIds.length - 1];
+                                } else {
+                                    // Trouve le cadre le plus visible (dont le haut est le plus proche du haut de la fenêtre mais pas trop loin)
+                                    let minDistance = Infinity;
+                                    frames.forEach(({ id, frame }) => {
+                                        const rect = frame.getBoundingClientRect();
+                                        // On considère le cadre actif si son haut est dans la fenêtre ou juste au-dessus
+                                        const distance = Math.abs(rect.top - headerHeight - 20);
+                                        if (rect.top - headerHeight < 100 && distance < minDistance) {
+                                            minDistance = distance;
+                                            activeSection = id;
+                                        }
+                                    });
+                                }
+
+                                // Met à jour les classes des liens
+                                links.forEach(link => {
+                                    if (link && link.getAttribute('href') === `#${activeSection}`) {
+                                        link.classList.add('active-sommaire');
+                                    } else if (link) {
+                                        link.classList.remove('active-sommaire');
+                                    }
+                                });
+                                // Affiche les sous-sections uniquement pour la section active
+                                document.querySelectorAll('aside ul > li').forEach(li => li.classList.remove('active-section'));
+                                const activeLink = document.querySelector('.sommaire-link.active-sommaire');
+                                if (activeLink) {
+                                    const parentLi = activeLink.closest('li');
+                                    if (parentLi) parentLi.classList.add('active-section');
+                                }
+                            }
+
+                            // Recalcule le scrollspy lors du resize
+                            let resizeTimer;
+                            window.addEventListener('resize', function () {
+                                clearTimeout(resizeTimer);
+                                resizeTimer = setTimeout(function () {
+                                    activateSommaire();
+                                }, 250);
+                            });
+
+                            window.addEventListener('scroll', activateSommaire);
+                            window.addEventListener('DOMContentLoaded', activateSommaire);
+
+                            // Animation douce pour le scroll
+                            document.querySelectorAll('.sommaire-link').forEach(link => {
+                                link.addEventListener('click', function (e) {
+                                    e.preventDefault();
+                                    const targetId = this.getAttribute('href');
+                                    const targetElement = document.querySelector(targetId);
+                                    if (targetElement) {
+                                        window.scrollTo({
+                                            top: targetElement.offsetTop - headerHeight,
+                                            behavior: 'smooth'
+                                        });
+                                    }
+                                });
+                            });
+                        </script>
+</body>
+
+</html>

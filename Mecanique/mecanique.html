@@ -1,0 +1,716 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Documentation Mécanique - Convoyeur Intelligent</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link
+    href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;700;900&family=Roboto:wght@300;400;500;700&display=swap"
+    rel="stylesheet">
+  <!-- Mermaid.js pour diagrammes dynamiques -->
+  <script type="module">
+    import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
+    mermaid.initialize({ startOnLoad: true });
+  </script>
+</head>
+
+<body class="bg-dark text-light">
+  <!-- Header sur toute la largeur en haut -->
+  <header class="fixed top-0 left-0 w-full z-50 transition-all duration-300"
+    style="background:rgba(2,12,27,0.95); backdrop-filter:blur(10px); border-bottom:2px solid rgba(0,247,255,0.2); box-shadow: 0 0 20px rgba(0,247,255,0.15);">
+    <div class="container mx-auto px-4 py-4 flex justify-between items-center">
+      <a href="#" class="logo flex items-center transition-all duration-300 hover:transform hover:scale-105">
+        <img src="https://ucaotech.com/wp-content/uploads/2024/10/UCAO-TECH-1.png" alt="UCAO-TECH Logo"
+          class="h-10 mr-3" style="filter: drop-shadow(0 0 10px rgba(0,247,255,0.3));">
+        <span class="text-xl font-bold cyberpunk-text"
+          style="color: var(--secondary); text-shadow: 0 0 10px rgba(0,247,255,0.5);">UCAO-TECH</span>
+      </a>
+      <nav class="hidden md:flex space-x-6">
+        <a href="https://tekbot-robotics-challenge.github.io/2025-Team-UCAO-TECH-Docs/Test_Final/Test_Final.html"
+          class="nav-link transition-all duration-300">Test-Final</a>
+        <a href="../Mecanique/mecanique.html" class="nav-link transition-all duration-300">
+          <i
+            class="fa-solid fa-wrench mr-1 transition-transform duration-300 transform group-hover:scale-110"></i>Mécanique</a>
+        <a href="../Dashboad/dashboad.html" class="nav-link transition-all duration-300">Dashboard</a>
+        <a href="https://github.com/TekBot-Robotics-Challenge/2025-Team-UCAO-TECH-Docs" target="_blank"
+          class="nav-link transition-all duration-300">
+          <i class="fab fa-github mr-1 transition-transform duration-300 transform group-hover:scale-110"></i>Github</a>
+      </nav>
+      <button id="menuBtn"
+        class="md:hidden text-cyber-blue text-2xl transition-all duration-300 hover:text-secondary hover:transform hover:scale-110"
+        style="text-shadow: 0 0 10px rgba(0,247,255,0.5);">
+        <i class="fas fa-bars"></i>
+      </button>
+      <div id="mobile-menu" class="hidden md:hidden fixed top-16 left-0 right-0 bg-gray-900/95 backdrop-blur-xl z-40"
+        style="border-bottom: 2px solid rgba(0,247,255,0.2); box-shadow: 0 5px 20px rgba(0,247,255,0.15);">
+        <nav class="flex flex-col items-center py-4 space-y-4">
+          <a href="https://tekbot-robotics-challenge.github.io/2025-Team-UCAO-TECH-Docs/Test_Final/Test_Final.html"
+            class="w-full text-center text-cyber-blue hover:text-secondary hover:bg-cyber-blue/10 py-3 px-4 transition-all duration-300"
+            style="text-shadow: 0 0 8px rgba(0,247,255,0.3);">
+            Test-Final
+          </a>
+          <a href="../Mecanique/mecanique.html"
+            class="w-full text-center text-cyber-blue hover:text-secondary hover:bg-cyber-blue/10 py-3 px-4 transition-all duration-300"
+            style="text-shadow: 0 0 8px rgba(0,247,255,0.3);">
+            <i
+              class="fa-solid fa-wrench mr-1 transition-transform duration-300 transform group-hover:scale-110"></i>Mécanique
+          </a>
+          <a href="../Dashboad/dashboad.html"
+            class="w-full text-center text-cyber-blue hover:text-secondary hover:bg-cyber-blue/10 py-3 px-4 transition-all duration-300"
+            style="text-shadow: 0 0 8px rgba(0,247,255,0.3);">
+            Dashboard
+          </a>
+          <a href="https://github.com/TekBot-Robotics-Challenge/2025-Team-UCAO-TECH-Docs" target="_blank"
+            class="w-full text-center text-cyber-blue hover:text-secondary hover:bg-cyber-blue/10 py-3 px-4 transition-all duration-300"
+            style="text-shadow: 0 0 8px rgba(0,247,255,0.3);">
+            <i class="fab fa-github mr-1 transition-transform duration-300 transform group-hover:scale-110"></i>Github
+          </a>
+        </nav>
+      </div>
+    </div>
+  </header>
+
+  <!-- Layout principal avec sommaire fixe à gauche -->
+  <div style="display:flex; margin-top:100px; min-height:100vh;">
+    <!-- Sommaire latéral fixe sous le header -->
+    <aside
+      style="width:260px; background:rgba(0,209,255,0.08); border-right:2px solid rgba(0,209,255,0.2); box-shadow:0 0 10px rgba(0,209,255,0.12); position:fixed; top:80px; left:0; bottom:0; padding:32px 18px 32px 18px; z-index:99; height:calc(100vh - 80px); overflow-y:auto;">
+      <h2 style="font-family:'Orbitron'; color:var(--cyber-blue); font-size:1.2em; margin-bottom:18px;">Sommaire
+        Mécanique</h2>
+      <ul style="list-style:none; padding:0;">
+        <li style="margin-bottom:12px;"><a class="sommaire-link" href="#intro"><i
+              class="fa-solid fa-circle-info mr-2"></i>Introduction</a>
+          <ul class="sommaire-sous" style="margin-left:18px;">
+            <li><a class="sommaire-link" href="#contexte"><i class="fa-solid fa-globe mr-2"></i>Contexte</a>
+            </li>
+            <li><a class="sommaire-link" href="#vision"><i class="fa-solid fa-eye mr-2"></i>Vision et
+                perspectives</a></li>
+            <li><a class="sommaire-link" href="#approche"><i class="fa-solid fa-book mr-2"></i>Approche
+                documentaire</a></li>
+          </ul>
+        </li>
+        <li style="margin-bottom:12px;"><a class="sommaire-link" href="#presentation"><i
+              class="fa-solid fa-lightbulb mr-2"></i>Description du système</a>
+          <ul class="sommaire-sous" style="margin-left:18px;">
+            <li><a class="sommaire-link" href="#presentation-generale"><i
+                  class="fa-solid fa-rectangle-list mr-2"></i>Présentation générale</a></li>
+            <li><a class="sommaire-link" href="#enjeux"><i class="fa-solid fa-chart-line mr-2"></i>Enjeux et
+                perspectives</a></li>
+            <li><a class="sommaire-link" href="#objectifs-systeme"><i class="fa-solid fa-bullseye mr-2"></i>Objectifs du
+                système</a></li>
+            <li><a class="sommaire-link" href="#fonctionnement-general"><i
+                  class="fa-solid fa-gears mr-2"></i>Fonctionnement général</a></li>
+            <li><a class="sommaire-link" href="#avantages"><i class="fa-solid fa-star mr-2"></i>Avantages du
+                système</a></li>
+          </ul>
+        </li>
+        <li style="margin-bottom:12px;"><a class="sommaire-link" href="#cao"><i
+              class="fa-solid fa-drafting-compass mr-2"></i>Conception CAO</a>
+          <ul class="sommaire-sous" style="margin-left:18px;">
+            <li><a class="sommaire-link" href="#solidworks"><i class="fa-solid fa-cube mr-2"></i>SolidWorks</a>
+            </li>
+            <li><a class="sommaire-link" href="#assemblage"><i class="fa-solid fa-layer-group mr-2"></i>Assemblage</a>
+            </li>
+            <li><a class="sommaire-link" href="#simulation"><i class="fa-solid fa-computer mr-2"></i>Simulation</a></li>
+          </ul>
+        </li>
+        <li style="margin-bottom:12px;"><a class="sommaire-link" href="#materiaux"><i
+              class="fa-solid fa-tools mr-2"></i>Choix des matériaux</a>
+          <ul class="sommaire-sous" style="margin-left:18px;">
+            <li><a class="sommaire-link" href="#structure"><i class="fa-solid fa-cubes mr-2"></i>Structure</a></li>
+            <li><a class="sommaire-link" href="#composants"><i class="fa-solid fa-cogs mr-2"></i>Composants</a></li>
+            <li><a class="sommaire-link" href="#optimisation"><i class="fa-solid fa-chart-bar mr-2"></i>Optimisation</a>
+            </li>
+          </ul>
+        </li>
+        <li class="fabrication-section" style="margin-bottom:12px;"><a class="sommaire-link" href="#fabrication"><i
+              class="fa-solid fa-industry mr-2"></i>Fabrication</a>
+          <ul class="sommaire-sous" style="margin-left:18px;">
+            <li><a class="sommaire-link" href="#impression-3d"><i class="fa-solid fa-print mr-2"></i>Impression 3D</a>
+            </li>
+            <li><a class="sommaire-link" href="#assemblage-final"><i
+                  class="fa-solid fa-screwdriver-wrench mr-2"></i>Montage</a></li>
+            <li><a class="sommaire-link" href="#securite"><i class="fa-solid fa-shield-alt mr-2"></i>Sécurité et
+                maintenance</a></li>
+          </ul>
+        </li>
+        <li class="performance-section" style="margin-bottom:12px;"><a class="sommaire-link" href="#performance"><i
+              class="fa-solid fa-tachometer-alt mr-2"></i>Performance</a>
+          <ul class="sommaire-sous" style="margin-left:18px;">
+            <li><a class="sommaire-link" href="#tests"><i class="fa-solid fa-vial mr-2"></i>Tests et
+                validation</a></li>
+            <li><a class="sommaire-link" href="#resultats"><i class="fa-solid fa-chart-line mr-2"></i>Résultats</a></li>
+            <li><a class="sommaire-link" href="#ameliorations"><i
+                  class="fa-solid fa-arrow-up mr-2"></i>Améliorations</a></li>
+          </ul>
+        </li>
+        <li style="margin-bottom:12px;"><a class="sommaire-link" href="#conclusion"><i
+              class="fa-solid fa-flag-checkered mr-2"></i>Conclusion et perspectives</a>
+          <ul class="sommaire-sous" style="margin-left:18px;">
+            <li><a class="sommaire-link" href="#synthese"><i class="fa-solid fa-lightbulb mr-2"></i>Synthèse</a></li>
+            <li><a class="sommaire-link" href="#evolutions"><i class="fa-solid fa-forward-step mr-2"></i>Prochaines
+                évolutions</a></li>
+            <li><a class="sommaire-link" href="#remerciements"><i
+                  class="fa-solid fa-hands-clapping mr-2"></i>Remerciements</a></li>
+          </ul>
+        </li>
+      </ul>
+    </aside>
+
+    <!-- Contenu principal -->
+    <main style="flex:1; margin-left:260px; padding:32px 0;">
+      <div style="max-width:1400px; margin:0 auto;">
+        <h1 class="cyber-title text-center mb-10" id="intro">Documentation Mécanique<br>Système de Convoyeur
+          Intelligent</h1>
+
+        <div class="p-8 mb-8">
+          <h2 class="text-2xl font-bold mb-4 flex items-center" style="color:var(--secondary);">
+            <i class="fa-solid fa-circle-info mr-3 text-cyber-blue text-2xl"></i>
+            Introduction
+          </h2>
+          <h3 id="contexte" class="font-bold text-lg mb-2" style="color:var(--cyber-blue);"><i
+              class="fa-solid fa-globe mr-2"></i>Contexte</h3>
+          <p class="mb-4 text-lg" style="text-align:justify;">
+            [Contenu à ajouter]
+          </p>
+          <h3 id="vision" class="font-bold text-lg mb-2" style="color:var(--cyber-blue);"><i
+              class="fa-solid fa-eye mr-2"></i>Vision et perspectives</h3>
+          <p class="mb-4 text-lg" style="text-align:justify;">
+            [Contenu à ajouter]
+          </p>
+          <h3 id="approche" class="font-bold text-lg mb-2" style="color:var(--cyber-blue);"><i
+              class="fa-solid fa-book mr-2"></i>Approche documentaire</h3>
+          <p class="mb-4 text-lg" style="text-align:justify;">
+            [Contenu à ajouter]
+          </p>
+        </div>
+
+        <hr style="border: none; border-top: 2px solid var(--cyber-blue); margin: 48px 0 32px 0; opacity: 0.4;">
+
+        <div class="p-8 mb-8" id="presentation">
+          <!-- ... Autres sections ... -->
+        </div>
+
+        <!-- ... Suite du contenu ... -->
+
+      </div>
+    </main>
+  </div>
+
+  <script>
+    // Scrollspy général pour toutes les sections principales
+    document.addEventListener('DOMContentLoaded', function () {
+      function updateSommaireSections() {
+        // Désactive toutes les sections principales
+        document.querySelectorAll('aside ul > li').forEach(function (li) {
+          li.classList.remove('active-section');
+          var link = li.querySelector('a.sommaire-link');
+          if (link) link.classList.remove('active-sommaire');
+        });
+
+        // Liste des IDs des grandes sections
+        var mainSections = [
+          'intro',
+          'presentation',
+          'cao',
+          'materiaux',
+          'fabrication',
+          'performance',
+          'conclusion'
+        ];
+
+        // Détection de la section active par scroll
+        var activeId = null;
+        for (var i = 0; i < mainSections.length; i++) {
+          var el = document.getElementById(mainSections[i]);
+          if (el) {
+            var rect = el.getBoundingClientRect();
+            if (rect.top < 180 && rect.bottom > 80) {
+              activeId = mainSections[i];
+              break;
+            }
+          }
+        }
+
+        // Fallback sur le hash si aucun scroll détecté
+        if (!activeId && window.location.hash) {
+          activeId = window.location.hash.replace('#', '');
+        }
+
+        // Active la section correspondante et affiche ses sous-sections
+        if (activeId) {
+          document.querySelectorAll('aside ul > li').forEach(function (li) {
+            var link = li.querySelector('a.sommaire-link');
+            if (link && link.getAttribute('href') === '#' + activeId) {
+              li.classList.add('active-section');
+              link.classList.add('active-sommaire');
+            }
+          });
+        }
+      }
+
+      window.addEventListener('hashchange', updateSommaireSections);
+      window.addEventListener('scroll', updateSommaireSections);
+      updateSommaireSections();
+    });
+
+    // Menu mobile
+    const menuBtn = document.getElementById('menuBtn');
+    const mobileMenu = document.getElementById('mobile-menu');
+    const body = document.body;
+
+    menuBtn.addEventListener('click', () => {
+      mobileMenu.classList.toggle('hidden');
+      if (!mobileMenu.classList.contains('hidden')) {
+        body.style.overflow = 'hidden'; // Empêche le défilement quand le menu est ouvert
+      } else {
+        body.style.overflow = ''; // Réactive le défilement quand le menu est fermé
+      }
+    });
+
+    // Ferme le menu mobile quand on clique à l'extérieur
+    document.addEventListener('click', (e) => {
+      if (!mobileMenu.classList.contains('hidden') &&
+        !mobileMenu.contains(e.target) &&
+        !menuBtn.contains(e.target)) {
+        mobileMenu.classList.add('hidden');
+        body.style.overflow = '';
+      }
+    });
+  </script>
+</body>
+
+</html>
+<style>
+  :root {
+    --dark: #020c1b;
+    --light: #e6f1ff;
+    --secondary: #00f7ff;
+    --cyber-purple: #9452ff;
+    --cyber-blue: #00d1ff;
+    scroll-behavior: smooth;
+  }
+
+  .section-container {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 0 2rem;
+  }
+
+  .features-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem;
+    margin-top: 2rem;
+  }
+
+  header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 1000;
+    background-color: rgba(2, 12, 27, 0.9);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid rgba(0, 209, 255, 0.2);
+    transition: all 0.3s ease;
+  }
+
+  .navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 1rem 2rem;
+  }
+
+  .logo {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    color: white;
+    text-decoration: none;
+    font-size: 1.5rem;
+    font-weight: 700;
+  }
+
+  .logo img {
+    height: 50px;
+    transition: transform 0.5s ease;
+  }
+
+  .logo:hover img {
+    transform: rotate(360deg);
+  }
+
+  .logo span {
+    color: var(--secondary);
+  }
+
+  .nav-links {
+    display: flex;
+    gap: 1.5rem;
+  }
+
+  .nav-links a {
+    color: rgba(230, 241, 255, 0.8);
+    text-decoration: none;
+    font-weight: 500;
+    font-size: 0.82rem;
+    text-transform: uppercase;
+    letter-spacing: 1.2px;
+    padding: 0.5rem 0.8rem;
+    position: relative;
+    transition: all 0.3s ease;
+  }
+
+  .nav-links a::before {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 0;
+    height: 2px;
+    background: linear-gradient(90deg, var(--secondary), var(--cyber-purple));
+    transition: width 0.3s ease;
+  }
+
+  .nav-links a:hover {
+    color: var(--cyber-blue);
+  }
+
+  .nav-links a:hover::before {
+    width: 100%;
+  }
+
+  .nav-links a.active {
+    color: var(--cyber-blue);
+  }
+
+  .nav-links a.active::before {
+    width: 100%;
+  }
+
+  .mobile-menu-btn {
+    display: none;
+    background: none;
+    border: none;
+    color: white;
+    font-size: 1.5rem;
+    cursor: pointer;
+    z-index: 1001;
+  }
+
+  /* Hero Section */
+  .hero {
+    height: 100vh;
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    padding: 0 2rem;
+  }
+
+  .hero-video-container {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    z-index: -1;
+  }
+
+  .hero-video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    opacity: 0.3;
+  }
+
+  .hero-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(to bottom,
+        rgba(2, 12, 27, 0.8) 0%,
+        rgba(10, 25, 47, 0.5) 50%,
+        rgba(2, 12, 27, 0.8) 100%);
+    z-index: -1;
+  }
+
+  .hero-content {
+    max-width: 1400px;
+    margin: 0 auto;
+    width: 100%;
+    padding-top: 80px;
+    animation: fadeIn 1s ease-out;
+  }
+
+  .hero-text {
+    max-width: 800px;
+  }
+
+  .hero h1 {
+    font-size: 3.5rem;
+    margin-bottom: 1.5rem;
+    line-height: 1.2;
+    background: linear-gradient(90deg, var(--cyber-blue), var(--light));
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    text-shadow: 0 0 15px rgba(0, 247, 255, 0.3);
+  }
+
+  .hero p {
+    font-size: 1.2rem;
+    margin-bottom: 2.5rem;
+    opacity: 0.9;
+    max-width: 700px;
+  }
+
+  .hero-cta {
+    display: flex;
+    gap: 1.5rem;
+  }
+
+  .btn {
+    padding: 0.9rem 2.5rem;
+    border-radius: 0;
+    font-weight: 600;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    cursor: pointer;
+    font-size: 0.95rem;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    position: relative;
+    overflow: hidden;
+    border: none;
+    font-family: 'Orbitron', sans-serif;
+  }
+
+  .btn-primary {
+    background-color: transparent;
+    color: var(--cyber-blue);
+    border: 2px solid var(--secondary);
+    box-shadow: 0 0 15px rgba(0, 209, 255, 0.3);
+  }
+
+  .btn-primary:hover {
+    background-color: rgba(0, 209, 255, 0.1);
+    box-shadow: 0 0 30px rgba(0, 209, 255, 0.6);
+    transform: translateY(-3px);
+  }
+
+  .btn-primary::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg,
+        transparent,
+        rgba(0, 209, 255, 0.2),
+        transparent);
+    transition: 0.5s;
+  }
+
+  .btn-primary:hover::before {
+    left: 100%;
+  }
+
+  .btn-outline {
+    background-color: transparent;
+    color: white;
+    border: 2px solid white;
+  }
+
+  .btn-outline:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+    box-shadow: 0 0 30px rgba(255, 255, 255, 0.3);
+    transform: translateY(-3px);
+  }
+
+  /* Circuit Animation */
+  .circuit-animation {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    z-index: -1;
+    opacity: 0.1;
+  }
+
+  .circuit-line {
+    position: absolute;
+    background-color: var(--secondary);
+    box-shadow: 0 0 5px var(--secondary);
+  }
+
+  /* Fin */
+  body {
+    padding-top: 100px;
+  }
+
+  body {
+    background-color: #020c1b;
+    color: #e6f1ff;
+    font-family: 'Roboto', sans-serif;
+  }
+
+  h2.cyber-title {
+    color: #00f7ff;
+    font-family: 'Orbitron', sans-serif;
+    text-align: center;
+    margin-bottom: 1rem;
+  }
+
+  ul {
+    list-style: none;
+    padding-left: 0;
+  }
+
+  ul li {
+    padding: 0.25rem 0;
+  }
+
+  ul li a {
+    color: #00d1ff;
+    text-decoration: none;
+    font-weight: 500;
+  }
+
+  ul li a:hover {
+    color: #9452ff;
+    text-decoration: underline;
+  }
+
+  .feature-card {
+    border: 1px solid rgba(0, 209, 255, 0.2);
+    padding: 1.5rem;
+    margin: 1rem 0;
+    background-color: rgba(10, 25, 47, 0.5);
+    backdrop-filter: blur(5px);
+    transition: all 0.3s ease;
+  }
+
+  .feature-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 0 20px rgba(0, 209, 255, 0.3);
+  }
+
+  .mobile-menu-btn {
+    display: none;
+    background: transparent;
+    border: none;
+    width: 40px;
+    height: 40px;
+    position: relative;
+    cursor: pointer;
+    z-index: 1000;
+  }
+
+  .hamburger {
+    width: 30px;
+    height: 3px;
+    background: var(--cyber-blue);
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    transition: all 0.3s ease;
+  }
+
+  .hamburger::before,
+  .hamburger::after {
+    content: '';
+    position: absolute;
+    width: 30px;
+    height: 3px;
+    background: var(--cyber-blue);
+    transition: all 0.3s ease;
+  }
+
+  .hamburger::before {
+    top: -10px;
+  }
+
+  .hamburger::after {
+    top: 10px;
+  }
+
+  .mobile-menu-btn.active .hamburger {
+    background: transparent;
+  }
+
+  .mobile-menu-btn.active .hamburger::before {
+    transform: rotate(45deg);
+    top: 0;
+  }
+
+  .mobile-menu-btn.active .hamburger::after {
+    transform: rotate(-45deg);
+    top: 0;
+  }
+
+  @media (max-width: 768px) {
+    .nav-links {
+      position: fixed;
+      top: 0;
+      right: -100%;
+      width: 100%;
+      height: 100vh;
+      background-color: rgba(10, 25, 47, 0.95);
+      backdrop-filter: blur(10px);
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 2rem;
+      padding: 5rem 2rem;
+      transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+      z-index: 999;
+    }
+
+    .nav-links.active {
+      right: 0;
+    }
+
+    .nav-links li {
+      opacity: 0;
+      transform: translateY(20px);
+      transition: all 0.3s ease;
+    }
+
+    .nav-links.active li {
+      opacity: 1;
+      transform: translateY(0);
+      transition-delay: 0.3s;
+    }
+
+    .mobile-menu-btn {
+      display: block;
+    }
+  }
+</style>
+
+<script>
+  // Mobile Menu Toggle
+  const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
+  const navLinks = document.querySelector('.nav-links');
+
+  mobileMenuBtn.addEventListener('click', () => {
+    mobileMenuBtn.classList.toggle('active');
+    navLinks.classList.toggle('active');
+  });
+</script>
+
+</html>

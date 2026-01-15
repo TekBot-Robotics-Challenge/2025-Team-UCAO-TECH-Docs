@@ -1,0 +1,513 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Tests Informatique TRC 2025 | UCAO-TECH</title>
+  <link rel="icon" href="https://ucaotech.com/wp-content/uploads/2024/10/UCAO-TECH-1.png" type="image/png">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap"
+    rel="stylesheet" />
+  <style>
+    :root {
+      --primary: #0a192f;
+      --secondary: #0066cc;
+      --accent: #004d99;
+      --light: #f5f9ff;
+      --dark: #020c1b;
+      --text: #333;
+      --border: #e0e0e0;
+      --sidebar-width: 280px;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      background-color: var(--light);
+      color: var(--text);
+      font-family: 'Roboto', sans-serif;
+      line-height: 1.6;
+    }
+
+    /* Header */
+    header {
+      background-color: var(--primary);
+      color: white;
+      padding: 1rem 0;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+      position: fixed;
+      width: 100%;
+      top: 0;
+      z-index: 1000;
+    }
+
+    .header-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0 2rem;
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+      text-decoration: none;
+    }
+
+    .logo img {
+      height: 40px;
+    }
+
+    .logo span {
+      font-size: 1.3rem;
+      font-weight: 700;
+      color: white;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 1.5rem;
+    }
+
+    .nav-links a {
+      color: white;
+      font-weight: 500;
+      padding: 0.5rem 0.8rem;
+      border-radius: 4px;
+      transition: background-color 0.3s;
+      text-decoration: none;
+    }
+
+    .nav-links a:hover {
+      background-color: rgba(255,255,255,0.1);
+    }
+
+    .mobile-menu-btn {
+      display: none;
+      background: transparent;
+      border: none;
+      color: white;
+      font-size: 1.5rem;
+      cursor: pointer;
+    }
+
+    /* Main Layout */
+    .main-container {
+      display: flex;
+      max-width: 1200px;
+      margin: 80px auto 0;
+      min-height: calc(100vh - 80px);
+    }
+
+    /* Sidebar */
+    .sidebar {
+      width: var(--sidebar-width);
+      background: white;
+      border-right: 1px solid var(--border);
+      padding: 2rem 1rem;
+      position: sticky;
+      top: 80px;
+      height: calc(100vh - 80px);
+      overflow-y: auto;
+    }
+
+    .sidebar h3 {
+      color: var(--primary);
+      margin-bottom: 1.5rem;
+      padding-bottom: 0.5rem;
+      border-bottom: 2px solid var(--secondary);
+    }
+
+    .sidebar-nav {
+      list-style: none;
+    }
+
+    .sidebar-nav li {
+      margin-bottom: 0.5rem;
+    }
+
+    .sidebar-nav a {
+      display: block;
+      padding: 0.8rem 1rem;
+      color: var(--text);
+      text-decoration: none;
+      border-radius: 4px;
+      transition: all 0.3s;
+      border-left: 3px solid transparent;
+    }
+
+    .sidebar-nav a:hover,
+    .sidebar-nav a.active {
+      background-color: rgba(0,102,204,0.1);
+      border-left-color: var(--secondary);
+      color: var(--secondary);
+    }
+
+    /* Content */
+    .content {
+      flex: 1;
+      padding: 2rem;
+      background: white;
+    }
+
+    .test-section {
+      margin-bottom: 3rem;
+      padding-bottom: 2rem;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .test-section:last-child {
+      border-bottom: none;
+    }
+
+    .test-header {
+      display: flex;
+      justify-content: between;
+      align-items: center;
+      margin-bottom: 1.5rem;
+      padding-bottom: 1rem;
+      border-bottom: 2px solid var(--secondary);
+    }
+
+    .test-header h2 {
+      color: var(--primary);
+      margin: 0;
+    }
+
+    .test-badges {
+      display: flex;
+      gap: 1rem;
+    }
+
+    .badge {
+      background: var(--secondary);
+      color: white;
+      padding: 0.3rem 0.8rem;
+      border-radius: 20px;
+      font-size: 0.8rem;
+      font-weight: 500;
+    }
+
+    .test-content {
+      line-height: 1.8;
+    }
+
+    .test-links {
+      display: flex;
+      gap: 1rem;
+      margin-top: 1.5rem;
+    }
+
+    .test-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      background: var(--secondary);
+      color: white;
+      padding: 0.7rem 1.2rem;
+      border-radius: 4px;
+      text-decoration: none;
+      transition: background-color 0.3s;
+    }
+
+    .test-link:hover {
+      background: var(--accent);
+      text-decoration: none;
+    }
+
+    /* Footer */
+    footer {
+      background-color: var(--primary);
+      color: white;
+      padding: 2rem 0;
+      margin-top: 3rem;
+    }
+
+    .footer-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 2rem;
+      text-align: center;
+    }
+
+    .copyright {
+      color: #ccc;
+      font-size: 0.9rem;
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+      .mobile-menu-btn {
+        display: block;
+      }
+
+      .nav-links {
+        display: none;
+        position: absolute;
+        top: 100%;
+        left: 0;
+        width: 100%;
+        background-color: var(--primary);
+        flex-direction: column;
+        padding: 1rem;
+        box-shadow: 0 5px 10px rgba(0,0,0,0.1);
+      }
+
+      .nav-links.active {
+        display: flex;
+      }
+
+      .main-container {
+        flex-direction: column;
+      }
+
+      .sidebar {
+        width: 100%;
+        position: static;
+        height: auto;
+        border-right: none;
+        border-bottom: 1px solid var(--border);
+      }
+
+      .content {
+        padding: 1.5rem;
+      }
+
+      .test-links {
+        flex-direction: column;
+      }
+
+      .test-link {
+        justify-content: center;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <!-- Header -->
+  <header>
+    <div class="header-container">
+      <a href="https://tekbot-robotics-challenge.github.io/2025-Team-UCAO-TECH-Docs" class="logo">
+        <img src="https://ucaotech.com/wp-content/uploads/2024/10/UCAO-TECH-1.png" alt="UCAO-TECH Logo">
+        <span>UCAO-TECH</span>
+      </a>
+      <button class="mobile-menu-btn">
+        <i class="fas fa-bars"></i>
+      </button>
+      <nav class="nav-links">
+        <a href="https://tekbot-robotics-challenge.github.io/2025-Team-UCAO-TECH-Docs">Accueil</a>
+        <a href="https://tekbot-robotics-challenge.github.io/2025-Team-UCAO-TECH-Docs/#a-propos">À propos</a>
+        <a href="https://tekbot-robotics-challenge.github.io/2025-Team-UCAO-TECH-Docs/#equipe">Équipe</a>
+        <a href="https://tekbot-robotics-challenge.github.io/2025-Team-UCAO-TECH-Docs/#contact">Contact</a>
+        <a href="https://tekbot-robotics-challenge.github.io/2025-Team-UCAO-TECH-Docs/#documentation">Documentation</a>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Main Content -->
+  <div class="main-container">
+    <!-- Sidebar Navigation -->
+    <aside class="sidebar">
+      <h3>Tests Informatique</h3>
+      <ul class="sidebar-nav">
+        <li><a href="#test1" class="active">Test 1 : Système de classe Robot</a></li>
+        <li><a href="#test2">Test 2 : Introduction à ROS2</a></li>
+        <li><a href="#test3">Test 3 : Algorithme de Pathfinding</a></li>
+      </ul>
+    </aside>
+
+    <!-- Content Area -->
+    <main class="content">
+      <!-- Test 1 -->
+      <section id="test1" class="test-section">
+        <div class="test-header">
+          <h2>Test 1 : Réalisation d'un système de classe de gestion d'un Robot</h2>
+          <div class="test-badges">
+            <span class="badge">POO</span>
+            <span class="badge">Python</span>
+            <span class="badge">Architecture</span>
+          </div>
+        </div>
+        <div class="test-content">
+          <p><strong>Objectif :</strong> Concevoir et implémenter un système de classes en Python pour la gestion complète d'un robot autonome.</p>
+          
+          <h3>Description du test</h3>
+          <p>Ce test vise à établir les fondations de notre architecture logicielle en mettant en place un système modulaire de gestion du robot. L'approche orientée objet permet une maintenance simplifiée et une extensibilité du code.</p>
+          
+          <h3>Fonctionnalités implémentées</h3>
+          <ul>
+            <li>Classes pour les différents composants du robot (moteurs, capteurs, contrôleur)</li>
+            <li>Système de gestion d'état et d'erreurs</li>
+            <li>Interface unifiée pour les interactions entre modules</li>
+            <li>Mécanismes de sécurité et de validation</li>
+          </ul>
+
+          <div class="test-links">
+            <a href="Test1/Test1Informatique.html" class="test-link">
+              <i class="fas fa-file-alt"></i> Documentation détaillée
+            </a>
+            <a href="Test1/GalerieTest1Informatique.html" class="test-link">
+              <i class="fas fa-images"></i> Galerie des résultats
+            </a>
+          </div>
+        </div>
+      </section>
+
+      <!-- Test 2 -->
+      <section id="test2" class="test-section">
+        <div class="test-header">
+          <h2>Test 2 : Introduction à ROS2</h2>
+          <div class="test-badges">
+            <span class="badge">ROS2</span>
+            <span class="badge">Temps réel</span>
+            <span class="badge">Communication</span>
+          </div>
+        </div>
+        <div class="test-content">
+          <p><strong>Objectif :</strong> Maîtriser les concepts fondamentaux de ROS2 pour la communication entre les différents modules du robot.</p>
+          
+          <h3>Description du test</h3>
+          <p>ROS2 (Robot Operating System 2) constitue le framework de communication essentiel pour notre architecture distribuée. Ce test permet d'établir les bases de communication entre les différents nœuds de notre système.</p>
+          
+          <h3>Concepts abordés</h3>
+          <ul>
+            <li>Architecture des nœuds ROS2</li>
+            <li>Système de topics et de messages</li>
+            <li>Services et actions ROS2</li>
+            <li>Gestion des dépendances et packages</li>
+            <li>Débogage et monitoring</li>
+          </ul>
+
+          <div class="test-links">
+            <a href="Test2/Test2Informatique.html" class="test-link">
+              <i class="fas fa-file-alt"></i> Documentation détaillée
+            </a>
+            <a href="Test2/GalerieTest2Informatique.html" class="test-link">
+              <i class="fas fa-images"></i> Galerie des résultats
+            </a>
+          </div>
+        </div>
+      </section>
+
+      <!-- Test 3 -->
+      <section id="test3" class="test-section">
+        <div class="test-header">
+          <h2>Test 3 : Création d'un Algorithme de Pathfinding</h2>
+          <div class="test-badges">
+            <span class="badge">Algorithmes</span>
+            <span class="badge">Navigation</span>
+            <span class="badge">Optimisation</span>
+          </div>
+        </div>
+        <div class="test-content">
+          <p><strong>Objectif :</strong> Développer un algorithme de pathfinding efficace pour la navigation autonome du robot dans un environnement complexe.</p>
+          
+          <h3>Description du test</h3>
+          <p>La capacité de navigation autonome est cruciale pour le succès de notre robot. Ce test se concentre sur l'implémentation et l'optimisation d'algorithmes de recherche de chemin adaptés aux contraintes du challenge.</p>
+          
+          <h3>Algorithmes implémentés</h3>
+          <ul>
+            <li>Algorithme A* (A-star) pour la recherche de chemin optimal</li>
+            <li>Gestion des obstacles dynamiques</li>
+            <li>Optimisation pour la consommation énergétique</li>
+            <li>Intégration avec le système de capteurs</li>
+            <li>Tests de performance et validation</li>
+          </ul>
+
+          <div class="test-links">
+            <a href="Test3/Test3Informatique.html" class="test-link">
+              <i class="fas fa-file-alt"></i> Documentation détaillée
+            </a>
+            <a href="Test3/GalerieTest3Informatique.html" class="test-link">
+              <i class="fas fa-images"></i> Galerie des résultats
+            </a>
+          </div>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <!-- Footer -->
+  <footer>
+    <div class="footer-container">
+      <div class="copyright">
+        &copy; 2025 UCAO-TECH - Tous droits réservés
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // Mobile menu functionality
+    document.querySelector('.mobile-menu-btn').addEventListener('click', function() {
+      document.querySelector('.nav-links').classList.toggle('active');
+    });
+
+    // Smooth scrolling for sidebar navigation
+    document.querySelectorAll('.sidebar-nav a').forEach(link => {
+      link.addEventListener('click', function(e) {
+        e.preventDefault();
+        
+        // Remove active class from all links
+        document.querySelectorAll('.sidebar-nav a').forEach(a => {
+          a.classList.remove('active');
+        });
+        
+        // Add active class to clicked link
+        this.classList.add('active');
+        
+        // Scroll to target section
+        const targetId = this.getAttribute('href');
+        const targetElement = document.querySelector(targetId);
+        
+        if (targetElement) {
+          window.scrollTo({
+            top: targetElement.offsetTop - 20,
+            behavior: 'smooth'
+          });
+        }
+      });
+    });
+
+    // Update active sidebar link on scroll
+    window.addEventListener('scroll', function() {
+      const sections = document.querySelectorAll('.test-section');
+      const sidebarLinks = document.querySelectorAll('.sidebar-nav a');
+      
+      let currentSection = '';
+      
+      sections.forEach(section => {
+        const sectionTop = section.offsetTop - 100;
+        const sectionHeight = section.clientHeight;
+        
+        if (window.scrollY >= sectionTop && window.scrollY < sectionTop + sectionHeight) {
+          currentSection = section.getAttribute('id');
+        }
+      });
+      
+      sidebarLinks.forEach(link => {
+        link.classList.remove('active');
+        if (link.getAttribute('href') === '#' + currentSection) {
+          link.classList.add('active');
+        }
+      });
+    });
+
+    // Close mobile menu when clicking on a link
+    document.querySelectorAll('.nav-links a').forEach(link => {
+      link.addEventListener('click', () => {
+        document.querySelector('.nav-links').classList.remove('active');
+      });
+    });
+  </script>
+</body>
+</html>

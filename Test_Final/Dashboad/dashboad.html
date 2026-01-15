@@ -1,0 +1,531 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TRC 2025 - Système de Convoyeur Intelligent</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        .conveyor-belt {
+            background-image: repeating-linear-gradient(45deg,
+                    #e5e7eb,
+                    #e5e7eb 10px,
+                    #d1d5db 10px,
+                    #d1d5db 20px);
+            animation: moveBelt 2s linear infinite;
+            animation-play-state: paused;
+        }
+
+        .conveyor-belt.active {
+            animation-play-state: running;
+        }
+
+        @keyframes moveBelt {
+            0% {
+                background-position: 0 0;
+            }
+
+            100% {
+                background-position: 40px 0;
+            }
+        }
+
+        .waste-cube {
+            transition: all 0.5s ease;
+        }
+
+        .waste-bin {
+            transition: all 0.3s ease;
+        }
+
+        .waste-bin:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+        }
+
+        .notification-badge {
+            position: absolute;
+            top: -5px;
+            right: -5px;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+        }
+    </style>
+</head>
+
+<body class="bg-gray-50 font-sans">
+    <div class="min-h-screen flex flex-col">
+        <!-- Header -->
+        <header class="bg-white shadow-sm">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex justify-between items-center">
+                <div class="flex items-center space-x-4">
+                    <div class="flex items-center ml-4">
+                        <img src="data:image/webp;base64,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"
+                            alt="TEKBOT Logo" class="h-10">
+                        <span class="mx-4 text-xl font-bold text-gray-800">UCAO-TECH CONVEYOR</span>
+                        <img src="https://avatars.githubusercontent.com/u/196821106?s=200&v=4" alt="TRC 2025 Logo"
+                            class="h-8 ml-2">
+
+                        <!-- Navigation mobile -->
+                        <button id="menuBtn" class="md:hidden text-gray-700 ml-4">
+                            <i class="fas fa-bars text-2xl"></i>
+                        </button>
+                    </div>
+
+                    <div id="mobile-menu" class="hidden md:hidden absolute top-16 left-0 w-full bg-white shadow-lg">
+                        <div class="flex flex-col p-4 space-y-4">
+                            <a href="#" class="text-gray-700 hover:text-blue-600 transition">Tableau de bord</a>
+                            <a href="#" class="text-gray-700 hover:text-blue-600 transition">Statistiques</a>
+                            <a href="#" class="text-gray-700 hover:text-blue-600 transition">Contrôles système</a>
+                            <a href="#" class="text-gray-700 hover:text-blue-600 transition">Alertes</a>
+                            <a href="#" class="text-gray-700 hover:text-blue-600 transition">Export & Rapports</a>
+                        </div>
+                    </div>
+
+                    <script>
+                        const menuBtn = document.getElementById('menuBtn');
+                        const mobileMenu = document.getElementById('mobile-menu');
+
+                        menuBtn.addEventListener('click', () => {
+                            mobileMenu.classList.toggle('hidden');
+                        });
+                    </script>
+                </div>
+                <div class="flex items-center space-x-4">
+                    <div class="relative">
+                        <button class="p-2 rounded-full text-gray-500 hover:text-gray-700 hover:bg-gray-100">
+                            <i class="fas fa-bell text-xl"></i>
+                            <span class="notification-badge bg-red-500 text-white">3</span>
+                        </button>
+                    </div>
+                    <div class="flex items-center space-x-2">
+                        <div
+                            class="h-8 w-8 rounded-full bg-blue-500 flex items-center justify-center text-white font-semibold">
+                            AD</div>
+                        <span class="text-sm font-medium text-gray-700">Admin</span>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <!-- Main Content -->
+        <div class="flex flex-1">
+            <!-- Sidebar -->
+            <nav class="bg-white w-64 shadow-sm hidden md:block">
+                <div class="p-4">
+                    <div class="space-y-1">
+                        <a href="#"
+                            class="flex items-center px-4 py-3 text-sm font-medium text-white bg-blue-600 rounded-lg">
+                            <i class="fas fa-tachometer-alt mr-3"></i>
+                            Tableau de bord
+                        </a>
+                        <a href="#"
+                            class="flex items-center px-4 py-3 text-sm font-medium text-gray-700 hover:bg-gray-100 rounded-lg">
+                            <i class="fas fa-chart-bar mr-3"></i>
+                            Statistiques
+                        </a>
+                        <a href="#"
+                            class="flex items-center px-4 py-3 text-sm font-medium text-gray-700 hover:bg-gray-100 rounded-lg">
+                            <i class="fas fa-cogs mr-3"></i>
+                            Contrôles système
+                        </a>
+                        <a href="#"
+                            class="flex items-center px-4 py-3 text-sm font-medium text-gray-700 hover:bg-gray-100 rounded-lg">
+                            <i class="fas fa-bell mr-3"></i>
+                            Alertes
+                        </a>
+                        <a href="#"
+                            class="flex items-center px-4 py-3 text-sm font-medium text-gray-700 hover:bg-gray-100 rounded-lg">
+                            <i class="fas fa-file-export mr-3"></i>
+                            Export & Rapports
+                        </a>
+                    </div>
+
+                    <div class="mt-8">
+                        <h3 class="px-4 text-xs font-semibold text-gray-500 uppercase tracking-wider">Système</h3>
+                        <div class="mt-2 space-y-1">
+                            <a href="#"
+                                class="flex items-center px-4 py-3 text-sm font-medium text-gray-700 hover:bg-gray-100 rounded-lg">
+                                <i class="fas fa-info-circle mr-3"></i>
+                                À propos
+                            </a>
+                            <a href="#"
+                                class="flex items-center px-4 py-3 text-sm font-medium text-gray-700 hover:bg-gray-100 rounded-lg">
+                                <i class="fas fa-cog mr-3"></i>
+                                Paramètres
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </nav>
+
+            <!-- Main Panel -->
+            <main class="flex-1 p-6">
+                <!-- Dashboard Header -->
+                <div class="mb-6">
+                    <h2 class="text-2xl font-bold text-gray-800">Tableau de bord</h2>
+                    <p class="text-gray-600">Surveillance en temps réel du système de convoyeur</p>
+                </div>
+
+                <!-- System Status -->
+                <div class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-6">
+                    <div class="bg-white p-6 rounded-lg shadow-sm">
+                        <div class="flex items-center justify-between">
+                            <div>
+                                <p class="text-sm font-medium text-gray-500">Statut système</p>
+                                <p class="text-2xl font-semibold text-green-600">Actif</p>
+                            </div>
+                            <div class="p-3 rounded-full bg-green-100 text-green-600">
+                                <i class="fas fa-check-circle text-xl"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="bg-white p-6 rounded-lg shadow-sm">
+                        <div class="flex items-center justify-between">
+                            <div>
+                                <p class="text-sm font-medium text-gray-500">Déchets traités</p>
+                                <p class="text-2xl font-semibold text-gray-800" id="total-waste">0</p>
+                            </div>
+                            <div class="p-3 rounded-full bg-blue-100 text-blue-600">
+                                <i class="fas fa-recycle text-xl"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="bg-white p-6 rounded-lg shadow-sm">
+                        <div class="flex items-center justify-between">
+                            <div>
+                                <p class="text-sm font-medium text-gray-500">Taux de tri</p>
+                                <p class="text-2xl font-semibold text-gray-800">0%</p>
+                            </div>
+                            <div class="p-3 rounded-full bg-purple-100 text-purple-600">
+                                <i class="fas fa-chart-line text-xl"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="bg-white p-6 rounded-lg shadow-sm">
+                        <div class="flex items-center justify-between">
+                            <div>
+                                <p class="text-sm font-medium text-gray-500">Uptime</p>
+                                <p class="text-2xl font-semibold text-gray-800">12h 45m</p>
+                            </div>
+                            <div class="p-3 rounded-full bg-yellow-100 text-yellow-600">
+                                <i class="fas fa-clock text-xl"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Waste Counters -->
+                <div class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-6">
+                    <div class="bg-white p-6 rounded-lg shadow-sm border-t-4 border-green-500">
+                        <div class="flex items-center justify-between">
+                            <div>
+                                <p class="text-sm font-medium text-gray-500">Déchets verts</p>
+                                <p class="text-2xl font-semibold text-gray-800" id="green-waste">0</p>
+                            </div>
+                            <div class="p-3 rounded-full bg-green-100 text-green-600">
+                                <i class="fas fa-cube text-xl"></i>
+                            </div>
+                        </div>
+                        <div class="mt-4">
+                            <div class="w-full bg-gray-200 rounded-full h-2">
+                                <div class="bg-green-500 h-2 rounded-full" style="width: 25%"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="bg-white p-6 rounded-lg shadow-sm border-t-4 border-yellow-500">
+                        <div class="flex items-center justify-between">
+                            <div>
+                                <p class="text-sm font-medium text-gray-500">Déchets jaunes</p>
+                                <p class="text-2xl font-semibold text-gray-800" id="yellow-waste">0</p>
+                            </div>
+                            <div class="p-3 rounded-full bg-yellow-100 text-yellow-600">
+                                <i class="fas fa-cube text-xl"></i>
+                            </div>
+                        </div>
+                        <div class="mt-4">
+                            <div class="w-full bg-gray-200 rounded-full h-2">
+                                <div class="bg-yellow-500 h-2 rounded-full" style="width: 35%"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="bg-white p-6 rounded-lg shadow-sm border-t-4 border-red-500">
+                        <div class="flex items-center justify-between">
+                            <div>
+                                <p class="text-sm font-medium text-gray-500">Déchets rouges</p>
+                                <p class="text-2xl font-semibold text-gray-800" id="red-waste">0</p>
+                            </div>
+                            <div class="p-3 rounded-full bg-red-100 text-red-600">
+                                <i class="fas fa-cube text-xl"></i>
+                            </div>
+                        </div>
+                        <div class="mt-4">
+                            <div class="w-full bg-gray-200 rounded-full h-2">
+                                <div class="bg-red-500 h-2 rounded-full" style="width: 15%"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="bg-white p-6 rounded-lg shadow-sm border-t-4 border-blue-500">
+                        <div class="flex items-center justify-between">
+                            <div>
+                                <p class="text-sm font-medium text-gray-500">Déchets bleus</p>
+                                <p class="text-2xl font-semibold text-gray-800" id="blue-waste">0</p>
+                            </div>
+                            <div class="p-3 rounded-full bg-blue-100 text-blue-600">
+                                <i class="fas fa-cube text-xl"></i>
+                            </div>
+                        </div>
+                        <div class="mt-4">
+                            <div class="w-full bg-gray-200 rounded-full h-2">
+                                <div class="bg-blue-500 h-2 rounded-full" style="width: 25%"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Conveyor Visualization -->
+                <div class="bg-white p-6 rounded-lg shadow-sm mb-6">
+                    <div class="flex justify-between items-center mb-4">
+                        <h3 class="text-lg font-medium text-gray-800">Visualisation du convoyeur</h3>
+                        <div class="flex space-x-2">
+                            <button id="start-conveyor"
+                                class="px-4 py-2 bg-green-600 text-white rounded-md hover:bg-green-700">
+                                <i class="fas fa-play mr-2"></i>Démarrer
+                            </button>
+                            <button id="stop-conveyor"
+                                class="px-4 py-2 bg-red-600 text-white rounded-md hover:bg-red-700">
+                                <i class="fas fa-stop mr-2"></i>Arrêter
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="relative h-40 mb-6 overflow-hidden">
+                        <div id="conveyor-belt" class="conveyor-belt absolute top-0 left-0 w-full h-20"></div>
+
+                        <!-- Detection Zone -->
+                        <div
+                            class="absolute top-0 left-1/3 h-20 w-1/6 border-2 border-dashed border-purple-500 flex items-center justify-center">
+                            <div class="text-purple-500 font-medium">Zone de détection</div>
+                        </div>
+
+                        <!-- Waste cubes will be added here dynamically -->
+                    </div>
+
+                    <!-- Waste Bins -->
+                    <div class="grid grid-cols-4 gap-4 mt-16">
+                        <div class="waste-bin bg-green-100 p-4 rounded-lg text-center border-2 border-green-300">
+                            <div
+                                class="h-16 w-16 mx-auto bg-green-500 rounded-md mb-2 flex items-center justify-center text-white">
+                                <i class="fas fa-trash-alt text-2xl"></i>
+                            </div>
+                            <p class="font-medium text-green-800">Déchets verts</p>
+                            <p class="text-sm text-green-600" id="green-bin-count">0</p>
+                        </div>
+                        <div class="waste-bin bg-yellow-100 p-4 rounded-lg text-center border-2 border-yellow-300">
+                            <div
+                                class="h-16 w-16 mx-auto bg-yellow-500 rounded-md mb-2 flex items-center justify-center text-white">
+                                <i class="fas fa-trash-alt text-2xl"></i>
+                            </div>
+                            <p class="font-medium text-yellow-800">Déchets jaunes</p>
+                            <p class="text-sm text-yellow-600" id="yellow-bin-count">0</p>
+                        </div>
+                        <div class="waste-bin bg-red-100 p-4 rounded-lg text-center border-2 border-red-300">
+                            <div
+                                class="h-16 w-16 mx-auto bg-red-500 rounded-md mb-2 flex items-center justify-center text-white">
+                                <i class="fas fa-trash-alt text-2xl"></i>
+                            </div>
+                            <p class="font-medium text-red-800">Déchets rouges</p>
+                            <p class="text-sm text-red-600" id="red-bin-count">0</p>
+                        </div>
+                        <div class="waste-bin bg-blue-100 p-4 rounded-lg text-center border-2 border-blue-300">
+                            <div
+                                class="h-16 w-16 mx-auto bg-blue-500 rounded-md mb-2 flex items-center justify-center text-white">
+                                <i class="fas fa-trash-alt text-2xl"></i>
+                            </div>
+                            <p class="font-medium text-blue-800">Déchets bleus</p>
+                            <p class="text-sm text-blue-600" id="blue-bin-count">0</p>
+                        </div>
+                    </div>
+                    <!-- Firebase SDK -->
+                    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+                    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-analytics-compat.js"></script>
+                    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
+
+                    <script>
+                        // Votre configuration Firebase
+                        const firebaseConfig = {
+                            apiKey: "AIzaSyD8LxWN2AKh9om4elcD09xL7kjBngPy9S4",
+                            authDomain: "convoyeur-tri-dechets.firebaseapp.com",
+                            databaseURL: "https://convoyeur-tri-dechets-default-rtdb.europe-west1.firebasedatabase.app",
+                            projectId: "convoyeur-tri-dechets",
+                            storageBucket: "convoyeur-tri-dechets.firebasestorage.app",
+                            messagingSenderId: "339709175778",
+                            appId: "1:339709175778:web:163d4d8708a89561fb7bbb",
+                            measurementId: "G-ZCSHF7ZVJ6"
+                        };
+
+                        // Initialisation Firebase
+                        const app = firebase.initializeApp(firebaseConfig);
+                        const analytics = firebase.analytics();
+                        const database = firebase.database();
+
+                        // Fonction pour mettre à jour le statut système
+                        function updateSystemStatus(etat) {
+                            var statusElem = document.querySelector('.bg-white .text-2xl.font-semibold.text-green-600, .bg-white .text-2xl.font-semibold.text-red-600');
+                            if (!statusElem) {
+                                // Sélection alternative si la classe change
+                                statusElem = document.querySelector('.bg-white .text-2xl.font-semibold');
+                            }
+                            if (statusElem) {
+                                if (etat === 'actif') {
+                                    statusElem.textContent = 'Actif';
+                                    statusElem.classList.remove('text-red-600');
+                                    statusElem.classList.add('text-green-600');
+                                } else {
+                                    statusElem.textContent = 'Inactif';
+                                    statusElem.classList.remove('text-green-600');
+                                    statusElem.classList.add('text-red-600');
+                                }
+                            }
+                        }
+
+                        // Fonction pour mettre à jour le taux de tri dynamiquement
+                        function updateSortRateDynamic(detectes, tries) {
+                            var sortElem = document.querySelector('.bg-white .text-2xl.font-semibold.text-gray-800');
+                            if (sortElem) {
+                                sortElem.textContent = '0%';
+                            }
+                        }
+
+                        // Fonction pour gérer l'uptime
+                        let uptimeInterval = null;
+                        let uptimeSeconds = 0;
+                        function updateUptime(etat) {
+                            var uptimeElem = document.querySelectorAll('.bg-white .text-2xl.font-semibold.text-gray-800');
+                            var elem = uptimeElem && uptimeElem.length > 3 ? uptimeElem[3] : null
+                            if (elem) {
+                                if (etat === 'actif') {
+                                    uptimeSeconds++;
+                                    var hours = Math.floor(uptimeSeconds / 3600);
+                                    var minutes = Math.floor((uptimeSeconds % 3600) / 60);
+                                    var seconds = uptimeSeconds % 60;
+                                    elem.textContent = hours + 'h ' + minutes + 'm ' + seconds + 's';
+                                } else {
+                                    elem.textContent = '0';
+                                }
+                            }
+                        }
+
+                        // Écouteur d'événements pour le bouton "Démarrer"
+                        document.getElementById('start-conveyor').addEventListener('click', function () {
+                            // Démarrer l'animation du convoyeur
+                            document.getElementById('conveyor-belt').classList.add('active');
+                            // Mettre à jour le statut système
+                            updateSystemStatus('actif');
+                            // Réinitialiser les compteurs de déchets
+                            resetWasteCounters();
+                            // Démarrer la détection des déchets
+                            startWasteDetection();
+                            // Démarrer l'uptime
+                            uptimeInterval = setInterval(function () {
+                                updateUptime('actif');
+                            }, 1000);
+                        });
+
+                        // Écouteur d'événements pour le bouton "Arrêter"
+                        document.getElementById('stop-conveyor').addEventListener('click', function () {
+                            // Arrêter l'animation du convoyeur
+                            document.getElementById('conveyor-belt').classList.remove('active');
+                            // Mettre à jour le statut système
+                            updateSystemStatus('inactif');
+                            // Arrêter la détection des déchets
+                            stopWasteDetection();
+                            // Arrêter l'uptime
+                            clearInterval(uptimeInterval);
+                            // Remettre à zéro l'uptime
+                            updateUptime('inactif');
+                        });
+
+                        // Fonction pour réinitialiser les compteurs de déchets
+                        function resetWasteCounters() {
+                            document.getElementById('total-waste').textContent = '0';
+                            document.getElementById('green-waste').textContent = '0';
+                            document.getElementById('yellow-waste').textContent = '0';
+                            document.getElementById('red-waste').textContent = '0';
+                            document.getElementById('blue-waste').textContent = '0';
+                            document.getElementById('green-bin-count').textContent = '0';
+                            document.getElementById('yellow-bin-count').textContent = '0';
+                            document.getElementById('red-bin-count').textContent = '0';
+                            document.getElementById('blue-bin-count').textContent = '0';
+                        }
+
+                        // Fonction pour démarrer la détection des déchets
+                        function startWasteDetection() {
+                            // Simulation de l'ajout de déchets sur le convoyeur
+                            setInterval(function () {
+                                var wasteType = Math.floor(Math.random() * 4); // 0 à 3
+                                var wasteColor = ['green', 'yellow', 'red', 'blue'][wasteType];
+                                var wasteCount = Math.floor(Math.random() * 10) + 1;
+
+                                // Mettre à jour les compteurs de déchets
+                                document.getElementById(wasteColor + '-waste').textContent = parseInt(document.getElementById(wasteColor + '-waste').textContent) + wasteCount;
+                                document.getElementById(wasteColor + '-bin-count').textContent = parseInt(document.getElementById(wasteColor + '-bin-count').textContent) + wasteCount;
+
+                                // Mettre à jour le total des déchets traités
+                                var totalWaste = 0;
+                                ['green', 'yellow', 'red', 'blue'].forEach(function (color) {
+                                    totalWaste += parseInt(document.getElementById(color + '-waste').textContent);
+                                });
+                                document.getElementById('total-waste').textContent = totalWaste;
+
+                                // Mettre à jour le taux de tri
+                                var tries = parseInt(document.getElementById('green-waste').textContent) + parseInt(document.getElementById('yellow-waste').textContent) + parseInt(document.getElementById('red-waste').textContent) + parseInt(document.getElementById('blue-waste').textContent);
+                                var detectes = tries; // Pour la simulation, on considère que tous les déchets sont détectés
+                                var tauxTri = Math.round((detectes / tries) * 100);
+                                updateSortRateDynamic(detectes, tries);
+                            }, 5000);
+                        }
+
+                        // Fonction pour arrêter la détection des déchets
+                        function stopWasteDetection() {
+                            clearInterval(wasteDetectionInterval);
+                        }
+
+                        window.addEventListener('DOMContentLoaded', function () {
+                            // Statut système
+                            var statusElem = document.querySelector('.bg-white .text-2xl.font-semibold.text-green-600, .bg-white .text-2xl.font-semibold.text-red-600');
+                            if (!statusElem) {
+                                statusElem = document.querySelector('.bg-white .text-2xl.font-semibold');
+                            }
+                            if (statusElem) {
+                                statusElem.textContent = 'Inactif';
+                                statusElem.classList.remove('text-green-600');
+                                statusElem.classList.add('text-red-600');
+                            }
+                            // Taux de tri
+                            var sortElem = document.querySelectorAll('.bg-white .text-2xl.font-semibold.text-gray-800');
+                            if (sortElem && sortElem.length > 2) {
+                                sortElem[2].textContent = '0%';
+                            }
+                            // Uptime
+                            if (sortElem && sortElem.length > 3) {
+                                sortElem[3].textContent = '0';
+                            }
+                        });
+                    </script>
+                </div>
+        </div>
+        </main>
+    </div>
+    </div>
+</body>
+
+</html>

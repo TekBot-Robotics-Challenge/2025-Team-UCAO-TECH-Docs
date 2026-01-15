@@ -1,0 +1,1564 @@
+<!-- Fin encadré téléopération web avancée -->
+<!-- Le CSS personnalisé est replacé dans la balise <style> du <head> -->
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Documentation Technique TekBot - Simulation ROS2 Humble | UCAO-TECH</title>
+  <link rel="icon" href="https://ucaotech.com/wp-content/uploads/2024/10/UCAO-TECH-1.png" type="image/png">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;700;900&family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet" />
+  <style>
+    /* Header */
+    header {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        z-index: 1000;
+        background-color: rgba(2, 12, 27, 0.9);
+        backdrop-filter: blur(10px);
+        border-bottom: 1px solid rgba(0, 209, 255, 0.2);
+        transition: all 0.3s ease;
+    }
+    
+    .navbar {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        max-width: 1400px;
+        margin: 0 auto;
+        padding: 1rem 2rem;
+    }
+    
+    .logo {
+        display: flex;
+        align-items: center;
+        gap: 15px;
+        color: white;
+        text-decoration: none;
+        font-size: 1.5rem;
+        font-weight: 700;
+    }
+    
+    .logo img {
+        height: 50px;
+        transition: transform 0.5s ease;
+    }
+    
+    .logo:hover img {
+        transform: rotate(360deg);
+    }
+    
+    .logo span {
+        color: var(--secondary);
+    }
+    
+    .nav-links {
+        display: flex;
+        gap: 1.5rem;
+    }
+    
+    .nav-links a {
+        color: rgba(230, 241, 255, 0.8);
+        text-decoration: none;
+        font-weight: 500;
+        font-size: 0.82rem;
+        text-transform: uppercase;
+        letter-spacing: 1.2px;
+        padding: 0.5rem 0.8rem;
+        position: relative;
+        transition: all 0.3s ease;
+    }
+    
+    .nav-links a::before {
+        content: '';
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 0;
+        height: 2px;
+        background: linear-gradient(90deg, var(--secondary), var(--cyber-purple));
+        transition: width 0.3s ease;
+    }
+    
+    .nav-links a:hover {
+        color: var(--cyber-blue);
+    }
+    
+    .nav-links a:hover::before {
+        width: 100%;
+    }
+    
+    .nav-links a.active {
+        color: var(--cyber-blue);
+    }
+    
+    .nav-links a.active::before {
+        width: 100%;
+    }
+    
+    .mobile-menu-btn {
+        display: none;
+        background: none;
+        border: none;
+        color: white;
+        font-size: 1.5rem;
+        cursor: pointer;
+        z-index: 1001;
+    }
+    
+    /* Main Content */
+    body {
+      background-color: #020c1b;
+      color: #e6f1ff;
+      font-family: 'Roboto', sans-serif;
+      margin: 0;
+      padding: 100px 1rem 1rem 1rem;
+    }
+
+    .section #informatique {
+      margin-top: 5em;
+    }
+    
+    h2.cyber-title, h2, h3, h4, h5 {
+      color: #00f7ff;
+      font-family: 'Orbitron', sans-serif;
+    }
+    
+    img {
+      max-width: 100%;
+      border: 1px solid #00d1ff;
+      margin: 1rem 0;
+    }
+    
+    .section-doc {
+      background-color: rgba(10, 25, 47, 0.4);
+      padding: 1.2rem 2rem 1.2rem 2rem;
+      border-radius: 10px;
+      margin-top: 2rem;
+    }
+    /* Réduction de l'espace entre les sections 1+2 et la section 3 */
+    .section > div + div > .section-doc:first-child {
+      margin-top: 0 !important;
+    }
+    
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 1rem 0;
+    }
+    
+    th, td {
+      padding: 0.5rem;
+      border: 1px solid #00d1ff;
+    }
+    
+    a {
+      color: #00d1ff;
+      text-decoration: none;
+    }
+    
+    a:hover {
+      color: #9452ff;
+      text-decoration: underline;
+    }
+    
+    pre {
+      background-color: #0a192f;
+      padding: 1rem;
+      overflow-x: auto;
+      border-left: 4px solid #00f7ff;
+    }
+    
+    code {
+      font-family: monospace;
+      color: #00f7ff;
+    }
+    
+    .feature-card ul {
+    /* Responsive global : mobile, tablette, PC */
+    @media (max-width: 900px) {
+      body {
+        padding: 80px 0.5rem 1rem 0.5rem;
+      }
+      .navbar {
+        flex-direction: column;
+        padding: 1rem 0.5rem;
+      }
+      .nav-links {
+        gap: 0.7rem;
+        flex-wrap: wrap;
+      }
+      .section-doc {
+        padding: 1rem 0.5rem 1rem 0.5rem;
+        border-radius: 8px;
+      }
+      h2, h3, h4 {
+        font-size: 1.1em;
+      }
+      table, th, td {
+        font-size: 0.95em;
+        padding: 0.3em;
+      }
+      .feature-card, .section-doc > div[style*="display:flex"] {
+        flex-direction: column !important;
+        max-width: 100% !important;
+      }
+      .feature-card > div, .section-doc > div[style*="display:flex"] > div {
+        max-width: 100% !important;
+        min-width: 0 !important;
+      }
+      .encadre-info, .encadre-astuce, .encadre-limites, .encadre-doc {
+        padding: 0.7em !important;
+        font-size: 0.98em;
+      }
+      .section-doc .display-flex, .section-doc [style*="display:flex"] {
+        flex-direction: column !important;
+        gap: 18px !important;
+      }
+      .section-doc [style*="flex:0 0 40%"],
+      .section-doc [style*="flex:0 0 50%"] {
+        max-width: 100% !important;
+        min-width: 0 !important;
+        flex: 1 1 100% !important;
+      }
+      .section-doc img, .section-doc video {
+        max-width: 100% !important;
+        height: auto !important;
+        margin: 0 auto 1em auto !important;
+      }
+    }
+    @media (max-width: 600px) {
+      body {
+        padding: 60px 0.2rem 0.5rem 0.2rem;
+      }
+      h2, h3, h4 {
+        font-size: 1em;
+      }
+      .section-doc {
+        padding: 0.5rem 0.2rem 0.5rem 0.2rem;
+        border-radius: 6px;
+      }
+      table, th, td {
+        font-size: 0.92em;
+        padding: 0.2em;
+      }
+      .encadre-info, .encadre-astuce, .encadre-limites, .encadre-doc {
+        padding: 0.5em !important;
+        font-size: 0.95em;
+      }
+      .section-doc .display-flex, .section-doc [style*="display:flex"] {
+        flex-direction: column !important;
+        gap: 12px !important;
+      }
+      .section-doc [style*="flex:0 0 40%"],
+      .section-doc [style*="flex:0 0 50%"] {
+        max-width: 100% !important;
+        min-width: 0 !important;
+        flex: 1 1 100% !important;
+      }
+      .section-doc img, .section-doc video {
+        max-width: 100% !important;
+        height: auto !important;
+        margin: 0 auto 1em auto !important;
+      }
+    }
+      list-style: none;
+      padding-left: 0;
+    }
+    
+    .feature-card ul li {
+      padding: 0.25rem 0;
+    }
+    
+    .toc {
+      background-color: #081a2b;
+      padding: 1rem;
+      margin: 2rem 0;
+      border-left: 4px solid #00f7ff;
+    }
+    
+    .toc h4 {
+      margin-top: 0;
+    }
+    
+    .toc ul {
+      list-style: none;
+      padding-left: 0;
+    }
+    
+    .toc ul li {
+      margin: 0.5rem 0;
+    }
+    
+    .divider {
+      border-top: 2px dashed #00d1ff;
+      margin: 2rem 0;
+    }
+    
+    /* Specific styles from original doc */
+    ul, ol { margin-left: 1.5rem; }
+    pre code { display: block; padding: 1rem; background: #0a192f; border-left: 4px solid #00f7ff; overflow-x: auto; font-family: monospace; }
+    .tip, .warn {
+      background: #232b2b;
+      border-left: 4px solid #00f7ff;
+      color: #e6f1ff;
+      padding: 1em;
+      margin: 1em 0;
+      border-radius: 6px;
+    }
+
+    /* --- Correction responsive illustrations et cartes --- */
+    @media (max-width: 900px) {
+      .feature-card, .section-doc > div[style*="display:flex"] {
+        flex-direction: column !important;
+        max-width: 100% !important;
+      }
+      .feature-card > div, .section-doc > div[style*="display:flex"] > div {
+        max-width: 100% !important;
+        min-width: 0 !important;
+      }
+    }
+    @media (max-width: 600px) {
+      .section-doc, .feature-card, .section-doc > div[style*="display:flex"] {
+        padding: 1rem !important;
+      }
+      h2, h3, h4, h5 {
+        font-size: 1.1rem !important;
+      }
+      .toc {
+        font-size: 0.98rem !important;
+        padding: 0.5rem !important;
+      }
+    }
+
+    @keyframes rosfloat {
+      0% { transform: translateY(0); opacity: 1; }
+      60% { opacity: 1; }
+      100% { transform: translateY(-32px); opacity: 0.7; }
+    }
+  a.blink-link {
+    animation: blink 2.2s steps(2, start) infinite, glow 2.8s ease-in-out infinite;
+    box-shadow: 0 0 2px 1px #009bb3, 0 0 1px 0.5px #444;
+    background: linear-gradient(90deg, #009bb3 0%, #5e3a99 100%);
+    color: #e0f7fa !important;
+    border-radius: 6px;
+    padding: 2px 10px;
+    font-size: 1.1em;
+    text-shadow: 0 0 1px #009bb3, 0 0 0.5px #444;
+    transition: transform 0.2s;
+  }
+  a.blink-link:hover {
+    transform: scale(1.04) rotate(-0.5deg);
+    box-shadow: 0 0 6px 2px #00f7ff, 0 0 2px 0.5px #fff;
+  }
+  @keyframes blink {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.35; }
+  }
+  @keyframes glow {
+    0%, 100% { box-shadow: 0 0 2px 1px #00f7ff, 0 0 1px 0.5px #fff; }
+    50% { box-shadow: 0 0 6px 2px #00f7ff, 0 0 2px 0.5px #fff; }
+  }
+  </style>
+</head>
+<body>
+
+  <!-- Header -->
+  <header>
+    <nav class="navbar">
+      <a href="https://tekbot-robotics-challenge.github.io/2025-Team-UCAO-TECH-Docs" class="logo">
+        <img src="https://ucaotech.com/wp-content/uploads/2024/10/UCAO-TECH-1.png" alt="UCAO-TECH Logo">
+        <span>UCAO-TECH</span>
+      </a>
+      <ul class="nav-links">
+        <li><a href="https://tekbot-robotics-challenge.github.io/2025-Team-UCAO-TECH-Docs">Accueil</a></li>
+        <li><a href="https://tekbot-robotics-challenge.github.io/2025-Team-UCAO-TECH-Docs/#a-propos">À propos</a></li>
+        <li><a href="https://tekbot-robotics-challenge.github.io/2025-Team-UCAO-TECH-Docs/#equipe">Équipe</a></li>
+        <li><a href="https://tekbot-robotics-challenge.github.io/2025-Team-UCAO-TECH-Docs/#contact">Contact</a></li>
+        <li><a href="https://tekbot-robotics-challenge.github.io/2025-Team-UCAO-TECH-Docs/#documentation">Documentation</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <div style="text-align:center; margin-top:3.5rem; margin-bottom:0.5rem;">
+    <span style="font-family:'Orbitron',sans-serif; font-size:2.2rem; font-weight:900; color:#00f7ff; letter-spacing:0.12em;">Test 3</span>
+  </div>
+  <div style="position:relative; width:100%; text-align:center; margin-top:1.5rem; margin-bottom:3.5rem;">
+    <span id="ros-float-title" style="display:inline-block; font-family:'Orbitron',sans-serif; font-size:3.2rem; font-weight:900; letter-spacing:0.15em; color:#00f7ff; text-shadow:0 4px 32px #00f7ff99,0 1px 0 #081a2b; animation:rosfloat 3.5s infinite alternate cubic-bezier(.4,0,.2,1); filter:drop-shadow(0 0 16px #00f7ff88); pointer-events:none;">
+      Creation d'un algorithme de pathfinding
+    </span>
+  </div>
+        <style>
+          @keyframes rosfloat {
+            0% { transform: translateY(16px); opacity: 1; }
+            60% { opacity: 1; }
+            100% { transform: translateY(-16px); opacity: 0.7; }
+          }
+          @media (max-width: 600px) {
+            #ros-float-title { font-size: 1.8rem; }
+          }
+        </style>
+        
+
+  <main>
+    <section class="section" id="informatique">
+      <div class="section-container">
+        <details id="toc-details" style="margin-bottom:2.5rem;" open>
+          <summary id="toc-summary" style="font-size:1.4rem; font-family:'Orbitron',sans-serif; color:#00f7ff; display:flex; align-items:center; gap:18px; cursor:pointer; font-weight:900; letter-spacing:0.08em; position:relative; transition:font-size 0.3s ease;">
+            <span style="display:inline-block; animation:tocpulse 1.2s infinite alternate;">
+              <svg width="32" height="32" viewBox="0 0 32 32"><circle cx="16" cy="16" r="16" fill="#0a192f"/><path d="M16 9v10" stroke="#00f7ff" stroke-width="2.8" stroke-linecap="round"/><circle cx="16" cy="23" r="2.3" fill="#00f7ff"/></svg>
+            </span>
+            <span id="sommaire-hover" style="position:relative;">
+              SOMMAIRE
+            </span>
+            <span id="toc-click-hint" style="font-size:1.1rem; color:#fff; background:#0a192f; border-left:4px solid #00f7ff; padding:0.2em 0.8em; border-radius:6px; margin-left:8px; animation:tocpulse 1.2s infinite alternate; display:none;">Cliquez ici !</span>
+          </summary>
+          <div class="toc">
+            <ul>
+              <li><a href="#contexte">1. Contexte</a></li>
+              <li><a href="#objectifs">2. Objectifs</a></li>
+              <li><a href="#workspace">3. Configuration du workspace</a></li>
+              <li><a href="#configuration">4. Outils et logiciels</a></li>
+              <li><a href="#teleoperation">5. Télé-opération</a></li>
+              <li><a href="#slam">6. SLAM (cartographie)</a></li>
+              <li><a href="#nav2">7. Nav2 (Navigation)</a></li>
+              <li><a href="#astar">8. Algorithme A*</a></li>
+              <li><a href="#defis">9. Défis & solutions</a></li>
+              <li><a href="#annexes">10. Annexes & références</a></li>
+            </ul>
+          </div>
+        </details>
+        <script>
+          // Animation "ROS2" visible uniquement quand le sommaire est replié
+          const tocDetails = document.getElementById('toc-details');
+          const rosFloat = document.getElementById('ros-float-title');
+          const tocClickHint = document.getElementById('toc-click-hint');
+          function updateRosFloatAndHint() {
+            if (tocDetails.open) {
+              rosFloat.style.opacity = '0';
+              rosFloat.style.pointerEvents = 'none';
+              tocClickHint.style.display = 'none';
+            } else {
+              rosFloat.style.opacity = '1';
+              rosFloat.style.pointerEvents = 'none';
+              tocClickHint.style.display = 'inline-block';
+            }
+          }
+          tocDetails.addEventListener('toggle', updateRosFloatAndHint);
+          updateRosFloatAndHint();
+        </script>
+
+        <!-- ICI COMMENCE LE CONTENU SPÉCIFIQUE À TEKBOT_SIM -->
+        <!-- Section 1 : Contexte -->
+        <div class="section-doc" style="background:rgba(10,25,47,0.85); border:3px solid #00f7ff; box-shadow:0 0 24px #00f7ff33; padding:2.2rem 2.5rem 2.2rem 2.5rem; border-radius:18px; margin-bottom:2.5rem;">
+          <h3 id="contexte">1. Contexte</h3>
+          <p>
+            La robotique mobile occupe aujourd’hui une place centrale dans l’industrie, la recherche et l’innovation. Les robots capables de se déplacer de façon autonome dans des environnements complexes sont au cœur de nombreux défis technologiques, qu’il s’agisse de logistique, d’exploration, d’assistance ou de recherche scientifique. Le Test 3 s’inscrit dans cette dynamique : il propose de confronter les étudiants à une problématique concrète de navigation autonome, telle qu’on la retrouve dans le monde professionnel.
+          </p>
+          <p style="margin-top:0.5em;">
+            Dans ce test, le robot TekBot évolue dans un environnement inconnu, simulé sous Gazebo, qui reproduit les contraintes d’un labyrinthe réel. L’étudiant doit aborder la question de la mobilité robotique comme le ferait un ingénieur ou un chercheur : comment permettre à une machine de percevoir, comprendre et traverser un espace sans intervention humaine directe ?
+          </p>
+          <p>
+            L’intérêt pédagogique de ce test est double :<br>
+            <ul style="margin-top:0.2em;">
+              <li>Plonger l’étudiant dans une situation réaliste, proche des problématiques rencontrées dans la recherche en robotique.</li>
+              <li>Favoriser l’autonomie, la rigueur et la capacité à mobiliser des outils modernes pour résoudre un problème complexe, de la compréhension du besoin jusqu’à la validation expérimentale.</li>
+            </ul>
+          </p>
+          <p>
+            Enfin, ce test met en avant l’importance du travail reproductible et documenté : chaque étape, chaque choix technique doit pouvoir être expliqué, justifié et partagé, à l’image des pratiques professionnelles en robotique.
+          </p>
+        </div>
+
+        <!-- Section 2 : Objectif -->
+        <div class="section-doc" style="background:rgba(10,25,47,0.85); border:3px solid #00f7ff; box-shadow:0 0 24px #00f7ff33; padding:2.2rem 2.5rem 2.2rem 2.5rem; border-radius:18px; margin-bottom:2.5rem;">
+          <h3 id="objectif">2. Objectif</h3>
+          <p>
+            L’objectif du Test 3 est de démontrer la capacité à concevoir et mettre en œuvre une navigation autonome pour un robot mobile (ici le robot TekBot) dans un environnement inconnu et contraignant, tel qu’un labyrinthe simulé. L’étudiant doit permettre au robot d’atteindre une position cible en évitant les obstacles, sans intervention humaine directe, en s’appuyant sur les principes fondamentaux de la robotique mobile : perception, localisation, planification de trajectoire et prise de décision autonome.
+          </p>
+          <ul>
+            <li><strong>Le robot TekBot doit explorer un environnement inconnu et en générer une carte utilisable pour la navigation.</strong></li>
+            <li><strong>Le robot doit être capable de se localiser de façon autonome sur cette carte, même après des déplacements complexes.</strong></li>
+            <li><strong>L’étudiant doit permettre au robot d’atteindre une position cible définie sur la carte, en évitant tous les obstacles présents.</strong></li>
+            <li><strong>La solution doit fonctionner sans intervention humaine directe pendant la phase de navigation autonome.</strong></li>
+            <li><strong>La démarche doit être reproductible et documentée, chaque choix technique devant être justifié.</strong></li>
+          </ul>
+          <p>
+            La réussite du test se mesure à la capacité du robot à explorer, se localiser et se déplacer de façon fiable et autonome jusqu’à l’objectif fixé, dans le respect des contraintes de l’environnement. Une attention particulière sera portée à la robustesse de la navigation, à la qualité de la cartographie produite, et à la clarté de la documentation technique fournie.
+          </p>
+        </div>
+
+        <!-- Section 3 : Configuration du workspace (deux colonnes dans un grand cadre) -->
+        <div class="section-doc" style="background:rgba(10,25,47,0.85); border:3px solid #00f7ff; box-shadow:0 0 24px #00f7ff33; padding:2.2rem 2.5rem 2.2rem 2.5rem; border-radius:18px; margin-bottom:2.5rem;">
+          <div style="display:flex; gap:2.5rem; align-items:stretch; flex-wrap:nowrap;">
+            <!-- Colonne gauche : explications -->
+            <div style="flex:0 0 45%; max-width:45%; min-width:240px; padding-right:1.5em;">
+              <h3 id="workspace">3. Configuration du workspace</h3>
+              <h4 id="prerequis">3.1 Prérequis</h4>
+              <ul>
+                <li><b>Système d’exploitation</b> : Ubuntu 22.04 LTS (recommandé pour la compatibilité ROS 2 Humble)</li>
+                <li><b>ROS 2 Humble</b> installé (<a href="https://docs.ros.org/en/humble/Installation.html" target="_blank">guide officiel</a>)</li>
+                <li><b>Droits administrateur</b> (sudo) pour l’installation des paquets nécessaires</li>
+              </ul>
+              <div style="margin-top:0.7em; color:#b2dfdb; background:#081a2b; border-left:4px solid #00f7ff; border-radius:6px; padding:0.8em 1.2em;">
+                <b>Conseil :</b> Ubuntu 22.04 LTS est la plateforme de référence pour ROS 2 Humble. Elle garantit une compatibilité optimale avec les outils, une documentation à jour et un support communautaire étendu.
+              </div>
+              <h4 id="installation">3.2 Installation du projet TekBot</h4>
+              <ol style="margin-bottom:0.7em;">
+                <li><b>Cloner le dépôt du projet</b><br>
+                  <span style="color:#00f7ff; font-family:monospace;">git clone https://github.com/charif-tekbot/tekbot_sim.git</span><br>
+                  Cette commande télécharge l’ensemble du code source dans un dossier <span style="color:#00f7ff; font-family:monospace;">tekbot_sim</span>.
+                </li>
+                <li><b>Se placer dans le dossier du projet</b><br>
+                  <span style="color:#00f7ff; font-family:monospace;">cd tekbot_sim</span>
+                </li>
+                <li><b>Rendre le script de configuration exécutable</b> <span style="color:#b2dfdb; font-size:90%;">(optionnel si déjà exécutable)</span><br>
+                  <span style="color:#00f7ff; font-family:monospace;">chmod +x configure.sh</span>
+                </li>
+                <li><b>Lancer le script de configuration</b><br>
+                  <span style="color:#00f7ff; font-family:monospace;">source configure.sh</span><br>
+                  Ce script&nbsp;:
+                  <ul style="margin-top:0.3em;">
+                    <li>Crée le workspace <span style="color:#00f7ff; font-family:monospace;">~/tekbot_ws</span></li>
+                    <li>Place le code source dans le workspace</li>
+                    <li>Supprime le dossier <span style="color:#00f7ff; font-family:monospace;">bin</span> inutile</li>
+                    <li>Source l’environnement ROS 2 Humble</li>
+                    <li>Compile tous les paquets avec <span style="color:#00f7ff; font-family:monospace;">colcon build</span></li>
+                    <li>Source l’environnement du workspace compilé</li>
+                  </ul>
+                </li>
+              </ol>
+              
+              <style>
+                .doc-link-gazebo {
+                  color: #90caf9;
+                  text-decoration: none;
+                  font-weight: normal;
+                  transition: color 0.2s, text-decoration 0.2s;
+                }
+                .doc-link-gazebo:hover {
+                  color: #8e24aa;
+                  text-decoration: underline solid 2px #8e24aa;
+                }
+              </style>
+            </div>
+            <!-- Colonne droite : arborescence -->
+            <div style="flex:0 0 45%; max-width:45%; min-width:320px; background:#0a192f; border-left:4px solid #00f7ff; border-radius:10px; padding:1.2em 1.2em 1.2em 1.2em; color:#00f7ff; font-size:0.98em; overflow-x:auto; margin-bottom:0;">
+              <h4 id="arborescences">3.3 Arborescence du dossier <span style="font-size:0.95em; color:#00f7ff;">tekbot_ws</span></h4>
+              <pre style="font-size:0.97em; color:#00f7ff; background:transparent; border:none; margin:0; padding:0;">
+tekbot_ws/
+├── build/                      ← Fichiers temporaires de compilation colcon
+│   └── [maze_solving, tekbot, tekbot_description...]
+├── install/                    ← Résultat de l’installation des packages ROS 2
+│   ├── local_setup.bash
+│   ├── setup.bash              ← ⚠ à sourcer pour activer l’environnement
+│   └── lib, share, ...         ← exécutables, ressources de chaque package
+├── log/                        ← Logs de compilation
+│   └── latest_build/
+├── src/
+│   └── tekbot_sim/
+│       ├── configure.sh
+│       ├── README.md
+│       ├── maze_solving/
+│       │   ├── launch/
+│       │   │   └── maze.launch.py
+│       │   ├── maps/
+│       │   │   ├── maze.yaml
+│       │   │   └── maze.pgm
+│       │   ├── scripts/
+│       │   │   └── generate_maze.py
+│       │   ├── maze_solving/
+│       │   │   └── _init_.py
+│       │   ├── package.xml
+│       │   └── setup.py
+│       ├── tekbot/
+│       │   ├── src/
+│       │   │   ├── control_node.cpp
+│       │   │   └── main.cpp
+│       │   ├── CMakeLists.txt
+│       │   └── package.xml
+│       └── tekbot_description/
+│           ├── urdf/
+│           │   └── tekbot.urdf.xacro
+│           ├── meshes/
+│           │   ├── base_link.dae
+│           │   └── wheel.dae
+│           ├── launch/
+│           │   └── display.launch.py
+│           ├── gazebo/
+│           │   ├── tekbot.world
+│           │   └── model.sdf
+│           └── package.xml
+              </pre>
+            </div>
+          </div>
+          <!-- Documentation officielle supprimée de la section 3 -->
+        </div>
+
+        <!-- OUVERTURE du super-cadre englobant la section 4 SUPPRIMÉ -->
+        <!-- Début du bloc interne section 4.1 -->
+        <div class="section-doc" style="background:rgba(10,25,47,0.85); border:3px solid #00f7ff; box-shadow:0 0 24px #00f7ff33; padding:2.2rem 2.5rem 2.2rem 2.5rem; border-radius:18px; margin-bottom:2.5rem;">
+          <h3 id="configuration">4. Outils et logiciels</h3>
+          <!-- Début 4.1 Gazebo Classic -->
+          <h4 id="gazebo">4.1 Gazebo Classic</h4>
+          <p style="margin-top:1.2em; margin-bottom:1.2em; font-size:1.08em; color:#e6f1ff;">
+            Gazebo Classic est le simulateur 3D de référence pour la robotique mobile sous ROS&nbsp;2. Il permet de tester, valider et optimiser le comportement du robot TekBot dans des environnements virtuels réalistes, sans risque matériel. Grâce à son intégration native avec ROS&nbsp;2, il facilite le prototypage, la validation logicielle et l’expérimentation de scénarios complexes (navigation, SLAM, interactions capteurs/environnement) avant tout déploiement réel.
+          </p>
+          <b style="color:#00f7ff;">Pourquoi choisir Gazebo Classic&nbsp;?</b><br>
+          Gazebo Classic reste le simulateur 3D de référence pour la robotique mobile sous ROS&nbsp;2, notamment pour la version Humble. Il est reconnu pour sa stabilité, sa compatibilité éprouvée avec ROS&nbsp;2, la richesse de sa documentation et la taille de sa communauté. Classic est idéal pour l'enseignement, la recherche et les projets nécessitant un environnement robuste et bien documenté.<br>
+          Remarque&nbsp;: Les versions plus récentes (Ignition/Fortress) existent, mais Classic est le choix recommandé pour la majorité des projets ROS&nbsp;2 Humble.
+<div style="display:flex; flex-wrap:nowrap; gap:12px; margin-bottom:10px; justify-content:center; align-items:stretch;">
+  <div style="flex:1; min-width:220px; background:#081a2b; color:#fff; border:2px solid #00f7ff; border-radius:10px; padding:14px 18px; max-width:33.33%;">
+    <b>Fonctionnalités principales</b><br>
+    <ul style="margin-left:10px;">
+      <li>Simulation physique (collisions, gravité, dynamique…)</li>
+      <li>Capteurs variés (LiDAR, IMU, GPS…)</li>
+      <li>Création/import de mondes personnalisés</li>
+      <li>Tests automatisés et reproductibles</li>
+    </ul>
+  </div>
+  <div style="flex:1; min-width:220px; background:#081a2b; color:#fff; border:2px solid #00f7ff; border-radius:10px; padding:14px 18px; max-width:33.33%;">
+    <b>Outils disponibles</b><br>
+    <ul style="margin-left:10px;">
+      <li>Interface graphique interactive (ajout/suppression d’objets, manipulation de la scène)</li>
+      <li>Bibliothèque de modèles (robots, capteurs, obstacles…)</li>
+      <li>Plugins et ressources communautaires</li>
+    </ul>
+  </div>
+  <div style="flex:1; min-width:220px; background:#081a2b; color:#fff; border:2px solid #00f7ff; border-radius:10px; padding:14px 18px; max-width:33.33%;">
+    <b>Installation de Gazebo</b><br>
+    <ul style="margin-left:10px;">
+      <li>Exécute&nbsp;: <span style="background:#081a2b; color:#00f7ff; border-radius:4px; padding:2px 7px; font-family:monospace;">sudo apt update &amp;&amp; sudo apt install gazebo11 libgazebo11-dev</span></li>
+      <li>Pour l’intégration ROS2&nbsp;: <span style="background:#081a2b; color:#00f7ff; border-radius:4px; padding:2px 7px; font-family:monospace;">sudo apt install ros-humble-gazebo-ros-pkgs ros-humble-gazebo-ros-control</span></li>
+    </ul>
+  </div>
+</div>
+          <h4 id="gazebo-methods" style="margin-top:2.2em;">Méthodes de lancement dans Gazebo</h4>
+          <p style="margin: 0.7em 0 0.7em 0; font-size:1.04em;">
+            Plusieurs méthodes sont possibles pour lancer la simulation TekBot sous Gazebo, selon le scénario que vous souhaitez tester (robot seul, labyrinthe seul, ou robot dans le labyrinthe). Chaque méthode permet de valider une étape clé du développement : installation, configuration de l’environnement, ou navigation autonome complète. Choisissez la méthode adaptée à votre besoin : test d’installation, exploration de l’environnement, ou validation de la navigation et du SLAM.
+          </p>
+          <div style="background:#081a2b; color:#00f7ff; border-left:4px solid #00f7ff; border-radius:7px; padding:13px 18px; margin-bottom:16px; font-size:1.04em;">
+            <b style="color:#00f7ff;">Rappel important&nbsp;: </b><span style="color:#fff;">Avant de lancer <b>Gazebo</b> ou tout fichier <b>launch</b> ROS&nbsp;2, assurez-vous d’avoir bien <b>sourcé l’environnement ROS&nbsp;2</b> <span style="font-family:monospace; color:#00f7ff;">source /opt/ros/humble/setup.bash</span> <b>et</b> <b>sourcé le workspace</b> <span style="font-family:monospace; color:#00f7ff;">source ~/tekbot_ws/install/setup.bash</span> dans chaque terminal utilisé. Sans cela, les commandes <span style="font-family:monospace; color:#00f7ff;">ros2</span> et les packages du projet ne seront pas reconnus. Pour de meilleures performances, fermez les applications lourdes (navigateur, IDE, etc.) avant de lancer Gazebo Classic, surtout sur un PC portable.</span>
+          </div>
+          <div style="display:flex; flex-wrap:nowrap; gap:14px; margin-top:12px; margin-bottom:8px;">
+  <div style="flex:1 1 220px; min-width:220px; background:#081a2b; color:#fff; border:2px solid #00f7ff; border-radius:8px; color:#fff; padding:14px;">
+    <span style="color:#00f7ff; font-weight:900; font-size:1.08em; letter-spacing:0.02em;"><b>Simulation de base (robot seul)</b> :</span><span style="color:#fff"> Lance le robot TekBot dans un environnement Gazebo vide.</span>
+    <div style="background:#081a2b; color:#00f7ff; border-radius:4px; padding:2px 7px; font-family:monospace; display:inline-block; margin:8px 0;">ros2 launch tekbot_description gazebo.launch.py</div>
+  </div>
+  <div style="flex:1 1 220px; min-width:220px; background:#081a2b; color:#fff; border:2px solid #00f7ff; border-radius:8px; color:#fff; padding:14px;">
+    <span style="color:#00f7ff; font-weight:900; font-size:1.08em; letter-spacing:0.02em;"><b>Visualisation du labyrinthe (sans robot)</b> :</span><span style="color:#fff"> Affiche uniquement l’environnement maze dans Gazebo.</span><br>
+    <div style="background:#081a2b; color:#00f7ff; border-radius:4px; padding:2px 7px; font-family:monospace; display:inline-block; margin:8px 0; white-space:nowrap;">ros2 launch maze_solving maze.launch.py</div>
+  </div>
+  <div style="flex:1 1 220px; min-width:220px; background:#081a2b; color:#fff; border:2px solid #00f7ff; border-radius:8px; color:#fff; padding:14px;">
+    <span style="color:#00f7ff; font-weight:900; font-size:1.08em; letter-spacing:0.02em;"><b>Simulation complète (robot + labyrinthe)</b> :</span><span style="color:#fff"> Lance TekBot directement dans le labyrinthe</span>
+    <div style="background:#081a2b; color:#00f7ff; border-radius:4px; padding:2px 7px; font-family:monospace; display:inline-block; margin:8px 0;">ros2 launch maze_solving tekbot_maze.launch.py</div>
+  </div>
+</div>
+
+<div style="display:flex; flex-wrap:nowrap; gap:14px; margin-bottom:18px; width:100%;">
+  <div style="flex:1 1 0; min-width:0; max-width:33.33%; background:#081a2b; border-radius:8px; display:flex; flex-direction:column; align-items:stretch; justify-content:center; padding:0; border:2px solid #00f7ff; margin:0 2px; min-height:220px; overflow:hidden;">
+    <div style="position:relative; width:100%; height:220px;">
+      <img id="img-robot-gazebo" src="Images/robot.png" alt="Robot TekBot dans Gazebo" style="width:100%; height:220px; object-fit:cover; opacity:0.97; margin:0; display:block; border-radius:6px;" />
+      <button onclick="openFullscreen('img-robot-gazebo')" title="Plein écran" style="position:absolute; top:8px; right:8px; background:#232946cc; border:none; border-radius:50%; width:28px; height:28px; display:flex; align-items:center; justify-content:center; cursor:pointer; box-shadow:0 1px 4px #0005; transition:box-shadow 0.2s;">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 3H5a2 2 0 0 0-2 2v3m0 8v3a2 2 0 0 0 2 2h3m8-18h3a2 2 0 0 1 2 2v3m0 8v3a2 2 0 0 1-2 2h-3"/></svg>
+      </button>
+    </div>
+  </div>
+  <div style="flex:1 1 0; min-width:0; max-width:33.33%; background:#081a2b; border-radius:8px; display:flex; flex-direction:column; align-items:stretch; justify-content:center; padding:0; border:2px solid #00f7ff; margin:0 2px; min-height:220px; overflow:hidden;">
+    <div style="position:relative; width:100%; height:220px;">
+      <img id="img-labyrinthe-gazebo" src="Images/labyrinthe.png" alt="Robot TekBot dans le labyrinthe Gazebo" style="width:100%; height:220px; object-fit:cover; opacity:0.97; margin:0; display:block; border-radius:6px;" />
+      <button onclick="openFullscreen('img-labyrinthe-gazebo')" title="Plein écran" style="position:absolute; top:8px; right:8px; background:#232946cc; border:none; border-radius:50%; width:28px; height:28px; display:flex; align-items:center; justify-content:center; cursor:pointer; box-shadow:0 1px 4px #0005; transition:box-shadow 0.2s;">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 3H5a2 2 0 0 0-2 2v3m0 8v3a2 2 0 0 0 2 2h3m8-18h3a2 2 0 0 1 2 2v3m0 8v3a2 2 0 0 1-2 2h-3"/></svg>
+      </button>
+    </div>
+  </div>
+  <div style="flex:1 1 0; min-width:0; max-width:33.33%; background:#081a2b; border-radius:8px; display:flex; flex-direction:column; align-items:stretch; justify-content:center; padding:0; border:2px solid #00f7ff; margin:0 2px; min-height:220px; overflow:hidden;">
+    <div style="position:relative; width:100%; height:220px;">
+      <img id="img-labyrinthe-gazebo" src="Images/robot_et_labyrinthe.png" alt="Robot TekBot dans le labyrinthe Gazebo" style="width:100%; height:220px; object-fit:cover; opacity:0.97; margin:0; display:block; border-radius:6px;" />
+      <button onclick="openFullscreen('img-robot_et_labyrinthe-gazebo')" title="Plein écran" style="position:absolute; top:8px; right:8px; background:#232946cc; border:none; border-radius:50%; width:28px; height:28px; display:flex; align-items:center; justify-content:center; cursor:pointer; box-shadow:0 1px 4px #0005; transition:box-shadow 0.2s;">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 3H5a2 2 0 0 0-2 2v3m0 8v3a2 2 0 0 0 2 2h3m8-18h3a2 2 0 0 1 2 2v3m0 8v3a2 2 0 0 1-2 2h-3"/></svg>
+      </button>
+  </div>
+
+</div>
+ 
+<script>
+function openFullscreen(id) {
+  var img = document.getElementById(id);
+  if (img.requestFullscreen) {
+    img.requestFullscreen();
+  } else if (img.webkitRequestFullscreen) {
+    img.webkitRequestFullscreen();
+  } else if (img.msRequestFullscreen) {
+    img.msRequestFullscreen();
+  }
+}
+</script>
+</div>
+<div style="margin-top:18px; font-size:90%; color:#888;">
+            <span>Documentation officielle :</span>
+            <a href="https://gazebosim.org/docs" target="_blank" style="color:#00f7ff; text-decoration:none; text-transform:lowercase;">https://gazebosim.org/docs</a>
+          </div>
+  </div>
+</div>
+          <!-- Documentation officielle après la FAQ avancée / Problèmes fréquents -->
+          
+        </div>
+
+        <!-- Début du bloc interne section 4.2 -->
+          <div class="section-doc" style="background:rgba(10,25,47,0.85); border:3px solid #00f7ff; box-shadow:0 0 24px #00f7ff33; padding:2.2rem 2.5rem 2.2rem 2.5rem; border-radius:18px; margin-bottom:2.5rem;">
+            <h4 id="rqt">4.2 RQt</h4>
+            <p>
+              <strong>RQt</strong> est une application graphique modulaire basée sur Qt, conçue pour ROS/ROS2. Elle permet d’agréger de nombreux outils de monitoring, de visualisation et de configuration sous forme de plugins : graphe des nœuds, topics, logs, paramètres dynamiques, etc. RQt facilite le diagnostic, le debug et l’analyse du système robotique TekBot.
+            </p>
+            <b style="color:#00f7ff;">Pourquoi utiliser RQt&nbsp;?</b><br>
+            RQt centralise tous les outils de supervision et de debug ROS2 dans une seule interface graphique&nbsp;: vous gagnez du temps, visualisez l’état du système en temps réel et pouvez diagnostiquer rapidement les problèmes de communication ou de configuration.
+            <div style="height:32px;"></div>
+            <div style="display:flex; gap:18px; margin-bottom:32px; align-items:flex-start;">
+              <div style="flex:1; min-width:260px; display:flex; flex-direction:column; gap:18px;">
+                <div style="border:2px solid #00f7ff; border-radius:8px; background:#020c1b; color:#fff; padding:14px;">
+                  <b>Installation rapide&nbsp;:</b> <span style="background:#020c1b; color:#00f7ff; padding:2px 6px; border-radius:4px; font-family:monospace;">sudo apt install ros-humble-rqt</span><br>
+                  Cette commande installe RQt ainsi que la majorité des plugins indispensables pour superviser, visualiser et diagnostiquer un système ROS2.
+                  <br><b>Lancement&nbsp;:</b> <span style="background:#020c1b; color:#00f7ff; padding:2px 6px; border-radius:4px; font-family:monospace;">rqt</span> (à lancer dans un terminal après avoir démarré le robot et le labyrinthe) ou <span style="background:#020c1b; color:#00f7ff; padding:2px 6px; border-radius:4px; font-family:monospace;">ros2 launch maze_solving tekbot_maze.launch.py</span> (cette commande lance le robot, le labyrinthe et ouvre automatiquement RQt pour le monitoring graphique).<br>
+                  <span style="font-weight:500;">Astuce&nbsp;:</span> <span style="color:#fff;">Superpose ou organise les fenêtres de plugins selon tes besoins : RQt permet une interface totalement personnalisable.</span>
+                </div>
+                <!-- Encadré FAQ / Problèmes fréquents déplacé ici -->
+                <div style="background:#081a2b; color:#fff; border-left:4px solid #ff5252; border-radius:7px; padding:10px 18px; margin-bottom:0; font-size:1.04em; margin-top:10px; display:flex; align-items:center; justify-content:flex-start;">
+                  <b style="color:#ff5252; margin-right:12px;">FAQ / Problèmes fréquents</b>
+                  <span><b>RQt ne détecte pas les topics ou nœuds</b> : vérifiez que vous avez bien sourcé l’environnement ROS2 et le workspace dans ce terminal. | <b>Interface vide au lancement</b> : ajoutez les plugins nécessaires via le menu <b>Plugins</b>. | <b>Problèmes d’affichage ou de lenteur</b> : fermez les applications lourdes, réduisez la taille de la fenêtre ou relancez RQt. | <b>RQt ne démarre pas</b> : vérifiez l’installation de Qt et des dépendances graphiques (<span style="font-family:monospace; color:#00f7ff;">sudo apt install qtbase5-dev</span>).</span>
+                </div>
+              </div>
+              <div style="flex:1; border:2px solid #00f7ff; border-radius:8px; background:#020c1b; color:#fff; padding:14px; display:flex; align-items:center; justify-content:center; min-width:260px; min-height:180px;">
+                <div style="width:100%; height:100%; display:flex; align-items:center; justify-content:center;">
+                  <video controls style="width:100%; height:100%; min-height:180px; min-width:100%; object-fit:cover; border-radius:6px; background:#000;">
+                    <source src="Videos/rqt.mp4" type="video/mp4">
+                    Votre navigateur ne supporte pas la lecture vidéo.
+                  </video>
+                </div>
+              </div>
+            </div>
+            <h5 style="color:#00f7ff; margin-top:10px; margin-bottom:4px;">Plugins recommandés pour le debug ROS2</h5>
+            <!-- Tableau plugins RQt -->
+            <div style="overflow-x:auto; margin-bottom:14px; margin-top:0;">
+              <table style="background:#0a192f; color:#e6f1ff; border-radius:8px;">
+                <thead>
+                  <tr style="background:#081a2b; color:#00f7ff;">
+                    <th>Plugin</th>
+                    <th>Utilité</th>
+                    <th>Menu d’accès</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td><b>Node Graph</b></td>
+                    <td>Visualise la structure des nœuds et leurs connexions</td>
+                    <td>Plugins → Introspection → Node Graph</td>
+                  </tr>
+                  <tr>
+                    <td><b>Topic Monitor</b></td>
+                    <td>Affiche la liste des topics actifs, leur fréquence et la structure des messages</td>
+                    <td>Plugins → Topics → Topic Monitor</td>
+                  </tr>
+                  <tr>
+                    <td><b>TF Tree</b></td>
+                    <td>Visualise en temps réel l’arbre des transformations (TF)</td>
+                    <td>Plugins → Visualization → TF Tree</td>
+                  </tr>
+                  <!-- Suppression des plugins Logger Level et Dynamic Reconfigure sur demande -->
+                </tbody>
+              </table>
+            </div>
+            
+            <div style="margin-top:10px; font-size:90%; color:#888;">
+              <style>
+                .doc-link-rqt {
+                  color: #90caf9;
+                  text-decoration: none;
+                  font-weight: normal;
+                  transition: color 0.2s, text-decoration 0.2s;
+                }
+                .doc-link-rqt:hover {
+                  color: #8e24aa;
+                  text-decoration: underline solid 2px #8e24aa;
+                }
+              </style>
+              Documentation officielle : <a href="https://wiki.ros.org/rqt" target="_blank" class="doc-link-rqt">wiki.ros.org/rqt</a>
+            </div>
+          </div> <!-- fermeture du cadre 4.2 -->
+          <!-- Début 4.3 RViz2 dans un nouveau cadre -->
+          <!-- Début du bloc interne section 4.3 -->
+          <div class="section-doc" style="background:rgba(10,25,47,0.85); border:3px solid #00f7ff; box-shadow:0 0 24px #00f7ff33; padding:2.2rem 2.5rem 2.2rem 2.5rem; border-radius:18px; margin-bottom:2.5rem;">
+            <h4 id="rviz2">4.3 RViz2</h4>
+            <p>
+              <strong>RViz2</strong> est l’outil de visualisation 3D incontournable de ROS2. Il permet d’afficher en temps réel l’état du robot, les données capteurs (LiDAR, caméras…), la carte générée, les trajectoires, les frames de coordonnées, etc. RViz2 est indispensable pour le debug, la validation et l’interaction avec le système TekBot.
+            </p>
+            <b style="color:#00f7ff;">Tableau des displays principaux</b><br>
+            <table style="width:100%; background:#0a192f; color:#e6f1ff; border-radius:8px; margin-top:8px;">
+              <thead>
+                <tr style="background:#081a2b; color:#00f7ff;">
+                  <th>Display</th>
+                  <th>Utilité</th>
+                  <th>Ajout</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr><td>Map</td><td>Affiche la carte générée (SLAM, navigation)</td><td>Displays → Map</td></tr>
+                <tr><td>LaserScan</td><td>Visualise les données LiDAR</td><td>Displays → LaserScan</td></tr>
+                <tr><td>TF</td><td>Affiche l’arbre des frames (repères)</td><td>Displays → TF</td></tr>
+                <tr><td>Path</td><td>Affiche la trajectoire planifiée</td><td>Displays → Path</td></tr>
+                <tr><td>Image</td><td>Affiche le flux caméra</td><td>Displays → Image</td></tr>
+                <tr><td>RobotModel</td><td>Affiche le modèle 3D du robot</td><td>Displays → RobotModel</td></tr>
+              </tbody>
+            </table>
+            <div style="display:flex; flex-wrap:wrap; gap:18px; margin-bottom:18px; justify-content:center; align-items:stretch;">
+              <div style="flex:1 1 0; min-width:260px; max-width:50%; background:#081a2b; color:#fff; border-left:4px solid #00f7ff; border-radius:7px; padding:14px 18px; font-size:1.04em; box-sizing:border-box;">
+                <b style="color:#00f7ff;">Procédure pas à pas</b><br>
+                <ol style="margin-left:1.2em; margin-top:0.5em;">
+                  <li>Lance RViz2 dans un terminal : <span style="background:#020c1b; color:#00f7ff; padding:2px 6px; border-radius:4px; font-family:monospace;">rviz2</span></li>
+                  <li>Ajoute un display via le bouton <b>Add</b> (en bas à gauche), puis choisis le type (ex : Map, LaserScan…)</li>
+                  <li>Personnalise les paramètres du display dans le panneau latéral</li>
+                  <li>Sauvegarde ta configuration : <b>File → Save Config As…</b></li>
+                  <li>Pour recharger une configuration : <b>File → Open Config</b></li>
+                </ol>
+              </div>
+              <div style="flex:1 1 0; min-width:260px; max-width:50%; background:#081a2b; color:#fff; border-left:4px solid #00f7ff; border-radius:7px; padding:14px 18px; font-size:1.04em; box-sizing:border-box;">
+                <b style="color:#00f7ff;">Bonnes pratiques & astuces avancées</b><br>
+                <ul style="margin-left:1.2em; margin-top:0.5em;">
+                  <li>Sauvegarde une configuration différente pour chaque scénario (SLAM, navigation, debug…)</li>
+                  <li>Utilise les raccourcis clavier pour naviguer dans la vue 3D (Maj + clic, molette…)</li>
+                  <li>Ferme les displays inutiles pour améliorer les performances</li>
+                  <li>Personnalise les couleurs et styles d’affichage selon tes besoins</li>
+                  <li>Utilise les outils d’interaction (2D Pose Estimate, 2D Nav Goal…)</li>
+                </ul>
+              </div>
+            </div>
+            <!-- Bloc Installation + Problèmes fréquents à gauche, image à droite (50/50) -->
+            <div style="display:flex; flex-wrap:wrap; gap:18px; margin-bottom:18px; justify-content:center; align-items:stretch;">
+              <!-- Colonne gauche : Installation + Problèmes fréquents -->
+              <div style="flex:1 1 0; min-width:260px; max-width:50%; display:flex; flex-direction:column; gap:16px;">
+                <div style="border:2px solid #00f7ff; border-radius:8px; background:#020c1b; color:#fff; padding:14px; margin-bottom:0;">
+                  <b>Installation :</b> <span style="background:#020c1b; color:#00f7ff; padding:2px 6px; border-radius:4px; font-family:monospace;">sudo apt install ros-humble-rviz2</span><br>
+                  <span style="color:#90caf9; font-size:90%;">Installe RViz2 sur Ubuntu/ROS2 Humble.</span><br>
+                  <b>Lancement rapide :</b> <span style="background:#020c1b; color:#fff; padding:2px 6px; border-radius:4px; font-family:monospace;">rviz2</span><br>
+                  <span style="color:#90caf9; font-size:90%;">Lance RViz2 après avoir démarré la simulation ou les nœuds ROS2.</span>
+                </div>
+                <div style="background:#081a2b; color:#fff; border-left:4px solid #ff5252; border-radius:7px; padding:14px 18px; font-size:1.04em;">
+                  <b style="color:#ff5252;">Problèmes fréquents</b><br>
+                  <ul style="margin-left:1.2em; margin-top:0.5em;">
+                    <!-- Problème 'Écran noir ou pas de données' supprimé -->
+                    <li><b>RViz2 plante au lancement</b> : mets à jour tes pilotes graphiques, essaie <span style="font-family:monospace; color:#00f7ff;">rviz2 --opengl</span>.</li>
+                    <li><b>Le robot n’apparaît pas</b> : vérifie le display RobotModel et les topics associés.</li>
+                    <li><b>Les axes ou repères sont décalés</b> : vérifie la configuration des TF (transforms) et la synchronisation des horloges ROS2.</li>
+                    <li><b>Impossible d’ajouter un affichage</b> : assure-toi que le bon type de message est publié sur le topic (ex : « LaserScan », « Image », « PointCloud2 »).</li>
+                  </ul>
+                </div>
+              </div>
+              <!-- Colonne droite : Image illustrative SANS cadre -->
+              <div style="flex:1 1 0; min-width:260px; max-width:50%; display:flex; align-items:center; justify-content:center;">
+                <div style="position:relative; width:100%; max-width:100%; aspect-ratio:16/9; height:auto;">
+                  <img id="img-rviz2" src="Images/rviz2.jpg" alt="Aperçu RViz2" style="width:100%; max-width:100%; aspect-ratio:16/9; height:auto; object-fit:cover; border-radius:16px; border:3px solid #00d1ff; box-shadow:0 6px 36px #00f7ff77; background:#0a192f; display:block; margin:0 auto;" />
+                  <button onclick="openFullscreen('img-rviz2')" title="Plein écran" style="position:absolute; top:8px; right:8px; background:#232946cc; border:none; border-radius:50%; width:28px; height:28px; display:flex; align-items:center; justify-content:center; cursor:pointer; box-shadow:0 1px 4px #0005; transition:box-shadow 0.2s;">
+                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 3H5a2 2 0 0 0-2 2v3m0 8v3a2 2 0 0 0 2 2h3m8-18h3a2 2 0 0 1 2 2v3m0 8v3a2 2 0 0 1-2 2h-3"/></svg>
+                  </button>
+                </div>
+              </div>
+            </div>
+            <div style="margin-top:10px; font-size:90%; color:#90caf9;">
+              <style>
+                .doc-link-rviz2 {
+                  color: #90caf9;
+                  text-decoration: none;
+                  font-weight: normal;
+                  transition: color 0.2s, text-decoration 0.2s;
+                }
+                .doc-link-rviz2:hover {
+                  color: #8e24aa;
+                  text-decoration: underline solid 2px #8e24aa;
+                }
+              </style>
+              <span style="color:#888;">Documentation officielle :</span>
+              <a href="https://index.ros.org/p/rviz2/" target="_blank" class="doc-link-rviz2">index.ros.org/p/rviz2/</a>
+            </div>
+          </div>
+          <!-- Fin du bloc interne section 4.3 -->
+        </div>
+        <!-- FERMETURE du super-cadre englobant la section 4 SUPPRIMÉ -->
+        <!-- Suppression du doublon éventuel de 4.2 et 4.3 hors du grand cadre : rien à supprimer car tout est déjà englobé -->
+        <div class="section-doc" style="background:rgba(10,25,47,0.97); border:4px solid #00f7ff; box-shadow:0 0 32px #00f7ff55; padding:2.8rem 2.8rem 2.8rem 2.8rem; border-radius:24px; margin-bottom:2.5rem;"> <!-- OUVERTURE du grand cadre de la section 5 -->
+          <!-- SECTION 5 : Télé-opération -->
+
+          <h3 id="teleoperation" style="margin-top:2.5em;">5. Télé-opération</h3>
+
+          <!-- Remarque sur les modes utilisés -->
+<!-- Remarque importante déplacée -->
+          <p>
+            La <strong>télé-opération</strong> est une étape clé du cycle de développement robotique : elle permet de prendre le contrôle manuel du robot TekBot pour valider chaque sous-système (moteurs, capteurs, communication ROS2, sécurité) avant toute expérimentation autonome.<br>
+            <br>
+            <b>Pourquoi télé-opérer ?</b>
+          </p>
+          <ul>
+            <li><b>Vérification initiale :</b> S’assurer que le robot réagit bien aux commandes, que les moteurs tournent dans le bon sens, que les capteurs publient des données cohérentes.</li>
+            <li><b>Diagnostic et debug :</b> Identifier rapidement les problèmes de configuration (topics, permissions, drivers, etc.) en observant la réponse du robot en temps réel.</li>
+            <li><b>Calibration :</b> Ajuster les paramètres (vitesses, sensibilité, limites) en situation réelle ou simulée.</li>
+            <li><b>Prise de main d’urgence :</b> Intervenir manuellement en cas de bug, de danger ou de test critique.</li>
+            <li><b>Formation et démonstration :</b> Permettre à un utilisateur novice de piloter le robot pour comprendre son fonctionnement.</li>
+          </ul>
+
+          <!-- Détail sur la télé-opération par clavier -->
+
+          <div style="margin:1.2em 0 1.2em 0; background:#020c1b; border-left:4px solid #00f7ff; border-radius:8px; color:#fff; padding:16px 22px;">
+            <b>Principe technique :</b> La télé-opération consiste à publier des messages <span style="font-family:monospace; color:#00f7ff;">geometry_msgs/Twist</span> sur le topic <span style="font-family:monospace; color:#00f7ff;">/cmd_vel</span> du robot. Ces messages sont interprétés par le contrôleur de mouvement (diff_drive, ackermann, etc.) pour générer les déplacements.
+          </div>
+          <!-- Contrôles clavier pour la télé-opération déplacé en bas de Téléopération Web avancée -->
+          <!-- Contrôles clavier pour la télé-opération déplacé ici -->
+          <!-- Contrôles clavier pour la télé-opération déplacé en bas de Téléopération Web avancée -->
+          <!-- Contrôles clavier pour la télé-opération déplacé ici -->
+          <!-- Contrôles clavier pour la télé-opération déplacé en bas de Téléopération Web avancée -->
+
+          <!-- Tableau comparatif des modes de télé-opération -->
+          <h4 style="color:#00f7ff; margin-top:1.5em;">Comparatif des modes de télé-opération</h4>
+          <div style="overflow-x:auto; margin-bottom:1.2em;">
+            <table style="width:100%; background:#0a192f; color:#e6f1ff; border-radius:8px;">
+              <thead>
+                <tr style="background:#081a2b; color:#00f7ff;">
+                  <th>Mode</th>
+                  <th>Avantages</th>
+                  <th>Limites</th>
+                  <th>Cas d'usage</th>
+                  <th>Commande d'installation</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><b>Clavier</b></td>
+                  <td>Simple, rapide, pas de matériel supplémentaire</td>
+                  <td>Contrôle peu précis, pas d’analogique</td>
+                  <td>Debug, tests unitaires, prise en main rapide</td>
+                  <td><code style="color:#00f7ff; font-family:monospace; background:none; border:none; padding:0; border-radius:0;">sudo apt install ros-humble-teleop-twist-keyboard</code></td>
+                </tr>
+                <tr>
+                  <td><b>Manette</b></td>
+                  <td>Contrôle analogique précis, ergonomique</td>
+                  <td>Configuration parfois nécessaire, dépend du matériel</td>
+                  <td>Conduite fine, formation, démonstration</td>
+                  <td><code style="color:#00f7ff; font-family:monospace; background:none; border:none; padding:0; border-radius:0;">sudo apt install ros-humble-teleop-twist-joy</code></td>
+                </tr>
+                <tr>
+                  <td><b>Interface graphique (RQt)</b></td>
+                  <td>Accessible à tous, visuel, sliders intuitifs</td>
+                  <td>Moins réactif, nécessite un environnement graphique</td>
+                  <td>Démonstration, pédagogie, prise en main par débutant</td>
+                  <td><code style="color:#00f7ff; font-family:monospace; background:none; border:none; padding:0; border-radius:0;">sudo apt install ros-humble-rqt-robot-steering</code></td>
+                </tr>
+                <tr>
+                  <td><b>Web / Mobile</b></td>
+                  <td>Contrôle à distance, multiplateforme</td>
+                  <td>Installation de ROSBridge, sécurité réseau à gérer</td>
+                  <td>Contrôle à distance, démo publique, accès mobile</td>
+                  <td><code style="color:#00f7ff; font-family:monospace; background:none; border:none; padding:0; border-radius:0;">sudo apt install ros-humble-rosbridge-server</code></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <!-- Schéma/illustration du flux de télé-opération -->
+          <div style="text-align:center; margin-bottom:1.2em;">
+            <img src="https://raw.githubusercontent.com/ros-visualization/rqt_robot_steering/master/doc/teleop_schema.png" alt="Schéma télé-opération ROS2" style="max-width:420px; width:100%; border:2px solid #00f7ff; border-radius:8px; background:#0a192f; box-shadow:0 2px 16px #00f7ff33; margin-bottom:0.5em;" />
+            <div style="color:#90caf9; font-size:90%;">Chaîne logicielle : PC/Manette/Web → ROS2 → /cmd_vel → Robot</div>
+          </div>
+
+
+          <!-- Encadré : Téléopération Web avancée (rosbridge_server + roslibjs) -->
+          <!-- Bloc Remarque importante supprimé -->
+          <div style="display:flex; gap:24px; flex-wrap:wrap; align-items:stretch; margin-bottom:1.2em;">
+            <div style="flex:1 1 340px; min-width:320px; background:#081a2b; color:#00f7ff; border-left:4px solid #00f7ff; border-radius:7px; padding:16px 22px; font-size:1.06em;">
+              <b style="color:#00f7ff;">Téléopération Web avancée (WebSocket & navigateur)</b><br>
+              <ol style="margin-left:1.2em; margin-top:0.5em; color:#fff;">
+                <li><b style="color:#fff;">Installer rosbridge_server</b> :<br>
+                  <code style="color:#00f7ff; font-family:monospace; background:none; border:none; padding:0; border-radius:0;">cd ~/tekbot_ws/src &amp;&amp; git clone https://github.com/RobotWebTools/rosbridge_suite.git</code>
+                </li>
+                <li><b style="color:#fff;">Résoudre les dépendances</b> :<br>
+                  <code style="color:#00f7ff; font-family:monospace; background:none; border:none; padding:0; border-radius:0;">sudo apt install ros-humble-ament-cmake-mypy</code> <span style="color:#fff;">(ou cloner <span style="font-family:monospace; color:#00f7ff;">ament_cmake</span> si besoin)</span>
+                </li>
+                <li><b style="color:#fff;">Recompiler le workspace</b> :<br>
+                  <code style="color:#00f7ff; font-family:monospace; background:none; border:none; padding:0; border-radius:0;">cd ~/tekbot_ws &amp;&amp; colcon build &amp;&amp; source install/setup.bash</code>
+                </li>
+                <li><b style="color:#fff;">Lancer le serveur WebSocket</b> :<br>
+                  <code style="color:#00f7ff; font-family:monospace; background:none; border:none; padding:0; border-radius:0;">ros2 launch rosbridge_server rosbridge_websocket_launch.xml</code>
+                  <br><span style="color:#fff;">(Le serveur écoute sur <b style="color:#00f7ff;">ws://localhost:9090</b>)</span>
+                </li>
+                <li><b style="color:#fff;">Créer une interface web de téléopération</b> :<br>
+                  <code style="color:#00f7ff; font-family:monospace; background:none; border:none; padding:0; border-radius:0;">git clone https://github.com/RobotWebTools/roslibjs.git</code><br>
+                </li>
+                <li><b style="color:#fff;">Accès direct à la téléopération web moderne</b> :<br>
+                  <span style="color:#fff;"><span style="font-size:1.3em; vertical-align:middle;">👉</span> <a href="index.html" target="_blank" style="color:#00f7ff; text-decoration:underline; font-family:monospace; font-weight:bold;">interface de téléopération TekBot</a></span>
+                </li>
+                <li><b style="color:#fff;">Lancer un serveur web local</b> :<br>
+                  <code style="color:#00f7ff; font-family:monospace; background:none; border:none; padding:0; border-radius:0;">python3 -m http.server 8000</code> <span style="color:#fff;">puis ouvrir <span style="color:#00f7ff;">http://localhost:8000/teleop.html</span></span>
+                </li>
+              </ol>
+              <span style="color:#fff;">Résultat : tu peux piloter ton robot en direct depuis le navigateur, via WebSocket, dans Gazebo ou sur le robot réel.</span>
+            </div>
+            <div style="flex:1 1 340px; min-width:320px; background:#081a2b; color:#e6f1ff; border-left:4px solid #00f7ff; border-radius:7px; padding:14px 18px; font-size:1.06em; display:flex; flex-direction:column; justify-content:stretch;">
+              <b style="color:#00f7ff;">Contrôles clavier pour la télé-opération</b>
+              <table style="width:100%; background:#0a192f; color:#e6f1ff; border-radius:8px; margin-top:10px;">
+                <thead>
+                  <tr style="background:#081a2b; color:#00f7ff;">
+                    <th style="padding:8px 6px;">Touche</th>
+                    <th style="padding:8px 6px;">Action</th>
+                    <th style="padding:8px 6px;">Description</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr><td style="text-align:center;">i</td><td>Avancer</td><td>Déplace le robot vers l'avant</td></tr>
+                  <tr><td style="text-align:center;">k</td><td>Arrêter</td><td>Arrêt immédiat du robot</td></tr>
+                  <tr><td style="text-align:center;">,</td><td>Reculer</td><td>Déplace le robot vers l'arrière</td></tr>
+                  <tr><td style="text-align:center;">j</td><td>Tourner à gauche</td><td>Rotation sur place vers la gauche</td></tr>
+                  <tr><td style="text-align:center;">l</td><td>Tourner à droite</td><td>Rotation sur place vers la droite</td></tr>
+                  <tr><td style="text-align:center;">u</td><td>Avancer + gauche</td><td>Mouvement combiné</td></tr>
+                  <tr><td style="text-align:center;">o</td><td>Avancer + droite</td><td>Mouvement combiné</td></tr>
+                  <tr><td style="text-align:center;">q / z</td><td>Vitesse globale ±</td><td>Augmente/diminue toutes les vitesses</td></tr>
+                  <tr><td style="text-align:center;">w / x</td><td>Vitesse linéaire ±</td><td>Contrôle précis vitesse avant/arrière</td></tr>
+                  <tr><td style="text-align:center;">e / c</td><td>Vitesse angulaire ±</td><td>Contrôle précis vitesse rotation</td></tr>
+                </tbody>
+              </table>
+              <span style="color:#fff; font-size:90%;">Ces raccourcis sont valables pour l’outil <b>teleop_twist_keyboard</b> sous ROS2.</span>
+            </div>
+          
+
+          <!-- Vidéos démonstration télé-opération -->
+          <div style="display:flex; gap:24px; flex-wrap:wrap; align-items:stretch; margin-bottom:1.2em;">
+            <div style="flex:1 1 340px; min-width:320px; background:#081a2b; color:#e6f1ff; border:2px solid #00f7ff; border-radius:8px; padding:0; display:flex; flex-direction:column; align-items:stretch; justify-content:center;">
+              <div style="width:100%; aspect-ratio:16/9; background:#0a192f; border-radius:6px; border:1px solid #00d1ff; display:flex; align-items:center; justify-content:center; height:100%;">
+                <!-- Remplacez src par le lien de votre vidéo web -->
+                <video controls style="width:100%; height:100%; border-radius:6px; background:#000; display:block; object-fit:cover;">
+                  <source src="Videos/teleop_web.mp4" type="video/mp4">
+                  Votre navigateur ne supporte pas la vidéo HTML5.
+                </video>
+              </div>
+            </div>
+            <div style="flex:1 1 340px; min-width:320px; background:#081a2b; color:#e6f1ff; border:2px solid #00f7ff; border-radius:8px; padding:0; display:flex; flex-direction:column; align-items:stretch; justify-content:center;">
+              <div style="width:100%; aspect-ratio:16/9; background:#0a192f; border-radius:6px; border:1px solid #00d1ff; display:flex; align-items:center; justify-content:center; height:100%;">
+                <!-- Remplacez src par le lien de votre vidéo clavier -->
+                <video controls style="width:100%; height:100%; border-radius:6px; background:#000; display:block; object-fit:cover;">
+                  <source src="Videos/teleop_clavier.mp4" type="video/mp4">
+                  Votre navigateur ne supporte pas la vidéo HTML5.
+                </video>
+              </div>
+            </div>
+          </div>
+
+          <!-- Bonnes pratiques et FAQ côte à côte -->
+          <div style="display:flex; gap:18px; flex-wrap:wrap; margin-bottom:1.2em;">
+            <div style="flex:1 1 340px; min-width:320px; background:#081a2b; color:#fff; border-left:4px solid #00f7ff; padding:14px 18px; border-radius:10px; box-shadow:0 2px 16px #00f7ff33;">
+              <b style="color:#00f7ff; font-size:1.15em;">Bonnes pratiques et astuces</b><br>
+              <ul style="margin:0 0 0 1.2em; color:#90caf9;">
+                <li style="color:#fff;">Avant de télé-opérer, vérifie que le robot (ou la simulation) est bien lancé et que le topic <span style="font-family:monospace; color:#00f7ff;">/cmd_vel</span> est disponible (<span style="font-family:monospace; color:#00f7ff;">ros2 topic list</span>).</li>
+                <li style="color:#fff;">Utilise <span style="font-family:monospace; color:#00f7ff;">ros2 topic echo /cmd_vel</span> pour observer les messages envoyés.</li>
+                <li style="color:#fff;">Pour la manette, adapte le mapping YAML selon ton modèle (axes, boutons, deadzones).</li>
+                <li style="color:#fff;">En simulation, vérifie la réactivité dans Gazebo : si le robot ne bouge pas, contrôle la configuration du contrôleur de vitesse.</li>
+                <li style="color:#fff;">En cas de latence, privilégie la connexion filaire ou réduis la fréquence d’envoi des messages.</li>
+                <li style="color:#fff;">Pour la sécurité, garde toujours un terminal prêt à envoyer <span style="font-family:monospace; color:#00f7ff;">Ctrl+C</span> pour stopper la télé-opération.</li>
+              </ul>
+            </div>
+            <div style="flex:1 1 340px; min-width:320px; background:#081a2b; color:#fff; border-left:4px solid #ff5252; border-radius:10px; padding:18px 20px; font-size:1.08em; box-shadow:0 2px 16px #ff525233; margin-bottom:8px;">
+              <b style="color:#ff5252; font-size:1.13em;">FAQ avancée / Problèmes fréquents</b>
+              <ul style="margin:1em 0 0 1.2em; color:#fff;">
+                <li><b>Problèmes de latence :</b> Privilégie le filaire, réduis la fréquence d’envoi, surveille la charge CPU.</li>
+
+                <li><b>Problèmes de sécurité réseau :</b> Utilise un VPN, désactive l’auto-discovery sur WAN, privilégie le LAN.</li>
+                <li><b>Impossible de piloter via Web :</b> Vérifie l’installation de ROSBridge, la configuration des ports et la sécurité du navigateur.</li>
+                <li><b>Le robot ne réagit pas :</b> Vérifie que <span style="color:#00f7ff; font-family:monospace;">/cmd_vel</span> est bien publié, que le contrôleur est lancé, et que le robot est alimenté.</li>
+              </ul>
+            </div>
+
+          </div>
+            </div>
+            <div style="margin-top:18px; font-size:90%; color:#888;">
+            <span>Documentation officielle :</span>
+            <a href="https://navigation.ros.org/tutorials/docs/teleop.html" target="_blank" style="color:#00f7ff; text-decoration:none; text-transform:lowercase;">navigation.ros.org/tutorials/docs/teleop.html</a>
+          </div>
+          </div>
+          <!-- Documentation officielle après la FAQ avancée / Problèmes fréquents -->
+          
+
+          <!-- SECTION 6 : SLAM (cartographie) -->
+          <div class="section-doc" style="background:rgba(10,25,47,0.97); border:4px solid #00f7ff; box-shadow:0 0 32px #00f7ff55; padding:2.8rem 2.8rem 2.8rem 2.8rem; border-radius:24px; margin-bottom:2.5rem;">
+          <h3 id="slam" style="margin-top:2.5em;">6. SLAM (cartographie)</h3>
+          <!-- Mini-sommaire interne SLAM -->
+          <!-- Sommaire SLAM supprimé -->
+          <!-- Encadré Pourquoi le SLAM ? -->
+          <div id="slam-principe" style="background:#081a2b; color:#fff; border-left:4px solid #00f7ff; border-radius:7px; padding:14px 18px; margin-bottom:14px; font-size:1.07em;">
+            <b style="color:#00f7ff;">Qu'est-ce que SLAM&nbsp;?</b><br>
+            Le <strong>SLAM</strong> (Simultaneous Localization And Mapping) est une brique essentielle de la robotique mobile. Il permet à un robot comme TekBot de construire une carte de son environnement tout en se localisant dessus, sans GPS ni repères externes.<br><br>
+            Concrètement, le SLAM permet au robot&nbsp;:
+            <ul style="margin-left:1em; margin-bottom:0.5em;">
+              <li>de découvrir et mémoriser la structure d’un lieu inconnu (murs, obstacles, chemins…) ;</li>
+              <li>de savoir à tout moment où il se trouve sur la carte qu’il construit ;</li>
+              <li>de s’adapter à un environnement qui change (portes, objets déplacés…) ;</li>
+              <li>de fournir une base fiable pour toutes les tâches avancées (exploration, navigation, planification de trajets).</li>
+            </ul>
+            <span style="color:#ffb347; font-size:0.98em; display:inline-block; margin-bottom:0.3em;">
+              ⚠️ <b>À retenir&nbsp;:</b> le SLAM ne fait pas « naviguer » le robot ! Il lui donne la carte et sa position ; c’est ensuite un autre module (comme Nav2 sous ROS2) qui utilise ces informations pour planifier et exécuter les déplacements.
+            </span><br>
+            En résumé, sans SLAM, le robot serait « aveugle » : il ne pourrait ni se repérer, ni explorer, ni interagir intelligemment avec son environnement.
+          </div>
+
+          <!-- Tableau comparatif des principaux outils SLAM -->
+          <div style="overflow-x:auto; margin-bottom:1.2em;">
+            <table style="width:100%; background:#0a192f; color:#e6f1ff; border-radius:8px;">
+              <thead>
+                <tr style="background:#081a2b; color:#00f7ff;">
+                  <th>Outil SLAM</th>
+                  <th>Type</th>
+                  <th>Capteurs requis</th>
+                  <th>Points forts</th>
+                  <th>Limites</th>
+                  <th>Documentation</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><b>SLAM Toolbox</b></td>
+                  <td>Graph-based, 2D</td>
+                  <td>LiDAR, odométrie</td>
+                  <td>Précis, rapide, compatible ROS2, mode online/offline</td>
+                  <td>2D uniquement, nécessite une bonne odométrie</td>
+                  <td><a href="https://github.com/SteveMacenski/slam_toolbox" target="_blank" style="color:#00f7ff;">GitHub</a></td>
+                </tr>
+                <tr>
+                  <td><b>Cartographer</b></td>
+                  <td>Graph-based, 2D/3D</td>
+                  <td>LiDAR, IMU, odométrie</td>
+                  <td>2D & 3D, robuste, multi-capteurs, cartographie en temps réel</td>
+                  <td>Configuration avancée, plus lourd en ressources</td>
+                  <td><a href="https://google-cartographer.readthedocs.io" target="_blank" style="color:#00f7ff;">Docs</a></td>
+                </tr>
+                <tr>
+                  <td><b>GMapping</b></td>
+                  <td>Particle filter, 2D</td>
+                  <td>LiDAR, odométrie</td>
+                  <td>Simple, efficace, historique sous ROS1/2</td>
+                  <td>Sensible aux erreurs d’odométrie, pas de 3D</td>
+                  <td><a href="https://wiki.ros.org/gmapping" target="_blank" style="color:#00f7ff;">Wiki</a></td>
+                </tr>
+                <tr>
+                  <td><b>Hector SLAM</b></td>
+                  <td>Scan matching, 2D</td>
+                  <td>LiDAR (pas besoin d’odométrie)</td>
+                  <td>Pas besoin d’odométrie, rapide, idéal drones/UGV</td>
+                  <td>Moins précis sur grandes surfaces, pas de 3D</td>
+                  <td><a href="https://wiki.ros.org/hector_slam" target="_blank" style="color:#00f7ff;">Wiki</a></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <!-- Schéma/illustration SLAM (texte alternatif si image non dispo) -->
+          <div id="slam-illustration" style="text-align:center; margin-bottom:1.2em;">
+            <span style="display:inline-block; background:#081a2b; color:#00f7ff; border-radius:8px; padding:10px 18px; font-size:1.08em; font-family:'Orbitron',sans-serif;">
+              <i class="fa-solid fa-robot" style="font-size:1.3em; margin-right:8px;"></i>
+              <span style="font-weight:700;">Robot TekBot</span>
+              <span style="margin:0 10px;">→</span>
+              <i class="fa-solid fa-wave-square" style="font-size:1.2em; margin-right:6px;"></i>
+              <span>Capteurs (LiDAR, IMU...)</span>
+              <span style="margin:0 10px;">→</span>
+              <i class="fa-solid fa-map" style="font-size:1.2em; margin-right:6px;"></i>
+              <span>Carte générée</span>
+              <span style="margin:0 10px;">→</span>
+              <i class="fa-solid fa-location-arrow" style="font-size:1.2em; margin-right:6px;"></i>
+              <span>Localisation</span>
+            </span>
+            <br>
+            <span style="color:#90caf9; font-size:90%;">Flux : SLAM → carte → map_server + AMCL → localisation</span>
+          </div>
+          <!-- Étapes pratiques SLAM Toolbox -->
+          <div id="slam-etapes" style="background:#081a2b; color:#b2dfdb; border-left:4px solid #00f7ff; border-radius:7px; padding:14px 18px; margin-bottom:14px; font-size:1.06em;">
+            <b style="color:#00f7ff; font-size:1.13em;">Pourquoi avons-nous choisi SLAM Toolbox&nbsp;?</b><br>
+            <span style="color:#fff;">Pour ce projet, nous avons retenu <b>SLAM Toolbox</b> parmi les différents outils SLAM présentés ci-dessus. Ce choix s’explique par plusieurs raisons&nbsp;:</span>
+            <ul style="margin-left:1.2em; margin-bottom:0.5em; color:#fff;">
+              <li>SLAM Toolbox est parfaitement intégré à ROS2, ce qui correspond à l’architecture de notre projet TekBot.</li>
+              <li>Il offre un excellent compromis entre précision, rapidité et facilité de configuration pour la cartographie 2D.</li>
+              <li>Il dispose de modes online et offline, adaptés à l’exploration en temps réel comme à la génération de cartes précises.</li>
+              <li>La documentation et la communauté sont très actives, facilitant le support et la résolution de problèmes.</li>
+            </ul>
+            <span style="color:#fff;">Ce choix garantit une mise en œuvre efficace et reproductible du SLAM dans notre contexte pédagogique.</span><br><br>
+            <b style="color:#00f7ff;">Installation de SLAM Toolbox</b><br>
+            <span style="color:#fff;">Pour installer SLAM Toolbox sous ROS2 Humble, il suffit d’exécuter la commande suivante dans un terminal&nbsp;:</span><br>
+            <code style="color:#00f7ff; font-family:monospace; background:none; border:none; padding:0; border-radius:0;">sudo apt install ros-humble-slam-toolbox</code><br>
+            <span style="color:#fff;">Cette commande télécharge et installe automatiquement tous les composants nécessaires.</span><br><br>
+          </div>
+
+          <!-- Bloc séparé : Étapes pratiques pour utiliser le SLAM Toolbox -->
+          <div style="display:flex; gap:18px; flex-wrap:wrap; margin-bottom:14px;">
+            <div id="slam-toolbox-etapes" style="flex:1 1 340px; min-width:320px; background:#081a2b; color:#b2dfdb; border-left:4px solid #00f7ff; border-radius:7px; padding:14px 18px; font-size:1.06em;">
+              <b style="color:#00f7ff; font-size:1.13em;">Étapes pratiques pour utiliser le SLAM Toolbox :</b>
+              <ol style="margin:0.7em 0 0.7em 1.2em; color:#fff;">
+                <li><b>Lance la simulation TekBot</b> (ex : <code style="color:#00f7ff; font-family:monospace; background:none; border:none; padding:0; border-radius:0;">ros2 launch maze_solving tekbot_maze.launch.py</code>).</li>
+                <li><b>Lance le SLAM Toolbox</b> dans un autre terminal&nbsp;:<br>
+                  <code style="color:#00f7ff; font-family:monospace; background:none; border:none; padding:0; border-radius:0;">ros2 launch slam_toolbox online_async_launch.py</code><br>
+                  <span style="color:#90caf9; font-size:90%;">Démarre le SLAM en mode asynchrone pour la cartographie en temps réel.</span>
+                </li>
+                <li><b>Visualise la carte et la position du robot</b> dans <code style="color:#00f7ff; font-family:monospace; background:none; border:none; padding:0; border-radius:0;">rviz2</code> (display "Map" et "Pose").</li>
+                <li><b>Sauvegarde la carte</b> une fois l’exploration terminée&nbsp;:<br>
+                  <code style="color:#00f7ff; font-family:monospace; background:none; border:none; padding:0; border-radius:0;">ros2 run nav2_map_server map_saver_cli -f ~/map</code>
+                </li>
+              </ol>
+            </div>
+            <div id="slam-bonnespratiques" style="flex:1 1 340px; min-width:320px; background:#081a2b; color:#fff; border-left:4px solid #00f7ff; border-radius:7px; padding:14px 18px; font-size:1.06em;">
+              <b style="color:#00f7ff;">Bonnes pratiques pour le SLAM :</b>
+              <ul style="margin-left:1.2em; margin-top:0.5em;">
+                <li>Déplace le robot lentement et régulièrement pour obtenir une carte précise.</li>
+                <li>Évite les mouvements brusques ou les rotations rapides.</li>
+                <li>Explore tout l’environnement pour éviter les “trous” dans la carte.</li>
+                <li>Sauvegarde la carte une fois l’exploration terminée, avant de relancer la localisation.</li>
+                <li><b>Ne jamais lancer le SLAM et AMCL en même temps sur le même robot.</b></li>
+              </ul>
+              <span style="color:#90caf9; font-size:90%;">Astuce avancée : dans RViz2, utilise l’outil “2D Pose Estimate” pour réinitialiser la position du robot et aider AMCL à converger plus vite.</span>
+            </div>
+          </div>
+          <!-- Cadres image et vidéo SLAM -->
+          <div style="display:flex; gap:18px; flex-wrap:wrap; margin-bottom:18px;">
+            <div style="flex:1 1 340px; min-width:320px; background:#081a2b; color:#fff; border-left:4px solid #00f7ff; border-radius:7px; padding:14px 18px; display:flex; flex-direction:column; align-items:center;">
+              
+              <div style="width:50%; aspect-ratio:16/9; background:#0a192f; border-radius:8px; border:2px solid #00f7ff; box-shadow:0 2px 12px #00f7ff33; margin-bottom:6px; display:flex; align-items:center; justify-content:center; min-width:180px;">
+                <div style="position:relative; width:100%; height:100%;">
+                  <img id="img-carte-slam" src="Images/carte.jpg" alt="Carte générée par SLAM" style="width:100%; height:100%; object-fit:cover; border-radius:8px; background:#0a192f; display:block;" />
+                  <button onclick="openFullscreen('img-carte-slam')" title="Plein écran" style="position:absolute; top:8px; right:8px; background:#232946cc; border:none; border-radius:50%; width:28px; height:28px; display:flex; align-items:center; justify-content:center; cursor:pointer; box-shadow:0 1px 4px #0005; transition:box-shadow 0.2s;">
+                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 3H5a2 2 0 0 0-2 2v3m0 8v3a2 2 0 0 0 2 2h3m8-18h3a2 2 0 0 1 2 2v3m0 8v3a2 2 0 0 1-2 2h-3"/></svg>
+                  </button>
+                </div>
+              </div>
+
+            </div>
+            <div style="flex:1 1 340px; min-width:320px; background:#081a2b; color:#fff; border-left:4px solid #00f7ff; border-radius:7px; padding:14px 18px; display:flex; flex-direction:column; align-items:center;">
+              
+              <div style="width:100%; aspect-ratio:16/9; background:#0a192f; border-radius:8px; border:2px solid #00f7ff; box-shadow:0 2px 12px #00f7ff33; margin-bottom:6px; display:flex; align-items:center; justify-content:center;">
+                <video controls style="width:100%; height:100%; border-radius:8px; background:#000; display:block; object-fit:cover;">
+                  <source src="Videos/carte.mp4" type="video/mp4">
+                  Votre navigateur ne supporte pas la lecture vidéo.
+                </video>
+              </div>
+              <!-- Légende supprimée sur demande -->
+            </div>
+          </div>
+          <!-- Localisation avec AMCL et map_server -->
+          <div id="slam-localisation" style="background:#081a2b; color:#b2dfdb; border-left:4px solid #00f7ff; border-radius:7px; padding:14px 18px; margin-bottom:14px; font-size:1.06em;">
+            <b style="color:#00f7ff; font-size:1.13em;">Localisation sur carte sauvegardée (AMCL + map_server)</b><br>
+            <span style="color:#fff;">Une fois la carte générée et sauvegardée, il est possible de localiser le robot sur cette carte sans refaire le SLAM. Pour cela, on utilise&nbsp;:</span>
+            <ul style="margin-left:1.2em; margin-top:0.5em; color:#fff;">
+              <li><b>map_server</b> : diffuse la carte sauvegardée aux autres nœuds ROS2.</li>
+              <li><b>amcl</b> (Adaptive Monte Carlo Localization) : estime la position du robot sur la carte à partir des capteurs (LiDAR) et des mouvements.</li>
+            </ul>
+            <b style="color:#00f7ff;">Étapes typiques :</b>
+            <ol style="margin:0.7em 0 0.7em 1.2em; color:#fff;">
+              <li>Lance la simulation TekBot sur la carte sauvegardée.</li>
+              <li>Lance le serveur de carte&nbsp;:<br>
+                <code style="color:#00f7ff; font-family:monospace; background:none; border:none; padding:0; border-radius:0;">ros2 run map_server map_server --ros-args -p yaml_filename:=/chemin/vers/ta_carte.yaml</code>
+              </li>
+              <li>Lance le nœud de localisation AMCL&nbsp;:<br>
+                <code style="color:#00f7ff; font-family:monospace; background:none; border:none; padding:0; border-radius:0;">ros2 run amcl amcl</code>
+              </li>
+              <li>Visualise la localisation dans <code style="color:#00f7ff; font-family:monospace; background:none; border:none; padding:0; border-radius:0;">rviz2</code> (display "Map", "Pose", "ParticleCloud").</li>
+            </ol>
+            <span style="color:#90caf9; font-size:90%;">Astuce : la localisation AMCL est plus rapide et plus légère que le SLAM pour la navigation sur une carte déjà connue.</span>
+          </div>
+          <!-- FAQ / Problèmes fréquents SLAM -->
+          <div id="slam-faq" style="background:#081a2b; color:#fff; border-left:4px solid #ff5252; border-radius:7px; padding:14px 18px; margin-bottom:14px; font-size:1.06em;">
+            <b style="color:#ff5252; font-size:1.15em;">FAQ / Problèmes fréquents</b><br>
+            <ul style="margin-left:1.2em; margin-top:0.5em; color:#fff;">
+              <li><b>La carte générée est incomplète</b> : explore plus lentement, vérifie la portée du LiDAR, évite les obstacles non détectés.</li>
+              <li><b>Le robot n’est pas localisé correctement</b> : utilise l’outil “2D Pose Estimate” dans RViz2 pour réinitialiser la position estimée.</li>
+              <li><b>AMCL ne converge pas</b> : vérifie la correspondance entre la carte et l’environnement, ajuste les paramètres de particules.</li>
+              <li><b>map_server ne trouve pas la carte</b> : vérifie le chemin du fichier YAML et l’accessibilité des fichiers .pgm/.yaml.</li>
+              <li><b>Le SLAM et AMCL tournent en même temps</b> : arrête le SLAM avant de lancer AMCL pour éviter les conflits.</li>
+            </ul>
+          </div>
+          <div style="margin-top:10px; font-size:90%; color:#90caf9;">
+            <span style="color:#888;">Documentation officielle :</span>
+            <a href="https://github.com/SteveMacenski/slam_toolbox" target="_blank" style="color:#90caf9; text-decoration:none;">github.com/SteveMacenski/slam_toolbox</a>
+          </div>
+          </div>
+          <!-- Pour aller plus loin -->
+          
+      <!-- SECTION 7 : Nav2 (Navigation) -->
+      <div class="section-doc" style="background:rgba(10,25,47,0.97); border:4px solid #00f7ff; box-shadow:0 0 32px #00f7ff55; padding:2.8rem 2.8rem 2.8rem 2.8rem; border-radius:24px; margin-bottom:2.5rem;">
+      <h3 id="nav2" style="margin-top:2.5em;">7. Nav2 (Navigation autonome)</h3>
+      <div style="background:#081a2b; color:#fff; border-left:4px solid #00f7ff; border-radius:7px; padding:14px 18px; margin-bottom:14px; font-size:1.07em;">
+        <b style="color:#00f7ff;">Qu’est-ce que Nav2&nbsp;?</b><br>
+        <strong>Nav2</strong> (Navigation2) est la suite logicielle officielle de navigation autonome pour ROS2. Elle fournit au robot TekBot toutes les briques nécessaires pour se déplacer de façon intelligente et sûre dans un environnement connu : planification de trajectoire, suivi de chemin, évitement dynamique d’obstacles, gestion des arrêts d’urgence, et adaptation en temps réel aux imprévus. Nav2 s’appuie sur la localisation (AMCL), la cartographie, des algorithmes de planification avancés (Dijkstra, A*, RRT*…), et un système de contrôle en boucle fermée pour garantir que le robot atteint sa destination même dans des environnements complexes ou changeants. Grâce à son architecture modulaire, Nav2 permet d’intégrer facilement de nouveaux capteurs, de personnaliser les comportements de navigation, et de surveiller en temps réel l’état du robot via RViz2. C’est l’outil de référence pour la navigation autonome sous ROS2, utilisé aussi bien en recherche qu’en industrie.
+      </div>
+      <div style="display:flex; gap:18px; flex-wrap:wrap; margin-bottom:14px;">
+        <div style="flex:1 1 340px; min-width:320px;">
+          <p>
+            <b style="color:#00f7ff;">Étapes pour utiliser Nav2 :</b>
+          </p>
+          <ol style="margin-left:1.2em; margin-top:0.5em; color:#fff;">
+            <li>Assure-toi d’avoir une carte générée et sauvegardée (voir section SLAM).</li>
+            <li>Lance la simulation TekBot sur la carte.</li>
+            <li>Lance le serveur de carte (<span style="font-family:monospace; color:#00f7ff;">map_server</span>) et la localisation (<span style="font-family:monospace; color:#00f7ff;">amcl</span>).</li>
+            <li>Lance Nav2 avec le launch file adapté&nbsp;:<br>
+              <span style="color:#00f7ff; font-family:monospace;">ros2 launch nav2_bringup navigation_launch.py map:=/chemin/vers/ta_carte.yaml</span>
+            </li>
+            <li>Utilise RViz2 pour envoyer un objectif de navigation (outil “2D Nav Goal”).</li>
+          </ol>
+        </div>
+        <div style="flex:1 1 340px; min-width:320px; background:#081a2b; color:#fff; border-left:4px solid #00f7ff; border-radius:7px; padding:14px 18px; font-size:1.06em;">
+          <b style="color:#00f7ff;">Bonnes pratiques et conseils :</b>
+          <ul style="margin-left:1.2em; margin-top:0.5em;">
+            <li>Vérifie que la carte utilisée correspond bien à l’environnement simulé.</li>
+            <li>Adapte les paramètres de Nav2 (planners, contrôleurs) selon la taille du robot et la complexité du labyrinthe.</li>
+            <li>Utilise RViz2 pour surveiller la trajectoire, les obstacles détectés et la position du robot.</li>
+            <li><span style="color:#fff;">En cas de problème de navigation, vérifie les logs de Nav2 et la configuration des topics.</span></li>
+          </ul>
+        </div>
+      </div>
+      <!-- FAQ & Astuce avancée Nav2 côte à côte -->
+      <div style="display:flex; gap:18px; flex-wrap:wrap; margin-bottom:14px;">
+        <!-- Bloc FAQ -->
+        <div style="flex:1 1 340px; min-width:320px; background:#081a2b; color:#fff; border-left:4px solid #ff5252; border-radius:7px; padding:14px 18px; font-size:1.06em;">
+          <b style="color:#ff5252;">FAQ / Problèmes fréquents</b><br>
+          <ul style="margin-left:1.2em; margin-top:0.5em;">
+            <li><b>Le robot ne bouge pas</b> : vérifie que la localisation AMCL fonctionne, que la carte est bien chargée et que les topics de commande sont connectés.</li>
+            <li><b>La planification échoue</b> : vérifie que l’objectif est atteignable (pas dans un mur ou hors carte), ajuste les paramètres du planner.</li>
+            <li><b>RViz2 n’affiche pas la trajectoire</b> : ajoute les displays “Path” et “Goal”, vérifie la configuration des topics.</li>
+            <li><b>Le robot s’arrête en chemin</b> : surveille les costmaps, vérifie la détection d’obstacles et les logs de Nav2.</li>
+          </ul>
+        </div>
+        <!-- Bloc Astuce avancée & Pour aller plus loin -->
+        <div style="flex:1 1 340px; min-width:320px; background:#081a2b; color:#fff; border-left:4px solid #00f7ff; border-radius:7px; padding:14px 18px; font-size:1.06em;">
+          <b style="color:#00f7ff;">Astuce avancée & Pour aller plus loin :</b><br>
+          Utilise les outils de debug de Nav2 pour diagnostiquer les problèmes&nbsp;: visualise les costmaps (local/global), ajuste dynamiquement les paramètres dans RViz2, et consulte les logs détaillés pour comprendre les blocages ou erreurs de planification.<br>
+          <br>
+          Explore les fonctionnalités avancées de Nav2&nbsp;: navigation multi-robots, plugins personnalisés, navigation dynamique, gestion des obstacles mobiles.<br>
+        </div>
+      </div>
+
+
+      <!-- Vidéo : Robot s'échappe du labyrinthe -->
+      <div style="background:#081a2b; border-left:4px solid #00f7ff; border-radius:7px; color:#fff; padding:18px 24px; margin-bottom:2.2rem; display:flex; gap:24px; flex-wrap:wrap; align-items:stretch;">
+        <div style="flex:1 1 340px; min-width:320px; display:flex; flex-direction:column; align-items:center; justify-content:center;">
+          <b style="color:#00f7ff; font-size:1.13em; margin-bottom:10px;">Vidéo : Navigation autonome – le robot s’échappe du labyrinthe</b>
+          <video controls style="width:100%; max-width:520px; border-radius:8px; border:2px solid #00f7ff; background:#0a192f; box-shadow:0 2px 12px #00f7ff33; margin-bottom:6px;">
+            <source src="Videos/nav2.mp4" type="video/mp4">
+            Votre navigateur ne supporte pas la lecture vidéo.
+          </video>
+          <span style="color:#90caf9; font-size:90%;">Démonstration : le robot TekBot planifie et suit un chemin pour sortir du labyrinthe grâce à Nav2</span>
+
+        </div>
+
+      </div>
+      <div style="margin-top:10px; font-size:90%; color:#888;">
+        <span>Documentation officielle :</span>
+        <a href="https://navigation.ros.org/" target="_blank" style="color:#00f7ff; text-decoration:none; text-transform:lowercase;">navigation.ros.org</a>
+      </div>
+      </div>
+    </section>
+  </main>
+
+  <div style="text-align:center; margin:2em 0 1em 0;">
+
+<!-- SECTION 8 : Algorithme A* -->
+<div class="section-doc" style="background:rgba(10,25,47,0.97); border:4px solid #00f7ff; box-shadow:0 0 32px #00f7ff55; padding:2.8rem; border-radius:24px; margin-bottom:2.5rem;">
+
+  <h3 id="astar" style="color:#00f7ff;">8. Algorithme A*</h3>
+  <div class="encadre-info" style="border-left: 5px solid #00f7ff; background: #081a2b; color: #e6f1ff; padding: 1em; margin-bottom: 1em;">
+    <div style="display:flex; flex-wrap:wrap; gap:32px; align-items:flex-start;">
+      <div style="flex:0 0 40%; max-width:40%; min-width:220px;">
+        <strong>Résumé pédagogique :</strong><br>
+        L’algorithme A* (A-Star) est une méthode de recherche de chemin optimale très utilisée en robotique mobile et dans ROS2, notamment pour la navigation autonome de robots comme TekBot. Il permet de trouver le chemin le plus court entre un point de départ et une destination sur une carte, en tenant compte des obstacles et du coût du déplacement.<br><br>
+        <strong>Principe :</strong> A* combine les avantages de Dijkstra (exploration du coût réel) et de la recherche heuristique (anticipation du coût restant). À chaque étape, il choisit le nœud avec le coût total estimé le plus faible :<br>
+        <ul style="margin-left:1em;">
+          <li><code>f(n) = g(n) + h(n)</code> où :</li>
+          <li><strong>g(n)</strong> = coût réel du départ à n</li>
+          <li><strong>h(n)</strong> = estimation du coût restant (heuristique, ex : distance Euclidienne)</li>
+        </ul>
+         <div style="margin-top:1em; color:#00f7ff; font-size:1.04em;">
+           <b>Le code source de l’algorithme A* est disponible dans le dossier GitHub du projet.</b>
+         </div>
+      </div>
+      <div style="flex:0 0 50%; max-width:50%; min-width:180px; margin:0 auto;">
+        <div style="position:relative; width:100%; background:#0a192f; border-radius:8px; border:2px solid #00f7ff; box-shadow:0 2px 8px #00f7ff77; padding:8px; margin-bottom:1em;">
+          <img id="img-astar" src="Images/Astar.png" alt="Exemple de chemin A*" style="width:100%; border-radius:8px; box-shadow:0 2px 8px #00f7ff77; display:block; border:2px solid #00f7ff; background:#0a192f; color:#e6f1ff;">
+          <button onclick="openFullscreen('img-astar')" title="Plein écran" style="position:absolute; top:10px; right:10px; background:#232946cc; border:none; border-radius:50%; width:32px; height:32px; display:flex; align-items:center; justify-content:center; cursor:pointer; box-shadow:0 2px 8px #0007;">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 3H5a2 2 0 0 0-2 2v3m0 8v3a2 2 0 0 0 2 2h3m8-18h3a2 2 0 0 1 2 2v3m0 8v3a2 2 0 0 1-2 2h-3"/></svg>
+          </button>
+        </div>
+      </div>
+    </div>
+    <script>
+      function openFullscreenAstar() {
+        var img = document.getElementById('img-astar');
+        if (img.requestFullscreen) {
+          img.requestFullscreen();
+        } else if (img.webkitRequestFullscreen) {
+          img.webkitRequestFullscreen();
+        } else if (img.msRequestFullscreen) {
+          img.msRequestFullscreen();
+        }
+      }
+    </script>
+  </div>
+
+  <div class="encadre-astuce" style="border-left: 5px solid #00f7ff; background: #081a2b; color: #e6f1ff; padding: 1em; margin-bottom: 1em;">
+    <strong>Astuce TekBot :</strong> Dans ROS2, A* est utilisé par le planificateur global de <code>Nav2</code> pour générer des trajectoires sûres et efficaces, en tenant compte de la carte d’occupation générée par SLAM ou fournie par l’utilisateur.
+  </div>
+
+  <h4 style="color:#00f7ff; margin-top:1.5em;">Fonctionnement étape par étape</h4>
+  <ol style="margin-left:1em;">
+    <li>Initialiser la liste ouverte (open list) avec le point de départ.</li>
+    <li>Répéter jusqu’à atteindre la cible ou épuisement :
+      <ul>
+        <li>Sélectionner le nœud avec le plus petit <code>f(n)</code>.</li>
+        <li>Si c’est la cible, reconstruire le chemin.</li>
+        <li>Sinon, déplacer ce nœud dans la liste fermée (closed list).</li>
+        <li>Pour chaque voisin accessible :
+          <ul>
+            <li>Calculer <code>g(n)</code>, <code>h(n)</code>, <code>f(n)</code>.</li>
+            <li>Si meilleur chemin trouvé, mettre à jour et ajouter à la liste ouverte.</li>
+          </ul>
+        </li>
+      </ul>
+    </li>
+  </ol>
+
+  <div class="encadre-limites" style="border-left: 5px solid #00f7ff; background: #081a2b; color: #e6f1ff; padding: 1em; margin-bottom: 1em;">
+    <strong>Limites et améliorations :</strong>
+    <table style="width:100%; color:#fff; background:transparent; border-collapse:collapse;">
+      <tr style="background:#0a192f; color:#00f7ff;">
+        <th style="padding:0.5em; border-bottom:1px solid #444;">Limites</th>
+        <th style="padding:0.5em; border-bottom:1px solid #444;">Améliorations possibles</th>
+      </tr>
+      <tr>
+        <td style="padding:0.5em;">Lent sur de grandes cartes ou en présence de nombreux obstacles</td>
+        <td style="padding:0.5em;">Utiliser des variantes (Theta*, Jump Point Search), optimiser l’heuristique</td>
+      </tr>
+      <tr>
+        <td style="padding:0.5em;">Ne gère pas les environnements dynamiques (obstacles mobiles)</td>
+        <td style="padding:0.5em;">Combiner avec D* Lite, ou des algorithmes réactifs</td>
+      </tr>
+      <tr>
+        <td style="padding:0.5em;">Chemins parfois non naturels (angles droits)</td>
+        <td style="padding:0.5em;">Post-traitement (lissage, courbes de Bézier)</td>
+      </tr>
+    </table>
+  </div>
+
+  <div class="encadre-doc" style="border-left: 5px solid #00f7ff; background: #081a2b; color: #e6f1ff; padding: 1em; margin-bottom: 1em;">
+    <strong>Pour aller plus loin :</strong>
+    <ul style="margin-left:1em;">
+      <li><a href="https://navigation.ros.org/concepts/index.html#global-planner" target="_blank" style="color:#38bdf8;">Documentation officielle Nav2 – Global Planner</a></li>
+      <li><a href="https://fr.wikipedia.org/wiki/Algorithme_A*" target="_blank" style="color:#38bdf8;">Wikipédia : Algorithme A*</a></li>
+      <li><a href="https://www.roboticsproceedings.org/rss07/p10.pdf" target="_blank" style="color:#38bdf8;">A* in Robotics (article scientifique, anglais)</a></li>
+    </ul>
+  </div>
+</div>
+
+<!-- SECTION 9 : Défis & solutions -->
+<div class="section-doc" style="background:rgba(10,25,47,0.97); border:4px solid #ff5252; box-shadow:0 0 32px #ff525255; padding:2.8rem; border-radius:24px; margin-bottom:2.5rem;">
+  <h3 id="defis" style="color:#ff5252;">9. Défis & solutions</h3>
+    <div style="margin-bottom:1em; color:#e6f1ff; background:#081a2b; border-left:5px solid #00f7ff; border-radius:7px; padding:1em 1.5em;">
+    <b>Note :</b> Les défis et solutions présentés ici sont ceux que nous avons réellement rencontrés lors de l’élaboration du projet TekBot. Pour chaque défi, une solution concrète a été apportée et explicitée dans les sections précédentes (SLAM, Nav2, A*, FAQ, etc.). Vous pouvez vous y référer pour retrouver nos retours d’expérience et les méthodes qui ont permis de résoudre chaque difficulté.
+  </div>
+  <div style="display:flex; gap:24px; flex-wrap:wrap;">
+    <div style="flex:1 1 340px; min-width:320px;">
+      <ul>
+        <li><b>Cartographie incomplète :</b> <span style="color:#fff;">Vérifier la couverture du robot, ajuster la vitesse et la stratégie d’exploration.</span></li>
+        <li><b>Localisation instable :</b> <span style="color:#fff;">Bien initialiser AMCL, éviter de lancer SLAM et AMCL en même temps.</span></li>
+        <li><b>Navigation bloquée :</b> <span style="color:#fff;">Surveiller les costmaps, ajuster les paramètres du planner et du contrôleur.</span></li>
+        <li><b>Problèmes de performance :</b> <span style="color:#fff;">Limiter les displays RViz2, fermer les applications lourdes, optimiser la configuration du PC.</span></li>
+        <li><b>Sauvegarde de la carte :</b> <span style="color:#fff;">Des difficultés pour enregistrer la carte générée par SLAM, nécessitant de vérifier les permissions et le format du fichier.</span></li>
+        <li><b>Planification du chemin (A*) :</b> <span style="color:#fff;">L’algorithme planifiait parfois le chemin à partir de l’origine du repère au lieu de la position réelle du robot ; il a fallu corriger la prise en compte de la localisation dans le code.</span></li>
+        <li><b>Cas pratiques divers :</b> <span style="color:#fff;">Problèmes de synchronisation entre les nœuds ROS2, erreurs de configuration des topics, et ajustements des paramètres pour obtenir un comportement optimal.</span></li>
+      </ul>
+    </div>
+    <div style="flex:1 1 340px; min-width:320px;">
+      <div style="background:#081a2b; border-left:4px solid #ff5252; border-radius:7px; color:#fff; padding:12px 18px; margin:1em 0;">
+        <b style="color:#ff5252;">Bonnes pratiques</b>
+        <ul>
+          <li>Documenter chaque étape et chaque choix technique.</li>
+          <li>Tester régulièrement chaque brique (SLAM, Nav2, A*…)</li>
+          <li>Collaborer et demander de l’aide sur les forums ROS2.</li>
+        </ul>
+      </div>
+      <div style="background:#081a2b; border-left:4px solid #00f7ff; border-radius:7px; color:#fff; padding:12px 18px; margin-top:1em;">
+        <b style="color:#00f7ff;">FAQ</b>
+        <ul>
+          <li><b>Le robot tourne en rond ?</b> Vérifie la calibration des capteurs et la configuration du contrôleur.</li>
+          <li><b>La carte ne se sauvegarde pas ?</b> Vérifie les permissions d’écriture et le chemin du dossier.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- SECTION 10 : Annexes & références -->
+<div class="section-doc" style="background:rgba(10,25,47,0.97); border:4px solid #00f7ff; box-shadow:0 0 32px #00f7ff55; padding:2.8rem; border-radius:24px; margin-bottom:2.5rem;">
+  <h3 id="annexes" style="color:#00f7ff;">10. Annexes & références</h3>
+  <ul style="color:#fff;">
+    <li><b>Documentation ROS2 :</b> <a href="https://docs.ros.org/en/humble/index.html" target="_blank" style="color:#00f7ff;">docs.ros.org/en/humble</a></li>
+    <li><b>SLAM Toolbox :</b> <a href="https://github.com/SteveMacenski/slam_toolbox" target="_blank" style="color:#00f7ff;">github.com/SteveMacenski/slam_toolbox</a></li>
+    <li><b>Nav2 :</b> <a href="https://navigation.ros.org/" target="_blank" style="color:#00f7ff;">navigation.ros.org</a></li>
+    <li><b>Gazebo Classic :</b> <a href="https://classic.gazebosim.org/" target="_blank" style="color:#00f7ff;">classic.gazebosim.org</a></li>
+    <li><b>RQt :</b> <a href="https://wiki.ros.org/rqt" target="_blank" style="color:#00f7ff;">wiki.ros.org/rqt</a></li>
+    <li><b>RViz2 :</b> <a href="https://index.ros.org/p/rviz2/" target="_blank" style="color:#00f7ff;">index.ros.org/p/rviz2/</a></li>
+    <li><b>Forum ROS2 :</b> <a href="https://answers.ros.org/questions/" target="_blank" style="color:#00f7ff;">answers.ros.org</a></li>
+    <li><b>Exemples de cartes :</b> <a href="https://github.com/charif-tekbot/tekbot_sim/tree/main/maze_solving/maps" target="_blank" style="color:#00f7ff;">tekbot_sim/maps</a></li>
+  </ul>
+  <div style="margin-top:1.2em; color:#90caf9; font-size:90%;">
+    Pour toute question ou suggestion, consultez la documentation officielle ou contactez l’équipe pédagogique.
+  </div>
+</div>
+
+<!-- SECTION 11 : Conclusion -->
+<div class="section-doc" style="background:rgba(10,25,47,0.97); border:4px solid #00f7ff; box-shadow:0 0 32px #00f7ff55; padding:2.8rem; border-radius:24px; margin-bottom:2.5rem;">
+  <h3 id="conclusion" style="color:#00f7ff;">11. Conclusion</h3>
+  <div style="color:#e6f1ff; font-size:1.08em;">
+    Ce projet TekBot a permis d’explorer concrètement les principaux outils et méthodes de la robotique mobile sous ROS2 : simulation dans Gazebo, SLAM, navigation autonome, planification de trajectoire (A*), et téléopération. Les défis rencontrés ont été surmontés grâce à une démarche expérimentale et collaborative, chaque solution étant explicitée dans la documentation. Ce travail constitue une base solide pour aller plus loin : optimisation des algorithmes, intégration de nouveaux capteurs, ou déploiement sur robot réel. N’hésitez pas à vous inspirer de cette expérience pour vos propres projets !
+  </div>
+</div>
+    <a href="https://github.com/ros2/ros2" target="_blank" style="margin:0 0.5em;">
+      <img src="https://img.shields.io/badge/ROS2-Humble-blue?logo=ros" alt="ROS2 Humble" style="vertical-align:middle; height:28px;"/>
+    </a>
+    <a href="https://github.com/adavidj/2025-Team-UCAO-TECH-Docs" target="_blank" style="margin:0 0.5em;">
+      <img src="https://img.shields.io/badge/GitHub-TekBot-black?logo=github" alt="GitHub" style="vertical-align:middle; height:28px;"/>
+    </a>
+    <a href="https://tekbot-robotics-challenge.github.io/2025-Team-UCAO-TECH-Docs/#contact"  style="margin:0 0.5em;">
+      <img src="https://img.shields.io/badge/Contact-Formulaire-9452ff?logo=gmail&logoColor=white" alt="Contact" style="vertical-align:middle; height:28px;"/>
+    </a>
+  </div>
+
+  <button onclick="window.scrollTo({top:0,behavior:'smooth'});" style="position:fixed;bottom:32px;right:32px;z-index:999;background:#00f7ff;color:#0a192f;font-weight:bold;border:none;border-radius:50%;width:48px;height:48px;box-shadow:0 2px 8px #111;cursor:pointer;font-size:1.7rem;display:none;" id="btnTop" title="Retour en haut">↑</button>
+  <script>
+    // Affichage du bouton retour en haut
+    window.addEventListener('scroll', function() {
+      document.getElementById('btnTop').style.display = (window.scrollY > 300) ? 'block' : 'none';
+    });
+
+    // Animation du sommaire déroulant
+    // Animation du sommaire déroulant
+    document.querySelectorAll('.toc ul li').forEach(function(item) {
+      item.addEventListener('click', function(e) {
+        const href = item.querySelector('a')?.getAttribute('href');
+        if(href && href.startsWith('#')) {
+          e.preventDefault();
+          const section = document.querySelector(href);
+          if(section) {
+            section.scrollIntoView({behavior:'smooth'});
+            section.classList.add('highlight-section');
+            setTimeout(()=>section.classList.remove('highlight-section'), 1200);
+          }
+        }
+      });
+    });
+  </script>
+  <style>
+    .highlight-section {
+      box-shadow: 0 0 0 4px #00f7ff99;
+      transition: box-shadow 0.3s;
+    }
+  </style>
+</body>
+</html>

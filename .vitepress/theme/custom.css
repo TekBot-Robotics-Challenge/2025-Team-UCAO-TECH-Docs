@@ -1,0 +1,20 @@
+/* Personnalisation des couleurs VitePress */
+:root {
+  /* Couleur principale - Vert avec meilleur contraste en mode clair */
+  --vp-c-brand-1: #15803d;
+  --vp-c-brand-2: #166534;
+  --vp-c-brand-3: #14532d;
+  --vp-c-brand-soft: rgba(21, 128, 61, 0.14);
+  
+  /* Couleur des liens */
+  --vp-c-brand: #15803d;
+}
+
+/* Mode sombre */
+.dark {
+  --vp-c-brand-1: #4ade80;
+  --vp-c-brand-2: #22c55e;
+  --vp-c-brand-3: #16a34a;
+  --vp-c-brand-soft: rgba(74, 222, 128, 0.14);
+}
+.VPDocAside { overflow-y: auto; max-height: calc(100vh - var(--vp-nav-height)); }

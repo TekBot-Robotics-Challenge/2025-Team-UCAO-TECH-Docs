@@ -1,0 +1,208 @@
+:root {
+    --primary: #ffffff;
+    /* fond clair */
+    --secondary: #0077b6;
+    /* bleu doux */
+    --accent: #d62828;
+    /* rouge doux */
+    --light: #f8f9fa;
+    /* clair pour sections */
+    --dark: #212529;
+    /* texte principal */
+    --success: #2a9d8f;
+    /* vert doux */
+    --cyber-blue: #0077b6;
+    /* bleu atténué */
+    --cyber-purple: #6f42c1;
+    /* violet doux */
+}
+
+/* Styles de base */
+body {
+    background-color: rgba(10, 25, 47, 0.7);
+    color: var(--dark);
+    font-family: 'Roboto', sans-serif;
+    line-height: 1.6;
+}
+
+h1,
+h2,
+h3,
+h4,
+.logo,
+.nav-links a {
+    font-family: 'Orbitron', sans-serif;
+    letter-spacing: 1px;
+}
+
+/* Header commun */
+header {
+    background: rgba(2, 12, 27, 0.9);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid rgba(0, 209, 255, 0.2);
+}
+
+/* Boîtes avec style cyberpunk */
+.cyber-box {
+    position: relative;
+    background: linear-gradient(120deg, #14263d 60%, #1a2e47 100%);
+    border: 2px solid var(--secondary);
+    box-shadow: 0 0 32px rgba(0, 209, 255, 0.2);
+    backdrop-filter: none;
+    overflow: hidden;
+    border-radius: 16px;
+    margin-bottom: 32px;
+}
+
+/* Titres avec style cyberpunk */
+.cyber-title {
+    color: #e6f1ff;
+    position: relative;
+    display: inline-block;
+}
+
+.cyber-title::after {
+    content: '';
+    position: absolute;
+    bottom: -5px;
+    left: 0;
+    width: 100%;
+    height: 2px;
+    background: linear-gradient(90deg, #0077b6, #6f42c1);
+}
+
+/* Navigation */
+.nav-link {
+    position: relative;
+    color: #e6f1ff;
+    text-decoration: none;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 1.2px;
+    transition: all 0.3s ease;
+}
+
+.nav-link::after {
+    content: '';
+    position: absolute;
+    width: 0;
+    height: 2px;
+    bottom: 0;
+    left: 0;
+    background: linear-gradient(90deg, #0077b6, #6f42c1);
+    transition: width 0.3s ease;
+}
+
+.nav-link:hover {
+    color: #00d1ff;
+}
+
+.nav-link:hover::after {
+    width: 100%;
+}
+
+/* Sections */
+.section-card {
+    background: linear-gradient(120deg, #14263d 60%, #1a2e47 100%);
+    border: 1px solid rgba(0, 209, 255, 0.2);
+    box-shadow: 0 0 32px rgba(0, 209, 255, 0.2);
+    border-radius: 16px;
+    padding: 32px;
+    margin-bottom: 32px;
+    transition: all 0.3s ease;
+}
+
+.section-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 32px rgba(0, 209, 255, 0.3);
+}
+
+/* Boutons */
+.btn {
+    padding: 0.9rem 2.5rem;
+    border-radius: 8px;
+    font-weight: 600;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    font-family: 'Orbitron', sans-serif;
+    background: transparent;
+    color: #00d1ff;
+    border: 2px solid #00d1ff;
+    transition: all 0.3s ease;
+}
+
+.btn:hover {
+    background: rgba(0, 209, 255, 0.1);
+    box-shadow: 0 0 20px rgba(0, 209, 255, 0.4);
+    transform: translateY(-2px);
+}
+
+/* Animations */
+@keyframes float {
+    0% {
+        transform: translateY(0);
+    }
+
+    50% {
+        transform: translateY(-8px);
+    }
+
+    100% {
+        transform: translateY(0);
+    }
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.floating {
+    animation: float 3s ease-in-out infinite;
+}
+
+/* Effet holographique */
+.holographic-card {
+    position: relative;
+    overflow: hidden;
+}
+
+.holographic-card::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: linear-gradient(to bottom right,
+            rgba(0, 209, 255, 0.05),
+            rgba(111, 66, 193, 0.05),
+            rgba(0, 209, 255, 0.05));
+    transform: rotate(45deg);
+    animation: hologram 8s linear infinite;
+    pointer-events: none;
+}
+
+@keyframes hologram {
+    0% {
+        transform: rotate(45deg) translate(-20%, -20%);
+    }
+
+    100% {
+        transform: rotate(45deg) translate(20%, 20%);
+    }
+}
+
+/* Footer */
+footer {
+    background: linear-gradient(120deg, #0a192f 60%, #001a2e 100%);
+    color: #e6f1ff;
+    border-top: 2px solid rgba(0, 209, 255, 0.1);
+}

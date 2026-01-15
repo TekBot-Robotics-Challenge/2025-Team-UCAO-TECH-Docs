@@ -1,0 +1,847 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Test 2 - Boîte noire | UCAO-TECH</title>
+  <link rel="icon" href="https://ucaotech.com/wp-content/uploads/2024/10/UCAO-TECH-1.png" type="image/png">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Roboto:wght@300;400;700&display=swap" rel="stylesheet" />
+  
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    body {
+      background-color: #020c1b;
+      color: #e6f1ff;
+      font-family: 'Roboto', sans-serif;
+      padding: 100px 2rem 2rem 2rem;
+    }
+    h2, h3, h4, h5, h6 {
+      color: #00f7ff;
+      font-family: 'Orbitron', sans-serif;
+      margin-top: 1rem;
+    }
+    header {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      z-index: 1000;
+      background-color: rgba(2, 12, 27, 0.9);
+      backdrop-filter: blur(10px);
+      border-bottom: 1px solid rgba(0, 209, 255, 0.2);
+    }
+    .navbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 1rem 2rem;
+    }
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+      color: white;
+      text-decoration: none;
+      font-size: 1.5rem;
+      font-weight: 700;
+    }
+    .logo img {
+      height: 50px;
+      transition: transform 0.5s ease;
+      cursor: pointer;
+    }
+    .logo:hover img {
+      transform: rotate(360deg);
+    }
+    .logo span {
+      color: #00d1ff;
+    }
+    .nav-links {
+      display: flex;
+      gap: 1.5rem;
+    }
+    .nav-links a {
+      color: rgba(230, 241, 255, 0.8);
+      text-decoration: none;
+      font-weight: 500;
+      font-size: 0.82rem;
+      text-transform: uppercase;
+      letter-spacing: 1.2px;
+      padding: 0.5rem 0.8rem;
+      position: relative;
+      transition: all 0.3s ease;
+    }
+    .nav-links a::before {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 0;
+      height: 2px;
+      background: linear-gradient(90deg, #00d1ff, #9452ff);
+      transition: width 0.3s ease;
+    }
+    .nav-links a:hover {
+      color: #00d1ff;
+    }
+    .nav-links a:hover::before,
+    .nav-links a.active::before {
+      width: 100%;
+    }
+    .nav-links a.active {
+      color: #00d1ff;
+    }
+    .section {
+      background-color: rgba(10, 25, 47, 0.4);
+      padding: 2rem;
+      border-radius: 10px;
+      margin-top: 2rem;
+      max-width: 1000px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    .section p {
+      margin-top: 1rem;
+      line-height: 1.6;
+    }
+    ul, ol {
+      margin-left: 1.5rem;
+      margin-top: 1rem;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 1rem 0;
+    }
+    th, td {
+      padding: 0.5rem;
+      border: 1px solid #00d1ff;
+    }
+    pre {
+      background-color: #0a192f;
+      padding: 1rem;
+      overflow-x: auto;
+      border-left: 4px solid #00f7ff;
+      margin-top: 1rem;
+    }
+    code {
+      font-family: monospace;
+      color: #00f7ff;
+    }
+    iframe {
+      margin-top: 1rem;
+      border: 1px solid #00d1ff;
+    }
+    .toc {
+      background-color: #081a2b;
+      padding: 1rem;
+      margin: 2rem 0;
+      border-left: 4px solid #00f7ff;
+    }
+    .toc h4 {
+      margin-top: 0;
+    }
+    .toc ul {
+      list-style: none;
+      padding-left: 0;
+    }
+    .toc ul li {
+      margin: 0.5rem 0;
+    }
+    .toc ul li a {
+      color: #00d1ff;
+      text-decoration: none;
+    }
+    .toc ul li a:hover {
+      text-decoration: underline;
+    }
+
+    .component-card {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 2rem;
+      background-color: rgba(2, 12, 27, 0.6);
+      padding: 1.5rem;
+      border-radius: 10px;
+      margin: 2rem auto;
+      max-width: 900px;
+      align-items: center;
+      border-left: 4px solid #00f7ff;
+      box-shadow: 0 0 10px rgba(0, 209, 255, 0.1);
+    }
+
+    .component-img {
+      width: 100%;
+      max-width: 220px;
+      height: auto;
+      border-radius: 8px;
+      border: 1px solid #00d1ff;
+      margin: 0 auto;
+      display: block;
+      cursor: pointer;
+      transition: transform 0.3s ease;
+    }
+    .component-img:hover {
+      transform: scale(1.05);
+    }
+
+    .component-card .component-img + .component-img {
+      margin-top: 1rem;
+    }
+
+    .component-card img:not(:first-child) {
+      margin-top: 1rem;
+    }
+
+    .pcb-section img,
+    .schematic-section img {
+      max-width: 400px;
+      width: 100%;
+      height: auto;
+      cursor: pointer;
+      border-radius: 6px;
+      border: 1px solid #00d1ff;
+      display: block;
+      margin: 0.8rem auto;
+      transition: transform 0.3s ease;
+    }
+    .pcb-section img:hover,
+    .schematic-section img:hover {
+      transform: scale(1.03);
+    }
+
+    @media (max-width: 768px) {
+      .component-card {
+        flex-direction: column;
+        text-align: center;
+      }
+      .component-img, .component-desc {
+        flex: 1 1 100%;
+      }
+    }
+
+    #lightbox-overlay {
+      position: fixed;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: rgba(0,0,0,0.85);
+      display: none;
+      justify-content: center;
+      align-items: center;
+      z-index: 2000;
+      cursor: zoom-out;
+    }
+    #lightbox-overlay img {
+      max-width: 90vw;
+      max-height: 90vh;
+      box-shadow: 0 0 20px #00d1ff;
+      border-radius: 10px;
+    }
+    .download-btn {
+      display: inline-block;
+      padding: 12px 25px;
+      background: linear-gradient(90deg, #00d1ff, #9452ff);
+      color: #fff;
+      font-weight: 600;
+      text-decoration: none;
+      border-radius: 8px;
+      box-shadow: 0 4px 12px rgba(0, 209, 255, 0.5);
+      transition: background 0.3s ease, box-shadow 0.3s ease;
+      font-size: 1rem;
+      margin-top: 1rem;
+      user-select: none;
+    }
+    .download-btn:hover,
+    .download-btn:focus {
+      background: linear-gradient(90deg, #9452ff, #00d1ff);
+      box-shadow: 0 6px 16px rgba(148, 82, 255, 0.7);
+      outline: none;
+    }
+    .download-btn i {
+      margin-right: 8px;
+      vertical-align: middle;
+    }
+    .video-container video {
+      max-width: 600px;
+      width: 100%;
+      margin: 2rem auto;
+      display: block;
+      border: 1px solid #00d1ff;
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(0, 209, 255, 0.2);
+    }
+    .section-doc {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 20px;
+    }
+    .component-grid {
+      display: flex;
+      flex-direction: column;
+      gap: 2rem;
+    }
+    .schematic-gallery, .pcb-gallery {
+      display: flex;
+      flex-direction: column;
+      gap: 3rem;
+    }
+  </style>
+</head>
+<body>
+  <!-- Header -->
+  <header>
+    <nav class="navbar">
+      <a href="https://tekbot-robotics-challenge.github.io/2025-Team-UCAO-TECH-Docs" class="logo">
+        <img src="https://ucaotech.com/wp-content/uploads/2024/10/UCAO-TECH-1.png" alt="UCAO-TECH Logo" />
+        <span>UCAO-TECH</span>
+      </a>
+      <ul class="nav-links">
+        <li><a href="https://tekbot-robotics-challenge.github.io/2025-Team-UCAO-TECH-Docs">Accueil</a></li>
+        <li><a href="https://tekbot-robotics-challenge.github.io/2025-Team-UCAO-TECH-Docs/#a-propos">À propos</a></li>
+        <li><a href="https://tekbot-robotics-challenge.github.io/2025-Team-UCAO-TECH-Docs/#equipe">Équipe</a></li>
+        <li><a href="https://tekbot-robotics-challenge.github.io/2025-Team-UCAO-TECH-Docs/#contact">Contact</a></li>
+        <li><a href="https://tekbot-robotics-challenge.github.io/2025-Team-UCAO-TECH-Docs/#documentation">Documentation</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main class="section-doc">
+    <section>
+      <h2>Test 2 : Boîte Noire - Communication et Contrôle</h2>
+      <h3>Durée : 1 semaine</h3>
+
+      <div class="toc">
+        <h4>Sommaire</h4>
+        <ul>
+          <li><a href="#introduction">1. Introduction</a></li>
+          <li><a href="#objectifs">2. Objectifs du test</a></li>
+          <li><a href="#composants">3. Liste des composants utilisés</a></li>
+          <li><a href="#architecture">4. Architecture du système</a></li>
+          <li><a href="#schemas">5. Schémas électroniques</a></li>
+          <li><a href="#pcb">6. Circuit imprimé</a></li>
+          <li><a href="#simulation">7. Simulation dans Proteus</a></li>
+          <li><a href="#codes">8. Codes</a></li>
+          <li><a href="#explication">9. Explication : Simulation vs Réalité</a></li>
+          <li><a href="#video">10. Vidéo de démonstration</a></li>
+          <li><a href="#contraintes">11. Contraintes et recommandations</a></li>
+          <li><a href="#evaluation">12. Critères d'évaluation</a></li>
+          <li><a href="#references">13. Références techniques</a></li>
+          <li><a href="#conclusion">14. Conclusion</a></li>
+        </ul>
+      </div>
+      
+      <section id="introduction" class="section">
+        <h4>1. Introduction</h4>
+        <p>Dans les secteurs de l'aéronautique, de l'automobile ou du ferroviaire, les boîtes noires sont essentielles pour l'enregistrement des données de fonctionnement. Inspirés de ces systèmes, nous avons conçu un dispositif capable d'enregistrer et de transmettre en temps réel les données de mouvement d'un robot grâce à un capteur MPU6050 (accéléromètre + gyroscope) intégré dans une boîte cubique.</p>
+      </section>
+
+      <section id="objectifs" class="section">
+        <h4>2. Objectifs du test</h4>
+        <ul>
+          <li>Mettre en œuvre un système d'acquisition de données inertielle (MPU6050)</li>
+          <li>Transmettre les données via un bus I2C vers une station de contrôle</li>
+          <li>Afficher les données en temps réel sur un écran LCD</li>
+          <li>Utiliser des microcontrôleurs ATmega328P sans carte Arduino</li>
+          <li>Documenter la conception du circuit imprimé (PCB) et assurer une présentation professionnelle</li>
+        </ul>
+      </section>
+
+      <section id="composants" class="section">
+        <h4>3. Liste des composants utilisés</h4>
+        <div class="component-grid">
+          <!-- ATmega328P -->
+          <div class="component-card">
+            <img src="Images/ATMEGA328P.jpg" alt="ATmega328P" class="component-img" />
+            <div class="component-desc">
+              <h5>2 × ATmega328P</h5>
+              <p>Cœur du système, ces microcontrôleurs 8-bit gèrent :</p>
+              <ul>
+                <li>La communication I2C entre modules</li>
+                <li>Le traitement des données du capteur</li>
+                <li>L'affichage sur l'écran LCD</li>
+              </ul>
+              <p>Caractéristiques : 32KB Flash, 2KB SRAM, 16MHz</p>
+            </div>
+          </div>
+
+          <!-- MPU6050 -->
+          <div class="component-card">
+            <div class="component-desc">
+              <h5>1 × Module MPU6050</h5>
+              <p>Capteur 6 axes (gyroscope + accéléromètre) utilisé pour :</p>
+              <ul>
+                <li>Détection de l'orientation spatiale</li>
+                <li>Mesure des mouvements brusques</li>
+                <li>Référence à la gravité terrestre</li>
+              </ul>
+              <p>Communication via I2C (adresse 0x68)</p>
+            </div>
+            <img src="../Test1/Images/GY-521.png" alt="MPU6050" class="component-img" />
+          </div>
+
+          <!-- LCD 16x2 -->
+          <div class="component-card">
+            <div class="component-desc">
+              <h5>1 × Écran LCD 16x2</h5>
+              <p>Interface de visualisation des données :</p>
+              <ul>
+                <li>Affiche les données en temps réel</li>
+                <li>Contrôlé via interface I2C</li>
+                <li>Adresse typique : 0x27 ou 0x3F</li>
+              </ul>
+              <p>Consommation : ~1mA</p>
+            </div>
+            <img src="Images/16x2-lcd.webp" alt="LCD 16x2" class="component-img" />
+          </div>
+
+          <!-- Régulateur 5V -->
+          <div class="component-card">
+            <div class="component-desc">
+              <h5>1 × Régulateur de tension 5V</h5>
+              <p>Stabilise l'alimentation électrique :</p>
+              <ul>
+                <li>Protège les composants sensibles</li>
+                <li>Type : LM7805</li>
+              </ul>
+              <p>Courant max : 1A (avec dissipateur)</p>
+            </div>
+            <img src="Images/regulateurdetension5v.jpg" alt="Régulateur 5V" class="component-img" />
+          </div>
+
+          <!-- Composants passifs -->
+          <div class="component-card">
+            <div class="component-desc">
+              <h5>Résistances, condensateurs, quartz 16MHz</h5>
+              <p>Éléments essentiels au fonctionnement :</p>
+              <ul>
+                <li>Résistances 10kΩ et 220Ω</li>
+                <li>Condensateurs de découplage (100nF)</li>
+                <li>Quartz pour l'horloge du microcontrôleur</li>
+              </ul>
+              <p>Précision requise : ±5%</p>
+            </div>
+            <div style="display: flex; gap: 1rem; flex-wrap: wrap; justify-content: center;">
+              <img src="Images/resistance220.jpg" class="component-img" style="max-width: 120px;" alt="Résistance 220Ω"/>
+              <img src="Images/CONDENSATEUR100nF.jpg" class="component-img" style="max-width: 120px;" alt="Condensateur 100nF"/>
+              <img src="Images/quartz16mhZ.webp" class="component-img" style="max-width: 120px;" alt="Quartz 16MHz"/>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="architecture" class="section">
+        <h4>4. Architecture du système</h4>
+        <p>Le système est réparti en deux modules :</p>
+        <ul>
+          <li><strong>Module capteur (la boîte noire)</strong> : contient l'ATmega328P maître I2C et le MPU6050</li>
+          <li><strong>Station de contrôle</strong> : contient l'ATmega328P esclave I2C et l'écran LCD</li>
+        </ul>
+      </section>
+
+      <section id="schemas" class="section">
+        <h4>5. Schémas électroniques (réalisés sur KiCad)</h4>
+        <p>Les circuits ont été conçus avec KiCad pour chaque sous-système du projet.</p>
+
+        <div class="schematic-gallery">
+          <div class="schematic-section">
+            <h6>Schéma de l'alimentation</h6>
+            <img src="Images/IMG_Circuit_Alimentation.PNG" alt="Schéma alimentation" />
+          </div>
+
+          <div class="schematic-section">
+            <h6>Schéma de la boîte noire</h6>
+            <img src="Images/img_Circuit_Boite_Noire.PNG" alt="Schéma boîte noire" />
+          </div>
+
+          <div class="schematic-section">
+            <h6>Schéma de la station de contrôle</h6>
+            <img src="Images/img_Circuit_Station.PNG" alt="Schéma station de contrôle" />
+          </div>
+        </div>
+      </section>
+
+      <section id="pcb" class="section">
+        <h4>6. Circuit imprimé</h4>
+        <p>Support physique du circuit : PCB personnalisé pour chaque module : alimentation, boîte noire et station de contrôle</p>
+
+        <div class="pcb-gallery">
+          <!-- Carte alimentation -->
+          <div class="pcb-section">
+            <h6>Carte d'alimentation</h6>
+            <img src="Images/img_PCBAlimentation.PNG" alt="Carte alimentation 2D" />
+            <img src="Images/img_PCB_3D_Alimentation.PNG" alt="Carte alimentation 3D" />
+          </div>
+
+          <!-- Carte boîte noire -->
+          <div class="pcb-section">
+            <h6>Carte de la boîte noire</h6>
+            <img src="Images/img_PCB_2D_boite_noire.PNG" alt="Carte boîte noire 2D" />
+            <img src="Images/img_PCB_3D_boite_noire.PNG" alt="Carte boîte noire 3D" />
+          </div>
+
+          <!-- Carte station de contrôle -->
+          <div class="pcb-section">
+            <h6>Carte de la station de contrôle</h6>
+            <img src="Images/imgSC_PCB.PNG" alt="Carte station de contrôle 2D" />
+            <img src="Images/imgSC_3D_front.PNG" alt="Carte station de contrôle 3D" />
+          </div>
+        </div>
+        
+        <h5>Téléchargement des fichiers KiCad</h5>
+        <p>Téléchargez ici tous les fichiers sources KiCad regroupant les schémas et PCB du projet :</p>
+        <a href="Schemas/Circuit_electronique_test2.rar" download class="download-btn" aria-label="Télécharger les fichiers KiCad">
+          <i class="fa fa-download"></i> Télécharger le dossier KiCad complet (RAR)
+        </a>
+      </section>
+
+      <section id="simulation" class="section">
+        <h4>7. Simulation dans Proteus</h4>
+        <p>Le module <strong>MPU6050</strong> n'étant pas présent dans la bibliothèque officielle de Proteus, nous avons simulé son comportement en injectant directement des données constantes dans le microcontrôleur maître (ATmega328P). Cela permet de vérifier le bon fonctionnement du bus I2C, la transmission des données et l'affichage sur l'écran LCD.</p>
+
+        <h5>Structure du dossier de simulation</h5>
+        <pre><code>📁 Simulation_Proteus_Boite_Noire
+├── 📁 maitre
+│   ├── maitre.ino
+└── 📁 esclave
+    └── esclave.ino
+</code></pre>
+
+        <h5>Téléchargement du dossier complet</h5>
+        <a href="Codes/Code_Source_Simulation.rar" download class="download-btn" aria-label="Télécharger le projet de simulation Proteus">
+          <i class="fa fa-download"></i> Télécharger le projet de simulation (.zip)
+        </a>
+
+        <h5>Vidéo de démonstration de la simulation</h5>
+        <div class="video-container">
+          <video controls>
+            <source src="Videos/VideoSimulation.mp4" type="video/mp4">
+            Votre navigateur ne supporte pas la lecture de cette vidéo.
+          </video>
+        </div>
+      </section>
+
+      <section id="codes" class="section">
+        <h4>8. Codes</h4>
+        <h5>Côté "boîte noire" (maître I2C, avec MPU6050)</h5>
+        <pre><code>
+#define F_CPU 16000000UL
+#include <avr/io.h>
+#include <util/delay.h>
+#include <avr/interrupt.h>
+
+#define MPU6050_ADDR 0x68
+#define SLAVE_ADDR 0x20
+
+// === I2C Maître ===
+void I2C_Init() {
+    TWSR = 0x00;
+    TWBR = 72; // 100kHz à 16MHz
+}
+
+void I2C_Start() {
+    TWCR = (1 << TWINT) | (1 << TWSTA) | (1 << TWEN);
+    while (!(TWCR & (1 << TWINT)));
+}
+
+void I2C_Stop() {
+    TWCR = (1 << TWINT) | (1 << TWSTO) | (1 << TWEN);
+    _delay_us(10);
+}
+
+void I2C_Write(uint8_t data) {
+    TWDR = data;
+    TWCR = (1 << TWINT) | (1 << TWEN);
+    while (!(TWCR & (1 << TWINT)));
+}
+
+uint8_t I2C_Read_ACK() {
+    TWCR = (1 << TWINT) | (1 << TWEN) | (1 << TWEA);
+    while (!(TWCR & (1 << TWINT)));
+    return TWDR;
+}
+
+uint8_t I2C_Read_NACK() {
+    TWCR = (1 << TWINT) | (1 << TWEN);
+    while (!(TWCR & (1 << TWINT)));
+    return TWDR;
+}
+
+// === MPU6050 ===
+void MPU6050_Init() {
+    I2C_Start();
+    I2C_Write(MPU6050_ADDR << 1);  // Write mode
+    I2C_Write(0x6B); // PWR_MGMT_1
+    I2C_Write(0);    // Wake up
+    I2C_Stop();
+}
+
+int16_t MPU6050_ReadAxis(uint8_t regH) {
+    I2C_Start();
+    I2C_Write(MPU6050_ADDR << 1);  // Write
+    I2C_Write(regH);               // Register to read
+    I2C_Start();
+    I2C_Write((MPU6050_ADDR << 1) | 1); // Read
+    uint8_t high = I2C_Read_ACK();
+    uint8_t low = I2C_Read_NACK();
+    I2C_Stop();
+    return (int16_t)(high << 8 | low);
+}
+
+int main() {
+    DDRB |= (1 << PB5); // Debug LED
+    I2C_Init();
+    MPU6050_Init();
+
+    while (1) {
+        int16_t accX = MPU6050_ReadAxis(0x3B);
+        int16_t accY = MPU6050_ReadAxis(0x3D);
+        int16_t accZ = MPU6050_ReadAxis(0x3F);
+
+        // Envoi des données à l'esclave
+        I2C_Start();
+        I2C_Write(SLAVE_ADDR << 1); // Esclave
+        I2C_Write(accX >> 8); I2C_Write(accX & 0xFF);
+        I2C_Write(accY >> 8); I2C_Write(accY & 0xFF);
+        I2C_Write(accZ >> 8); I2C_Write(accZ & 0xFF);
+        I2C_Stop();
+
+        PORTB ^= (1 << PB5);
+        _delay_ms(300);
+    }
+}
+</code></pre>
+
+        <h5>Côté "station de contrôle" (esclave I2C + LCD 4 bits)</h5>
+        <pre><code>
+#define F_CPU 16000000UL
+#include <avr/io.h>
+#include <avr/interrupt.h>
+#include <util/delay.h>
+#include <stdio.h>
+
+#define LCD_PORT PORTD
+#define LCD_DDR DDRD
+#define RS PD0
+#define EN PD1
+
+volatile int16_t accX, accY, accZ;
+volatile uint8_t data_received = 0;
+
+// === Fonctions LCD en 4 bits ===
+void LCD_Command(uint8_t cmd) {
+    LCD_PORT = (LCD_PORT & 0x0F) | (cmd & 0xF0);
+    LCD_PORT &= ~(1 << RS);
+    LCD_PORT |= (1 << EN);
+    _delay_us(1);
+    LCD_PORT &= ~(1 << EN);
+    _delay_us(200);
+
+    LCD_PORT = (LCD_PORT & 0x0F) | (cmd << 4);
+    LCD_PORT |= (1 << EN);
+    _delay_us(1);
+    LCD_PORT &= ~(1 << EN);
+    _delay_ms(2);
+}
+
+void LCD_Char(char data) {
+    LCD_PORT = (LCD_PORT & 0x0F) | (data & 0xF0);
+    LCD_PORT |= (1 << RS);
+    LCD_PORT |= (1 << EN);
+    _delay_us(1);
+    LCD_PORT &= ~(1 << EN);
+    _delay_us(200);
+
+    LCD_PORT = (LCD_PORT & 0x0F) | (data << 4);
+    LCD_PORT |= (1 << RS);
+    LCD_PORT |= (1 << EN);
+    _delay_us(1);
+    LCD_PORT &= ~(1 << EN);
+    _delay_ms(2);
+}
+
+void LCD_Init() {
+    LCD_DDR = 0xFF;
+    _delay_ms(50);
+    LCD_Command(0x02);
+    LCD_Command(0x28);
+    LCD_Command(0x0C);
+    LCD_Command(0x06);
+    LCD_Command(0x01);
+}
+
+void LCD_Print(char *str) {
+    while (*str) {
+        LCD_Char(*str++);
+    }
+}
+
+// === ISR pour réception I2C ===
+ISR(TWI_vect) {
+    static uint8_t buffer[6];
+    static uint8_t index = 0;
+
+    switch (TWSR & 0xF8) {
+        case 0x60: // Adresse esclave reçue (Write)
+            index = 0;
+            TWCR |= (1 << TWEA) | (1 << TWINT);
+            break;
+        case 0x80: // Donnée reçue
+            buffer[index++] = TWDR;
+            if (index >= 6) {
+                accX = (buffer[0] << 8) | buffer[1];
+                accY = (buffer[2] << 8) | buffer[3];
+                accZ = (buffer[4] << 8) | buffer[5];
+                data_received = 1;
+                index = 0; // Reset index après réception
+            }
+            TWCR |= (1 << TWEA) | (1 << TWINT);
+            break;
+        default:
+            TWCR |= (1 << TWEA) | (1 << TWINT);
+            break;
+    }
+}
+
+int main() {
+    DDRB |= (1 << PB1); // LED debug pour signal réception
+    LCD_Init();
+
+    // I2C en esclave
+    TWAR = (0x20 << 1);  // Adresse esclave 0x20
+    TWCR = (1 << TWEA) | (1 << TWEN) | (1 << TWIE);
+    sei(); // Interruptions globales
+
+    char text[16];
+
+    while (1) {
+        if (data_received) {
+            LCD_Command(0x80); // Ligne 1
+            sprintf(text, "X:%4d Y:%4d", accX, accY);
+            LCD_Print(text);
+
+            LCD_Command(0xC0); // Ligne 2
+            sprintf(text, "Z:%4d", accZ);
+            LCD_Print(text);
+
+            PORTB ^= (1 << PB1);  // Clignote LED pour debug
+            data_received = 0;
+        }
+    }
+}
+</code></pre>
+      </section>
+
+      <section id="explication" class="section">
+        <h4>9. Explication : Simulation vs Réalité</h4>
+        <p>Cette section vise à établir une correspondance claire entre ce qui a été simulé dans Proteus et ce qui se passe dans la mise en œuvre réelle du projet.</p>
+
+        <h5>a. Simulation dans Proteus</h5>
+        <ul>
+          <li>Dans l'environnement de simulation, deux microcontrôleurs ATmega328P communiquent via le bus I2C :</li>
+          <ul>
+            <li>Le microcontrôleur maître génère des données aléatoires simulant les valeurs de l'accéléromètre (accX, accY, accZ).</li>
+            <li>Ces données sont transmises via I2C à un microcontrôleur esclave, qui les affiche sur un écran LCD 16x2.</li>
+          </ul>
+          <li>Des LEDs permettent de visualiser l'activité du système :</li>
+          <ul>
+            <li>La LED du maître s'allume après chaque transmission.</li>
+            <li>La LED de l'esclave clignote à chaque réception complète des données.</li>
+          </ul>
+          <li>La simulation permet donc de valider la logique du protocole de communication (I2C), la réception, et l'affichage des données, sans avoir besoin de matériel réel.</li>
+        </ul>
+
+        <h5>b. Implémentation réelle avec MPU6050</h5>
+        <ul>
+          <li>Dans la version physique :</li>
+          <ul>
+            <li>Le maître n'utilise plus de données aléatoires, mais récupère les vraies valeurs d'accélération du capteur MPU6050, connecté via I2C.</li>
+            <li>Les données lues depuis le MPU6050 sont ensuite envoyées exactement de la même manière à l'esclave via I2C.</li>
+          </ul>
+          <li>L'esclave reste inchangé : il reçoit 6 octets (2 par axe) et les affiche sur le même écran LCD.</li>
+        </ul>
+      </section>
+
+      <section id="video" class="section">
+        <h4>10. Vidéo de démonstration</h4>
+        <div class="video-container">
+          <video controls>
+            <source src="#" type="video/mp4">
+            Votre navigateur ne supporte pas la lecture de cette vidéo.
+          </video>
+        </div>
+      </section>
+
+      <section id="contraintes" class="section">
+        <h4>11. Contraintes et recommandations</h4>
+        <ul>
+          <li>Ne pas utiliser de carte Arduino ou breadboard dans la version finale</li>
+          <li>Boîte cubique de 7 cm avec ouverture sur le dessus si opaque</li>
+          <li>Câblage propre et composants fixés solidement</li>
+          <li>Station de contrôle séparée avec écran bien lisible</li>
+        </ul>
+      </section>
+
+      <section id="evaluation" class="section">
+        <h4>12. Critères d'évaluation</h4>
+        <table>
+          <tr><th>Critère</th><th>Détails</th><th>Points</th></tr>
+          <tr><td>Circuiterie</td><td>Qualité du schéma, soudure, alimentation, présentation du circuit</td><td>25</td></tr>
+          <tr><td>Code</td><td>Lisibilité, commentaires, logique du code</td><td>25</td></tr>
+          <tr><td>Réalisation physique</td><td>Esthétique de la boîte et du poste de contrôle</td><td>10</td></tr>
+          <tr><td>Fonctionnement</td><td>Qualité de la démonstration du système</td><td>25</td></tr>
+          <tr><td>Documentation</td><td>Structure, clarté, rigueur technique</td><td>10</td></tr>
+          <tr><td>Présentation orale</td><td>Slides, expression orale, réponse aux questions</td><td>5</td></tr>
+        </table>
+      </section>
+
+      <section id="references" class="section">
+        <h4>13. Références techniques</h4>
+        <p>Voici les liens vers les documents techniques (datasheets) utilisés dans ce projet</p>
+
+        <ul>
+          <li><a href="https://ww1.microchip.com/downloads/en/DeviceDoc/Atmel-8271-8-bit-AVR-Microcontroller-ATmega328-328P_datasheet.pdf" target="_blank">ATmega328P – Datasheet (Microchip)</a></li>
+          <li><a href="https://invensense.tdk.com/download-pdf/mpu-6000-datasheet/" target="_blank">MPU6050 – Datasheet (TDK InvenSense)</a></li>
+          <li><a href="https://www.sparkfun.com/datasheets/LCD/HD44780.pdf" target="_blank">Écran LCD HD44780 – Datasheet</a></li>
+          <li><a href="https://www.st.com/resource/en/datasheet/l7805cv.pdf" target="_blank">LM7805 – Datasheet (STMicroelectronics)</a></li>
+        </ul>
+      </section>
+
+      <section id="conclusion" class="section">
+        <h4>14. Conclusion</h4>
+        <p>Ce test a permis de mettre en œuvre un système embarqué capable de mesurer et transmettre des données inertielle en temps réel. Il s'inscrit dans une logique de fiabilité, de rigueur technique et d'intégration dans une solution robotique autonome.</p>
+      </section>
+    </section>
+  </main>
+
+  <script>
+    // Lightbox functionality
+    document.addEventListener('DOMContentLoaded', function() {
+      const images = document.querySelectorAll('.component-img, .pcb-section img, .schematic-section img');
+      const lightbox = document.createElement('div');
+      lightbox.id = 'lightbox-overlay';
+      const img = document.createElement('img');
+      lightbox.appendChild(img);
+      document.body.appendChild(lightbox);
+
+      images.forEach(image => {
+        image.addEventListener('click', e => {
+          lightbox.style.display = 'flex';
+          img.src = e.target.src;
+        });
+      });
+
+      lightbox.addEventListener('click', e => {
+        if (e.target !== img) {
+          lightbox.style.display = 'none';
+        }
+      });
+    });
+  </script>
+</body>
+</html>

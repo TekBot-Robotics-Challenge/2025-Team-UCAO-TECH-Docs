@@ -1,0 +1,693 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Galerie - Convoyeur Intelligent UCAO-TECH</title>
+    <link rel="icon" href="https://ucaotech.com/wp-content/uploads/2024/10/UCAO-TECH-1.png" type="image/png">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;700;900&family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #0a192f;
+            --secondary: #00d1ff;
+            --accent: #ff2e63;
+            --light: #e6f1ff;
+            --dark: #020c1b;
+        }
+        body { 
+            background-color: var(--dark); 
+            color: var(--light); 
+            font-family: 'Roboto', sans-serif; 
+        }
+        h1, h2, h3, .logo, .nav-link { 
+            font-family: 'Orbitron', sans-serif; 
+        }
+        .cyber-title { 
+            color: var(--secondary); 
+            text-shadow: 0 0 10px rgba(0, 247, 255, 0.7); 
+        }
+        .nav-link { 
+            transition: color 0.3s; 
+        }
+        .nav-link:hover { 
+            color: var(--secondary); 
+        }
+        .gallery-item { 
+            transition: transform 0.3s, box-shadow 0.3s; 
+            position: relative;
+            overflow: hidden;
+        }
+        .gallery-item:hover { 
+            transform: translateY(-5px); 
+            box-shadow: 0 10px 20px rgba(0, 209, 255, 0.3); 
+        }
+        .gallery-item .media-container {
+            position: relative;
+            padding-top: 56.25%; /* 16:9 Aspect Ratio */
+            background: #111827;
+        }
+        .gallery-item img, .gallery-item video {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        .gallery-item .play-icon {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: white;
+            font-size: 3rem;
+            opacity: 0.8;
+            transition: all 0.3s;
+        }
+        .gallery-item:hover .play-icon {
+            color: var(--secondary);
+            opacity: 1;
+            text-shadow: 0 0 15px rgba(0, 209, 255, 0.7);
+        }
+        .active-filter {
+            background-color: var(--secondary) !important;
+            color: var(--dark) !important;
+            font-weight: bold;
+        }
+        /* Lightbox styles */
+        .lightbox {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.9);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+        }
+        .lightbox-content {
+            max-width: 90%;
+            max-height: 90%;
+        }
+        .lightbox-close {
+            position: absolute;
+            top: 20px;
+            right: 30px;
+            color: white;
+            font-size: 2rem;
+            cursor: pointer;
+            transition: color 0.3s;
+        }
+        .lightbox-close:hover {
+            color: var(--secondary);
+        }
+        .lightbox-nav {
+            position: absolute;
+            top: 50%;
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            padding: 0 20px;
+            transform: translateY(-50%);
+        }
+        .lightbox-nav button {
+            background: rgba(0, 0, 0, 0.5);
+            color: white;
+            border: none;
+            font-size: 2rem;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        .lightbox-nav button:hover {
+            background: var(--secondary);
+            color: var(--dark);
+        }
+        .lightbox-caption {
+            position: absolute;
+            bottom: 20px;
+            left: 0;
+            width: 100%;
+            text-align: center;
+            color: white;
+            padding: 10px;
+            background: rgba(0, 0, 0, 0.7);
+        }
+        .loading-spinner {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 3px solid rgba(255,255,255,.3);
+            border-radius: 50%;
+            border-top-color: var(--secondary);
+            animation: spin 1s ease-in-out infinite;
+        }
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body>
+    <!-- En-tête identique -->
+    <header class="fixed top-0 left-0 w-full z-50" style="background:rgba(2,12,27,0.9); backdrop-filter:blur(10px); border-bottom:2px solid rgba(0,209,255,0.2);">
+        <div class="container mx-auto px-4 py-4 flex justify-between items-center">
+            <a href="index.html" class="logo flex items-center">
+                <img src="https://ucaotech.com/wp-content/uploads/2024/10/UCAO-TECH-1.png" alt="Logo UCAO-TECH" class="h-10 mr-3">
+                <span class="text-xl font-bold" style="color: var(--secondary);">UCAO-TECH</span>
+            </a>
+            <nav class="hidden md:flex space-x-6">
+                <a href="https://tekbot-robotics-challenge.github.io/2025-Team-UCAO-TECH-Docs/Test_Final/Test_Final.html" class="nav-link">Test Final</a>
+                <a href="galerie.html" class="nav-link font-bold text-secondary">Galerie</a>
+            </nav>
+            <button class="md:hidden text-white text-2xl" id="mobile-menu-button">
+                <i class="fas fa-bars"></i>
+            </button>
+        </div>
+    </header>
+
+    <!-- Lightbox -->
+    <div id="lightbox" class="lightbox">
+        <span class="lightbox-close">&times;</span>
+        <div class="lightbox-content">
+            <img id="lightbox-img" src="" alt="">
+            <video id="lightbox-video" controls style="display:none;">
+                <source src="" type="video/mp4">
+            </video>
+        </div>
+        <div class="lightbox-nav">
+            <button id="prev-btn"><i class="fas fa-chevron-left"></i></button>
+            <button id="next-btn"><i class="fas fa-chevron-right"></i></button>
+        </div>
+        <div class="lightbox-caption" id="lightbox-caption"></div>
+    </div>
+
+    <!-- Contenu principal -->
+    <main class="pt-24 pb-12 container mx-auto px-4">
+        <h1 class="cyber-title text-3xl md:text-4xl mb-2">Galerie Multimédia</h1>
+        <p class="text-lg mb-8 max-w-2xl">Découvrez l'ensemble des photos et vidéos de notre projet de convoyeur intelligent</p>
+
+        <!-- Filtres -->
+        <div class="flex flex-wrap gap-3 mb-8">
+            <button class="filter-btn px-4 py-2 rounded-full bg-gray-800 hover:bg-secondary hover:text-dark transition active-filter" data-filter="all">Tout</button>
+            <button class="filter-btn px-4 py-2 rounded-full bg-gray-800 hover:bg-gray-700 transition" data-filter="photo">Photos</button>
+            <button class="filter-btn px-4 py-2 rounded-full bg-gray-800 hover:bg-gray-700 transition" data-filter="video">Vidéos</button>
+            <button class="filter-btn px-4 py-2 rounded-full bg-gray-800 hover:bg-gray-700 transition" data-filter="prototype">Prototypes</button>
+        </div>
+
+        <!-- Grille Gallery -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6" id="gallery-grid">
+            <!-- Les éléments de la galerie seront générés dynamiquement -->
+        </div>
+
+        <!-- Chargement -->
+        <div id="loading" class="text-center py-8 hidden">
+            <div class="loading-spinner mx-auto mb-2"></div>
+            <p>Chargement des médias...</p>
+        </div>
+
+        <!-- Pagination -->
+        <div class="flex justify-center mt-12">
+            <nav class="flex space-x-2" id="pagination">
+                <!-- La pagination sera générée dynamiquement -->
+            </nav>
+        </div>
+    </main>
+
+    <!-- Pied de page -->
+    <footer class="bg-gray-900 py-8 border-t border-gray-800">
+        <div class="container mx-auto px-4 text-center">
+            <p class="mb-4">Projet réalisé par l'équipe UCAO-TECH</p>
+            <div class="flex justify-center space-x-6">
+                <a href="#" class="text-gray-400 hover:text-secondary"><i class="fab fa-github text-xl"></i></a>
+                <a href="#" class="text-gray-400 hover:text-secondary"><i class="fas fa-envelope text-xl"></i></a>
+                <a href="#" class="text-gray-400 hover:text-secondary"><i class="fas fa-file-pdf text-xl"></i></a>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Données de la galerie
+        const galleryData = [
+            // Vidéos
+            {
+                type: "video",
+                category: "video",
+                src: "video_fonctionnement.mp4",
+                title: "Démonstration complète",
+                date: "30/07/2025",
+                size: "15.4 MB",
+                description: "Démonstration complète du fonctionnement du convoyeur intelligent"
+            },
+            {
+                type: "video",
+                category: "video",
+                src: "test_detection.mp4",
+                title: "Test détection de présence",
+                date: "30/07/2025",
+                size: "8.2 MB",
+                description: "Test du système de détection de présence des objets"
+            },
+            {
+                type: "video",
+                category: "video",
+                src: "video_reini.mp4",
+                title: "Vidéo réinitialisation",
+                date: "30/07/2025",
+                size: "5.7 MB",
+                description: "Processus de réinitialisation du système"
+            },
+            {
+                type: "video",
+                category: "video",
+                src: "bouton_R.mp4",
+                title: "Démarrage manuel",
+                date: "30/07/2025",
+                size: "7.1 MB",
+                description: "Démarrage manuel et réinitialisation système"
+            },
+            {
+                type: "video",
+                category: "video",
+                src: "video1.mp4",
+                title: "Test de vitesse",
+                date: "30/07/2025",
+                size: "12.3 MB",
+                description: "Test des différentes vitesses du convoyeur"
+            },
+            {
+                type: "video",
+                category: "video",
+                src: "video2.mp4",
+                title: "Test de précision",
+                date: "30/07/2025",
+                size: "9.8 MB",
+                description: "Test de précision du positionnement des objets"
+            },
+            {
+                type: "video",
+                category: "video",
+                src: "video3.mp4",
+                title: "Test de charge",
+                date: "30/07/2025",
+                size: "14.5 MB",
+                description: "Test avec différentes charges sur le convoyeur"
+            },
+            {
+                type: "video",
+                category: "video",
+                src: "video_elec.mp4",
+                title: "Système électrique",
+                date: "30/07/2025",
+                size: "11.2 MB",
+                description: "Fonctionnement du système électrique et électronique"
+            },
+            
+            // Photos
+            {
+                type: "image",
+                category: "photo",
+                src: "Convoyeur.jpg",
+                title: "Vue d'ensemble",
+                date: "30/07/2025",
+                size: "98 Ko",
+                description: "Vue d'ensemble du convoyeur intelligent"
+            },
+            {
+                type: "image",
+                category: "photo",
+                src: "img.jpg",
+                title: "Structure mécanique",
+                date: "30/07/2025",
+                size: "658 Ko",
+                description: "Détail de la structure mécanique du convoyeur"
+            },
+            {
+                type: "image",
+                category: "photo",
+                src: "img1.jpg",
+                title: "Système de contrôle",
+                date: "30/07/2025",
+                size: "693 Ko",
+                description: "Panneau de contrôle et interface utilisateur"
+            },
+            {
+                type: "image",
+                category: "photo",
+                src: "img2.jpg",
+                title: "Vue de dessus",
+                date: "30/07/2025",
+                size: "3 874 Ko",
+                description: "Vue aérienne du système complet"
+            },
+            {
+                type: "image",
+                category: "photo",
+                src: "img3.jpg",
+                title: "Détail capteurs",
+                date: "30/07/2025",
+                size: "2 093 Ko",
+                description: "Détail des capteurs de position et de présence"
+            },
+            {
+                type: "image",
+                category: "photo",
+                src: "img_meca.jpg",
+                title: "Mécanisme d'entraînement",
+                date: "30/07/2025",
+                size: "2 253 Ko",
+                description: "Mécanisme d'entraînement et motorisation"
+            },
+            
+            // Prototypes
+            {
+                type: "image",
+                category: "prototype",
+                src: "img_couture.jpg",
+                title: "Prototype 1",
+                date: "01/08/2025",
+                size: "102 Ko",
+                description: "Premier prototype du système de convoyage"
+            },
+            {
+                type: "image",
+                category: "prototype",
+                src: "img_couture1.jpg",
+                title: "Prototype 2",
+                date: "01/08/2025",
+                size: "101 Ko",
+                description: "Deuxième itération avec améliorations mécaniques"
+            },
+            {
+                type: "image",
+                category: "prototype",
+                src: "img_couture2.jpg",
+                title: "Prototype 3",
+                date: "01/08/2025",
+                size: "99 Ko",
+                description: "Prototype final avant production"
+            },
+            {
+                type: "image",
+                category: "prototype",
+                src: "img_elec1.jpg",
+                title: "Circuit électronique 1",
+                date: "01/08/2025",
+                size: "184 Ko",
+                description: "Première version du circuit de contrôle"
+            },
+            {
+                type: "image",
+                category: "prototype",
+                src: "img_elec2.jpg",
+                title: "Circuit électronique 2",
+                date: "01/08/2025",
+                size: "266 Ko",
+                description: "Circuit optimisé avec protections"
+            },
+            {
+                type: "image",
+                category: "prototype",
+                src: "img_elec3.jpg",
+                title: "Module de puissance",
+                date: "01/08/2025",
+                size: "251 Ko",
+                description: "Module d'alimentation et contrôle des moteurs"
+            },
+            {
+                type: "image",
+                category: "prototype",
+                src: "img_elec4.jpg",
+                title: "Carte contrôleur",
+                date: "01/08/2025",
+                size: "170 Ko",
+                description: "Carte contrôleur avec microprocesseur"
+            },
+            {
+                type: "image",
+                category: "prototype",
+                src: "img_elec5.jpg",
+                title: "Tests électroniques",
+                date: "01/08/2025",
+                size: "250 Ko",
+                description: "Phase de tests des circuits électroniques"
+            },
+            {
+                type: "image",
+                category: "prototype",
+                src: "img_elec6.jpg",
+                title: "Intégration finale",
+                date: "01/08/2025",
+                size: "178 Ko",
+                description: "Intégration des composants électroniques dans le châssis"
+            }
+        ];
+
+        // Variables globales
+        let currentFilter = "all";
+        let currentPage = 1;
+        const itemsPerPage = 9;
+        let filteredItems = [];
+        let currentLightboxIndex = 0;
+
+        // Initialisation
+        document.addEventListener('DOMContentLoaded', function() {
+            // Menu mobile
+            document.getElementById('mobile-menu-button').addEventListener('click', function() {
+                const nav = document.querySelector('nav');
+                nav.classList.toggle('hidden');
+                nav.classList.toggle('flex');
+                nav.classList.toggle('absolute');
+                nav.classList.toggle('top-16');
+                nav.classList.toggle('right-4');
+                nav.classList.toggle('bg-gray-900');
+                nav.classList.toggle('p-4');
+                nav.classList.toggle('rounded-lg');
+                nav.classList.toggle('shadow-lg');
+            });
+
+            // Filtres
+            const filterButtons = document.querySelectorAll('.filter-btn');
+            filterButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    // Retirer la classe active de tous les boutons
+                    filterButtons.forEach(btn => btn.classList.remove('active-filter'));
+                    // Ajouter la classe active au bouton cliqué
+                    this.classList.add('active-filter');
+                    
+                    currentFilter = this.dataset.filter;
+                    currentPage = 1;
+                    filterGallery();
+                });
+            });
+
+            // Lightbox
+            const lightbox = document.getElementById('lightbox');
+            const lightboxClose = document.querySelector('.lightbox-close');
+            const prevBtn = document.getElementById('prev-btn');
+            const nextBtn = document.getElementById('next-btn');
+
+            lightboxClose.addEventListener('click', closeLightbox);
+            prevBtn.addEventListener('click', showPrevItem);
+            nextBtn.addEventListener('click', showNextItem);
+            lightbox.addEventListener('click', function(e) {
+                if (e.target === lightbox) {
+                    closeLightbox();
+                }
+            });
+
+            // Initialiser la galerie
+            filterGallery();
+        });
+
+        // Filtrer la galerie
+        function filterGallery() {
+            document.getElementById('loading').classList.remove('hidden');
+            document.getElementById('gallery-grid').innerHTML = '';
+            
+            // Simuler un chargement asynchrone
+            setTimeout(() => {
+                if (currentFilter === 'all') {
+                    filteredItems = [...galleryData];
+                } else {
+                    filteredItems = galleryData.filter(item => item.category === currentFilter);
+                }
+                
+                renderGallery();
+                renderPagination();
+                document.getElementById('loading').classList.add('hidden');
+            }, 500);
+        }
+
+        // Afficher les éléments de la galerie
+        function renderGallery() {
+            const galleryGrid = document.getElementById('gallery-grid');
+            galleryGrid.innerHTML = '';
+            
+            const startIndex = (currentPage - 1) * itemsPerPage;
+            const endIndex = Math.min(startIndex + itemsPerPage, filteredItems.length);
+            
+            for (let i = startIndex; i < endIndex; i++) {
+                const item = filteredItems[i];
+                const galleryItem = document.createElement('div');
+                galleryItem.className = 'gallery-item bg-gray-900 rounded-lg overflow-hidden border border-gray-800';
+                
+                let mediaContent = '';
+                if (item.type === 'video') {
+                    mediaContent = `
+                        <div class="media-container">
+                            <video class="w-full h-full" data-index="${i}">
+                                <source src="${item.src}" type="video/mp4">
+                            </video>
+                            <i class="fas fa-play play-icon"></i>
+                        </div>
+                    `;
+                } else {
+                    mediaContent = `
+                        <div class="media-container">
+                            <img src="${item.src}" alt="${item.title}" class="w-full h-full" data-index="${i}">
+                        </div>
+                    `;
+                }
+                
+                galleryItem.innerHTML = `
+                    ${mediaContent}
+                    <div class="p-4">
+                        <h3 class="font-bold mb-1">${item.title}</h3>
+                        <p class="text-sm text-gray-400">${item.date} - ${item.size}</p>
+                        <p class="text-xs text-gray-500 mt-2 truncate">${item.description}</p>
+                    </div>
+                `;
+                
+                galleryItem.addEventListener('click', function(e) {
+                    // Ne pas ouvrir la lightbox si on clique sur un lien ou un bouton
+                    if (e.target.tagName === 'A' || e.target.tagName === 'BUTTON') return;
+                    
+                    currentLightboxIndex = parseInt(e.target.dataset.index || e.target.parentElement.dataset.index);
+                    openLightbox(currentLightboxIndex);
+                });
+                
+                galleryGrid.appendChild(galleryItem);
+            }
+        }
+
+        // Afficher la pagination
+        function renderPagination() {
+            const totalPages = Math.ceil(filteredItems.length / itemsPerPage);
+            const pagination = document.getElementById('pagination');
+            pagination.innerHTML = '';
+            
+            if (totalPages <= 1) return;
+            
+            // Bouton Précédent
+            const prevBtn = document.createElement('a');
+            prevBtn.href = '#';
+            prevBtn.className = `px-4 py-2 rounded bg-gray-800 hover:bg-secondary ${currentPage === 1 ? 'opacity-50 cursor-not-allowed' : ''}`;
+            prevBtn.innerHTML = '&laquo;';
+            prevBtn.addEventListener('click', function(e) {
+                e.preventDefault();
+                if (currentPage > 1) {
+                    currentPage--;
+                    renderGallery();
+                    window.scrollTo({top: 0, behavior: 'smooth'});
+                }
+            });
+            pagination.appendChild(prevBtn);
+            
+            // Pages
+            for (let i = 1; i <= totalPages; i++) {
+                const pageBtn = document.createElement('a');
+                pageBtn.href = '#';
+                pageBtn.className = `px-4 py-2 rounded ${currentPage === i ? 'bg-secondary text-dark font-bold' : 'bg-gray-800 hover:bg-gray-700'}`;
+                pageBtn.textContent = i;
+                pageBtn.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    currentPage = i;
+                    renderGallery();
+                    window.scrollTo({top: 0, behavior: 'smooth'});
+                });
+                pagination.appendChild(pageBtn);
+            }
+            
+            // Bouton Suivant
+            const nextBtn = document.createElement('a');
+            nextBtn.href = '#';
+            nextBtn.className = `px-4 py-2 rounded bg-gray-800 hover:bg-secondary ${currentPage === totalPages ? 'opacity-50 cursor-not-allowed' : ''}`;
+            nextBtn.innerHTML = '&raquo;';
+            nextBtn.addEventListener('click', function(e) {
+                e.preventDefault();
+                if (currentPage < totalPages) {
+                    currentPage++;
+                    renderGallery();
+                    window.scrollTo({top: 0, behavior: 'smooth'});
+                }
+            });
+            pagination.appendChild(nextBtn);
+        }
+
+        // Lightbox functions
+        function openLightbox(index) {
+            const item = filteredItems[index];
+            const lightbox = document.getElementById('lightbox');
+            const lightboxImg = document.getElementById('lightbox-img');
+            const lightboxVideo = document.getElementById('lightbox-video');
+            const caption = document.getElementById('lightbox-caption');
+            
+            if (item.type === 'image') {
+                lightboxImg.src = item.src;
+                lightboxImg.alt = item.title;
+                lightboxImg.style.display = 'block';
+                lightboxVideo.style.display = 'none';
+                lightboxVideo.pause();
+            } else {
+                lightboxVideo.querySelector('source').src = item.src;
+                lightboxVideo.load();
+                lightboxVideo.style.display = 'block';
+                lightboxImg.style.display = 'none';
+            }
+            
+            caption.innerHTML = `<strong>${item.title}</strong> - ${item.description}`;
+            lightbox.style.display = 'flex';
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeLightbox() {
+            const lightbox = document.getElementById('lightbox');
+            const lightboxVideo = document.getElementById('lightbox-video');
+            
+            lightbox.style.display = 'none';
+            document.body.style.overflow = 'auto';
+            lightboxVideo.pause();
+        }
+
+        function showPrevItem() {
+            currentLightboxIndex = (currentLightboxIndex - 1 + filteredItems.length) % filteredItems.length;
+            openLightbox(currentLightboxIndex);
+        }
+
+        function showNextItem() {
+            currentLightboxIndex = (currentLightboxIndex + 1) % filteredItems.length;
+            openLightbox(currentLightboxIndex);
+        }
+
+        // Gestion des touches du clavier
+        document.addEventListener('keydown', function(e) {
+            const lightbox = document.getElementById('lightbox');
+            if (lightbox.style.display === 'flex') {
+                if (e.key === 'Escape') {
+                    closeLightbox();
+                } else if (e.key === 'ArrowLeft') {
+                    showPrevItem();
+                } else if (e.key === 'ArrowRight') {
+                    showNextItem();
+                }
+            }
+        });
+    </script>
+</body>
+</html>

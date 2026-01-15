@@ -1,0 +1,1319 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Documentation Mécanique - Convoyeur Intelligent</title>
+    <link rel="icon" href="https://ucaotech.com/wp-content/uploads/2024/10/UCAO-TECH-1.png" type="image/png">
+    <!-- Assets -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;700;900&family=Roboto:wght@300;400;500;700&display=swap"
+        rel="stylesheet">
+    <!-- Styles -->
+    <style>
+        :root {
+            --primary: #020c1b;
+            --secondary: #00f7ff;
+            --accent: #ff2e63;
+            --light: #eaf6fb;
+            --dark: #181f2a;
+            --success: #2eff91;
+            --cyber-blue: #00f7ff;
+            --cyber-purple: #b342ff;
+            --text-light: #eaf6fb;
+            --text-dark: #181f2a;
+            --gradient-cyber: linear-gradient(135deg, #00f7ff, #b342ff);
+            --shadow-neon: 0 0 10px rgba(0, 247, 255, 0.5);
+        }
+
+        /* Base Styles */
+        body {
+            background: linear-gradient(135deg, #020c1b, #0d1b2a);
+            color: var(--text-light);
+            font-family: 'Roboto', Arial, sans-serif;
+            line-height: 1.6;
+        }
+
+        /* Typography */
+        h1,
+        h2,
+        h3,
+        h4,
+        .logo,
+        .nav-links a {
+            font-family: 'Orbitron', sans-serif;
+            letter-spacing: 1px;
+        }
+
+        .cyber-title {
+            color: var(--cyber-blue);
+            font-size: 2.2em;
+            font-weight: 700;
+            margin-bottom: 18px;
+            text-shadow: 0 0 10px rgba(0, 247, 255, 0.3);
+            position: relative;
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeInUp 0.6s ease-out forwards;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .title-shadow {
+            text-shadow: 0 0 10px rgba(0, 247, 255, 0.5);
+        }
+
+        /* Navigation */
+        .nav-link {
+            color: var(--text-light);
+            text-decoration: none;
+            font-family: 'Orbitron', sans-serif;
+            font-weight: 500;
+            letter-spacing: 1.2px;
+            transition: all 0.3s ease;
+            position: relative;
+            padding: 0.5rem 1rem;
+        }
+
+        .nav-link:before {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background: var(--gradient-cyber);
+            transform: scaleX(0);
+            transform-origin: right;
+            transition: transform 0.3s ease;
+        }
+
+        .nav-link:hover {
+            color: var(--cyber-blue);
+            text-shadow: 0 0 8px rgba(0, 247, 255, 0.5);
+        }
+
+        .nav-link:hover:before {
+            transform: scaleX(1);
+            transform-origin: left;
+        }
+
+        /* Buttons */
+        .btn {
+            padding: 0.9rem 2.5rem;
+            font-weight: 600;
+            text-decoration: none;
+            cursor: pointer;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            font-family: 'Orbitron', sans-serif;
+            background: transparent;
+            color: var(--cyber-blue);
+            border: 2px solid var(--cyber-blue);
+            border-radius: 8px;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.3s ease;
+            z-index: 1;
+        }
+
+        .btn:before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 0;
+            height: 100%;
+            background: var(--gradient-cyber);
+            transition: all 0.3s ease;
+            z-index: -1;
+        }
+
+        .btn:hover {
+            color: var(--dark);
+            border-color: transparent;
+            box-shadow: 0 0 15px rgba(0, 247, 255, 0.4);
+        }
+
+        .btn:hover:before {
+            width: 100%;
+        }
+
+        /* Cards & Sections */
+        .section-card {
+            background: rgba(2, 12, 27, 0.7);
+            border: 1px solid rgba(0, 247, 255, 0.2);
+            box-shadow: 0 0 20px rgba(0, 247, 255, 0.1);
+            border-radius: 16px;
+            padding: 32px;
+            margin-bottom: 32px;
+            transition: all 0.3s ease;
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeInUp 0.6s ease-out forwards;
+        }
+
+        .section-card:hover {
+            border-color: rgba(0, 247, 255, 0.4);
+            box-shadow: 0 0 30px rgba(0, 247, 255, 0.15);
+        }
+
+        /* Table of Contents */
+        .sommaire-link {
+            display: flex;
+            align-items: center;
+            color: var(--text-light);
+            text-decoration: none;
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1em;
+            padding: 8px 12px;
+            border-radius: 6px;
+            transition: all 0.3s ease;
+            margin-bottom: 4px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .sommaire-link i {
+            color: var(--cyber-blue);
+            font-size: 1em;
+            margin-right: 8px;
+            transition: transform 0.3s ease;
+        }
+
+        .sommaire-link:before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, rgba(0, 247, 255, 0.1), rgba(179, 66, 255, 0.1));
+            transform: scaleX(0);
+            transform-origin: right;
+            transition: transform 0.3s ease;
+            z-index: -1;
+        }
+
+        .sommaire-link:hover {
+            color: var(--cyber-blue);
+        }
+
+        .sommaire-link:hover:before {
+            transform: scaleX(1);
+            transform-origin: left;
+        }
+
+        .sommaire-link:hover i {
+            transform: translateX(4px);
+        }
+
+        .active-sommaire {
+            color: var(--cyber-blue) !important;
+            background: rgba(0, 247, 255, 0.1) !important;
+            box-shadow: 0 0 10px rgba(0, 247, 255, 0.2);
+        }
+
+        .active-sommaire i {
+            transform: scale(1.2);
+        }
+
+        /* Sidebar */
+        .sidebar {
+            width: 260px;
+            background: rgba(2, 12, 27, 0.7);
+            backdrop-filter: blur(10px);
+            border-right: 2px solid rgba(0, 247, 255, 0.2);
+            position: fixed;
+            top: 80px;
+            left: 0;
+            bottom: 0;
+            padding: 32px 18px;
+            z-index: 99;
+            height: calc(100vh - 80px);
+            overflow-y: auto;
+            transition: all 0.3s ease;
+            animation: slideInLeft 0.5s ease-out;
+        }
+
+        @keyframes slideInLeft {
+            from {
+                transform: translateX(-100%);
+                opacity: 0;
+            }
+
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+
+        .sidebar::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        .sidebar::-webkit-scrollbar-track {
+            background: rgba(2, 12, 27, 0.3);
+        }
+
+        .sidebar::-webkit-scrollbar-thumb {
+            background: var(--cyber-blue);
+            border-radius: 3px;
+        }
+
+        /* Main content */
+        .main-content {
+            flex: 1;
+            margin-left: 260px;
+            padding: 32px 0;
+            animation: fadeIn 0.5s ease-out;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+
+            to {
+                opacity: 1;
+            }
+        }
+
+        /* Header */
+        .main-header {
+            background: rgba(2, 12, 27, 0.9);
+            border-bottom: 2px solid rgba(0, 247, 255, 0.2);
+            backdrop-filter: blur(10px);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Animations globales */
+        .reveal {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.6s ease;
+        }
+
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    </style>
+</head>
+
+<body class="bg-dark text-light">
+    <!-- Header -->
+    <header class="main-header fixed top-0 left-0 w-full z-50">
+        <div class="container mx-auto px-4 py-4 flex justify-between items-center">
+            <a href="#" class="logo flex items-center">
+                <img src="https://ucaotech.com/wp-content/uploads/2024/10/UCAO-TECH-1.png" alt="UCAO-TECH Logo"
+                    class="h-10 mr-3">
+                <span class="text-xl font-bold" style="color: var(--secondary);">UCAO-TECH</span>
+            </a>
+            <nav class="hidden md:flex space-x-6">
+                <a href="https://tekbot-robotics-challenge.github.io/2025-Team-UCAO-TECH-Docs/#accueil"
+                    class="nav-link">Accueil</a>
+                <a href="https://tekbot-robotics-challenge.github.io/2025-Team-UCAO-TECH-Docs/Test_Final/Test_Final.html"
+                    class="nav-link"></i>TEST-FINAL</a>
+                <a href="#" class="nav-link"><i class="fa-solid fa-gears mr-1"></i>Mécanique</a>
+                <a href="#" class="nav-link">Dashboard</a>
+                <a href="https://github.com/" target="_blank" class="nav-link"><i
+                        class="fab fa-github mr-1"></i>Github</a>
+            </nav>
+            <button id="menuBtn" class="md:hidden text-white text-2xl">
+                <i class="fas fa-bars"></i>
+            </button>
+            <div id="mobile-menu"
+                class="hidden md:hidden fixed top-16 left-0 right-0 bg-gray-900/95 backdrop-blur-md border-b border-blue-900/50 z-40">
+                <nav class="flex flex-col items-center py-4 space-y-4">
+                    <a href="https://tekbot-robotics-challenge.github.io/2025-Team-UCAO-TECH-Docs/#accueil"
+                        class="w-full text-center text-white hover:text-blue-400 hover:bg-blue-900/30 py-2 px-4 transition-all duration-300">
+                        Accueil
+                    </a>
+                    <a href="https://tekbot-robotics-challenge.github.io/2025-Team-UCAO-TECH-Docs/Test_Final/Test_Final.html"
+                        class="w-full text-center text-white hover:text-blue-400 hover:bg-blue-900/30 py-2 px-4 transition-all duration-300">
+                        TEST-FINAL
+                    </a>
+                    <a href="#"
+                        class="w-full text-center text-white hover:text-blue-400 hover:bg-blue-900/30 py-2 px-4 transition-all duration-300">
+                        <i class="fa-solid fa-gears mr-1"></i>Mécanique
+                    </a>
+                    <a href="#"
+                        class="w-full text-center text-white hover:text-blue-400 hover:bg-blue-900/30 py-2 px-4 transition-all duration-300">
+                        Dashboard
+                    </a>
+                    <a href="https://github.com/" target="_blank"
+                        class="w-full text-center text-white hover:text-blue-400 hover:bg-blue-900/30 py-2 px-4 transition-all duration-300">
+                        <i class="fab fa-github mr-1"></i>Github
+                    </a>
+                </nav>
+            </div>
+        </div>
+        </div>
+
+        <script>
+            const menuBtn = document.getElementById('menuBtn');
+            const mobileMenu = document.getElementById('mobile-menu');
+            const body = document.body;
+
+            menuBtn.addEventListener('click', () => {
+                mobileMenu.classList.toggle('hidden');
+                if (!mobileMenu.classList.contains('hidden')) {
+                    body.style.overflow = 'hidden'; // Empêche le défilement quand le menu est ouvert
+                } else {
+                    body.style.overflow = ''; // Réactive le défilement quand le menu est fermé
+                }
+            });
+
+            // Ferme le menu mobile quand on clique à l'extérieur
+            document.addEventListener('click', (e) => {
+                if (!mobileMenu.classList.contains('hidden') &&
+                    !mobileMenu.contains(e.target) &&
+                    !menuBtn.contains(e.target)) {
+                    mobileMenu.classList.add('hidden');
+                    body.style.overflow = '';
+                }
+            });
+        </script>
+        </div>
+    </header>
+
+    <!-- Main Container -->
+    <div class="main-container">
+        <!-- Sidebar Navigation -->
+        <aside class="sidebar">
+            <h2 style="font-family:'Orbitron'; color:var(--cyber-blue); font-size:1.2em; margin-bottom:18px;">Sommaire
+                Mécanique</h2>
+            <ul style="list-style:none; padding:0;">
+                <li style="margin-bottom:12px;"><a class="sommaire-link" href="#intro-meca"><i
+                            class="fa-solid fa-circle-info mr-2"></i>Introduction</a></li>
+                <li style="margin-bottom:12px;"><a class="sommaire-link" href="#etudes"><i
+                            class="fa-solid fa-magnifying-glass-chart mr-2"></i>Études préliminaires</a>
+                    <ul class="sommaire-sous" style="margin-left:18px;">
+                        <li><a class="sommaire-link" href="#besoins"><i class="fa-solid fa-list-ul mr-2"></i>Besoins
+                                fonctionnels</a></li>
+                        <li><a class="sommaire-link" href="#contraintes"><i
+                                    class="fa-solid fa-triangle-exclamation mr-2"></i>Contraintes mécaniques</a></li>
+                    </ul>
+                </li>
+                <li style="margin-bottom:12px;"><a class="sommaire-link" href="#choix-materiaux"><i
+                            class="fa-solid fa-cubes mr-2"></i>Choix des matériaux</a></li>
+                <li style="margin-bottom:12px;"><a class="sommaire-link" href="#liste-composants"><i
+                            class="fa-solid fa-boxes-stacked mr-2"></i>Liste des composants</a></li>
+                <li style="margin-bottom:12px;"><a class="sommaire-link" href="#modelisation"><i
+                            class="fa-solid fa-cube mr-2"></i>Modélisation CAO</a>
+                    <ul class="sommaire-sous" style="margin-left:18px;">
+                        <li><a class="sommaire-link" href="#modeles-3d"><i class="fa-solid fa-cube mr-2"></i>Modèles
+                                3D</a></li>
+                        <li><a class="sommaire-link" href="#assemblage"><i
+                                    class="fa-solid fa-layer-group mr-2"></i>Assemblage</a></li>
+                        <li><a class="sommaire-link" href="#validation"><i
+                                    class="fa-solid fa-check-double mr-2"></i>Validation mécanique</a></li>
+                    </ul>
+                </li>
+                <li style="margin-bottom:12px;"><a class="sommaire-link" href="#dimensionnement"><i
+                            class="fa-solid fa-ruler-combined mr-2"></i>Dimensionnement</a></li>
+                <li style="margin-bottom:12px;"><a class="sommaire-link" href="#specs"><i
+                            class="fa-solid fa-clipboard-list mr-2"></i>Spécifications techniques</a></li>
+                <li style="margin-bottom:12px;"><a class="sommaire-link" href="#conclusion-meca"><i
+                            class="fa-solid fa-flag-checkered mr-2"></i>Conclusion</a></li>
+            </ul>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <div class="container mx-auto px-4">
+                <!-- Le contenu existant reste exactement le même ici -->
+                <h1 class="cyber-title text-center mb-10" id="intro-meca">Documentation Mécanique<br>Système de
+                    Convoyeur Intelligent</h1>
+
+                <!-- Section Contexte Projet -->
+                <section class="p-6 mb-8 bg-gray-800 rounded-lg border-l-4 border-blue-500">
+                    <h2 class="text-xl font-medium text-white mb-3">
+                        Contexte du Projet
+                    </h2>
+
+                    <div class="text-gray-300 space-y-3">
+                        <p>
+                            Dans le cadre d'une initiative de recyclage innovante, ce projet vise à développer
+                            un système mécanique de tri automatisé pour une usine de traitement des déchets.
+                        </p>
+
+                        <p>
+                            Le convoyeur doit permettre la séparation de différents types de matériaux
+                            selon leurs propriétés physiques, avec une exigence particulière de robustesse
+                            et de maintenance simplifiée.
+                        </p>
+
+                        <p class="text-blue-300 italic">
+                            Challenge : concevoir une solution mécanique fiable pour environnement industriel,
+                            dans des délais serrés et avec un budget contraint.
+                        </p>
+                    </div>
+                </section>
+
+                <!-- Choix des Matériaux -->
+                <section class="section-card p-8 mb-8" id="choix-materiaux">
+                    <h2 class="text-2xl font-bold mb-6 flex items-center" style="color:var(--secondary);">
+                        <i class="fa-solid fa-atom mr-3 text-cyber-blue text-2xl"></i>
+                        Sélection des Matériaux
+                    </h2>
+
+                    <!-- Stratégie Globale -->
+                    <div class="bg-gray-900 p-6 rounded-lg border border-cyber-blue mb-8">
+                        <h3 class="text-xl font-semibold mb-4 flex items-center" style="color:var(--cyber-purple);">
+                            <i class="fa-solid fa-chess-board mr-3"></i> Stratégie Matériaux
+                        </h3>
+                        <div class="flex items-start">
+                            <div class="mr-6 text-cyber-blue text-5xl">
+                                <i class="fa-solid fa-print"></i>
+                            </div>
+                            <div>
+                                <p class="text-lg mb-3">
+                                    <strong>Approche retenue :</strong> Utilisation maximale du PLA pour l'impression 3D
+                                    des composants structurels, combiné à des éléments spécifiques pour les parties
+                                    mobiles.
+                                </p>
+                                <div class="grid grid-cols-2 md:grid-cols-3 gap-4 mt-4">
+                                    <div class="bg-gray-800 p-3 rounded text-center">
+                                        <div class="text-cyber-blue text-2xl mb-1"><i class="fa-solid fa-cube"></i>
+                                        </div>
+                                        <p class="font-bold">Structure</p>
+                                        <p class="text-sm">100% PLA</p>
+                                    </div>
+                                    <div class="bg-gray-800 p-3 rounded text-center">
+                                        <div class="text-cyber-blue text-2xl mb-1"><i class="fa-solid fa-cogs"></i>
+                                        </div>
+                                        <p class="font-bold">Mécanique</p>
+                                        <p class="text-sm">PLA + Roulements</p>
+                                    </div>
+                                    <div class="bg-gray-800 p-3 rounded text-center">
+                                        <div class="text-cyber-blue text-2xl mb-1"><i class="fa-solid fa-belt"></i>
+                                        </div>
+                                        <p class="font-bold">Transmission</p>
+                                        <p class="text-sm">Bande PVC</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Détail PLA -->
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+                        <div class="bg-gray-900 p-6 rounded-lg border border-cyber-blue">
+                            <h3 class="text-xl font-semibold mb-4 flex items-center" style="color:var(--cyber-purple);">
+                                <i class="fa-solid fa-cube mr-3"></i> PLA - Acide Polylactique
+                            </h3>
+                            <div class="flex mb-4">
+                                <img src="https://www.twi-global.com/image-library/hero/abs-pla-filament-istock-1032726224.jpg"
+                                    alt="Pièces imprimées en PLA" class="w-1/2 rounded-lg mr-4">
+                                <div>
+                                    <p class="text-sm mb-2"><strong>Utilisation :</strong> Toutes les pièces imprimées
+                                        (châssis, supports, guides)</p>
+                                    <p class="text-sm"><strong>Paramètres :</strong> 100% remplissage pour les pièces
+                                        structurelles</p>
+                                </div>
+                            </div>
+                            <div class="grid grid-cols-2 gap-4 text-sm">
+                                <div>
+                                    <p class="font-semibold underline mb-1">Avantages</p>
+                                    <ul class="list-disc pl-5 space-y-1">
+                                        <li>Excellent rapport rigidité/poids</li>
+                                        <li>Faible warping (déformation)</li>
+                                        <li>Compatibilité avec tous les types d'imprimantes</li>
+                                    </ul>
+                                </div>
+                                <div>
+                                    <p class="font-semibold underline mb-1">Optimisations</p>
+                                    <ul class="list-disc pl-5 space-y-1">
+                                        <li>Orientation des pièces pendant l'impression</li>
+                                        <li>Choix des paramètres de remplissage</li>
+                                        <li>Post-traitement minimal</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Détail PVC -->
+                        <div class="bg-gray-900 p-6 rounded-lg border border-cyber-blue">
+                            <h3 class="text-xl font-semibold mb-4 flex items-center" style="color:var(--cyber-purple);">
+                                <i class="fa-solid fa-belt mr-3"></i> Bande
+                            </h3>
+                            <div class="flex mb-4">
+                                <img src="courroie.png" alt="Bande " class="w-1/2 rounded-lg mr-4">
+                                <div>
+                                    <p class="text-sm mb-2"><strong>Utilisation :</strong> Bande transporteuse
+                                        principale</p>
+                                    <p class="text-sm"><strong>Spécifications :</strong> Largeur 120mm, épaisseur 2mm
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="grid grid-cols-2 gap-4 text-sm">
+                                <div>
+                                    <p class="font-semibold underline mb-1">Propriétés</p>
+                                    <ul class="list-disc pl-5 space-y-1">
+                                        <li>Adhérence adaptée aux cubes</li>
+                                        <li>Flexibilité pour enroulement</li>
+                                        <li>Résistance à l'abrasion</li>
+                                    </ul>
+                                </div>
+                                <div>
+                                    <p class="font-semibold underline mb-1">Intégration</p>
+                                    <ul class="list-disc pl-5 space-y-1">
+                                        <li>Fixation par collage</li>
+                                        <li>Tension réglable</li>
+                                        <li>Compatibilité avec les tambours PLA</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Roulements -->
+                    <div class="bg-gray-900 p-6 rounded-lg border border-cyber-blue">
+                        <h3 class="text-xl font-semibold mb-4 flex items-center" style="color:var(--cyber-purple);">
+                            <i class="fa-solid fa-bearings mr-3"></i> Roulements Métalliques
+                        </h3>
+                        <div class="flex flex-col md:flex-row">
+                            <img src="https://sdn-distrib.com/29179-large_default/roulement-a-billes-inox-6300-2rs-ss-etanche-eau-et-poussiere-diametre-10x35x11mm-codex.jpg"
+                                alt="Roulements" class="md:w-1/3 rounded-lg mb-4 md:mb-0 md:mr-6">
+                            <div>
+                                <p class="mb-3"><strong>Type :</strong> Roulements à billes étanches (6300-2RS)</p>
+                                <p class="mb-3"><strong>Justification :</strong> Nécessité de faible friction pour les
+                                    parties rotatives</p>
+                                <div class="grid grid-cols-2 gap-4 text-sm">
+                                    <div>
+                                        <p class="font-semibold">Caractéristiques</p>
+                                        <ul class="list-disc pl-5">
+                                            <li>Diamètre intérieur: 12mm</li>
+                                            <li>Charge dynamique: 5.6kN</li>
+                                            <li>Vitesse max: 14,000 tr/min</li>
+                                        </ul>
+                                    </div>
+                                    <div>
+                                        <p class="font-semibold">Intégration</p>
+                                        <ul class="list-disc pl-5">
+                                            <li>Press-fit dans les pièces PLA</li>
+                                            <li>Jeu axial contrôlé</li>
+                                            <li>Lubrification permanente</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Avantages-->
+                    <div class="mt-8 bg-gray-900 p-6 rounded-lg border border-cyber-blue">
+                        <h3 class="text-xl font-semibold mb-4" style="color:var(--cyber-purple);">
+                            <i class="fa-solid fa-check-double mr-2"></i> Avantages
+                        </h3>
+
+                        <div>
+                            <ul class="list-disc pl-6 space-y-2">
+                                <li>Coût total réduit de 60% vs solutions métalliques</li>
+                                <li>Temps de production divisé par 3</li>
+                                <li>Maintenance simplifiée</li>
+                        </div>
+                    </div>
+                </section>
+                <!-- Liste des Composants (version minimaliste) -->
+                <section class="section-card p-8 mb-8" id="liste-composants">
+                    <h2 class="text-2xl font-bold mb-6 flex items-center" style="color:var(--secondary);">
+                        <i class="fa-solid fa-list-check mr-3 text-cyber-blue text-2xl"></i>
+                        Inventaire des Pièces
+                    </h2>
+
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-4 text-sm">
+                        <!-- Colonne 1 -->
+                        <div>
+                            <h3 class="font-semibold text-cyber-blue mb-2 border-b border-cyber-blue pb-1">Structure
+                            </h3>
+                            <ul class="list-disc pl-5 space-y-1">
+                                <li>Châssis principal</li>
+                                <li>Support latéral gauche</li>
+                                <li>Support latéral droit</li>
+                                <li>Guide d'entrée gauche</li>
+                                <li>Guide d'entrée droit</li>
+                                <li>Plancher capteur couleur</li>
+                            </ul>
+                        </div>
+
+                        <!-- Colonne 2 -->
+                        <div>
+                            <h3 class="font-semibold text-cyber-blue mb-2 border-b border-cyber-blue pb-1">Mécanique
+                            </h3>
+                            <ul class="list-disc pl-5 space-y-1">
+                                <li>Tambour moteur</li>
+                                <li>Tambour de retour</li>
+                                <li>Palier simple (x2)</li>
+                                <li>Palier moteur</li>
+                                <li>Roulements 6300-2RS (x4)</li>
+                                <li>Bande PVC 120mm</li>
+                            </ul>
+                        </div>
+
+                        <!-- Colonne 3 -->
+                        <div>
+                            <h3 class="font-semibold text-cyber-blue mb-2 border-b border-cyber-blue pb-1">Système</h3>
+                            <ul class="list-disc pl-5 space-y-1">
+                                <li>Planche aiguillage (x2)</li>
+                                <li>Support aiguillage</li>
+                                <li>Axe rotatif</li>
+                                <li>Support servomoteurs</li>
+                                <li>Tige servo</li>
+                                <li>Capteur couleur</li>
+                            </ul>
+                        </div>
+                    </div>
+                </section>
+                <!-- Modélisation CAO Complète -->
+                <section class="section-card p-8 mb-8" id="modelisation">
+                    <h2 class="text-2xl font-bold mb-6 flex items-center" style="color:var(--secondary);">
+                        <i class="fa-solid fa-cube mr-3 text-cyber-blue text-2xl"></i>
+                        Modélisation CAO Complète
+                    </h2>
+
+                    <!-- Catalogue des Pièces -->
+                    <div class="mb-8" id="pieces-detaillees">
+                        <h3 class="text-xl font-semibold mb-6 flex items-center" style="color:var(--cyber-purple);">
+                            <i class="fa-solid fa-puzzle-piece mr-3"></i> Catalogue des Pièces
+                        </h3>
+
+                        <!-- Disposition en 2 colonnes avec grandes images -->
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+
+                            <!-- Ligne 1 -->
+                            <div class="bg-gray-900 p-4 rounded-lg border-2 border-cyber-blue h-full">
+                                <img src="support1-1.png" alt="Support gauche section A"
+                                    class="w-full h-48 object-contain mx-auto mb-3">
+                                <h4 class="font-bold text-lg text-center text-cyber-blue">Support Gauche - Section A
+                                </h4>
+                                <p class="text-center">Partie supérieure - PLA</p>
+                                <p class="text-center text-sm mt-1">Dimensions : 225×100×12mm</p>
+                            </div>
+
+                            <div class="bg-gray-900 p-4 rounded-lg border-2 border-cyber-blue h-full">
+                                <img src="support1-2.png" alt="Support gauche section B"
+                                    class="w-full h-48 object-contain mx-auto mb-3">
+                                <h4 class="font-bold text-lg text-center text-cyber-blue">Support Gauche - Section B
+                                </h4>
+                                <p class="text-center">Partie centrale - PLA</p>
+                                <p class="text-center text-sm mt-1">Dimensions : 200×85×12mm</p>
+                            </div>
+
+                            <!-- Ligne 2 -->
+                            <div class="bg-gray-900 p-4 rounded-lg border-2 border-cyber-blue h-full">
+                                <img src="support1-3.png" alt="Support gauche section C"
+                                    class="w-full h-48 object-contain mx-auto mb-3">
+                                <h4 class="font-bold text-lg text-center text-cyber-blue">Support Gauche - Section C
+                                </h4>
+                                <p class="text-center">Partie inférieure - PLA</p>
+                                <p class="text-center text-sm mt-1">Dimensions : 225×100×12mm</p>
+                            </div>
+
+                            <div class="bg-gray-900 p-4 rounded-lg border-2 border-cyber-blue h-full">
+                                <img src="support2-1.png" alt="Support droit section A"
+                                    class="w-full h-48 object-contain mx-auto mb-3">
+                                <h4 class="font-bold text-lg text-center text-cyber-blue">Support Droit - Section A</h4>
+                                <p class="text-center">Partie supérieure - PLA</p>
+                                <p class="text-center text-sm mt-1">Dimensions : 225×100×12mm</p>
+                            </div>
+
+                            <!-- Ligne 3 -->
+                            <div class="bg-gray-900 p-4 rounded-lg border-2 border-cyber-blue h-full">
+                                <img src="support2-2.png" alt="Support droit section B"
+                                    class="w-full h-48 object-contain mx-auto mb-3">
+                                <h4 class="font-bold text-lg text-center text-cyber-blue">Support Droit - Section B</h4>
+                                <p class="text-center">Partie centrale - PLA</p>
+                                <p class="text-center text-sm mt-1">Dimensions : 200×85×12mm</p>
+                            </div>
+
+                            <div class="bg-gray-900 p-4 rounded-lg border-2 border-cyber-blue h-full">
+                                <img src="support2-3.png" alt="Support droit section C"
+                                    class="w-full h-48 object-contain mx-auto mb-3">
+                                <h4 class="font-bold text-lg text-center text-cyber-blue">Support Droit - Section C</h4>
+                                <p class="text-center">Partie inférieure - PLA</p>
+                                <p class="text-center text-sm mt-1">Dimensions : 225×100×12mm</p>
+                            </div>
+
+                            <!-- Ligne 4 -->
+                            <div class="bg-gray-900 p-4 rounded-lg border-2 border-cyber-blue h-full">
+                                <img src="tambou_moteur.png" alt="Tambour moteur"
+                                    class="w-full h-48 object-contain mx-auto mb-3">
+                                <h4 class="font-bold text-lg text-center text-cyber-blue">Tambour Moteur</h4>
+                                <p class="text-center">Ø60mm - PLA</p>
+                            </div>
+
+                            <div class="bg-gray-900 p-4 rounded-lg border-2 border-cyber-blue h-full">
+                                <img src="tambou_secondaire.png" alt="Tambour retour"
+                                    class="w-full h-48 object-contain mx-auto mb-3">
+                                <h4 class="font-bold text-lg text-center text-cyber-blue">Tambour Retour</h4>
+                                <p class="text-center">Ø60mm - PLA</p>
+                            </div>
+
+                            <!-- Ligne 5 -->
+                            <div class="bg-gray-900 p-4 rounded-lg border-2 border-cyber-blue h-full">
+                                <img src="guidelateral.png" alt="Guide gauche"
+                                    class="w-full h-48 object-contain mx-auto mb-3">
+                                <h4 class="font-bold text-lg text-center text-cyber-blue">Guide Gauche</h4>
+                                <p class="text-center">Angle 45° - PLA</p>
+                            </div>
+
+                            <div class="bg-gray-900 p-4 rounded-lg border-2 border-cyber-blue h-full">
+                                <img src="guidelateral.png" alt="Guide droit"
+                                    class="w-full h-48 object-contain mx-auto mb-3">
+                                <h4 class="font-bold text-lg text-center text-cyber-blue">Guide Droit</h4>
+                                <p class="text-center">Angle 45° - PLA</p>
+                            </div>
+
+                            <!-- Ligne 6 -->
+                            <div class="bg-gray-900 p-4 rounded-lg border-2 border-cyber-blue h-full">
+                                <img src="planche.png" alt="Planches aiguillage"
+                                    class="w-full h-48 object-contain mx-auto mb-3">
+                                <h4 class="font-bold text-lg text-center text-cyber-blue">Planches Aiguillage Fixe</h4>
+                                <p class="text-center">3× - PLA</p>
+                            </div>
+
+                            <div class="bg-gray-900 p-4 rounded-lg border-2 border-cyber-blue h-full">
+                                <img src="planche_asso.png" alt="Planches aiguillage"
+                                    class="w-full h-48 object-contain mx-auto mb-3">
+                                <h4 class="font-bold text-lg text-center text-cyber-blue">Planches Aiguillage mobile
+                                </h4>
+                                <p class="text-center">3× - PLA</p>
+                            </div>
+
+                            <!-- Ligne 7 -->
+                            <div class="bg-gray-900 p-4 rounded-lg border-2 border-cyber-blue h-full">
+                                <img src="traverse_tri.png" alt="Support aiguillage"
+                                    class="w-full h-48 object-contain mx-auto mb-3">
+                                <h4 class="font-bold text-lg text-center text-cyber-blue">Support Aiguillage</h4>
+                                <p class="text-center">Maintient des planches</p>
+                            </div>
+
+                            <div class="bg-gray-900 p-4 rounded-lg border-2 border-cyber-blue h-full">
+                                <img src="pallierroulement.png" alt="Palier simple"
+                                    class="w-full h-48 object-contain mx-auto mb-3">
+                                <h4 class="font-bold text-lg text-center text-cyber-blue">Palier Simple</h4>
+                                <p class="text-center">Roulement 6300-2RS</p>
+                            </div>
+
+                            <!-- Ligne 8 -->
+                            <div class="bg-gray-900 p-4 rounded-lg border-2 border-cyber-blue h-full">
+                                <img src="pallierRmoteur.png" alt="Palier moteur"
+                                    class="w-full h-48 object-contain mx-auto mb-3">
+                                <h4 class="font-bold text-lg text-center text-cyber-blue">Palier Moteur</h4>
+                                <p class="text-center">Roulement 6300-2RS + Entraînement</p>
+                            </div>
+
+                            <div class="bg-gray-900 p-4 rounded-lg border-2 border-cyber-blue h-full">
+                                <img src="traverse_capteur.png" alt="Plancher capteur"
+                                    class="w-full h-48 object-contain mx-auto mb-3">
+                                <h4 class="font-bold text-lg text-center text-cyber-blue">Plancher Capteur</h4>
+                                <p class="text-center">Support TCS3752</p>
+                            </div>
+
+                            <!-- Ligne 9 -->
+                            <div class="bg-gray-900 p-4 rounded-lg border-2 border-cyber-blue h-full">
+                                <img src="tigefenetre.png" alt="Axe rotatif"
+                                    class="w-full h-48 object-contain mx-auto mb-3">
+                                <h4 class="font-bold text-lg text-center text-cyber-blue">Axe Rotatif</h4>
+                                <p class="text-center">Ø4×37.5mm</p>
+                            </div>
+
+                            <div class="bg-gray-900 p-4 rounded-lg border-2 border-cyber-blue h-full">
+                                <img src="tige_planche.png" alt="Axe fixation"
+                                    class="w-full h-48 object-contain mx-auto mb-3">
+                                <h4 class="font-bold text-lg text-center text-cyber-blue">Axe fixation</h4>
+                                <p class="text-center">Ø6×86.5mm</p>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- 2. Processus d'assemblage -->
+                    <div class="mb-8" id="processus-assemblage">
+                        <h3 class="text-xl font-semibold mb-4 flex items-center" style="color:var(--cyber-purple);">
+                            <i class="fa-solid fa-cogs mr-2"></i> Séquence d'Assemblage
+                        </h3>
+
+                        <div class="bg-gray-900 p-6 rounded-lg border border-cyber-blue">
+                            <div class="flex flex-col md:flex-row gap-6">
+                                <!-- Étapes -->
+                                <div class="flex-1">
+                                    <h4 class="font-bold text-cyber-blue mb-3 border-b border-cyber-blue pb-1">Étapes
+                                        Clés</h4>
+                                    <ol class="list-decimal pl-5 space-y-3">
+                                        <li>
+                                            <strong>Montage structurel</strong>
+                                            <ul class="list-disc pl-5 text-sm mt-1">
+                                                <li>Assemblage supports latéraux</li>
+                                                <li>Fixation plancher capteur</li>
+                                            </ul>
+                                        </li>
+                                        <li>
+                                            <strong>Installation mécanique</strong>
+                                            <ul class="list-disc pl-5 text-sm mt-1">
+                                                <li>Montage tambours + roulements</li>
+                                                <li>Pose bande transporteuse</li>
+                                            </ul>
+                                        </li>
+                                        <li>
+                                            <strong>Intégration système</strong>
+                                            <ul class="list-disc pl-5 text-sm mt-1">
+                                                <li>Aiguillage + servomoteurs</li>
+                                                <li>Capteurs couleur</li>
+                                            </ul>
+                                        </li>
+                                    </ol>
+                                </div>
+
+                                <!-- Visualisation -->
+                                <div class="flex-1">
+                                    <h4 class="font-bold text-cyber-blue mb-3 border-b border-cyber-blue pb-1">
+                                        Visualisation 3D</h4>
+                                    <img src="images/assemblage_etapes.gif" alt="Animation assemblage"
+                                        class="rounded-lg shadow-lg w-full">
+                                    <p class="text-xs text-center mt-2">Animation du processus d'assemblage</p>
+                                </div>
+                            </div>
+
+                            <div class="mt-6 p-4 bg-gray-800 rounded-lg">
+                                <p class="text-sm"><i class="fa-solid fa-tools text-cyber-blue mr-2"></i>
+                                    <strong>Outillage requis :</strong> Clé Allen 3mm, tournevis cruciforme, jauge
+                                    d'alignement
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 3. Validation -->
+                    <div id="validation-complete">
+                        <h3 class="text-xl font-semibold mb-4 flex items-center" style="color:var(--cyber-purple);">
+                            <i class="fa-solid fa-check-circle mr-2"></i> Validation Complète
+                        </h3>
+
+                        <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                            <!-- Contraintes -->
+                            <div class="bg-gray-900 p-4 rounded-lg border border-cyber-blue">
+                                <h4 class="font-bold text-cyber-blue mb-2 flex items-center">
+                                    <i class="fa-solid fa-weight-hanging mr-2"></i> Résistance
+                                </h4>
+                                <p class="text-xs">Facteur de sécurité > 2.5 sur toutes les pièces en PLA</p>
+                            </div>
+
+                            <!-- Cinématique -->
+                            <div class="bg-gray-900 p-4 rounded-lg border border-cyber-blue">
+                                <h4 class="font-bold text-cyber-blue mb-2 flex items-center">
+                                    <i class="fa-solid fa-route mr-2"></i> Cinématique
+                                </h4>
+                                <p class="text-xs">Aucune interférence dans la plage de mouvement</p>
+                            </div>
+
+                            <!-- Tolérances -->
+                            <div class="bg-gray-900 p-4 rounded-lg border border-cyber-blue">
+                                <h4 class="font-bold text-cyber-blue mb-2 flex items-center">
+                                    <i class="fa-solid fa-ruler-combined mr-2"></i> Tolérances
+                                </h4>
+                                <p class="text-xs">Jeux fonctionnels < 0.5mm sur les parties mobiles</p>
+                            </div>
+                        </div>
+
+                        <div class="mt-6 bg-gray-900 p-4 rounded-lg border border-green-500">
+                            <p class="text-green-400 font-semibold flex items-center">
+                                <i class="fa-solid fa-circle-check mr-2"></i>
+                                Tous les composants répondent aux spécifications mécaniques avec une marge de sécurité
+                                de 20%
+                            </p>
+                        </div>
+                    </div>
+                </section>
+                <!-- Dimensionnement Section -->
+                <section class="section-card p-8 mb-8" id="dimensionnement">
+                    <h2 class="text-2xl font-bold mb-4 flex items-center" style="color:var(--secondary);">
+                        <i class="fa-solid fa-ruler-combined mr-3 text-cyber-blue text-2xl"></i>
+                        Dimensionnement
+                    </h2>
+                    <p class="mb-4 text-lg">Le dimensionnement du convoyeur à bande est réalisé en fonction des
+                        spécifications du cahier des charges :</p>
+                    <ul class="list-disc pl-6 space-y-2 mb-4 text-lg">
+                        <li><strong>Longueur totale :</strong> 650 mm (imposée)</li>
+                        <li><strong>Hauteur du tapis :</strong> 100 mm par rapport au sol</li>
+                        <li><strong>Largeur de la bande :</strong> 150 mm (adaptée aux cubes de 30 mm) </li>
+                        <li><strong>Zone de détection :</strong> positionnée à mi-parcours pour optimiser le tri</li>
+                        <li><strong>Réceptacles de tri :</strong> dimensionnés pour accueillir plusieurs cubes de 30 mm
+                        </li>
+                    </ul>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mt-6">
+                        <div>
+                            <h3 class="text-lg font-semibold mb-2" style="color:var(--cyber-purple);">Schéma coté</h3>
+                            <img src="img2.png" alt="Schéma coté" class="rounded-lg shadow-lg">
+                        </div>
+                        <div>
+                            <h3 class="text-lg font-semibold mb-2" style="color:var(--cyber-purple);">Plan d'ensemble
+                            </h3>
+                            <img src="convoyeur.png" alt="Plan d'ensemble" class="rounded-lg shadow-lg">
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Section Téléchargement Simplifiée -->
+                <section class="section-card p-8 mb-8" id="telechargement">
+                    <h2 class="text-2xl font-bold mb-6 flex items-center" style="color:var(--secondary);">
+                        <i class="fa-solid fa-download mr-3 text-cyber-blue text-2xl"></i>
+                        Télécharger les Fichiers du Projet
+                    </h2>
+
+                    <!-- Conteneur principal avec disposition en colonnes pour desktop -->
+                    <div class="flex flex-col space-y-6">
+
+                        <!-- Pack Complet SolidWorks -->
+                        <div
+                            class="bg-gray-900 p-6 rounded-lg border-2 border-cyber-blue hover:border-accent transition-all">
+                            <div class="flex flex-col md:flex-row md:items-center">
+                                <!-- Partie gauche : Icône + Description -->
+                                <div class="flex items-center mb-4 md:mb-0 md:w-1/2">
+                                    <i class="fa-brands fa-solidworks text-5xl text-orange-500 mr-4"></i>
+                                    <div>
+                                        <h3 class="text-xl font-bold">Pack Complet SolidWorks</h3>
+                                        <p class="text-sm opacity-80">Tous les fichiers sources (.SLDASM, .SLDPRT)</p>
+                                    </div>
+                                </div>
+
+                                <!-- Partie droite : Liste + Bouton -->
+                                <div class="md:w-1/2 md:pl-4">
+                                    <ul class="text-sm mb-3 space-y-1">
+                                        <li class="flex items-center">
+                                            <i class="fa-solid fa-check-circle text-green-400 mr-2"></i>
+                                            Assemblage principal et sous-ensembles
+                                        </li>
+                                        <li class="flex items-center">
+                                            <i class="fa-solid fa-check-circle text-green-400 mr-2"></i>
+                                            42 pièces détachées
+                                        </li>
+                                        <li class="flex items-center">
+                                            <i class="fa-solid fa-check-circle text-green-400 mr-2"></i>
+                                            Des images inclues
+                                        </li>
+                                    </ul>
+                                    <div class="flex justify-end">
+                                        <a href="Assemblage.rar" download
+                                            class="btn flex items-center justify-center w-full md:w-auto">
+                                            <i class="fa-solid fa-file-archive mr-2"></i>
+                                            Télécharger .RAR
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Pack STL pour Impression 3D -->
+                        <div
+                            class="bg-gray-900 p-6 rounded-lg border-2 border-cyber-blue hover:border-accent transition-all">
+                            <div class="flex flex-col md:flex-row md:items-center">
+                                <!-- Partie gauche : Icône + Description -->
+                                <div class="flex items-center mb-4 md:mb-0 md:w-1/2">
+                                    <i class="fa-solid fa-print text-5xl text-cyber-blue mr-4"></i>
+                                    <div>
+                                        <h3 class="text-xl font-bold">Pack Impression 3D</h3>
+                                        <p class="text-sm opacity-80">Fichiers STL prêts à imprimer</p>
+                                    </div>
+                                </div>
+
+                                <!-- Partie droite : Liste + Bouton -->
+                                <div class="md:w-1/2 md:pl-4">
+                                    <ul class="text-sm mb-3 space-y-1">
+                                        <li class="flex items-center">
+                                            <i class="fa-solid fa-check-circle text-green-400 mr-2"></i>
+                                            Toutes les pièces au format .STL
+                                        </li>
+                                    </ul>
+                                    <div class="flex justify-end">
+                                        <a href="Fichier_Imp3D.rar" download
+                                            class="btn flex items-center justify-center w-full md:w-auto">
+                                            <i class="fa-solid fa-file-zipper mr-2"></i>
+                                            Télécharger .ZIP
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Notes Techniques -->
+                    <div class="mt-8 bg-gray-900 p-6 rounded-lg border border-cyber-blue">
+                        <h3 class="text-xl font-semibold mb-4 flex items-center" style="color:var(--cyber-purple);">
+                            <i class="fa-solid fa-circle-info mr-2"></i>
+                            Informations Importantes
+                        </h3>
+
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <!-- Colonne Recommandations -->
+                            <div>
+                                <h4 class="font-bold text-cyber-blue mb-2">Recommandations</h4>
+                                <ul class="list-disc pl-5 text-sm space-y-2">
+                                    <li>SolidWorks 2025 pour les fichiers sources</li>
+                                    <li>Vérifier les chemins des dépendances après extraction</li>
+                                    <li>Imprimer avec un remplissage de 20-40% selon la pièce</li>
+                                </ul>
+                            </div>
+
+                            <!-- Colonne Avertissement (étendue sur mobile) -->
+                            <div class="md:col-span-1">
+                                <div class="bg-gray-800 p-4 rounded-lg flex items-start">
+                                    <i class="fa-solid fa-triangle-exclamation text-yellow-400 mt-1 mr-3"></i>
+                                    <p class="text-sm">
+                                        Pour l'impression, ajustez les paramètres selon votre machine.
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Section Rendu Physique avec Voir Plus -->
+                <section class="section-card p-8 mb-8" id="rendu-physique">
+                    <h2 class="text-2xl font-bold mb-6 flex items-center justify-between"
+                        style="color:var(--secondary);">
+                        <span class="flex items-center">
+                            <i class="fa-solid fa-cube mr-3 text-cyber-blue text-2xl"></i>
+                            Prototype Final
+                        </span>
+                        <a href="https://tekbot-robotics-challenge.github.io/2025-Team-UCAO-TECH-Docs/Test_Final/Galerie/galerie.html#"
+                            class="text-sm font-normal flex items-center text-cyber-blue hover:text-accent transition">
+                            Voir plus <i class="fa-solid fa-arrow-right ml-1"></i>
+                        </a>
+                    </h2>
+
+                    <!-- Contenu Principal - Nouvelle disposition -->
+                    <div class="flex flex-col lg:flex-row gap-6 mb-6">
+                        <!-- Colonne de gauche (Vidéo) -->
+                        <div class="lg:w-2/3">
+                            <div
+                                class="bg-gray-900 rounded-lg overflow-hidden border-2 border-cyber-blue hover:border-accent transition h-full">
+                                <video controls class="w-full h-full max-h-96" poster="videos/poster_demo.jpg">
+                                    <source src="Images/video_demo.mp4" type="video/mp4">
+                                    Votre navigateur ne supporte pas les vidéos HTML5
+                                </video>
+                                <div class="p-3 bg-gray-800 text-center">
+                                    <p class="text-sm text-cyber-blue"><i
+                                            class="fas fa-play-circle mr-2"></i>Démonstration du convoyeur en action</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Colonne de droite (Images principales) -->
+                        <div class="lg:w-1/3 flex flex-col gap-4">
+                            <div
+                                class="bg-gray-900 rounded-lg overflow-hidden border-2 border-cyber-blue hover:border-accent transition flex-1">
+                                <img src="Images/Convoyeur.jpg" alt="Vue complète du convoyeur"
+                                    class="w-full h-48 object-cover hover:scale-105 transition duration-500">
+                                <div class="p-3 bg-gray-800">
+                                    <p class="text-sm text-center text-cyber-blue"><i class="fas fa-camera mr-2"></i>Vue
+                                        d'ensemble</p>
+                                </div>
+                            </div>
+
+                            <div class="grid grid-cols-2 gap-3 flex-1">
+                                <div
+                                    class="bg-gray-900 rounded-lg overflow-hidden border-2 border-cyber-blue hover:border-accent transition">
+                                    <img src="Images/img1.jpg" alt="Détail mécanique"
+                                        class="w-full h-full max-h-40 object-cover">
+                                    <div class="p-2 bg-gray-800">
+                                        <p class="text-xs text-center text-cyber-blue">Détail mécanique</p>
+                                    </div>
+                                </div>
+                                <div
+                                    class="bg-gray-900 rounded-lg overflow-hidden border-2 border-cyber-blue hover:border-accent transition">
+                                    <img src="Images/img2.jpg" alt="Test en cours"
+                                        class="w-full h-full max-h-40 object-cover">
+                                    <div class="p-2 bg-gray-800">
+                                        <p class="text-xs text-center text-cyber-blue">Test en cours</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Mini-galerie avec aperçu -->
+                    <div class="grid grid-cols-3 gap-3 mb-6">
+                        <a href="https://tekbot-robotics-challenge.github.io/2025-Team-UCAO-TECH-Docs/Test_Final/Galerie/galerie.html#"
+                            class="group relative overflow-hidden rounded border-2 border-gray-700 hover:border-cyber-blue transition">
+                            <img src="Images/img1.jpg" alt="Détail mécanique"
+                                class="w-full h-28 object-cover group-hover:scale-110 transition duration-300">
+                            <div
+                                class="absolute inset-0 bg-black bg-opacity-40 flex items-center justify-center opacity-0 group-hover:opacity-100 transition">
+                                <i class="fas fa-search-plus text-white text-xl"></i>
+                            </div>
+                        </a>
+                        <a href="https://tekbot-robotics-challenge.github.io/2025-Team-UCAO-TECH-Docs/Test_Final/Galerie/galerie.html#"
+                            class="group relative overflow-hidden rounded border-2 border-gray-700 hover:border-cyber-blue transition">
+                            <img src="Images/img2.jpg" alt="Test en cours"
+                                class="w-full h-28 object-cover group-hover:scale-110 transition duration-300">
+                            <div
+                                class="absolute inset-0 bg-black bg-opacity-40 flex items-center justify-center opacity-0 group-hover:opacity-100 transition">
+                                <i class="fas fa-search-plus text-white text-xl"></i>
+                            </div>
+                        </a>
+                        <a href="https://tekbot-robotics-challenge.github.io/2025-Team-UCAO-TECH-Docs/Test_Final/Galerie/galerie.html#"
+                            class="group relative overflow-hidden rounded border-2 border-gray-700 hover:border-cyber-blue transition">
+                            <img src="Images/img3.jpg" alt="Vue technique"
+                                class="w-full h-28 object-cover group-hover:scale-110 transition duration-300">
+                            <div
+                                class="absolute inset-0 bg-black bg-opacity-40 flex items-center justify-center opacity-0 group-hover:opacity-100 transition">
+                                <i class="fas fa-search-plus text-white text-xl"></i>
+                            </div>
+                        </a>
+                    </div>
+
+                    <!-- Bouton Voir Plus -->
+                    <div class="flex justify-center mt-4">
+                        <a href="https://tekbot-robotics-challenge.github.io/2025-Team-UCAO-TECH-Docs/Test_Final/Galerie/galerie.html#"
+                            class="btn flex items-center px-6 py-2">
+                            <i class="fas fa-images mr-2"></i>
+                            Voir toutes les photos/vidéos
+                        </a>
+                    </div>
+                </section>
+                <!-- Observations Techniques -->
+                <div class="bg-gray-900 p-6 rounded-lg border border-cyber-blue">
+                    <h3 class="text-xl font-semibold mb-4" style="color:var(--cyber-purple);">
+                        Retour d'Expérience
+                    </h3>
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div>
+                            <h4 class="font-bold text-cyber-blue mb-2">Ce qui fonctionne bien</h4>
+                            <ul class="list-disc pl-5 space-y-2">
+                                <li>Fluidité du convoyeur</li>
+                                <li>Robustesse générale</li>
+                            </ul>
+                        </div>
+                        <div>
+                            <h4 class="font-bold text-cyber-blue mb-2">Points à améliorer</h4>
+                            <ul class="list-disc pl-5 space-y-2">
+                                <li>Stabilité à haute vitesse</li>
+                                <li>Bruit des mécanismes</li>
+                                <li>L'entrainement normale de la courroie</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                </section>
+                <!-- Conclusion Section -->
+                <section class="section-card p-8 mb-8" id="conclusion-meca">
+                    <h2 class="text-2xl font-bold mb-4 flex items-center" style="color:var(--secondary);">
+                        <i class="fa-solid fa-flag-checkered mr-3 text-cyber-blue text-2xl"></i>
+                        Conclusion
+                    </h2>
+                    <p class="mb-4 text-lg">
+                        Le convoyeur à bande conçu dans ce projet répond à l'ensemble des exigences du cahier des
+                        charges et des jurys : robustesse, sécurité, modularité, documentation et évolutivité. La
+                        démarche collaborative, la traçabilité sur GitHub et l'intégration des contraintes mécaniques,
+                        électroniques et informatiques garantissent la réussite du projet et sa réutilisation lors du
+                        challenge final.
+                    </p>
+                </section>
+            </div>
+        </main>
+    </div>
+
+    <!-- Scripts -->
+    <script>
+        // Gestion du menu mobile
+        document.getElementById('mobile-menu-button').addEventListener('click', function () {
+            const nav = document.querySelector('nav');
+            nav.classList.toggle('hidden');
+            nav.classList.toggle('flex');
+            nav.classList.toggle('absolute');
+            nav.classList.toggle('top-16');
+            nav.classList.toggle('right-4');
+            nav.classList.toggle('bg-gray-900');
+            nav.classList.toggle('p-4');
+            nav.classList.toggle('rounded-lg');
+            nav.classList.toggle('shadow-lg');
+        });
+
+        // Gestion du sommaire interactif
+        document.querySelectorAll('.sommaire-link').forEach(link => {
+            link.addEventListener('click', function (e) {
+                if (this.parentElement.querySelector('ul')) return;
+
+                document.querySelectorAll('.sommaire-link').forEach(l => {
+                    l.classList.remove('active-sommaire');
+                });
+
+                this.classList.add('active-sommaire');
+
+                const parentLi = this.closest('li');
+                if (parentLi && parentLi.querySelector('ul.sommaire-sous')) {
+                    parentLi.classList.toggle('active-section');
+                }
+            });
+        });
+
+        // Mise en surbrillance de la section active
+        window.addEventListener('scroll', function () {
+            const sections = document.querySelectorAll('.section-card');
+            const scrollPosition = window.scrollY + 200;
+
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop;
+                const sectionHeight = section.offsetHeight;
+                const sectionId = section.getAttribute('id');
+
+                if (scrollPosition >= sectionTop && scrollPosition < sectionTop + sectionHeight) {
+                    document.querySelectorAll('.sommaire-link').forEach(link => {
+                        link.classList.remove('active-sommaire');
+                        if (link.getAttribute('href') === `#${sectionId}`) {
+                            link.classList.add('active-sommaire');
+
+                            // Ouvrir la sous-section parente si nécessaire
+                            const parentLi = link.closest('li');
+                            if (parentLi && parentLi.querySelector('ul.sommaire-sous')) {
+                                parentLi.classList.add('active-section');
+                            }
+                        }
+                    });
+                }
+            });
+        });
+
+        // Activer la première section au chargement
+        window.addEventListener('load', function () {
+            document.querySelector('.sommaire-link').classList.add('active-sommaire');
+        });
+
+        // Animation des sections au scroll
+        function reveal() {
+            var reveals = document.querySelectorAll(".section-card");
+
+            for (var i = 0; i < reveals.length; i++) {
+                var windowHeight = window.innerHeight;
+                var elementTop = reveals[i].getBoundingClientRect().top;
+                var elementVisible = 150;
+
+                if (elementTop < windowHeight - elementVisible) {
+                    reveals[i].classList.add("active");
+                }
+            }
+        }
+
+        window.addEventListener("scroll", reveal);
+        reveal(); // Appel initial pour les éléments déjà visibles
+    </script>
+</body>
+
+</html>

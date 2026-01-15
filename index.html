@@ -1,0 +1,2860 @@
+<!DOCTYPE html>
+<html class="scroll-smooth" lang="fr"><head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=1200"/>
+<title>UCAO-TECH | TRC 2025</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,typography"></script>
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700;900&amp;family=Orbitron:wght@400;700;900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet"/>
+<script>
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#10B981', // Emerald 500
+                        'background-light': '#F9FAFB', // Gray 50
+                        'background-dark': '#111827', // Gray 900
+                        'surface-light': '#FFFFFF',
+                        'surface-dark': '#1F2937', // Gray 800
+                        'text-light': '#1F2937', // Gray 800
+                        'text-dark': '#F9FAFB', // Gray 50
+                        'text-muted-light': '#6B7280', // Gray 500
+                        'text-muted-dark': '#9CA3AF', // Gray 400
+                    },
+                    fontFamily: {
+                        display: ['Orbitron', 'sans-serif'],
+                        sans: ['Roboto', 'sans-serif'],
+                    },
+                    borderRadius: {
+                        'DEFAULT': '0.5rem',
+                        'lg': '1rem',
+                        'full': '9999px',
+                    },
+                    keyframes: {
+                        glitch: {
+                            '0%, 100%': {
+                                transform: 'translate(0, 0)',
+                                opacity: '1'
+                            },
+                            '25%': {
+                                transform: 'translate(2px, -2px)',
+                                opacity: '0.75'
+                            },
+                            '50%': {
+                                transform: 'translate(-2px, 2px)',
+                                opacity: '0.75'
+                            },
+                            '75%': {
+                                transform: 'translate(2px, 2px)',
+                                opacity: '0.75'
+                            }
+                        },
+                        fadeInUp: {
+                            '0%': {
+                                opacity: '0',
+                                transform: 'translateY(20px)'
+                            },
+                            '100%': {
+                                opacity: '1',
+                                transform: 'translateY(0)'
+                            }
+                        }
+                    },
+                    animation: {
+                        glitch: 'glitch 0.3s linear infinite',
+                        'fade-in-up': 'fadeInUp 0.8s ease-out forwards'
+                    }
+                }
+            }
+        };
+    </script>
+    <style>
+        .grid-lines {
+            background-image: 
+                linear-gradient(rgba(16, 185, 129, 0.1) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(16, 185, 129, 0.1) 1px, transparent 1px);
+            background-size: 50px 50px;
+            width: 100%;
+            height: 100%;
+            animation: gridMove 20s linear infinite;
+        }
+        
+        @keyframes gridMove {
+            0% {
+                transform: translate(0, 0);
+            }
+            100% {
+                transform: translate(50px, 50px);
+            }
+        }
+        
+        /* Animation gradient pour le titre */
+        @keyframes gradient {
+            0%, 100% {
+                background-position: 0% 50%;
+            }
+            50% {
+                background-position: 100% 50%;
+            }
+        }
+        
+        .animate-gradient {
+            background-size: 200% auto;
+            animation: gradient 3s ease infinite;
+        }
+        
+        /* Pulse lent pour le badge */
+        .animate-pulse-slow {
+            animation: pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+        }
+        
+        @keyframes pulse {
+            0%, 100% {
+                opacity: 1;
+            }
+            50% {
+                opacity: 0.8;
+            }
+        }
+        
+        /* Amélioration fade-in-up */
+        @keyframes fadeInUp {
+            0% {
+                opacity: 0;
+                transform: translateY(40px);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .animate-fade-in-up {
+            animation: fadeInUp 1s ease-out forwards;
+        }
+        
+        .team-card-float {
+            animation: none;
+            will-change: transform;
+        }
+
+        .team-contact-icons {
+            transform: translateY(12px);
+            transition: transform 0.3s ease, opacity 0.3s ease;
+            opacity: 0;
+        }
+
+        .group:hover .team-contact-icons {
+            transform: translateY(0);
+            opacity: 1;
+        }
+
+        .team-aurora {
+            position: absolute;
+            inset: 0;
+            background: radial-gradient(circle at 20% 20%, rgba(52, 211, 153, 0.15), transparent 55%), radial-gradient(circle at 80% 30%, rgba(79, 70, 229, 0.15), transparent 60%), radial-gradient(circle at 50% 80%, rgba(167, 139, 250, 0.12), transparent 65%);
+            transform: scale(1.1);
+            animation: teamAurora 14s ease-in-out infinite;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .team-grid .team-card {
+            opacity: 0;
+            transform: translateY(40px);
+            transition: opacity 0.6s ease, transform 0.6s ease;
+            will-change: transform, opacity;
+        }
+
+        #team.is-visible .team-grid .team-card {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+    #team.is-visible .team-grid .team-card:nth-child(1) { transition-delay: 0s; }
+    #team.is-visible .team-grid .team-card:nth-child(2) { transition-delay: 1s; }
+    #team.is-visible .team-grid .team-card:nth-child(3) { transition-delay: 2s; }
+    #team.is-visible .team-grid .team-card:nth-child(4) { transition-delay: 3s; }
+    #team.is-visible .team-grid .team-card:nth-child(5) { transition-delay: 4s; }
+    #team.is-visible .team-grid .team-card:nth-child(6) { transition-delay: 5s; }
+    #team.is-visible .team-grid .team-card:nth-child(7) { transition-delay: 6s; }
+    #team.is-visible .team-grid .team-card:nth-child(8) { transition-delay: 7s; }
+    #team.is-visible .team-grid .team-card:nth-child(9) { transition-delay: 8s; }
+    #team.is-visible .team-grid .team-card:nth-child(10) { transition-delay: 9s; }
+
+        @keyframes teamCardFloat {
+            0%, 100% {
+                transform: translateY(0);
+            }
+            50% {
+                transform: translateY(-6px);
+            }
+        }
+
+        @keyframes teamAurora {
+            0%, 100% {
+                transform: scale(1.05) translateY(0);
+                opacity: 0.6;
+            }
+            50% {
+                transform: scale(1.2) translateY(-12px);
+                opacity: 0.9;
+            }
+        }
+        
+        /* Grille futuriste pour le hero */
+        .grid-lines {
+            background-image: 
+                linear-gradient(rgba(16, 185, 129, 0.1) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(16, 185, 129, 0.1) 1px, transparent 1px);
+            background-size: 50px 50px;
+            width: 100%;
+            height: 100%;
+            animation: gridMove 20s linear infinite;
+        }
+        
+        @keyframes gridMove {
+            0% {
+                transform: translate(0, 0);
+            }
+            100% {
+                transform: translate(50px, 50px);
+            }
+        }
+        
+        /* Animation gradient pour le titre */
+        @keyframes gradient {
+            0%, 100% {
+                background-position: 0% 50%;
+            }
+            50% {
+                background-position: 100% 50%;
+            }
+        }
+        
+        .animate-gradient {
+            background-size: 200% auto;
+            animation: gradient 3s ease infinite;
+        }
+        
+        /* Pulse lent pour le badge */
+        .animate-pulse-slow {
+            animation: pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+        }
+        
+        @keyframes pulse {
+            0%, 100% {
+                opacity: 1;
+            }
+            50% {
+                opacity: 0.8;
+            }
+        }
+        
+        /* Amélioration fade-in-up */
+        @keyframes fadeInUp {
+            0% {
+                opacity: 0;
+                transform: translateY(40px);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .animate-fade-in-up {
+            animation: fadeInUp 1s ease-out forwards;
+        }
+        
+        /* Slides transition */
+        .team-slides { position: relative; overflow: hidden; }
+        .team-track {
+            display: flex;
+            width: 400%; /* four slides */
+            transform: translateX(0%);
+            transition: transform 0.8s cubic-bezier(.22,.61,.36,1);
+        }
+        /* Désactive la transition pendant le wrap (meca -> all) */
+        .team-track.no-transition { transition: none !important; }
+        .team-slides.is-it .team-track { transform: translateX(-25%); }
+        .team-slides.is-elec .team-track { transform: translateX(-50%); }
+        .team-slides.is-meca .team-track { transform: translateX(-75%); }
+        .team-slide { width: 25%; padding: 0 0.25rem; }
+        .team-controls .team-btn {
+            padding: 0.5rem 1rem;
+            border-radius: 9999px;
+            border: 1px solid rgba(16,185,129,0.4);
+            color: #10B981;
+            background: transparent;
+            transition: background-color .3s, color .3s;
+        }
+        .team-controls .team-btn:hover {
+            background: rgba(16,185,129,0.1);
+        }
+        .team-controls .team-btn.active {
+            background: #10B981;
+            color: white;
+            border-color: #10B981;
+        }
+        /* IT orbit animation */
+        .it-card { position: relative; }
+        .it-avatar { position: relative; display: inline-block; }
+        .it-orbit {
+            position: absolute;
+            border: 2px dashed rgba(16,185,129,0.8);
+            border-radius: 50%;
+            animation: orbitRotate 6s linear infinite;
+            pointer-events: none;
+        }
+        .it-orbit.orbit-outer {
+            width: 210px; height: 210px;
+            top: 50%; left: 50%; transform: translate(-50%, -50%);
+        }
+        .it-orbit.orbit-inner {
+            width: 160px; height: 160px;
+            top: 50%; left: 50%; transform: translate(-50%, -50%);
+            animation-duration: 5s;
+        }
+        @keyframes orbitRotate {
+            from { transform: translate(-50%, -50%) rotate(0deg); }
+            to { transform: translate(-50%, -50%) rotate(360deg); }
+        }
+        .it-node {
+            position: absolute;
+            width: 36px; height: 36px;
+            filter: drop-shadow(0 4px 10px rgba(16,185,129,0.4));
+            animation: nodeFloat 3.2s ease-in-out infinite;
+        }
+        /* Node positions per type */
+        .node-laptop { top: -12px; left: 50%; transform: translateX(-50%); }
+        .node-ai { right: -12px; top: 50%; transform: translateY(-50%); }
+        .node-vr { bottom: -12px; left: 50%; transform: translateX(-50%); }
+        .node-code { left: -12px; top: 30%; }
+        .node-cloud { right: -10px; top: 30%; }
+        .node-robot { bottom: -8px; left: 20%; }
+        .node-terminal { left: -12px; top: 50%; transform: translateY(-50%); }
+        .node-github { right: -12px; top: 20%; }
+        .node-shield { bottom: -10px; right: 20%; }
+        @keyframes nodeFloat {
+            0%, 100% { transform: translateY(0) translateX(0); }
+            50% { transform: translateY(-6px) translateX(2px); }
+        }
+        .it-legend { opacity: 0.9; }
+        
+        /* Animation des lignes de circuit */
+        .circuit-line {
+            filter: drop-shadow(0 0 5px #10B981);
+        }
+        
+        /* Animation des questions FAQ une à une */
+        #faq .faq-item {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.8s ease, transform 0.8s ease;
+        }
+        
+        #faq.is-visible .faq-left .faq-item {
+            transform: translateX(-50px) translateY(30px);
+        }
+        
+        #faq.is-visible .faq-right .faq-item {
+            transform: translateX(50px) translateY(30px);
+        }
+        
+        #faq.is-visible .faq-item {
+            opacity: 1;
+            transform: translateY(0) translateX(0);
+        }
+        
+        /* Délais pour arrivée une à une */
+        #faq.is-visible .faq-left .faq-item:nth-child(1) { transition-delay: 0s; }
+        #faq.is-visible .faq-left .faq-item:nth-child(2) { transition-delay: 0.8s; }
+        #faq.is-visible .faq-left .faq-item:nth-child(3) { transition-delay: 1.6s; }
+        #faq.is-visible .faq-left .faq-item:nth-child(4) { transition-delay: 2.4s; }
+        
+        #faq.is-visible .faq-right .faq-item:nth-child(1) { transition-delay: 0.4s; }
+        #faq.is-visible .faq-right .faq-item:nth-child(2) { transition-delay: 1.2s; }
+        #faq.is-visible .faq-right .faq-item:nth-child(3) { transition-delay: 2.0s; }
+        #faq.is-visible .faq-right .faq-item:nth-child(4) { transition-delay: 2.8s; }
+        
+        /* Slides roadmap */
+        .roadmap-slide {
+            display: none;
+        }
+        .roadmap-slide.active {
+            display: block;
+        }
+        .roadmap-btn {
+            color: #6b7280;
+        }
+        .roadmap-btn.active {
+            background: #10b981;
+            color: white;
+        }
+        
+        .circuit-node {
+            filter: drop-shadow(0 0 8px #10B981);
+        }
+        
+        /* Indicateur de scroll */
+        .scroll-indicator {
+            position: fixed;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(255, 255, 255, 0.95);
+            padding: 12px 24px;
+            border-radius: 20px;
+            font-size: 0.875rem;
+            font-weight: 500;
+            z-index: 999;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            opacity: 1;
+            transition: opacity 0.3s ease;
+            border: 1px solid rgba(0, 0, 0, 0.05);
+            backdrop-filter: blur(10px);
+        }
+
+        /* Google Translate customization */
+        #google_translate_element {
+            display: none !important;
+        }
+        .goog-logo-link,
+        .goog-te-gadget span,
+        .goog-te-gadget-simple {
+            display: none !important;
+        }
+        .goog-te-banner-frame.skiptranslate {
+            display: none !important;
+        }
+        body {
+            top: 0 !important;
+        }
+        /* Masquer complètement la barre de notification Google Traduction */
+        .goog-te-banner-frame {
+            display: none !important;
+        }
+        body > .skiptranslate {
+            display: none !important;
+        }
+        iframe.skiptranslate {
+            display: none !important;
+        }
+        .skiptranslate {
+            display: none !important;
+        }
+        #goog-gt-tt {
+            display: none !important;
+        }
+        .goog-te-balloon-frame {
+            display: none !important;
+        }
+
+    </style>
+</head>
+<body class="bg-surface-light dark:bg-surface-dark text-text-light dark:text-text-dark font-sans antialiased">
+<div class="gtranslate_wrapper" id="gt-wrapper-ucaotech"></div>
+<main>
+<section class="relative flex flex-col overflow-hidden bg-gradient-to-br from-slate-900 via-gray-900 to-zinc-900 dark:from-slate-50 dark:via-gray-50 dark:to-zinc-50" id="hero">
+  <!-- Barre de navigation intégrée dans le hero -->
+  <div class="relative z-20 w-full bg-white backdrop-blur-md border-b border-gray-200 shadow-sm">
+    <div class="container mx-auto px-6 py-4 flex justify-between items-center">
+      <a href="https://tekbot-robotics-challenge.github.io/2025-Team-UCAO-TECH-Docs/" class="flex items-center space-x-2">
+        <img src="https://tse4.mm.bing.net/th/id/OIP.MlvH1ynVOCs2IuWmIzhwrQHaHa?cb=12&rs=1&pid=ImgDetMain&o=7&rm=3" alt="Logo UCAO-TECH" class="h-12 w-12">
+        <span class="font-display font-bold text-lg text-gray-900">UCAO-TECH</span>
+      </a>
+      <nav class="flex items-center gap-8">
+        <a class="text-gray-900 hover:text-emerald-600 transition duration-300 font-medium" href="#resilience">Projet</a>
+        <a class="text-gray-900 hover:text-emerald-600 transition duration-300 font-medium" href="https://trc.tekbot.io/soutenir-trc/" target="_blank" rel="noopener">Soutenir l'événement</a>
+        <a class="text-gray-900 hover:text-emerald-600 transition duration-300 font-medium" href="https://tekbot-robotics-challenge.github.io/2025-Team-UCAO-TECH-Docs/documentation.html">Documentation</a>
+        <a class="text-gray-900 hover:text-emerald-600 transition duration-300 font-medium" href="#team">Équipe</a>
+        <a class="text-gray-900 hover:text-emerald-600 transition duration-300 font-medium" href="#roadmap">Roadmap</a>
+        <a class="text-gray-900 hover:text-emerald-600 transition duration-300 font-medium" href="#faq">FAQ</a>
+      </nav>
+
+      <div class="flex items-center gap-4">
+        <button type="button" id="translate-toggle" class="relative inline-flex items-center gap-1 text-gray-900 hover:text-emerald-600 transition duration-300 group">
+          <span class="material-icons text-xl">language</span>
+          <span id="lang-label" class="text-sm font-bold">EN</span>
+          <span class="absolute -bottom-8 left-1/2 transform -translate-x-1/2 bg-gray-800 text-white text-xs px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap pointer-events-none" id="lang-tooltip">English</span>
+        </button>
+        <!-- Bouton de changement de thème -->
+        <button id="theme-toggle" class="flex items-center text-gray-900 hover:text-emerald-600 transition duration-300" aria-label="Toggle theme">
+          <span class="material-icons" id="theme-icon">dark_mode</span>
+        </button>
+
+        <a class="flex items-center gap-2 px-4 py-2 bg-gray-100 hover:bg-gray-200 border border-gray-200 text-gray-900 font-bold rounded-full transition-all hover:scale-105" href="https://github.com/TekBot-Robotics-Challenge/2025-Team-UCAO-TECH-Docs" target="_blank" rel="noopener">
+          <svg aria-hidden="true" class="h-5 w-5" fill="currentColor" viewBox="0 0 24 24">
+            <path clip-rule="evenodd" d="M12 2C6.477 2 2 6.477 2 12c0 4.418 2.865 8.168 6.839 9.492.5.092.682-.217.682-.482 0-.237-.009-.868-.014-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.031-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.82c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.378.203 2.397.1 2.65.64.7 1.03 1.595 1.03 2.688 0 3.848-2.338 4.695-4.566 4.942.359.308.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.577.688.482A10.001 10.001 0 0022 12c0-5.523-4.477-10-10-10z" fill-rule="evenodd"></path>
+          </svg>
+          <span class="text-sm">GitHub</span>
+        </a>
+      </div>
+      <div class="hidden">
+        <button class="text-gray-900" id="mobile-menu-button">
+          <span class="material-icons">menu</span>
+        </button>
+      </div>
+    </div>
+    <!-- Menu mobile intégré dans le hero -->
+    <div class="hidden bg-white border-t border-gray-200" id="mobile-menu">
+      <button id="mobile-translate-toggle" type="button" class="flex items-center gap-2 w-full text-left py-3 px-6 text-sm text-gray-900 hover:bg-emerald-50 transition duration-300">
+        <span class="material-icons text-base">language</span>
+        <span id="mobile-lang-label">EN</span>
+      </button>
+      <a class="block py-3 px-6 text-sm text-gray-900 hover:bg-emerald-50 transition duration-300" href="#resilience">Projet</a>
+      <a class="block py-3 px-6 text-sm text-gray-900 hover:bg-emerald-50 transition duration-300" href="https://trc.tekbot.io/soutenir-trc/" target="_blank" rel="noopener">Soutenir l'événement</a>
+      <a class="block py-3 px-6 text-sm text-gray-900 hover:bg-emerald-50 transition duration-300" href="Images_membres/UCAO DOC.html">Documentation</a>
+      <a class="block py-3 px-6 text-sm text-gray-900 hover:bg-emerald-50 transition duration-300" href="#team">Équipe</a>
+      <a class="block py-3 px-6 text-sm text-gray-900 hover:bg-emerald-50 transition duration-300" href="#roadmap">Roadmap</a>
+      <a class="block py-3 px-6 text-sm text-gray-900 hover:bg-emerald-50 transition duration-300" href="#faq">FAQ</a>
+      <a class="block py-3 px-6 text-sm text-gray-900 hover:bg-emerald-50 transition duration-300" href="https://github.com/TekBot-Robotics-Challenge/2025-Team-UCAO-TECH-Docs">GitHub</a>
+    </div>
+  </div>
+
+  <!-- Pattern de fond subtil -->
+  <div class="absolute inset-0 opacity-5">
+    <div class="absolute inset-0" style="background-image: radial-gradient(circle at 25% 25%, #10b981 2px, transparent 2px), radial-gradient(circle at 75% 75%, #059669 2px, transparent 2px); background-size: 50px 50px;"></div>
+  </div>
+
+  <!-- Contenu principal -->
+  <!-- Design: Eco-Engineering Lab (Light & Technical) -->
+  <section class="relative flex items-center overflow-hidden bg-slate-50 text-slate-900 py-16">
+
+    <!-- Background: Technical Grid -->
+    <div class="absolute inset-0 z-0">
+        <div class="absolute inset-0 bg-[linear-gradient(to_right,#80808012_1px,transparent_1px),linear-gradient(to_bottom,#80808012_1px,transparent_1px)] bg-[size:24px_24px]"></div>
+        <div class="absolute left-0 right-0 top-0 -z-10 m-auto h-[310px] w-[310px] rounded-full bg-emerald-400 opacity-20 blur-[100px]"></div>
+        <div class="absolute right-0 bottom-0 -z-10 h-[310px] w-[310px] rounded-full bg-yellow-400 opacity-20 blur-[100px]"></div>
+    </div>
+
+    <div class="container mx-auto px-6 relative z-10" style="transform: scale(0.9); transform-origin: top center;">
+        <div class="grid lg:grid-cols-2 gap-16 items-center">
+
+            <!-- Left: Content -->
+            <div class="space-y-8">
+                <!-- Tech Badge -->
+                <div class="inline-flex items-center gap-2 px-3 py-1 rounded border border-slate-200 bg-white shadow-sm">
+                    <span class="flex h-2 w-2 rounded-full bg-emerald-500"></span>
+                    <span class="text-xs font-mono font-medium text-slate-600 uppercase tracking-wider">TRC 2025 • ÉDITION 2</span>
+                </div>
+
+                <!-- Headline -->
+                <h1 class="text-5xl lg:text-7xl font-black tracking-tight text-slate-900 leading-[1.1]">
+                    L'Innovation <br>
+                    <span class="text-transparent bg-clip-text bg-gradient-to-r from-emerald-600 to-teal-500">au service de</span> <br>
+                    l'Environnement.
+                </h1>
+
+                <!-- Description -->
+                <p class="text-lg text-slate-600 leading-relaxed max-w-lg border-l-4 border-yellow-400 pl-6">
+                    L'équipe <strong>UCAO-TECH</strong> conçoit la prochaine génération de robots autonomes pour relever le défi de la gestion des déchets en Afrique.
+                </p>
+
+                <!-- Stats / Specs -->
+                <div class="grid grid-cols-3 gap-6 pt-4">
+                    <div>
+                        <div class="text-3xl font-bold text-slate-900">100%</div>
+                        <div class="text-xs font-mono text-slate-500 mt-1">AUTONOME</div>
+                    </div>
+                    <div>
+                        <div class="text-3xl font-bold text-slate-900">AI</div>
+                        <div class="text-xs font-mono text-slate-500 mt-1">EMBARQUÉE</div>
+                    </div>
+                    <div>
+                        <div class="text-3xl font-bold text-slate-900">HAUTE</div>
+                        <div class="text-xs font-mono text-slate-500 mt-1">PRÉCISION</div>
+                    </div>
+                </div>
+
+                <!-- CTA Buttons -->
+                <div class="flex flex-wrap gap-4 pt-4">
+                    <a href="#resilience" class="px-8 py-4 bg-slate-900 text-white font-bold rounded-lg hover:bg-slate-800 transition-all shadow-lg hover:shadow-xl flex items-center gap-2">
+                        Découvrir le Projet
+                        <span class="material-icons text-sm">arrow_forward</span>
+                    </a>
+                    <a href="#team" class="px-8 py-4 bg-white text-slate-900 border border-slate-200 font-bold rounded-lg hover:bg-slate-50 transition-all flex items-center gap-2">
+                        L'Équipe
+                    </a>
+                </div>
+            </div>
+
+            <!-- Right: Visual Composition -->
+            <div class="relative lg:h-[600px] flex items-center justify-center">
+                <!-- Abstract Shapes -->
+                <div class="absolute inset-0 bg-gradient-to-tr from-emerald-100 to-transparent rounded-full opacity-50 blur-3xl animate-pulse"></div>
+
+                <!-- Main Image Container (Geometric) -->
+                <div class="relative w-full max-w-md aspect-[4/5] bg-white rounded-2xl shadow-2xl border border-slate-100 overflow-hidden transform rotate-[-2deg] hover:rotate-0 transition-transform duration-500">
+                    <!-- Header Bar of the 'Card' -->
+                    <div class="h-8 bg-slate-100 border-b border-slate-200 flex items-center px-4 gap-2">
+                        <div class="w-3 h-3 rounded-full bg-red-400"></div>
+                        <div class="w-3 h-3 rounded-full bg-yellow-400"></div>
+                        <div class="w-3 h-3 rounded-full bg-green-400"></div>
+                    </div>
+
+                    <!-- Image Area -->
+                    <div class="w-full h-full bg-slate-50 flex items-center justify-center relative group">
+                        <!-- Image Carousel -->
+                        <div class="relative w-full h-full overflow-hidden">
+                            <div class="carousel-container flex transition-transform duration-1000 ease-in-out" id="hero-carousel">
+                                <!-- First Image -->
+                                <img src="https://tse4.mm.bing.net/th/id/OIP.OSF8YBb4EUSx3xq_cnGDiwHaHa?cb=ucfimg2&ucfimg=1&w=1600&h=1600&rs=1&pid=ImgDetMain&o=7&rm=3" alt="Robot UCAO-TECH TRC 2025" class="w-full h-full object-cover flex-shrink-0">
+                                <!-- Second Image -->
+                                <img src="https://raw.githubusercontent.com/TekBot-Robotics-Challenge/2025-Team-UCAO-TECH-Docs/main/Images_membres/RaspberryPi_DOFBOT_Yahboom.jpg" alt="Raspberry Pi DOFBOT Robot" class="w-full h-full object-cover flex-shrink-0">
+                            </div>
+
+                            <!-- Floating Info Cards -->
+                            <div class="absolute bottom-8 left-8 right-8 bg-white/90 backdrop-blur p-4 rounded-xl border border-slate-100 shadow-lg">
+                                <div class="flex items-center justify-between">
+                                    <div>
+                                        <div class="text-xs text-slate-500 font-mono">STATUS</div>
+                                        <div class="text-sm font-bold text-emerald-600 flex items-center gap-1">
+                                            <span class="w-2 h-2 bg-emerald-500 rounded-full animate-pulse"></span>
+                                            OPERATIONAL
+                                        </div>
+                                    </div>
+                                    <div class="text-right">
+                                        <div class="text-xs text-slate-500 font-mono">MODEL</div>
+                                        <div class="text-sm font-bold text-slate-900" id="robot-model">TRC-X1</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Decorative Elements behind -->
+                <div class="absolute -right-12 top-1/4 p-4 bg-white rounded-xl shadow-xl border border-slate-100 animate-bounce" style="animation-duration: 3s;">
+                    <span class="material-icons text-yellow-500 text-3xl">emoji_objects</span>
+                </div>
+                <div class="absolute -left-8 bottom-1/4 p-4 bg-white rounded-xl shadow-xl border border-slate-100 animate-bounce" style="animation-duration: 4s;">
+                    <span class="material-icons text-emerald-500 text-3xl">recycling</span>
+                </div>
+
+            </div>
+        </div>
+    </div>
+  </section>
+</section>
+
+<!-- Section Résilience Urbaine -->
+<section class="py-20 md:py-32 bg-surface-light dark:bg-surface-dark" id="resilience">
+<div class="container mx-auto px-6">
+<div class="text-center mb-16 scroll-animation">
+<h2 class="text-3xl md:text-4xl font-display font-bold mb-4">
+La <span class="text-primary">Résilience Urbaine</span> : Un défi africain
+</h2>
+</div>
+
+<div class="mx-auto space-y-4">
+<!-- Le Problème -->
+<div class="grid md:grid-cols-3 gap-8 items-center scroll-animation">
+<!-- Photo gauche -->
+<div class="flex justify-center">
+<img src="https://media.licdn.com/dms/image/D4E12AQEWKdyOv3dLyw/article-cover_image-shrink_720_1280/0/1654964407320?e=2147483647&v=beta&t=DNlBYVaIVpToP5jFNIBLMYycb8re8fLojoMojCfj3cU" alt="Déchets en milieu urbain en Afrique" class="rounded-lg shadow-lg w-full h-64 object-cover" loading="lazy">
+</div>
+<!-- Texte au centre -->
+<div class="flex items-center">
+<p class="text-text-muted-light dark:text-text-muted-dark text-justify">
+Nos villes africaines font face à une <strong class="text-primary">crise des déchets</strong> sans précédent. 
+Les ordures s'entassent dans les rues, transformant nos quartiers en décharges à ciel ouvert. 
+Les systèmes de collecte traditionnels ne suivent plus le rythme de notre croissance urbaine, tandis que les décharges sauvages prolifèrent dangereusement. 
+Cette pollution quotidienne compromet notre santé publique et dégrade notre environnement.
+</p>
+</div>
+<!-- Photo droite -->
+<div class="flex justify-center">
+<img src="https://th.bing.com/th/id/OIP.pg4sn2q1HenkBoAd5H0UvwHaE8?w=278&h=185&c=7&r=0&o=7&cb=ucfimgc2&pid=1.7&rm=3" alt="Tas d'ordures dans la rue (noir et blanc)" class="rounded-lg shadow-lg w-full h-64 object-cover" loading="lazy">
+</div>
+</div>
+
+<!-- La Solution -->
+<div class="grid md:grid-cols-2 gap-12 items-center scroll-animation">
+<div>
+<!-- Vidéo de démonstration -->
+<div class="rounded-lg overflow-hidden shadow-2xl">
+<video id="dofbot-video" class="w-full h-auto" controls muted preload="none" playsinline>
+<source src="https://github.com/TekBot-Robotics-Challenge/2025-Team-UCAO-TECH-Docs/raw/main/Images_membres/Dofbot.mp4" type="video/mp4">
+Votre navigateur ne supporte pas la lecture de vidéos.
+</video>
+</div>
+</div>
+<div>
+<h3 class="text-3xl font-display font-bold mb-6">Le TRC 2025 : Une réponse innovante</h3>
+<p class="text-text-muted-light dark:text-text-muted-dark mb-6">
+Face à l'explosion de la production de déchets, la robotique devient la clé pour optimiser la collecte, le tri et la revalorisation. Cette compétition va au-delà de la simple innovation technologique ; elle explore des <strong class="text-primary">solutions concrètes pour un avenir plus vert</strong> et une résilience urbaine renforcée.
+</p>
+<a href="https://trc.tekbot.io/wp-content/uploads/2025/01/TRC-2025-Game-Manual-V1.0.pdf" target="_blank" rel="noopener" class="inline-block bg-primary text-white font-bold py-3 px-6 rounded-lg hover:bg-primary-dark transition-colors duration-300">
+Télécharger le manuel de jeu
+</a>
+</div>
+</div>
+
+<!-- UCAO-TECH -->
+<div class="grid md:grid-cols-2 gap-12 items-center scroll-animation">
+<div class="order-1 md:order-1">
+<h3 class="text-3xl font-display font-bold mb-6">
+<span class="text-primary">UCAO-TECH</span> relève le défi
+</h3>
+<p class="text-text-muted-light dark:text-text-muted-dark mb-4 text-justify">
+Notre équipe UCAO-TECH s'est fixée pour mission de représenter fièrement le <strong class="text-primary">Bénin</strong> au TRC 2025. Face à l'urgence environnementale et aux défis de la gestion des déchets, nous avons décidé de relever ce challenge avec détermination. Nous visons l'<strong>excellence technique</strong> et la <strong>créativité</strong> pour décrocher le podium.
+</p>
+<p class="text-text-muted-light dark:text-text-muted-dark mb-4 text-justify">
+Notre force réside dans notre <strong class="text-primary">esprit d'équipe</strong>. Chaque membre apporte son expertise et sa vision dans un esprit de partage et d'<strong>innovation</strong>. Nous ne construisons pas des robots par simple curiosité technique, mais pour résoudre un problème qui touche directement nos communautés et créer un impact réel.
+</p>
+<p class="text-text-muted-light dark:text-text-muted-dark text-justify">
+Ensemble, guidés par nos valeurs d'excellence, de respect et de créativité, nous relevons ce défi avec un engagement profond envers un avenir urbain plus propre et plus durable.
+</p>
+</div>
+<div class="order-2 md:order-2">
+<div class="rounded-xl shadow-2xl bg-white overflow-hidden">
+<!-- Vidéo en haut -->
+<div class="w-full">
+<video class="w-full h-auto object-cover" autoplay muted loop>
+<source src="https://github.com/TekBot-Robotics-Challenge/2025-Team-UCAO-TECH-Docs/raw/main/Images_membres/Teamwork%20Stock%20Video%20Footage%20for%20Free%20Download.mp4" type="video/mp4">
+Votre navigateur ne supporte pas la lecture de vidéos.
+</video>
+</div>
+</div>
+</div>
+
+<style>
+@keyframes scroll-carousel {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-200%);
+  }
+}
+
+.carousel-track:hover {
+  animation-play-state: paused;
+}
+</style>
+</div>
+
+<!-- Section Présentation -->
+<section class="py-8 md:py-12 bg-surface-light dark:bg-surface-dark" id="home">
+<div class="container mx-auto px-6 scroll-animation">
+<h2 class="text-3xl md:text-4xl font-display font-bold text-center mb-12">À propos du <span class="text-primary">TRC 2025</span></h2>
+<div class="mx-auto">
+<p class="text-lg text-justify text-text-muted-light dark:text-text-muted-dark mb-12 max-w-4xl mx-auto leading-relaxed">Porté par <span class="text-primary font-semibold">TEKBOT Robotics</span>, startup DeepTech béninoise dédiée à l'innovation, à la formation et à la démocratisation de la robotique, le TRC 2025 se veut un catalyseur pour les talents africains. Le thème 2025, « Résilience Urbaine : Gestion Durable des Déchets », nous pousse à créer des robots qui apportent des réponses concrètes aux besoins de nos villes.</p>
+<div class="grid md:grid-cols-2 gap-8 text-center">
+<div>
+<h3 class="text-2xl font-bold font-display mb-4">L'engagement de TEKBOT Robotics</h3>
+<ul class="space-y-2 text-text-muted-light dark:text-text-muted-dark">
+<li><span class="text-primary mr-2">✓</span>Positionner l'Afrique à l'avant-garde de l'innovation technologique</li>
+<li><span class="text-primary mr-2">✓</span>Former et inspirer une nouvelle génération d'innovateurs</li>
+<li><span class="text-primary mr-2">✓</span>Partager notre expertise au service des communautés</li>
+<li><span class="text-primary mr-2">✓</span>Défendre une robotique inclusive et responsable</li>
+</ul>
+</div>
+<div>
+<h3 class="text-2xl font-bold font-display mb-4">Des valeurs qui prennent vie</h3>
+<ul class="space-y-2 text-text-muted-light dark:text-text-muted-dark">
+<li><span class="text-primary mr-2">✓</span>Innover pour un avenir prometteur</li>
+<li><span class="text-primary mr-2">✓</span>Démystifier et promouvoir la robotique auprès de tous</li>
+<li><span class="text-primary mr-2">✓</span>Accompagner les jeunes talents et encourager la parité</li>
+<li><span class="text-primary mr-2">✓</span>Transformer les défis urbains en solutions durables</li>
+<li><span class="text-primary mr-2">✓</span>Créer un impact réel pour les villes africaines</li>
+</ul>
+</div>
+</div>
+<p class="text-lg text-center mt-12 font-semibold">Un challenge porté par TEKBOT Robotics pour inspirer, innover et agir concrètement pour l'Afrique de demain.</p>
+
+<!-- Bouton de soutien -->
+<div class="flex justify-center mt-8">
+<a href="https://trc.tekbot.io/soutenir-trc/" class="inline-flex items-center px-8 py-4 bg-primary hover:bg-primary/90 text-white font-semibold rounded-lg shadow-lg transform hover:scale-105 transition-all duration-300" target="_blank" rel="noopener">
+<span class="material-icons mr-2">favorite</span>
+<span>Soutenir l'événement</span>
+</a>
+</div>
+
+</div>
+</div>
+</section>
+<section class="pt-4 pb-0 bg-surface-light dark:bg-surface-dark" id="tech">
+<div class="container mx-auto px-6 scroll-animation">
+<div class="text-center mx-auto">
+<h2 class="text-3xl md:text-4xl font-display font-bold">Domaines <span class="text-primary">Techniques</span></h2>
+<p class="mt-4 text-lg text-text-muted-light dark:text-text-muted-dark">Les trois piliers technologiques de notre participation au TRC 2025</p>
+</div>
+<div class="mt-6 grid md:grid-cols-3 gap-8">
+<div class="bg-surface-light dark:bg-surface-dark p-8 rounded-lg shadow-lg text-center transform hover:-translate-y-2 transition-transform duration-300">
+<div class="text-primary text-5xl mb-4"><span class="material-icons text-5xl">memory</span></div>
+<h3 class="text-2xl font-display font-bold mb-3">Électronique</h3>
+</div>
+<div class="bg-surface-light dark:bg-surface-dark p-8 rounded-lg shadow-lg text-center transform hover:-translate-y-2 transition-transform duration-300">
+<div class="text-primary text-5xl mb-4"><span class="material-icons text-5xl">code</span></div>
+<h3 class="text-2xl font-display font-bold mb-3">Informatique</h3>
+</div>
+<div class="bg-surface-light dark:bg-surface-dark p-8 rounded-lg shadow-lg text-center transform hover:-translate-y-2 transition-transform duration-300">
+<div class="text-primary text-5xl mb-4"><span class="material-icons text-5xl">precision_manufacturing</span></div>
+<h3 class="text-2xl font-display font-bold mb-3">Mécanique</h3>
+</div>
+</div>
+</div>
+</section>
+
+<!-- Section Informatique détaillée -->
+<section class="pt-0 pb-0 bg-surface-light dark:bg-surface-dark" id="informatique">
+<div class="container mx-auto px-6">
+<div class="grid md:grid-cols-2 gap-6 items-center">
+<div class="space-y-3">
+<p class="text-text-muted-light dark:text-text-muted-dark">De la pré-sélection à la grande finale, l'équipe informatique développe progressivement le cerveau du robot. Les tests de pré-sélection (POO, ROS2, pathfinding) ont posé les bases, suivis du développement du système complet de navigation autonome et gestion intelligente des déchets dans EcoCity.</p>
+<div class="space-y-4">
+<div class="flex items-start space-x-3">
+<span class="material-icons text-primary mt-1">school</span>
+<div>
+<h4 class="font-semibold">Phase pré-sélection : Maîtrise des fondamentaux</h4>
+<p class="text-sm text-text-muted-light dark:text-text-muted-dark">Tests POO, introduction à ROS2 et algorithmes de pathfinding pour valider les compétences de base</p>
+</div>
+</div>
+<div class="flex items-start space-x-3">
+<span class="material-icons text-primary mt-1">hub</span>
+<div>
+<h4 class="font-semibold">Développement de l'architecture ROS2</h4>
+<p class="text-sm text-text-muted-light dark:text-text-muted-dark">Mise en place des nœuds de communication entre navigation, vision et manipulation</p>
+</div>
+</div>
+<div class="flex items-start space-x-3">
+<span class="material-icons text-primary mt-1">route</span>
+<div>
+<h4 class="font-semibold">Programmation de la navigation autonome</h4>
+<p class="text-sm text-text-muted-light dark:text-text-muted-dark">Implémentation des algorithmes pour parcourir les 10 quartiers d'EcoCity de manière optimale</p>
+</div>
+</div>
+<div class="flex items-start space-x-3">
+<span class="material-icons text-primary mt-1">visibility</span>
+<div>
+<h4 class="font-semibold">Système de vision et tri intelligent</h4>
+<p class="text-sm text-text-muted-light dark:text-text-muted-dark">Détection YOLO des déchets, lecture QR codes et contrôle du bras DofBot pour tri automatique</p>
+</div>
+</div>
+        </div>
+        </div>
+        <div class="relative">
+        <video autoplay muted loop class="w-full rounded-lg shadow-2xl">
+        <source src="https://raw.githubusercontent.com/TekBot-Robotics-Challenge/2025-Team-UCAO-TECH-Docs/main/Images_membres/Futuristics%20Mesh%20Human%20AI%20and%20VR%20Faces%201797448%20vid%C3%A9o%20d%E2%80%99archives%20sur%20Vecteezy.mp4" type="video/mp4">
+        </video>
+        <div class="absolute inset-0 bg-primary/20 rounded-lg pointer-events-none"></div>
+        </div>
+        </div>
+        </div>
+        </section><!-- Section Électronique détaillée -->
+<section class="py-0 bg-surface-light dark:bg-surface-dark" id="electronique">
+<div class="container mx-auto px-6">
+<div class="grid md:grid-cols-2 gap-6 items-center">
+<div class="relative order-2 md:order-1">
+<video autoplay muted loop class="w-full rounded-lg shadow-2xl">
+<source src="https://raw.githubusercontent.com/TekBot-Robotics-Challenge/2025-Team-UCAO-TECH-Docs/main/Images_membres/Electronique%20Conception%20Pcb%20Stock%20Video%20Footage%20for%20Free%20Download_3.mp4" type="video/mp4">
+</video>
+<div class="absolute inset-0 bg-primary/20 rounded-lg pointer-events-none"></div>
+</div>
+<div class="space-y-3 order-1 md:order-2">
+<p class="text-text-muted-light dark:text-text-muted-dark">L'équipe électronique a d'abord validé ses compétences lors de la pré-sélection avec les tests sur gyroscope, boîte noire et afficheur 7 segments, avant de concevoir l'ensemble des circuits embarqués du robot pour la phase finale.</p>
+<div class="space-y-4">
+<div class="flex items-start space-x-3">
+<span class="material-icons text-primary mt-1">school</span>
+<div>
+<h4 class="font-semibold">Phase pré-sélection : Tests techniques</h4>
+<p class="text-sm text-text-muted-light dark:text-text-muted-dark">Réalisation des tests gyroscope MPU6050, boîte noire et afficheur 7 segments</p>
+</div>
+</div>
+<div class="flex items-start space-x-3">
+<span class="material-icons text-primary mt-1">memory</span>
+<div>
+<h4 class="font-semibold">Système de boîte noire embarquée</h4>
+<p class="text-sm text-text-muted-light dark:text-text-muted-dark">Enregistrement continu des données de mission pour analyse et débogage</p>
+</div>
+</div>
+<div class="flex items-start space-x-3">
+<span class="material-icons text-primary mt-1">power</span>
+<div>
+<h4 class="font-semibold">Conception du circuit d'alimentation</h4>
+<p class="text-sm text-text-muted-light dark:text-text-muted-dark">Distribution et régulation de l'alimentation électrique pour tous les composants embarqués du robot</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+
+<!-- Section Mécanique détaillée -->
+<section class="py-0 bg-surface-light dark:bg-surface-dark" id="mecanique">
+<div class="container mx-auto px-6">
+<div class="grid md:grid-cols-2 gap-6 items-center">
+<div class="space-y-3">
+<p class="text-text-muted-light dark:text-text-muted-dark">Après avoir progressé à travers les tests CAO de la pré-sélection (niveau débutant à avancé), l'équipe mécanique a conçu sur SolidWorks l'intégralité de la structure physique du robot pour la mission EcoCity.</p>
+<div class="space-y-4">
+<div class="flex items-start space-x-3">
+<span class="material-icons text-primary mt-1">school</span>
+<div>
+<h4 class="font-semibold">Phase pré-sélection : Progression en CAO</h4>
+<p class="text-sm text-text-muted-light dark:text-text-muted-dark">Tests SolidWorks niveau débutant, intermédiaire et avancé pour maîtriser la modélisation 3D</p>
+</div>
+</div>
+<div class="flex items-start space-x-3">
+<span class="material-icons text-primary mt-1">view_in_ar</span>
+<div>
+<h4 class="font-semibold">Modélisation 3D du châssis sur SolidWorks</h4>
+<p class="text-sm text-text-muted-light dark:text-text-muted-dark">Structure porteuse avec emplacements dédiés aux moteurs, batteries et carte électronique</p>
+</div>
+</div>
+<div class="flex items-start space-x-3">
+<span class="material-icons text-primary mt-1">build_circle</span>
+<div>
+<h4 class="font-semibold">Systèmes de collecte et stockage</h4>
+<p class="text-sm text-text-muted-light dark:text-text-muted-dark">Mécanismes de préhension des cubes avec zones de stockage temporaire</p>
+</div>
+</div>
+</div>
+</div>
+<div class="relative">
+<video autoplay muted loop class="w-full rounded-lg shadow-2xl">
+<source src="https://raw.githubusercontent.com/TekBot-Robotics-Challenge/2025-Team-UCAO-TECH-Docs/main/Images_membres/Un%20sp%C3%A9cialiste%20observe%20des%20pi%C3%A8ces%20de%20mod%C3%A8le%203D%20de%20moteur%20lourd%20dans%20l%E2%80%99application%20de%20l%E2%80%99ing%C3%A9nierie.%20Application%20de%20mod%C3%A9lisation%203d%20industrielle%20pour%20l%E2%80%99ing%C3%A9nierie%20des%20machines.%20Application%20pour%20l%E2%80%99ing%C3%A9nierie%20de%20mod%C3%A8.mp4" type="video/mp4">
+</video>
+<div class="absolute inset-0 bg-primary/20 rounded-lg pointer-events-none"></div>
+</div>
+</div>
+</div>
+</section>
+
+<section class="bg-surface-light dark:bg-surface-dark">
+<div class="container mx-auto px-6 pt-0 pb-6">
+<div class="text-center">
+<a href="documentation.html" class="inline-flex items-center gap-2 bg-primary text-white font-bold px-8 py-4 rounded-full shadow-lg hover:bg-primary/90 transition">
+<span class="material-icons">description</span>
+<span>Consulter la documentation</span>
+</a>
+</div>
+</div>
+</section>
+
+<section class="pt-8 pb-4 md:pt-12 md:pb-6 bg-surface-light dark:bg-surface-dark" id="team">
+<div class="container mx-auto px-6 scroll-animation">
+<div class="text-center mx-auto">
+<h2 class="text-3xl md:text-4xl font-display font-bold">Notre <span class="text-primary">Équipe</span></h2>
+<p class="mt-4 text-lg text-center text-text-muted-light dark:text-text-muted-dark max-w-4xl mx-auto leading-relaxed">Derrière chaque projet ambitieux, il y a des femmes et des hommes engagés.. Découvrez celles et ceux qui relèvent chaque défi du TRC 2025 avec détermination et créativité.</p>
+</div>
+<!-- Slides wrapper -->
+<div class="mt-8 team-slides">
+    <div class="team-track">
+    <!-- Slide 1: All members -->
+    <div class="team-slide team-slide-all">
+        <div class="grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-8 team-grid">
+<div class="text-center group team-card relative">
+<div class="relative">
+<img alt="Photo de membre d'équipe" class="w-32 h-32 rounded-full mx-auto shadow-lg object-cover team-card-float" src="https://raw.githubusercontent.com/TekBot-Robotics-Challenge/2025-Team-UCAO-TECH-Docs/main/Images_membres/dodji.PNG"/>
+<div class="absolute inset-0 rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+<div class="flex space-x-2 team-contact-icons">
+<a aria-label="Envoyer un email à TCHIDEHOU Virgile" class="text-white hover:text-gray-200" href="mailto:tchidehoudodjivirgile@gmail.com"><span class="material-icons">email</span></a>
+<a aria-label="Voir le profil GitHub de TCHIDEHOU Virgile" class="text-white hover:text-gray-200" href="https://github.com/Badmus2005" rel="noopener" target="_blank"><svg aria-hidden="true" class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.3 3.438 9.8 8.205 11.387.6.113.82-.26.82-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.386-1.333-1.756-1.333-1.756-1.089-.744.083-.729.083-.729 1.205.085 1.838 1.237 1.838 1.237 1.07 1.834 2.809 1.304 3.495.997.108-.775.418-1.305.762-1.605-2.665-.304-5.467-1.332-5.467-5.93 0-1.31.468-2.381 1.235-3.221-.123-.303-.535-1.523.117-3.176 0 0 1.008-.322 3.3 1.23a11.5 11.5 0 0 1 3.003-.404 11.5 11.5 0 0 1 3.003.404c2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.241 2.873.118 3.176.77.84 1.233 1.911 1.233 3.221 0 4.61-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .32.218.694.825.576C20.565 21.796 24 17.297 24 12c0-6.63-5.37-12-12-12z"></path></svg></a>
+<a aria-label="Contacter TCHIDEHOU Virgile sur Discord" class="text-white hover:text-gray-200" href="https://discord.com/users/dodji_25" rel="noopener" target="_blank"><svg aria-hidden="true" class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M20.317 4.3698a19.7913 19.7913 0 0 0-4.8851-1.5152.0741.0741 0 0 0-.0785.0371c-.211.3753-.4447.8648-.6083 1.2495-1.8447-.2762-3.68-.2762-5.4868 0-.1636-.3933-.4058-.8742-.6177-1.2495a.077.077 0 0 0-.0785-.0371 19.7363 19.7363 0 0 0-4.8852 1.5152.0699.0699 0 0 0-.0321.0277C.5334 9.0458-.319 13.5799.0992 18.0578a.0824.0824 0 0 0 .0312.0561c2.0528 1.5076 4.0413 2.4228 5.9929 3.0294a.0777.0777 0 0 0 .0842-.0276c.4616-.6304.8731-1.2952 1.226-1.9942a.076.076 0 0 0-.0416-.1057c-.6528-.2476-1.2743-.5495-1.8722-.8923a.077.077 0 0 1-.0076-.1277c.1258-.0943.2517-.1923.3718-.2914a.0743.0743 0 0 1 .0776-.0105c3.9278 1.7933 8.18 1.7933 12.0614 0a.0737.0737 0 0 1 .0785.0095c.1202.0991.246.1981.3728.2924a.077.077 0 0 1-.0066.1276 12.2986 12.2986 0 0 1-1.8732.8914.0766.0766 0 0 0-.0406.1067c.3604.698.7719 1.3628 1.225 1.9932a.076.076 0 0 0 .0842.0286c1.961-.6067 3.9495-1.5218 6.0023-3.0294a.077.077 0 0 0 .0313-.0552c.5004-5.177-.8382-9.6739-3.5485-13.6604a.061.061 0 0 0-.0312-.0286zm-12.1395 9.5183c-1.1825 0-2.1569-1.0857-2.1569-2.419 0-1.3332.9555-2.4189 2.157-2.4189 1.2108 0 2.1757 1.0952 2.1568 2.4189 0 1.3333-.9555 2.419-2.1569 2.419zm7.6023 0c-1.1825 0-2.1569-1.0857-2.1569-2.419 0-1.3332.9554-2.4189 2.1569-2.4189 1.2108 0 2.1757 1.0952 2.1568 2.4189 0 1.3333-.946 2.419-2.1568 2.419z"></path></svg></a>
+</div>
+</div>
+</div>
+<h4 class="mt-4 text-lg font-bold">TCHIDEHOU Virgile</h4>
+<p class="text-sm text-text-muted-light dark:text-text-muted-dark">Licence 2 • Filière IIM</p>
+</div>
+<div class="text-center group team-card">
+<div class="relative">
+<img alt="AÏDASSO David Jonathan" class="w-32 h-32 rounded-full mx-auto shadow-lg object-cover team-card-float" src="https://raw.githubusercontent.com/TekBot-Robotics-Challenge/2025-Team-UCAO-TECH-Docs/main/Images_membres/christelle.jpg"/>
+<div class="absolute inset-0 rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+<div class="flex space-x-2 team-contact-icons">
+<a aria-label="Envoyer un email à ADAHE Christelle" class="text-white hover:text-gray-200" href="mailto:kiziadahe@gmail.com"><span class="material-icons">email</span></a>
+<a aria-label="Voir le profil GitHub de ADAHE Christelle" class="text-white hover:text-gray-200" href="https://github.com/kizi-Christelle" rel="noopener" target="_blank"><svg aria-hidden="true" class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.3 3.438 9.8 8.205 11.387.6.113.82-.26.82-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.386-1.333-1.756-1.333-1.756-1.089-.744.083-.729.083-.729 1.205.085 1.838 1.237 1.838 1.237 1.07 1.834 2.809 1.304 3.495.997.108-.775.418-1.305.762-1.605-2.665-.304-5.467-1.332-5.467-5.93 0-1.31.468-2.381 1.235-3.221-.123-.303-.535-1.523.117-3.176 0 0 1.008-.322 3.3 1.23a11.5 11.5 0 0 1 3.003-.404 11.5 11.5 0 0 1 3.003.404c2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.241 2.873.118 3.176.77.84 1.233 1.911 1.233 3.221 0 4.61-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .32.218.694.825.576C20.565 21.796 24 17.297 24 12c0-6.63-5.37-12-12-12z"></path></svg></a>
+<a aria-label="Contacter ADAHE Christelle sur Discord" class="text-white hover:text-gray-200" href="https://discord.com/users/Kizi0081" rel="noopener" target="_blank"><svg aria-hidden="true" class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M20.317 4.3698a19.7913 19.7913 0 0 0-4.8851-1.5152.0741.0741 0 0 0-.0785.0371c-.211.3753-.4447.8648-.6083 1.2495-1.8447-.2762-3.68-.2762-5.4868 0-.1636-.3933-.4058-.8742-.6177-1.2495a.077.077 0 0 0-.0785-.0371 19.7363 19.7363 0 0 0-4.8852 1.5152.0699.0699 0 0 0-.0321.0277C.5334 9.0458-.319 13.5799.0992 18.0578a.0824.0824 0 0 0 .0312.0561c2.0528 1.5076 4.0413 2.4228 5.9929 3.0294a.0777.0777 0 0 0 .0842-.0276c.4616-.6304.8731-1.2952 1.226-1.9942a.076.076 0 0 0-.0416-.1057c-.6528-.2476-1.2743-.5495-1.8722-.8923a.077.077 0 0 1-.0076-.1277c.1258-.0943.2517-.1923.3718-.2914a.0743.0743 0 0 1 .0776-.0105c3.9278 1.7933 8.18 1.7933 12.0614 0a.0737.0737 0 0 1 .0785.0095c.1202.0991.246.1981.3728.2924a.077.077 0 0 1-.0066.1276 12.2986 12.2986 0 0 1-1.8732.8914.0766.0766 0 0 0-.0406.1067c.3604.698.7719 1.3628 1.225 1.9932a.076.076 0 0 0 .0842.0286c1.961-.6067 3.9495-1.5218 6.0023-3.0294a.077.077 0 0 0 .0313-.0552c.5004-5.177-.8382-9.6739-3.5485-13.6604a.061.061 0 0 0-.0312-.0286zm-12.1395 9.5183c-1.1825 0-2.1569-1.0857-2.1569-2.419 0-1.3332.9555-2.4189 2.157-2.4189 1.2108 0 2.1757 1.0952 2.1568 2.4189 0 1.3333-.9555 2.419-2.1569 2.419zm7.6023 0c-1.1825 0-2.1569-1.0857-2.1569-2.419 0-1.3332.9554-2.4189 2.1569-2.4189 1.2108 0 2.1757 1.0952 2.1568 2.4189 0 1.3333-.946 2.419-2.1568 2.419z"></path></svg></a>
+</div>
+</div>
+</div>
+<h4 class="mt-4 text-lg font-bold">ADAHE Christelle</h4>
+<p class="text-sm text-text-muted-light dark:text-text-muted-dark">Licence 2 • Filière ELT</p>
+</div>
+<div class="text-center group team-card">
+<div class="relative">
+<img alt="HOUNNOUVI Hermes" class="w-32 h-32 rounded-full mx-auto shadow-lg object-cover team-card-float" src="https://raw.githubusercontent.com/TekBot-Robotics-Challenge/2025-Team-UCAO-TECH-Docs/main/Images_membres/hermes.PNG"/>
+<div class="absolute inset-0 rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+<div class="flex space-x-2 team-contact-icons">
+<a aria-label="Envoyer un email à HOUNNOUVI Hermes" class="text-white hover:text-gray-200" href="mailto:beneruchermeshounnouvi@gmail.com"><span class="material-icons">email</span></a>
+<a aria-label="Voir le profil GitHub de HOUNNOUVI Hermes" class="text-white hover:text-gray-200" href="https://github.com/Hermes0741" rel="noopener" target="_blank"><svg aria-hidden="true" class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.3 3.438 9.8 8.205 11.387.6.113.82-.26.82-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.386-1.333-1.756-1.333-1.756-1.089-.744.083-.729.083-.729 1.205.085 1.838 1.237 1.838 1.237 1.07 1.834 2.809 1.304 3.495.997.108-.775.418-1.305.762-1.605-2.665-.304-5.467-1.332-5.467-5.93 0-1.31.468-2.381 1.235-3.221-.123-.303-.535-1.523.117-3.176 0 0 1.008-.322 3.3 1.23a11.5 11.5 0 0 1 3.003-.404 11.5 11.5 0 0 1 3.003.404c2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.241 2.873.118 3.176.77.84 1.233 1.911 1.233 3.221 0 4.61-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .32.218.694.825.576C20.565 21.796 24 17.297 24 12c0-6.63-5.37-12-12-12z"></path></svg></a>
+<a aria-label="Contacter HOUNNOUVI Hermes sur Discord" class="text-white hover:text-gray-200" href="https://discord.com/users/Hermes-max" rel="noopener" target="_blank"><svg aria-hidden="true" class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M20.317 4.3698a19.7913 19.7913 0 0 0-4.8851-1.5152.0741.0741 0 0 0-.0785.0371c-.211.3753-.4447.8648-.6083 1.2495-1.8447-.2762-3.68-.2762-5.4868 0-.1636-.3933-.4058-.8742-.6177-1.2495a.077.077 0 0 0-.0785-.0371 19.7363 19.7363 0 0 0-4.8852 1.5152.0699.0699 0 0 0-.0321.0277C.5334 9.0458-.319 13.5799.0992 18.0578a.0824.0824 0 0 0 .0312.0561c2.0528 1.5076 4.0413 2.4228 5.9929 3.0294a.0777.0777 0 0 0 .0842-.0276c.4616-.6304.8731-1.2952 1.226-1.9942a.076.076 0 0 0-.0416-.1057c-.6528-.2476-1.2743-.5495-1.8722-.8923a.077.077 0 0 1-.0076-.1277c.1258-.0943.2517-.1923.3718-.2914a.0743.0743 0 0 1 .0776-.0105c3.9278 1.7933 8.18 1.7933 12.0614 0a.0737.0737 0 0 1 .0785.0095c.1202.0991.246.1981.3728.2924a.077.077 0 0 1-.0066.1276 12.2986 12.2986 0 0 1-1.8732.8914.0766.0766 0 0 0-.0406.1067c.3604.698.7719 1.3628 1.225 1.9932a.076.076 0 0 0 .0842.0286c1.961-.6067 3.9495-1.5218 6.0023-3.0294a.077.077 0 0 0 .0313-.0552c.5004-5.177-.8382-9.6739-3.5485-13.6604a.061.061 0 0 0-.0312-.0286zm-12.1395 9.5183c-1.1825 0-2.1569-1.0857-2.1569-2.419 0-1.3332.9555-2.4189 2.157-2.4189 1.2108 0 2.1757 1.0952 2.1568 2.4189 0 1.3333-.9555 2.419-2.1569 2.419zm7.6023 0c-1.1825 0-2.1569-1.0857-2.1569-2.419 0-1.3332.9554-2.4189 2.1569-2.4189 1.2108 0 2.1757 1.0952 2.1568 2.4189 0 1.3333-.946 2.419-2.1568 2.419z"></path></svg></a>
+</div>
+</div>
+</div>
+<h4 class="mt-4 text-lg font-bold">HOUNNOUVI Hermès</h4>
+<p class="text-sm text-text-muted-light dark:text-text-muted-dark">Licence 2 • Filière ELT</p>
+</div>
+<div class="text-center group team-card">
+<div class="relative">
+<img alt="Photo de membre d'équipe" class="w-32 h-32 rounded-full mx-auto shadow-lg object-cover team-card-float" src="https://raw.githubusercontent.com/TekBot-Robotics-Challenge/2025-Team-UCAO-TECH-Docs/main/Images_membres/romance.PNG"/>
+<div class="absolute inset-0 rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+<div class="flex space-x-2 team-contact-icons">
+<a aria-label="Envoyer un email à ADJAHOU Romance" class="text-white hover:text-gray-200" href="mailto:adjahouromance@gmail.com"><span class="material-icons">email</span></a>
+<a aria-label="Voir le profil GitHub de ADJAHOU Romance" class="text-white hover:text-gray-200" href="https://github.com/romance16" rel="noopener" target="_blank"><svg aria-hidden="true" class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.3 3.438 9.8 8.205 11.387.6.113.82-.26.82-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.386-1.333-1.756-1.333-1.756-1.089-.744.083-.729.083-.729 1.205.085 1.838 1.237 1.838 1.237 1.07 1.834 2.809 1.304 3.495.997.108-.775.418-1.305.762-1.605-2.665-.304-5.467-1.332-5.467-5.93 0-1.31.468-2.381 1.235-3.221-.123-.303-.535-1.523.117-3.176 0 0 1.008-.322 3.3 1.23a11.5 11.5 0 0 1 3.003-.404 11.5 11.5 0 0 1 3.003.404c2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.241 2.873.118 3.176.77.84 1.233 1.911 1.233 3.221 0 4.61-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .32.218.694.825.576C20.565 21.796 24 17.297 24 12c0-6.63-5.37-12-12-12z"></path></svg></a>
+<a aria-label="Contacter ADJAHOU Romance sur Discord" class="text-white hover:text-gray-200" href="https://discord.com/users/romance-rose" rel="noopener" target="_blank"><svg aria-hidden="true" class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M20.317 4.3698a19.7913 19.7913 0 0 0-4.8851-1.5152.0741.0741 0 0 0-.0785.0371c-.211.3753-.4447.8648-.6083 1.2495-1.8447-.2762-3.68-.2762-5.4868 0-.1636-.3933-.4058-.8742-.6177-1.2495a.077.077 0 0 0-.0785-.0371 19.7363 19.7363 0 0 0-4.8852 1.5152.0699.0699 0 0 0-.0321.0277C.5334 9.0458-.319 13.5799.0992 18.0578a.0824.0824 0 0 0 .0312.0561c2.0528 1.5076 4.0413 2.4228 5.9929 3.0294a.0777.0777 0 0 0 .0842-.0276c.4616-.6304.8731-1.2952 1.226-1.9942a.076.076 0 0 0-.0416-.1057c-.6528-.2476-1.2743-.5495-1.8722-.8923a.077.077 0 0 1-.0076-.1277c.1258-.0943.2517-.1923.3718-.2914a.0743.0743 0 0 1 .0776-.0105c3.9278 1.7933 8.18 1.7933 12.0614 0a.0737.0737 0 0 1 .0785.0095c.1202.0991.246.1981.3728.2924a.077.077 0 0 1-.0066.1276 12.2986 12.2986 0 0 1-1.8732.8914.0766.0766 0 0 0-.0406.1067c.3604.698.7719 1.3628 1.225 1.9932a.076.076 0 0 0 .0842.0286c1.961-.6067 3.9495-1.5218 6.0023-3.0294a.077.077 0 0 0 .0313-.0552c.5004-5.177-.8382-9.6739-3.5485-13.6604a.061.061 0 0 0-.0312-.0286zm-12.1395 9.5183c-1.1825 0-2.1569-1.0857-2.1569-2.419 0-1.3332.9555-2.4189 2.157-2.4189 1.2108 0 2.1757 1.0952 2.1568 2.4189 0 1.3333-.9555 2.419-2.1569 2.419zm7.6023 0c-1.1825 0-2.1569-1.0857-2.1569-2.419 0-1.3332.9554-2.4189 2.1569-2.4189 1.2108 0 2.1757 1.0952 2.1568 2.4189 0 1.3333-.946 2.419-2.1568 2.419z"></path></svg></a>
+</div>
+</div>
+</div>
+<h4 class="mt-4 text-lg font-bold">ADJAHOU Romance</h4>
+<p class="text-sm text-text-muted-light dark:text-text-muted-dark">Licence 2 • Filière IIM</p>
+</div>
+<div class="text-center group team-card">
+<div class="relative">
+<img alt="Photo de membre d'équipe" class="w-32 h-32 rounded-full mx-auto shadow-lg object-cover team-card-float" src="https://raw.githubusercontent.com/TekBot-Robotics-Challenge/2025-Team-UCAO-TECH-Docs/main/Images_membres/ladislas.PNG"/>
+<div class="absolute inset-0 rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+<div class="flex space-x-2 team-contact-icons">
+<a aria-label="Envoyer un email à DOUSSO Ladislas" class="text-white hover:text-gray-200" href="mailto:doussoladislas@gmail.com"><span class="material-icons">email</span></a>
+<a aria-label="Voir le profil GitHub de DOUSSO Ladislas" class="text-white hover:text-gray-200" href="https://github.com/ladislasStorm" rel="noopener" target="_blank"><svg aria-hidden="true" class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.3 3.438 9.8 8.205 11.387.6.113.82-.26.82-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.386-1.333-1.756-1.333-1.756-1.089-.744.083-.729.083-.729 1.205.085 1.838 1.237 1.838 1.237 1.07 1.834 2.809 1.304 3.495.997.108-.775.418-1.305.762-1.605-2.665-.304-5.467-1.332-5.467-5.93 0-1.31.468-2.381 1.235-3.221-.123-.303-.535-1.523.117-3.176 0 0 1.008-.322 3.3 1.23a11.5 11.5 0 0 1 3.003-.404 11.5 11.5 0 0 1 3.003.404c2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.241 2.873.118 3.176.77.84 1.233 1.911 1.233 3.221 0 4.61-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .32.218.694.825.576C20.565 21.796 24 17.297 24 12c0-6.63-5.37-12-12-12z"></path></svg></a>
+<a aria-label="Contacter DOUSSO Ladislas sur Discord" class="text-white hover:text-gray-200" href="https://discord.com/users/ladislas007" rel="noopener" target="_blank"><svg aria-hidden="true" class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M20.317 4.3698a19.7913 19.7913 0 0 0-4.8851-1.5152.0741.0741 0 0 0-.0785.0371c-.211.3753-.4447.8648-.6083 1.2495-1.8447-.2762-3.68-.2762-5.4868 0-.1636-.3933-.4058-.8742-.6177-1.2495a.077.077 0 0 0-.0785-.0371 19.7363 19.7363 0 0 0-4.8852 1.5152.0699.0699 0 0 0-.0321.0277C.5334 9.0458-.319 13.5799.0992 18.0578a.0824.0824 0 0 0 .0312.0561c2.0528 1.5076 4.0413 2.4228 5.9929 3.0294a.0777.0777 0 0 0 .0842-.0276c.4616-.6304.8731-1.2952 1.226-1.9942a.076.076 0 0 0-.0416-.1057c-.6528-.2476-1.2743-.5495-1.8722-.8923a.077.077 0 0 1-.0076-.1277c.1258-.0943.2517-.1923.3718-.2914a.0743.0743 0 0 1 .0776-.0105c3.9278 1.7933 8.18 1.7933 12.0614 0a.0737.0737 0 0 1 .0785.0095c.1202.0991.246.1981.3728.2924a.077.077 0 0 1-.0066.1276 12.2986 12.2986 0 0 1-1.8732.8914.0766.0766 0 0 0-.0406.1067c.3604.698.7719 1.3628 1.225 1.9932a.076.076 0 0 0 .0842.0286c1.961-.6067 3.9495-1.5218 6.0023-3.0294a.077.077 0 0 0 .0313-.0552c.5004-5.177-.8382-9.6739-3.5485-13.6604a.061.061 0 0 0-.0312-.0286zm-12.1395 9.5183c-1.1825 0-2.1569-1.0857-2.1569-2.419 0-1.3332.9555-2.4189 2.157-2.4189 1.2108 0 2.1757 1.0952 2.1568 2.4189 0 1.3333-.9555 2.419-2.1569 2.419zm7.6023 0c-1.1825 0-2.1569-1.0857-2.1569-2.419 0-1.3332.9554-2.4189 2.1569-2.4189 1.2108 0 2.1757 1.0952 2.1568 2.4189 0 1.3333-.946 2.419-2.1568 2.419z"></path></svg></a>
+</div>
+</div>
+</div>
+<h4 class="mt-4 text-lg font-bold">DOUSSO Ladislas</h4>
+<p class="text-sm text-text-muted-light dark:text-text-muted-dark">Licence 2 • Filière GT-TIC</p>
+</div>
+<div class="text-center group team-card">
+<div class="relative">
+<img alt="Photo de membre d'équipe" class="w-32 h-32 rounded-full mx-auto shadow-lg object-cover team-card-float" src="https://raw.githubusercontent.com/TekBot-Robotics-Challenge/2025-Team-UCAO-TECH-Docs/main/Images_membres/alade.PNG"/>
+<div class="absolute inset-0 rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+<div class="flex space-x-2 team-contact-icons">
+<a aria-label="Envoyer un email à ADECHI Alade" class="text-white hover:text-gray-200" href="mailto:aladeadechi100@gmail.com"><span class="material-icons">email</span></a>
+<a aria-label="Voir le profil GitHub de ADECHI Alade" class="text-white hover:text-gray-200" href="https://github.com/aladeadechi" rel="noopener" target="_blank"><svg aria-hidden="true" class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.3 3.438 9.8 8.205 11.387.6.113.82-.26.82-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.386-1.333-1.756-1.333-1.756-1.089-.744.083-.729.083-.729 1.205.085 1.838 1.237 1.838 1.237 1.07 1.834 2.809 1.304 3.495.997.108-.775.418-1.305.762-1.605-2.665-.304-5.467-1.332-5.467-5.93 0-1.31.468-2.381 1.235-3.221-.123-.303-.535-1.523.117-3.176 0 0 1.008-.322 3.3 1.23a11.5 11.5 0 0 1 3.003-.404 11.5 11.5 0 0 1 3.003.404c2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.241 2.873.118 3.176.77.84 1.233 1.911 1.233 3.221 0 4.61-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .32.218.694.825.576C20.565 21.796 24 17.297 24 12c0-6.63-5.37-12-12-12z"></path></svg></a>
+<a aria-label="Contacter ADECHI Alade sur Discord" class="text-white hover:text-gray-200" href="https://discord.com/users/aladeadechi" rel="noopener" target="_blank"><svg aria-hidden="true" class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M20.317 4.3698a19.7913 19.7913 0 0 0-4.8851-1.5152.0741.0741 0 0 0-.0785.0371c-.211.3753-.4447.8648-.6083 1.2495-1.8447-.2762-3.68-.2762-5.4868 0-.1636-.3933-.4058-.8742-.6177-1.2495a.077.077 0 0 0-.0785-.0371 19.7363 19.7363 0 0 0-4.8852 1.5152.0699.0699 0 0 0-.0321.0277C.5334 9.0458-.319 13.5799.0992 18.0578a.0824.0824 0 0 0 .0312.0561c2.0528 1.5076 4.0413 2.4228 5.9929 3.0294a.0777.0777 0 0 0 .0842-.0276c.4616-.6304.8731-1.2952 1.226-1.9942a.076.076 0 0 0-.0416-.1057c-.6528-.2476-1.2743-.5495-1.8722-.8923a.077.077 0 0 1-.0076-.1277c.1258-.0943.2517-.1923.3718-.2914a.0743.0743 0 0 1 .0776-.0105c3.9278 1.7933 8.18 1.7933 12.0614 0a.0737.0737 0 0 1 .0785.0095c.1202.0991.246.1981.3728.2924a.077.077 0 0 1-.0066.1276 12.2986 12.2986 0 0 1-1.8732.8914.0766.0766 0 0 0-.0406.1067c.3604.698.7719 1.3628 1.225 1.9932a.076.076 0 0 0 .0842.0286c1.961-.6067 3.9495-1.5218 6.0023-3.0294a.077.077 0 0 0 .0313-.0552c.5004-5.177-.8382-9.6739-3.5485-13.6604a.061.061 0 0 0-.0312-.0286zm-12.1395 9.5183c-1.1825 0-2.1569-1.0857-2.1569-2.419 0-1.3332.9555-2.4189 2.157-2.4189 1.2108 0 2.1757 1.0952 2.1568 2.4189 0 1.3333-.9555 2.419-2.1569 2.419zm7.6023 0c-1.1825 0-2.1569-1.0857-2.1569-2.419 0-1.3332.9554-2.4189 2.1569-2.4189 1.2108 0 2.1757 1.0952 2.1568 2.4189 0 1.3333-.946 2.419-2.1568 2.419z"></path></svg></a>
+</div>
+</div>
+</div>
+<h4 class="mt-4 text-lg font-bold">ADECHI Alade</h4>
+<p class="text-sm text-text-muted-light dark:text-text-muted-dark">Licence 2 • Filière IIM</p>
+</div>
+<div class="text-center group team-card">
+<div class="relative">
+<img alt="Photo de membre d'équipe" class="w-32 h-32 rounded-full mx-auto shadow-lg object-cover team-card-float" src="https://raw.githubusercontent.com/TekBot-Robotics-Challenge/2025-Team-UCAO-TECH-Docs/main/Images_membres/fati.jpg"/>
+<div class="absolute inset-0 rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+<div class="flex space-x-2 team-contact-icons">
+<a aria-label="Envoyer un email à SALIFOU Fatihatou" class="text-white hover:text-gray-200" href="mailto:salifoufatiha42@gmail.com"><span class="material-icons">email</span></a>
+<a aria-label="Voir le profil GitHub de SALIFOU Fatihatou" class="text-white hover:text-gray-200" href="https://github.com/0151507214" rel="noopener" target="_blank"><svg aria-hidden="true" class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.3 3.438 9.8 8.205 11.387.6.113.82-.26.82-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.386-1.333-1.756-1.333-1.756-1.089-.744.083-.729.083-.729 1.205.085 1.838 1.237 1.838 1.237 1.07 1.834 2.809 1.304 3.495.997.108-.775.418-1.305.762-1.605-2.665-.304-5.467-1.332-5.467-5.93 0-1.31.468-2.381 1.235-3.221-.123-.303-.535-1.523.117-3.176 0 0 1.008-.322 3.3 1.23a11.5 11.5 0 0 1 3.003-.404 11.5 11.5 0 0 1 3.003.404c2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.241 2.873.118 3.176.77.84 1.233 1.911 1.233 3.221 0 4.61-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .32.218.694.825.576C20.565 21.796 24 17.297 24 12c0-6.63-5.37-12-12-12z"></path></svg></a>
+<a aria-label="Contacter SALIFOU Fatihatou sur Discord" class="text-white hover:text-gray-200" href="https://discord.com/users/salifoufatiha" rel="noopener" target="_blank"><svg aria-hidden="true" class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M20.317 4.3698a19.7913 19.7913 0 0 0-4.8851-1.5152.0741.0741 0 0 0-.0785.0371c-.211.3753-.4447.8648-.6083 1.2495-1.8447-.2762-3.68-.2762-5.4868 0-.1636-.3933-.4058-.8742-.6177-1.2495a.077.077 0 0 0-.0785-.0371 19.7363 19.7363 0 0 0-4.8852 1.5152.0699.0699 0 0 0-.0321.0277C.5334 9.0458-.319 13.5799.0992 18.0578a.0824.0824 0 0 0 .0312.0561c2.0528 1.5076 4.0413 2.4228 5.9929 3.0294a.0777.0777 0 0 0 .0842-.0276c.4616-.6304.8731-1.2952 1.226-1.9942a.076.076 0 0 0-.0416-.1057c-.6528-.2476-1.2743-.5495-1.8722-.8923a.077.077 0 0 1-.0076-.1277c.1258-.0943.2517-.1923.3718-.2914a.0743.0743 0 0 1 .0776-.0105c3.9278 1.7933 8.18 1.7933 12.0614 0a.0737.0737 0 0 1 .0785.0095c.1202.0991.246.1981.3728.2924a.077.077 0 0 1-.0066.1276 12.2986 12.2986 0 0 1-1.8732.8914.0766.0766 0 0 0-.0406.1067c.3604.698.7719 1.3628 1.225 1.9932a.076.076 0 0 0 .0842.0286c1.961-.6067 3.9495-1.5218 6.0023-3.0294a.077.077 0 0 0 .0313-.0552c.5004-5.177-.8382-9.6739-3.5485-13.6604a.061.061 0 0 0-.0312-.0286zm-12.1395 9.5183c-1.1825 0-2.1569-1.0857-2.1569-2.419 0-1.3332.9555-2.4189 2.157-2.4189 1.2108 0 2.1757 1.0952 2.1568 2.4189 0 1.3333-.9555 2.419-2.1569 2.419zm7.6023 0c-1.1825 0-2.1569-1.0857-2.1569-2.419 0-1.3332.9554-2.4189 2.1569-2.4189 1.2108 0 2.1757 1.0952 2.1568 2.4189 0 1.3333-.946 2.419-2.1568 2.419z"></path></svg></a>
+</div>
+</div>
+</div>
+<h4 class="mt-4 text-lg font-bold">SALIFOU Fatihatou</h4>
+<p class="text-sm text-text-muted-light dark:text-text-muted-dark">Licence 2 • Filière ELT</p>
+</div>
+<div class="text-center group team-card">
+<div class="relative">
+<img alt="Photo de membre d'équipe" class="w-32 h-32 rounded-full mx-auto shadow-lg object-cover team-card-float" src="https://raw.githubusercontent.com/TekBot-Robotics-Challenge/2025-Team-UCAO-TECH-Docs/main/Images_membres/rachelle.JPG"/>
+<div class="absolute inset-0 rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+<div class="flex space-x-2 team-contact-icons">
+<a aria-label="Envoyer un email à FAGBITE Rachelle" class="text-white hover:text-gray-200" href="mailto:fagbitearikerachelle@gmail"><span class="material-icons">email</span></a>
+<a aria-label="Voir le profil GitHub de FAGBITE Rachelle" class="text-white hover:text-gray-200" href="https://github.com/rachelle2615" rel="noopener" target="_blank"><svg aria-hidden="true" class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.3 3.438 9.8 8.205 11.387.6.113.82-.26.82-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.386-1.333-1.756-1.333-1.756-1.089-.744.083-.729.083-.729 1.205.085 1.838 1.237 1.838 1.237 1.07 1.834 2.809 1.304 3.495.997.108-.775.418-1.305.762-1.605-2.665-.304-5.467-1.332-5.467-5.93 0-1.31.468-2.381 1.235-3.221-.123-.303-.535-1.523.117-3.176 0 0 1.008-.322 3.3 1.23a11.5 11.5 0 0 1 3.003-.404 11.5 11.5 0 0 1 3.003.404c2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.241 2.873.118 3.176.77.84 1.233 1.911 1.233 3.221 0 4.61-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .32.218.694.825.576C20.565 21.796 24 17.297 24 12c0-6.63-5.37-12-12-12z"></path></svg></a>
+<a aria-label="Contacter FAGBITE Rachelle sur Discord" class="text-white hover:text-gray-200" href="https://discord.com/users/rachelle0356" rel="noopener" target="_blank"><svg aria-hidden="true" class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M20.317 4.3698a19.7913 19.7913 0 0 0-4.8851-1.5152.0741.0741 0 0 0-.0785.0371c-.211.3753-.4447.8648-.6083 1.2495-1.8447-.2762-3.68-.2762-5.4868 0-.1636-.3933-.4058-.8742-.6177-1.2495a.077.077 0 0 0-.0785-.0371 19.7363 19.7363 0 0 0-4.8852 1.5152.0699.0699 0 0 0-.0321.0277C.5334 9.0458-.319 13.5799.0992 18.0578a.0824.0824 0 0 0 .0312.0561c2.0528 1.5076 4.0413 2.4228 5.9929 3.0294a.0777.0777 0 0 0 .0842-.0276c.4616-.6304.8731-1.2952 1.226-1.9942a.076.076 0 0 0-.0416-.1057c-.6528-.2476-1.2743-.5495-1.8722-.8923a.077.077 0 0 1-.0076-.1277c.1258-.0943.2517-.1923.3718-.2914a.0743.0743 0 0 1 .0776-.0105c3.9278 1.7933 8.18 1.7933 12.0614 0a.0737.0737 0 0 1 .0785.0095c.1202.0991.246.1981.3728.2924a.077.077 0 0 1-.0066.1276 12.2986 12.2986 0 0 1-1.8732.8914.0766.0766 0 0 0-.0406.1067c.3604.698.7719 1.3628 1.225 1.9932a.076.076 0 0 0 .0842.0286c1.961-.6067 3.9495-1.5218 6.0023-3.0294a.077.077 0 0 0 .0313-.0552c.5004-5.177-.8382-9.6739-3.5485-13.6604a.061.061 0 0 0-.0312-.0286zm-12.1395 9.5183c-1.1825 0-2.1569-1.0857-2.1569-2.419 0-1.3332.9555-2.4189 2.157-2.4189 1.2108 0 2.1757 1.0952 2.1568 2.4189 0 1.3333-.9555 2.419-2.1569 2.419zm7.6023 0c-1.1825 0-2.1569-1.0857-2.1569-2.419 0-1.3332.9554-2.4189 2.1569-2.4189 1.2108 0 2.1757 1.0952 2.1568 2.4189 0 1.3333-.946 2.419-2.1568 2.419z"></path></svg></a>
+</div>
+</div>
+</div>
+<h4 class="mt-4 text-lg font-bold">FAGBITE Rachelle</h4>
+<p class="text-sm text-text-muted-light dark:text-text-muted-dark">Licence 2 • Filière IIM</p>
+</div>
+<div class="text-center group team-card">
+<div class="relative">
+<img alt="Photo de membre d'équipe" class="w-32 h-32 rounded-full mx-auto shadow-lg object-cover team-card-float" src="https://raw.githubusercontent.com/TekBot-Robotics-Challenge/2025-Team-UCAO-TECH-Docs/main/Images_membres/david.jpg"/>
+<div class="absolute inset-0 rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+<div class="flex space-x-2 team-contact-icons">
+<a aria-label="Envoyer un email à DEGUENON David" class="text-white hover:text-gray-200" href="mailto:daviddeguenon3@gmail.com"><span class="material-icons">email</span></a>
+<a aria-label="Voir le profil GitHub de DEGUENON David" class="text-white hover:text-gray-200" href="https://github.com/david-2450" rel="noopener" target="_blank"><svg aria-hidden="true" class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.3 3.438 9.8 8.205 11.387.6.113.82-.26.82-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.386-1.333-1.756-1.333-1.756-1.089-.744.083-.729.083-.729 1.205.085 1.838 1.237 1.838 1.237 1.07 1.834 2.809 1.304 3.495.997.108-.775.418-1.305.762-1.605-2.665-.304-5.467-1.332-5.467-5.93 0-1.31.468-2.381 1.235-3.221-.123-.303-.535-1.523.117-3.176 0 0 1.008-.322 3.3 1.23a11.5 11.5 0 0 1 3.003-.404 11.5 11.5 0 0 1 3.003.404c2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.241 2.873.118 3.176.77.84 1.233 1.911 1.233 3.221 0 4.61-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .32.218.694.825.576C20.565 21.796 24 17.297 24 12c0-6.63-5.37-12-12-12z"></path></svg></a>
+<a aria-label="Contacter DEGUENON David sur Discord" class="text-white hover:text-gray-200" href="https://discord.com/users/12stv" rel="noopener" target="_blank"><svg aria-hidden="true" class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M20.317 4.3698a19.7913 19.7913 0 0 0-4.8851-1.5152.0741.0741 0 0 0-.0785.0371c-.211.3753-.4447.8648-.6083 1.2495-1.8447-.2762-3.68-.2762-5.4868 0-.1636-.3933-.4058-.8742-.6177-1.2495a.077.077 0 0 0-.0785-.0371 19.7363 19.7363 0 0 0-4.8852 1.5152.0699.0699 0 0 0-.0321.0277C.5334 9.0458-.319 13.5799.0992 18.0578a.0824.0824 0 0 0 .0312.0561c2.0528 1.5076 4.0413 2.4228 5.9929 3.0294a.0777.0777 0 0 0 .0842-.0276c.4616-.6304.8731-1.2952 1.226-1.9942a.076.076 0 0 0-.0416-.1057c-.6528-.2476-1.2743-.5495-1.8722-.8923a.077.077 0 0 1-.0076-.1277c.1258-.0943.2517-.1923.3718-.2914a.0743.0743 0 0 1 .0776-.0105c3.9278 1.7933 8.18 1.7933 12.0614 0a.0737.0737 0 0 1 .0785.0095c.1202.0991.246.1981.3728.2924a.077.077 0 0 1-.0066.1276 12.2986 12.2986 0 0 1-1.8732.8914.0766.0766 0 0 0-.0406.1067c.3604.698.7719 1.3628 1.225 1.9932a.076.076 0 0 0 .0842.0286c1.961-.6067 3.9495-1.5218 6.0023-3.0294a.077.077 0 0 0 .0313-.0552c.5004-5.177-.8382-9.6739-3.5485-13.6604a.061.061 0 0 0-.0312-.0286zm-12.1395 9.5183c-1.1825 0-2.1569-1.0857-2.1569-2.419 0-1.3332.9555-2.4189 2.157-2.4189 1.2108 0 2.1757 1.0952 2.1568 2.4189 0 1.3333-.9555 2.419-2.1569 2.419zm7.6023 0c-1.1825 0-2.1569-1.0857-2.1569-2.419 0-1.3332.9554-2.4189 2.1569-2.4189 1.2108 0 2.1757 1.0952 2.1568 2.4189 0 1.3333-.946 2.419-2.1568 2.419z"></path></svg></a>
+</div>
+</div>
+</div>
+<h4 class="mt-4 text-lg font-bold">DEGUENON David</h4>
+<p class="text-sm text-text-muted-light dark:text-text-muted-dark">Licence 2 • Filière IIM</p>
+</div>
+<div class="text-center group team-card">
+<div class="relative">
+<img alt="AÏDASSO Jonathan" class="w-32 h-32 rounded-full mx-auto shadow-lg object-cover team-card-float" src="https://raw.githubusercontent.com/TekBot-Robotics-Challenge/2025-Team-UCAO-TECH-Docs/main/Images_membres/jonathan.jpg"/>
+<div class="absolute inset-0 rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+<div class="flex space-x-2 team-contact-icons">
+<a aria-label="Envoyer un email à AÏDASSO Jonathan" class="text-white hover:text-gray-200" href="mailto:davidaidasso252@gmail.com"><span class="material-icons">email</span></a>
+<a aria-label="Voir le profil GitHub de AÏDASSO Jonathan" class="text-white hover:text-gray-200" href="https://github.com/adavidj" rel="noopener" target="_blank"><svg aria-hidden="true" class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.3 3.438 9.8 8.205 11.387.6.113.82-.26.82-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.386-1.333-1.756-1.333-1.756-1.089-.744.083-.729.083-.729 1.205.085 1.838 1.237 1.838 1.237 1.07 1.834 2.809 1.304 3.495.997.108-.775.418-1.305.762-1.605-2.665-.304-5.467-1.332-5.467-5.93 0-1.31.468-2.381 1.235-3.221-.123-.303-.535-1.523.117-3.176 0 0 1.008-.322 3.3 1.23a11.5 11.5 0 0 1 3.003-.404 11.5 11.5 0 0 1 3.003.404c2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.241 2.873.118 3.176.77.84 1.233 1.911 1.233 3.221 0 4.61-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .32.218.694.825.576C20.565 21.796 24 17.297 24 12c0-6.63-5.37-12-12-12z"></path></svg></a>
+<a aria-label="Contacter AÏDASSO Jonathan sur Discord" class="text-white hover:text-gray-200" href="https://discord.com/users/davidjnh" rel="noopener" target="_blank"><svg aria-hidden="true" class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M20.317 4.3698a19.7913 19.7913 0 0 0-4.8851-1.5152.0741.0741 0 0 0-.0785.0371c-.211.3753-.4447.8648-.6083 1.2495-1.8447-.2762-3.68-.2762-5.4868 0-.1636-.3933-.4058-.8742-.6177-1.2495a.077.077 0 0 0-.0785-.0371 19.7363 19.7363 0 0 0-4.8852 1.5152.0699.0699 0 0 0-.0321.0277C.5334 9.0458-.319 13.5799.0992 18.0578a.0824.0824 0 0 0 .0312.0561c2.0528 1.5076 4.0413 2.4228 5.9929 3.0294a.0777.0777 0 0 0 .0842-.0276c.4616-.6304.8731-1.2952 1.226-1.9942a.076.076 0 0 0-.0416-.1057c-.6528-.2476-1.2743-.5495-1.8722-.8923a.077.077 0 0 1-.0076-.1277c.1258-.0943.2517-.1923.3718-.2914a.0743.0743 0 0 1 .0776-.0105c3.9278 1.7933 8.18 1.7933 12.0614 0a.0737.0737 0 0 1 .0785.0095c.1202.0991.246.1981.3728.2924a.077.077 0 0 1-.0066.1276 12.2986 12.2986 0 0 1-1.8732.8914.0766.0766 0 0 0-.0406.1067c.3604.698.7719 1.3628 1.225 1.9932a.076.076 0 0 0 .0842.0286c1.961-.6067 3.9495-1.5218 6.0023-3.0294a.077.077 0 0 0 .0313-.0552c.5004-5.177-.8382-9.6739-3.5485-13.6604a.061.061 0 0 0-.0312-.0286zm-12.1395 9.5183c-1.1825 0-2.1569-1.0857-2.1569-2.419 0-1.3332.9555-2.4189 2.157-2.4189 1.2108 0 2.1757 1.0952 2.1568 2.4189 0 1.3333-.9555 2.419-2.1569 2.419zm7.6023 0c-1.1825 0-2.1569-1.0857-2.1569-2.419 0-1.3332.9554-2.4189 2.1569-2.4189 1.2108 0 2.1757 1.0952 2.1568 2.4189 0 1.3333-.946 2.419-2.1568 2.419z"></path></svg></a>
+</div>
+</div>
+</div>
+<h4 class="mt-4 text-lg font-bold">AÏDASSO Jonathan</h4>
+<p class="text-sm text-text-muted-light dark:text-text-muted-dark">Licence 1 • Filière GT-TIC</p>
+</div>
+        </div>
+    </div>
+    <!-- Slide 2: IT focus -->
+    <div class="team-slide team-slide-it">
+        <!-- Première ligne: Chef de pôle -->
+        <div class="flex justify-center">
+            <div class="relative text-center group team-card it-card">
+                <div class="absolute top-2 left-1/2 transform -translate-x-1/2 z-20">
+                    <span class="bg-primary text-white text-xs font-bold px-4 py-1.5 rounded-full shadow-lg whitespace-nowrap">Chef de pôle</span>
+                </div>
+                <div class="relative it-avatar">
+                    <div class="it-orbit orbit-outer"></div>
+                    <div class="it-orbit orbit-inner"></div>
+                    <img src="https://raw.githubusercontent.com/TekBot-Robotics-Challenge/2025-Team-UCAO-TECH-Docs/main/Images_membres/alade.PNG" alt="ADECHI Alade" class="w-36 h-36 rounded-full mx-auto shadow-xl object-cover ring-4 ring-primary"/>
+                    <div class="absolute bottom-[-20px] left-1/2 transform -translate-x-1/2 z-30">
+                        <span class="text-gray-900 dark:text-white text-sm font-bold whitespace-nowrap">Alade</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Deuxième ligne: Autres membres -->
+        <div class="grid sm:grid-cols-1 md:grid-cols-2 gap-8 max-w-2xl mx-auto">
+            <!-- IT: DOUSSO Ladislas -->
+            <div class="relative text-center group team-card it-card">
+                <div class="relative it-avatar">
+                    <div class="it-orbit orbit-outer"></div>
+                    <div class="it-orbit orbit-inner"></div>
+                    <img src="https://raw.githubusercontent.com/TekBot-Robotics-Challenge/2025-Team-UCAO-TECH-Docs/main/Images_membres/ladislas.PNG" alt="DOUSSO Ladislas" class="w-36 h-36 rounded-full mx-auto shadow-xl object-cover"/>
+                    <div class="absolute bottom-[-20px] left-1/2 transform -translate-x-1/2 z-30">
+                        <span class="text-gray-900 dark:text-white text-sm font-bold whitespace-nowrap">Ladislas</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- IT: AIDASSO Jonathan -->
+            <div class="relative text-center group team-card it-card">
+                <div class="relative it-avatar">
+                    <div class="it-orbit orbit-outer"></div>
+                    <div class="it-orbit orbit-inner"></div>
+                    <img src="https://raw.githubusercontent.com/TekBot-Robotics-Challenge/2025-Team-UCAO-TECH-Docs/main/Images_membres/jonathan.jpg" alt="AÏDASSO Jonathan" class="w-36 h-36 rounded-full mx-auto shadow-xl object-cover"/>
+                    <div class="absolute bottom-[-20px] left-1/2 transform -translate-x-1/2 z-30">
+                        <span class="text-gray-900 dark:text-white text-sm font-bold whitespace-nowrap">Jonathan</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Legend / Interaction line -->
+        <div class="mt-10 grid md:grid-cols-3 gap-6 text-center text-sm text-text-muted-light dark:text-text-muted-dark">
+        </div>
+    </div>
+    
+    <!-- Slide 3: Électronique focus -->
+    <div class="team-slide team-slide-elec">
+        <!-- Première ligne: Chef de pôle -->
+        <div class="flex justify-center">
+            <div class="relative text-center group team-card it-card">
+                <div class="absolute top-2 left-1/2 transform -translate-x-1/2 z-20">
+                    <span class="bg-primary text-white text-xs font-bold px-4 py-1.5 rounded-full shadow-lg whitespace-nowrap">Chef de pôle</span>
+                </div>
+                <div class="relative it-avatar">
+                    <div class="it-orbit orbit-outer"></div>
+                    <div class="it-orbit orbit-inner"></div>
+                    <img src="https://raw.githubusercontent.com/TekBot-Robotics-Challenge/2025-Team-UCAO-TECH-Docs/main/Images_membres/dodji.PNG" alt="TCHIDEHOU Virgile" class="w-36 h-36 rounded-full mx-auto shadow-xl object-cover ring-4 ring-primary"/>
+                    <div class="absolute bottom-[-20px] left-1/2 transform -translate-x-1/2 z-30">
+                        <span class="text-gray-900 dark:text-white text-sm font-bold whitespace-nowrap">Virgile</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Deuxième ligne: Autres membres -->
+        <div class="grid sm:grid-cols-1 md:grid-cols-3 gap-8 max-w-4xl mx-auto">
+            <!-- ADJAHOU Romance -->
+            <div class="relative text-center group team-card it-card">
+                <div class="relative it-avatar">
+                    <div class="it-orbit orbit-outer"></div>
+                    <div class="it-orbit orbit-inner"></div>
+                    <img src="https://raw.githubusercontent.com/TekBot-Robotics-Challenge/2025-Team-UCAO-TECH-Docs/main/Images_membres/romance.PNG" alt="ADJAHOU Romance" class="w-36 h-36 rounded-full mx-auto shadow-xl object-cover"/>
+                    <div class="absolute bottom-[-20px] left-1/2 transform -translate-x-1/2 z-30">
+                        <span class="text-gray-900 dark:text-white text-sm font-bold whitespace-nowrap">Romance</span>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- HOUNNOUVI Hermes -->
+            <div class="relative text-center group team-card it-card">
+                <div class="relative it-avatar">
+                    <div class="it-orbit orbit-outer"></div>
+                    <div class="it-orbit orbit-inner"></div>
+                    <img src="https://raw.githubusercontent.com/TekBot-Robotics-Challenge/2025-Team-UCAO-TECH-Docs/main/Images_membres/hermes.PNG" alt="HOUNNOUVI Hermes" class="w-36 h-36 rounded-full mx-auto shadow-xl object-cover"/>
+                    <div class="absolute bottom-[-20px] left-1/2 transform -translate-x-1/2 z-30">
+                        <span class="text-gray-900 dark:text-white text-sm font-bold whitespace-nowrap">Hermes</span>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- ADAHE Christelle -->
+            <div class="relative text-center group team-card it-card">
+                <div class="relative it-avatar">
+                    <div class="it-orbit orbit-outer"></div>
+                    <div class="it-orbit orbit-inner"></div>
+                    <img src="https://raw.githubusercontent.com/TekBot-Robotics-Challenge/2025-Team-UCAO-TECH-Docs/main/Images_membres/christelle.jpg" alt="ADAHE Christelle" class="w-36 h-36 rounded-full mx-auto shadow-xl object-cover"/>
+                    <div class="absolute bottom-[-20px] left-1/2 transform -translate-x-1/2 z-30">
+                        <span class="text-gray-900 dark:text-white text-sm font-bold whitespace-nowrap">Christelle</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="mt-10 grid md:grid-cols-3 gap-6 text-center text-sm text-text-muted-light dark:text-text-muted-dark">
+        </div>
+    </div>
+    
+    <!-- Slide 4: Mécanique focus -->
+    <div class="team-slide team-slide-meca">
+        <!-- Première ligne: Chef de pôle -->
+        <div class="flex justify-center">
+            <div class="relative text-center group team-card it-card">
+                <div class="absolute top-2 left-1/2 transform -translate-x-1/2 z-20">
+                    <span class="bg-primary text-white text-xs font-bold px-4 py-1.5 rounded-full shadow-lg whitespace-nowrap">Chef de pôle</span>
+                </div>
+                <div class="relative it-avatar">
+                    <div class="it-orbit orbit-outer"></div>
+                    <div class="it-orbit orbit-inner"></div>
+                    <img src="https://raw.githubusercontent.com/TekBot-Robotics-Challenge/2025-Team-UCAO-TECH-Docs/main/Images_membres/david.jpg" alt="DEGUENON David" class="w-36 h-36 rounded-full mx-auto shadow-xl object-cover ring-4 ring-primary"/>
+                    <div class="absolute bottom-[-20px] left-1/2 transform -translate-x-1/2 z-30">
+                        <span class="text-gray-900 dark:text-white text-sm font-bold whitespace-nowrap">David</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Deuxième ligne: Autres membres -->
+        <div class="grid sm:grid-cols-1 md:grid-cols-2 gap-8 max-w-2xl mx-auto">
+            <!-- FAGBITE Rachelle -->
+            <div class="relative text-center group team-card it-card">
+                <div class="relative it-avatar">
+                    <div class="it-orbit orbit-outer"></div>
+                    <div class="it-orbit orbit-inner"></div>
+                    <img src="https://raw.githubusercontent.com/TekBot-Robotics-Challenge/2025-Team-UCAO-TECH-Docs/main/Images_membres/rachelle.JPG" alt="FAGBITE Rachelle" class="w-36 h-36 rounded-full mx-auto shadow-xl object-cover"/>
+                    <div class="absolute bottom-[-20px] left-1/2 transform -translate-x-1/2 z-30">
+                        <span class="text-gray-900 dark:text-white text-sm font-bold whitespace-nowrap">Rachelle</span>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- SALIFOU Fatihatou -->
+            <div class="relative text-center group team-card it-card">
+                <div class="relative it-avatar">
+                    <div class="it-orbit orbit-outer"></div>
+                    <div class="it-orbit orbit-inner"></div>
+                    <img src="https://raw.githubusercontent.com/TekBot-Robotics-Challenge/2025-Team-UCAO-TECH-Docs/main/Images_membres/fati.jpg" alt="SALIFOU Fatihatou" class="w-36 h-36 rounded-full mx-auto shadow-xl object-cover"/>
+                    <div class="absolute bottom-[-20px] left-1/2 transform -translate-x-1/2 z-30">
+                        <span class="text-gray-900 dark:text-white text-sm font-bold whitespace-nowrap">Fatihatou</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="mt-10 grid md:grid-cols-3 gap-6 text-center text-sm text-text-muted-light dark:text-text-muted-dark">
+        </div>
+    </div>
+    </div>
+    <!-- Slide controls -->
+    <div class="team-controls mt-6 flex justify-center gap-3">
+        <button type="button" class="team-btn team-btn-all">Tous</button>
+        <button type="button" class="team-btn team-btn-it">Pôle IT</button>
+        <button type="button" class="team-btn team-btn-elec">Pôle Électronique</button>
+        <button type="button" class="team-btn team-btn-meca">Pôle Mécanique</button>
+    </div>
+</div>
+
+</div>
+</section>
+<!-- Section Roadmap - Design Zigzag -->
+<section id="roadmap" class="pt-20 pb-8 md:pt-24 md:pb-12 bg-surface-light dark:bg-surface-dark">
+    <div class="container mx-auto px-6 scroll-animation">
+        <div class="text-center mx-auto mb-14">
+            <h2 class="text-3xl md:text-4xl font-display font-bold">Feuille de <span class="text-primary">Route</span></h2>
+            <p class="mt-4 text-text-muted-light dark:text-text-muted-dark text-lg">Jalons structurants de notre préparation TRC 2025.</p>
+        </div>
+        <div class="relative mx-auto">
+            <div class="hidden md:block absolute left-1/2 -translate-x-1/2 top-0 h-full w-1 bg-gradient-to-b from-primary via-emerald-500 to-transparent rounded-full"></div>
+            <div class="roadmap-slides">
+                <!-- Slide 1: Feuille de route de toute la compétition -->
+                <div class="roadmap-slide active" id="slide1">
+                    <div class="relative max-w-7xl mx-auto">
+                        <!-- Ligne verticale -->
+                        <div class="hidden md:block absolute left-1/2 top-0 bottom-0 w-1 -translate-x-1/2 bg-gray-200/50 dark:bg-gray-700/50 rounded-full">
+                            <div class="w-full bg-gradient-to-b from-green-500 via-primary to-teal-400 rounded-full" style="height: 100%;"></div>
+                        </div>
+                        
+                        <!-- Cercles avec icônes sur la ligne verticale -->
+
+
+
+                        
+                        <div class="relative py-8 space-y-8">
+                            <!-- Phase 1 -->
+                            <div class="relative flex items-center flex-row">
+                                <div class="w-full md:w-[48rem] md:mr-8 transition-all duration-500">
+                                    <div class="bg-surface-light dark:bg-surface-dark flex flex-col gap-4 rounded-xl border py-6 shadow-lg border-green-500/20 bg-green-500/5">
+                                        <div class="px-6 space-y-3">
+                                            <div class="flex items-center gap-3">
+                                                <span class="text-sm font-semibold uppercase tracking-wider text-green-600">Phase 1</span>
+                                                <span class="text-sm font-semibold uppercase tracking-wider">Pré-sélection</span>
+                                            </div>
+                                            <p class="text-text-muted-light dark:text-text-muted-dark leading-relaxed">10 tests techniques répartis sur 5 semaines : Électronique (gyroscope, boîte noire, afficheur 7 segments), IT (POO, ROS2, pathfinding), Mécanique (CAO débutant à avancé) et un test final de système de convoyeur.</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="hidden md:flex items-center gap-4 w-[48rem] transition-all duration-700 translate-x-0">
+                                    <div class="w-16 h-16 rounded-full border-4 flex items-center justify-center bg-green-500 border-green-500 text-white flex-shrink-0">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-check-circle w-6 h-6">
+                                            <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+                                            <polyline points="22,4 12,14.01 9,11.01"></polyline>
+                                        </svg>
+                                    </div>
+                                    <div class="text-left space-y-2 flex-1">
+                                        <div class="text-xs uppercase tracking-wider font-semibold text-green-600">Terminé</div>
+                                        <p class="text-sm text-text-muted-light dark:text-text-muted-dark leading-relaxed">Processus rigoureux d'évaluation où chaque sous-équipe démontre son expertise technique. Objectif : identifier les équipes les plus qualifiées, polyvalentes et capables de travailler en synergie pour passer à la phase finale.</p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Phase 2 -->
+                            <div class="relative flex items-center flex-row-reverse">
+                                <div class="w-full md:w-[48rem] md:ml-8 transition-all duration-500">
+                                    <div class="bg-surface-light dark:bg-surface-dark flex flex-col gap-4 rounded-xl border py-6 shadow-lg border-primary/20 bg-primary/5">
+                                        <div class="px-6 space-y-3">
+                                            <div class="flex items-center gap-3">
+                                                <span class="text-sm font-semibold uppercase tracking-wider text-primary">Phase 2</span>
+                                                <span class="text-sm font-semibold uppercase tracking-wider">Finale</span>
+                                            </div>
+                                            <p class="text-text-muted-light dark:text-text-muted-dark leading-relaxed">Développement d'un système robotique complet pour la gestion des déchets dans EcoCity, une ville simulée avec 10 quartiers. Collecte, tri automatique et distribution ciblée des déchets en 5 minutes de match.</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="hidden md:flex items-center gap-4 w-[48rem] transition-all duration-700 translate-x-0">
+                                    <div class="text-right space-y-2 flex-1">
+                                        <div class="text-xs uppercase tracking-wider font-semibold text-amber-600 animate-pulse">En cours</div>
+                                        <p class="text-sm text-text-muted-light dark:text-text-muted-dark leading-relaxed">Implémentation complète du système robotique : navigation autonome avec ROS Master, collecte optimisée des cubes de déchets, tri automatique via DofBot et vision IA, redistribution manuelle vers les zones de recyclage. Objectif : maximiser le score en 5 minutes tout en évitant pénalités.</p>
+                                    </div>
+                                    <div class="w-16 h-16 rounded-full border-4 flex items-center justify-center bg-primary border-primary text-white flex-shrink-0">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-trophy w-6 h-6">
+                                            <path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6"></path>
+                                            <path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18"></path>
+                                            <path d="M4 22h16"></path>
+                                            <path d="M10 14.66V17c0 .55-.47.98-.97 1.21C7.85 18.75 7 20.24 7 22"></path>
+                                            <path d="M14 14.66V17c0 .55.47.98.97 1.21C16.15 18.75 17 20.24 17 22"></path>
+                                            <path d="M18 2H6v7a6 6 0 0 0 12 0V2Z"></path>
+                                        </svg>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Phase 3 -->
+                            <div class="relative flex items-center flex-row">
+                                <div class="w-full md:w-[48rem] md:mr-8 transition-all duration-500">
+                                    <div class="bg-surface-light dark:bg-surface-dark flex flex-col gap-4 rounded-xl border py-6 shadow-lg border-gray-500/20">
+                                        <div class="px-6 space-y-3">
+                                            <div class="flex items-center gap-3">
+                                                <span class="text-sm font-semibold uppercase tracking-wider text-gray-500">Phase 3</span>
+                                                <span class="text-sm font-semibold uppercase tracking-wider">Présentation</span>
+                                            </div>
+                                            <p class="text-text-muted-light dark:text-text-muted-dark leading-relaxed">Grande finale : Affrontement des deux meilleures équipes pour le titre de champion du TEKBOT Robotics Challenge 2025. Présentation et démonstration complète du système robotique en conditions réelles de compétition.</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="hidden md:flex items-center gap-4 w-[48rem] transition-all duration-700 translate-x-0">
+                                    <div class="w-16 h-16 rounded-full border-4 flex items-center justify-center bg-gray-500 border-gray-500 text-white flex-shrink-0">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-presentation w-6 h-6">
+                                            <path d="M2 3h20"></path>
+                                            <path d="M21 3v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V3"></path>
+                                            <path d="m7 21 5-5 5 5"></path>
+                                        </svg>
+                                    </div>
+                                    <div class="text-left space-y-2 flex-1">
+                                        <div class="text-xs uppercase tracking-wider font-semibold text-gray-500">À venir</div>
+                                        <p class="text-sm text-text-muted-light dark:text-text-muted-dark leading-relaxed">Participation à la grande finale du challenge. Démonstration du robot en match officiel de 5 minutes contre l'autre finaliste, évaluation technique par le jury, présentation de la documentation et stratégie. Objectif : remporter le titre et célébrer notre réussite.</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Slide 2: Feuille de route de la phase en cours -->
+                <div class="roadmap-slide" id="slide2">
+                    <div class="grid md:grid-cols-2 gap-8 md:gap-12">
+                        <!-- Côté gauche : Étapes de Collecte -->
+                        <div class="space-y-6">
+                            <h3 class="text-xl font-bold text-center mb-6 text-primary">Étapes de Collecte</h3>
+                            <div class="flex md:block items-start gap-4" data-roadmap-stage="1">
+                                <div class="md:mb-4 flex items-center gap-3">
+                                    <div class="flex items-center justify-center w-14 h-14 rounded-full bg-primary/10 text-primary font-display font-bold text-xl shadow flex-shrink-0">P1</div>
+                                    <h3 class="font-semibold text-lg">Mécanisme de Collecte</h3>
+                                </div>
+                                <div>
+                                    <p class="text-sm text-text-muted-light dark:text-text-muted-dark mt-1">Conception et intégration d'un système de ramassage : bras articulé, pince électromagnétique ou benne basculante pour saisir et transporter les cubes de déchets de différentes tailles et poids.</p>
+                                    <span class="inline-block mt-2 text-xs px-2 py-1 rounded bg-amber-500/10 text-amber-600 animate-pulse">En cours</span>
+                                </div>
+                            </div>
+                            <div class="flex md:block items-start gap-4" data-roadmap-stage="3">
+                                <div class="md:mb-4 flex items-center gap-3">
+                                    <div class="flex items-center justify-center w-14 h-14 rounded-full bg-primary/10 text-primary font-display font-bold text-xl shadow flex-shrink-0">P3</div>
+                                    <h3 class="font-semibold text-lg">Navigation & Collecte Autonome</h3>
+                                </div>
+                                <div>
+                                    <p class="text-sm text-text-muted-light dark:text-text-muted-dark mt-1">Implémentation de la navigation intelligente : scan des QR codes pour identifier quartiers et quantités, algorithmes de pathfinding pour optimiser les trajectoires, capteurs d'évitement d'obstacles, et séquences automatisées de ramassage.</p>
+                                    <span class="inline-block mt-2 text-xs px-2 py-1 rounded bg-teal-500/10 text-teal-600">À démarrer</span>
+                                </div>
+                            </div>
+                            <div class="flex md:block items-start gap-4" data-roadmap-stage="5">
+                                <div class="md:mb-4 flex items-center gap-3">
+                                    <div class="flex items-center justify-center w-14 h-14 rounded-full bg-primary/10 text-primary font-display font-bold text-xl shadow flex-shrink-0">P5</div>
+                                    <h3 class="font-semibold text-lg">Tests & Optimisation Collecte</h3>
+                                </div>
+                                <div>
+                                    <p class="text-sm text-text-muted-light dark:text-text-muted-dark mt-1">Phase de validation terrain : exécution de boucles de collecte sur pistes simulées, calibration des capteurs de distance et de position, optimisation des algorithmes pour maximiser le nombre de déchets collectés en 5 minutes.</p>
+                                    <span class="inline-block mt-2 text-xs px-2 py-1 rounded bg-blue-500/10 text-blue-600">Prévu</span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Côté droit : Étapes de Tri -->
+                        <div class="space-y-6">
+                            <h3 class="text-xl font-bold text-center mb-6 text-primary">Étapes de Tri</h3>
+                            <div class="flex md:block items-start gap-4" data-roadmap-stage="2">
+                                <div class="md:mb-4 flex items-center gap-3">
+                                    <div class="flex items-center justify-center w-14 h-14 rounded-full bg-primary/10 text-primary font-display font-bold text-xl shadow flex-shrink-0">P2</div>
+                                    <h3 class="font-semibold text-lg">Vision & Identification Déchets</h3>
+                                </div>
+                                <div>
+                                    <p class="text-sm text-text-muted-light dark:text-text-muted-dark mt-1">Développement du système de vision : constitution d'un dataset d'images de déchets locaux (plastique, métal, organique), annotation des données, entraînement d'un modèle YOLO pour la reconnaissance automatique des types de déchets en temps réel.</p>
+                                    <span class="inline-block mt-2 text-xs px-2 py-1 rounded bg-amber-500/10 text-amber-600 animate-pulse">En cours</span>
+                                </div>
+                            </div>
+                            <div class="flex md:block items-start gap-4" data-roadmap-stage="4">
+                                <div class="md:mb-4 flex items-center gap-3">
+                                    <div class="flex items-center justify-center w-14 h-14 rounded-full bg-primary/10 text-primary font-display font-bold text-xl shadow flex-shrink-0">P4</div>
+                                    <h3 class="font-semibold text-lg">Bras Robotique & Tri Automatique</h3>
+                                </div>
+                                <div>
+                                    <p class="text-sm text-text-muted-light dark:text-text-muted-dark mt-1">Intégration du bras Dofbot Jetson Nano : programmation du convoyeur pour acheminer les déchets, développement des algorithmes de classification automatique, tri précis vers les corbeilles colorées (bleue : ménagers, verte : recyclables, rouge : dangereux).</p>
+                                    <span class="inline-block mt-2 text-xs px-2 py-1 rounded bg-slate-500/10 text-slate-600">À venir</span>
+                                </div>
+                            </div>
+                            <div class="flex md:block items-start gap-4" data-roadmap-stage="6">
+                                <div class="md:mb-4 flex items-center gap-3">
+                                    <div class="flex items-center justify-center w-14 h-14 rounded-full bg-primary/10 text-primary font-display font-bold text-xl shadow flex-shrink-0">P6</div>
+                                    <h3 class="font-semibold text-lg">Validation & Optimisation Tri</h3>
+                                </div>
+                                <div>
+                                    <p class="text-sm text-text-muted-light dark:text-text-muted-dark mt-1">Tests de précision du système de tri : validation de la classification sans erreur, optimisation des performances énergétiques, mise en place de la distribution finale vers les centres spécialisés (usine de compostage, recyclage, incinération).</p>
+                                    <span class="inline-block mt-2 text-xs px-2 py-1 rounded bg-purple-500/10 text-purple-600">À planifier</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Contrôles des slides -->
+        <div class="text-center mt-8">
+            <div class="inline-flex gap-2 p-1 bg-surface-dark/50 rounded-full">
+                <button onclick="showRoadmapSlide(1)" class="roadmap-btn active px-4 py-2 rounded-full text-sm font-medium transition" id="btn-slide1">Vue d'ensemble</button>
+                <button onclick="showRoadmapSlide(2)" class="roadmap-btn px-4 py-2 rounded-full text-sm font-medium transition" id="btn-slide2">Phase en cours</button>
+            </div>
+        </div>
+    </div>
+</section>
+
+<style>
+
+.it-card .it-avatar { margin-top: 3rem; padding: 0.5rem 0; }
+.it-card h4 { margin-top: 2rem; }
+.team-card { overflow: visible !important; }
+
+/* Design futuriste du formulaire */
+.floating-input {
+  width: 100%;
+  padding: 1rem 3rem 0.5rem 1rem;
+  border: none;
+  border-bottom: 2px solid #e5e7eb;
+  background: transparent;
+  transition: all 0.3s;
+  font-size: 1rem;
+  color: #374151;
+}
+
+.floating-input::placeholder {
+  color: transparent;
+  transition: color 0.3s;
+}
+
+.floating-input:focus::placeholder {
+  color: #9ca3af;
+}
+
+.dark .floating-input {
+  color: #f3f4f6;
+  border-bottom-color: #4b5563;
+}
+
+.floating-input:focus {
+  border-bottom-color: #10b981;
+  box-shadow: 0 0 10px rgba(16, 185, 129, 0.3);
+  outline: none;
+}
+
+.floating-label {
+  position: absolute;
+  left: 1rem;
+  top: 1rem;
+  transition: all 0.3s;
+  pointer-events: none;
+  color: #6b7280;
+  background: transparent;
+  padding: 0 0.25rem;
+}
+
+.dark .floating-label {
+  color: #9ca3af;
+}
+
+.floating-input:focus + .floating-label,
+.floating-input:not(:placeholder-shown) + .floating-label {
+  top: 0.25rem;
+  font-size: 0.75rem;
+  color: #10b981;
+  transform: translateY(0);
+}
+
+.input-icon {
+  position: absolute;
+  right: 1rem;
+  top: 1rem;
+  color: #6b7280;
+  transition: color 0.3s;
+}
+
+.floating-input:focus ~ .input-icon {
+  color: #10b981;
+}
+
+.floating-textarea {
+  width: 100%;
+  padding: 1rem 3rem 0.5rem 1rem;
+  border: none;
+  border-bottom: 2px solid #e5e7eb;
+  background: transparent;
+  transition: all 0.3s;
+  font-size: 1rem;
+  color: #374151;
+  resize: vertical;
+  min-height: 60px;
+}
+
+.dark .floating-textarea {
+  color: #f3f4f6;
+  border-bottom-color: #4b5563;
+}
+
+.floating-textarea:focus {
+  border-bottom-color: #10b981;
+  box-shadow: 0 0 10px rgba(16, 185, 129, 0.3);
+  outline: none;
+}
+
+.floating-textarea:focus + .floating-label,
+.floating-textarea:not(:placeholder-shown) + .floating-label {
+  top: 0.25rem;
+  font-size: 0.75rem;
+  color: #10b981;
+}
+
+.btn-futuristic {
+  width: 100%;
+  background: linear-gradient(135deg, #10b981, #059669);
+  color: white;
+  padding: 0.75rem 1.5rem;
+  border-radius: 50px;
+  font-weight: bold;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  border: none;
+  cursor: pointer;
+  transition: all 0.3s;
+  position: relative;
+  overflow: hidden;
+}
+
+.btn-futuristic:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 20px rgba(16, 185, 129, 0.3);
+}
+
+.btn-futuristic:before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+  transition: left 0.5s;
+}
+
+.btn-futuristic:hover:before {
+  left: 100%;
+}
+
+.error-message {
+  position: absolute;
+  top: 50%;
+  right: 3rem;
+  transform: translateY(-50%);
+  color: #ef4444;
+  font-size: 0.7rem;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+
+.error-message.show {
+  opacity: 1;
+}
+
+.floating-input.error,
+.floating-textarea.error {
+  border-bottom-color: #ef4444;
+}
+
+.floating-textarea ~ .error-message {
+  top: 1.5rem;
+  transform: none;
+}
+
+/* Animation portes FAQ */
+#faq.is-visible .faq-left {
+  animation: slideInLeft 0.8s ease forwards;
+}
+
+#faq.is-visible .faq-right {
+  animation: slideInRight 0.8s ease forwards;
+}
+
+@keyframes slideInLeft {
+  from {
+    transform: translateX(-100%);
+  }
+  to {
+    transform: translateX(0);
+  }
+}
+
+@keyframes slideInRight {
+  from {
+    transform: translateX(100%);
+  }
+  to {
+    transform: translateX(0);
+  }
+}
+
+/* Optimisation animations mobile */
+@media (max-width: 768px) {
+    .animate-gradient { animation: none; background-position: 0% 50%; }
+    .animate-pulse-slow { animation: none; opacity: 1; }
+    .team-card-float { animation: none; }
+    .it-orbit { animation: none; }
+    .roadmap-item { animation-duration: 0.3s; }
+    #team.is-visible .team-grid .team-card { transition-delay: 0s !important; }
+}
+</style>
+<section id="faq" class="pt-12 pb-20 md:pt-16 md:pb-32 bg-surface-light dark:bg-surface-dark">
+    <div class="container mx-auto px-6">
+        <div class="text-center mb-8">
+            <h2 class="text-3xl md:text-4xl font-display font-bold mb-4">Questions <span class="text-primary">Fréquentes</span></h2>
+            <p class="text-lg text-text-muted-light dark:text-text-muted-dark">Tout ce que vous devez savoir sur notre projet</p>
+        </div>
+        
+        <div class="mx-auto grid md:grid-cols-2 gap-8">
+            <!-- Colonne 1 -->
+            <div class="faq-left space-y-4">
+                <!-- Question 1 -->
+                <details class="faq-item group bg-surface-light dark:bg-surface-dark rounded-lg shadow-lg p-5 transition hover:shadow-xl">
+                    <summary class="flex items-start cursor-pointer list-none">
+                        <span class="faq-icon mt-1 mr-3 text-primary material-icons">help_outline</span>
+                        <div class="flex-1">
+                            <h3 class="font-semibold">Qu'est-ce que le Tekbot Robotics Challenge (TRC) ?</h3>
+                        </div>
+                        <span class="ml-3 material-icons text-text-muted-light group-open:rotate-180 transition">expand_more</span>
+                    </summary>
+                    <div class="mt-3 pl-10 text-sm text-justify text-text-muted-light dark:text-text-muted-dark">Le Tekbot Robotics Challenge 2025 est une compétition panafricaine de robotique organisée par TEKBOT Robotics. Le thème 2025 est "Résilience Urbaine : Gestion Durable des Déchets". Les équipes doivent concevoir des robots autonomes capables de collecter, trier et gérer les déchets.</div>
+                </details>
+
+                <!-- Question 2 -->
+                <details class="faq-item group bg-surface-light dark:bg-surface-dark rounded-lg shadow-lg p-5 transition hover:shadow-xl">
+                    <summary class="flex items-start cursor-pointer list-none">
+                        <span class="faq-icon mt-1 mr-3 text-primary material-icons">groups</span>
+                        <div class="flex-1">
+                            <h3 class="font-semibold">Qui compose l'équipe UCAO-TECH ?</h3>
+                        </div>
+                        <span class="ml-3 material-icons text-text-muted-light group-open:rotate-180 transition">expand_more</span>
+                    </summary>
+                    <div class="mt-3 pl-10 text-sm text-justify text-text-muted-light dark:text-text-muted-dark">Notre équipe est composée de 10 étudiants passionnés de l'UCAO-UUC, répartis en trois pôles : Informatique (3 membres), Électronique (4 membres) et Mécanique (3 membres). Nous travaillons ensemble pour créer un robot innovant et performant.</div>
+                </details>
+
+                <!-- Question 3 -->
+                <details class="faq-item group bg-surface-light dark:bg-surface-dark rounded-lg shadow-lg p-5 transition hover:shadow-xl">
+                    <summary class="flex items-start cursor-pointer list-none">
+                        <span class="faq-icon mt-1 mr-3 text-primary material-icons">smart_toy</span>
+                        <div class="flex-1">
+                            <h3 class="font-semibold">Quelles technologies utilisez-vous ?</h3>
+                        </div>
+                        <span class="ml-3 material-icons text-text-muted-light group-open:rotate-180 transition">expand_more</span>
+                    </summary>
+                    <div class="mt-3 pl-10 text-sm text-justify text-text-text-muted-light dark:text-text-muted-dark">Nous utilisons ROS2 comme système d'exploitation pour robots. Nos robots : RosMaster X3 (mobile autonome avec système de collecte conçu dans SolidWorks pour ramasser des cubes dans l'arène) et Dofbot de Yahboom (bras robotique pour tri par détection d'objets par vision). Processus : cubes déposés en zone de tri, transportés par convoyeur au Dofbot pour tri par catégorie.</div>
+                </details>
+
+                <!-- Question 7 -->
+                <details class="faq-item group bg-surface-light dark:bg-surface-dark rounded-lg shadow-lg p-5 transition hover:shadow-xl">
+                    <summary class="flex items-start cursor-pointer list-none">
+                        <span class="faq-icon mt-1 mr-3 text-primary material-icons">event</span>
+                        <div class="flex-1">
+                            <h3 class="font-semibold">Quand et où aura lieu la compétition TRC 2025 ?</h3>
+                        </div>
+                        <span class="ml-3 material-icons text-text-muted-light group-open:rotate-180 transition">expand_more</span>
+                    </summary>
+                    <div class="mt-3 pl-10 text-sm text-justify text-text-muted-light dark:text-text-muted-dark">La compétition TRC 2025 est organisée par TEKBOT Robotics. Les dates et le lieu de la finale seront annoncés prochainement sur le site officiel trc.tekbot.io. Restez connectés pour les mises à jour !</div>
+                </details>
+            </div>
+            <!-- Colonne 2 -->
+            <div class="faq-right space-y-4">
+                <!-- Question 5 -->
+                <details class="faq-item group bg-surface-light dark:bg-surface-dark rounded-lg shadow-lg p-5 transition hover:shadow-xl">
+                    <summary class="flex items-start cursor-pointer list-none">
+                        <span class="faq-icon mt-1 mr-3 text-primary material-icons">emoji_events</span>
+                        <div class="flex-1">
+                            <h3 class="font-semibold">Quels sont vos objectifs pour le TRC 2025 ?</h3>
+                        </div>
+                        <span class="ml-3 material-icons text-text-muted-light group-open:rotate-180 transition">expand_more</span>
+                    </summary>
+                    <div class="mt-3 pl-10 text-sm text-justify text-text-muted-light dark:text-text-muted-dark">Notre objectif principal est de représenter fièrement le Bénin et de décrocher une place sur le podium. Nous visons l'excellence technique, l'innovation et la créativité pour nous démarquer lors de la finale.</div>
+                </details>
+
+                <!-- Question 6 -->
+                <details class="faq-item group bg-surface-light dark:bg-surface-dark rounded-lg shadow-lg p-5 transition hover:shadow-xl">
+                    <summary class="flex items-start cursor-pointer list-none">
+                        <span class="faq-icon mt-1 mr-3 text-primary material-icons">favorite</span>
+                        <div class="flex-1">
+                            <h3 class="font-semibold">Comment nous soutenir ?</h3>
+                        </div>
+                        <span class="ml-3 material-icons text-text-muted-light group-open:rotate-180 transition">expand_more</span>
+                    </summary>
+                    <div class="mt-3 pl-10 text-sm text-justify text-text-muted-light dark:text-text-muted-dark">Vous pouvez nous soutenir par du sponsoring matériel (composants électroniques, batteries), un soutien financier, du mentorat technique, ou en partageant notre projet. Contactez-nous pour plus d'informations !</div>
+                </details>
+
+                <!-- Question 8 -->
+                <details class="faq-item group bg-surface-light dark:bg-surface-dark rounded-lg shadow-lg p-5 transition hover:shadow-xl">
+                    <summary class="flex items-start cursor-pointer list-none">
+                        <span class="faq-icon mt-1 mr-3 text-primary material-icons">assessment</span>
+                        <div class="flex-1">
+                            <h3 class="font-semibold">Quels sont les critères d'évaluation des robots ?</h3>
+                        </div>
+                        <span class="ml-3 material-icons text-text-muted-light group-open:rotate-180 transition">expand_more</span>
+                    </summary>
+                    <div class="mt-3 pl-10 text-sm text-justify text-text-muted-light dark:text-text-muted-dark">Les robots sont évalués sur plusieurs critères : efficacité du tri (précision et rapidité), autonomie (navigation sans intervention humaine), innovation technologique, robustesse mécanique, et respect des règles du jeu. Téléchargez le manuel pour plus de détails.</div>
+                </details>
+
+                <!-- Question 9 -->
+                <details class="faq-item group bg-surface-light dark:bg-surface-dark rounded-lg shadow-lg p-5 transition hover:shadow-xl">
+                    <summary class="flex items-start cursor-pointer list-none">
+                        <span class="faq-icon mt-1 mr-3 text-primary material-icons">eco</span>
+                        <div class="flex-1">
+                            <h3 class="font-semibold">Quels sont les défis spécifiques du thème "Résilience Urbaine" ?</h3>
+                        </div>
+                        <span class="ml-3 material-icons text-text-muted-light group-open:rotate-180 transition">expand_more</span>
+                    </summary>
+                    <div class="mt-3 pl-10 text-sm text-justify text-text-muted-light dark:text-text-muted-dark">Le thème "Résilience Urbaine" adresse les défis des déchets urbains en Afrique : accumulation massive dans les rues, manque d'infrastructures de collecte, pollution environnementale et impact sur la santé publique. Nos robots visent à optimiser la collecte, le tri et la revalorisation pour des villes plus durables.</div>
+                </details>
+            </div>
+        </div>
+        
+        <!-- CTA -->
+        <div class="text-center mt-12">
+            <a href="#contact" class="inline-flex items-center gap-2 bg-primary text-white px-8 py-4 rounded-full font-bold shadow-lg hover:shadow-xl hover:bg-primary/90 transition-all hover:scale-105">
+                <span class="material-icons">mail</span>
+                <span>Une autre question ? Contactez-nous</span>
+            </a>
+        </div>
+    </div>
+</section>
+<section class="pt-4 pb-0 md:pt-6 md:pb-0 bg-surface-light dark:bg-surface-dark" id="contact">
+<div class="container mx-auto px-6 scroll-animation">
+<div class="text-center mx-auto">
+<h2 class="text-3xl md:text-4xl font-display font-bold">Contactez-<span class="text-primary">Nous</span></h2>
+<p id="typewriter-text" class="mt-4 text-lg text-text-muted-light dark:text-text-muted-dark"></p>
+</div>
+<div class="mt-4 grid md:grid-cols-2 gap-12 items-start">
+<div>
+<div class="bg-surface-light dark:bg-surface-dark p-6 rounded-lg shadow-lg mb-8">
+<h3 class="text-2xl font-bold font-display mb-4">Nos Coordonnées</h3>
+<div class="space-y-4 text-text-muted-light dark:text-text-muted-dark">
+<p class="flex items-center">
+    <a href="tel:+2290159325123" class="flex items-center hover:text-primary transition-colors">
+        <span class="material-icons text-primary mr-3">phone</span>+229 01 59 32 51 23
+    </a>
+</p>
+<p class="flex items-center">
+    <a href="https://wa.me/2290159325123" target="_blank" class="flex items-center hover:text-primary transition-colors">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" alt="WhatsApp" class="w-6 h-6 mr-3">
+        WhatsApp
+    </a>
+</p>
+<p class="flex items-center">
+    <a href="mailto:ucaotech@gmail.com" class="flex items-center hover:text-primary transition-colors">
+        <span class="material-icons text-primary mr-3">email</span>ucaotech@gmail.com
+    </a>
+</p>
+</div>
+</div>
+<div class="rounded-lg overflow-hidden shadow-lg">
+<iframe allowfullscreen title="Carte UCAO-UUC (994X+R5G, Cotonou)" height="250" loading="lazy" referrerpolicy="strict-origin-when-cross-origin" src="https://www.google.com/maps?q=UCAO-UUC%20994X%2BR5G%2C%20Cotonou&z=17&output=embed" style="border:0;" width="100%"></iframe>
+</div>
+</div>
+<div class="bg-surface-light dark:bg-surface-dark p-6 rounded-lg shadow-lg">
+<form id="contact-form" class="space-y-6">
+<div class="relative">
+<input class="floating-input" id="name" name="name" placeholder=" " required type="text"/>
+<label class="floating-label" for="name">Nom</label>
+<span class="input-icon material-icons">person</span>
+<div class="error-message" id="name-error"></div>
+</div>
+<div class="grid grid-cols-1 gap-4">
+    <div class="relative">
+        <input class="floating-input" id="email" name="email" placeholder=" " type="email"/>
+        <label class="floating-label" for="email">Email</label>
+        <span class="input-icon material-icons">email</span>
+        <div class="error-message" id="email-error"></div>
+    </div>
+    <div class="relative">
+        <input class="floating-input" id="phone" name="phone" placeholder="+ | __ __ __ __" type="tel" maxlength="24"/>
+        <label class="floating-label" for="phone">Téléphone</label>
+        <span class="input-icon material-icons">phone</span>
+        <div class="error-message" id="phone-error"></div>
+    </div>
+</div>
+<div class="relative">
+<input class="floating-input" id="subject" name="subject" placeholder=" " required type="text"/>
+<label class="floating-label" for="subject">Objet</label>
+<span class="input-icon material-icons">subject</span>
+<div class="error-message" id="subject-error"></div>
+</div>
+<div class="relative">
+<textarea class="floating-textarea" id="message" name="message" placeholder=" " required rows="1"></textarea>
+<label class="floating-label" for="message">Message</label>
+<span class="input-icon material-icons" style="top: 1.5rem;">message</span>
+<div class="error-message" id="message-error"></div>
+</div>
+<div class="flex gap-4">
+<button class="btn-futuristic flex-1 flex items-center justify-center" type="button" id="send-email" title="Envoyer par Email">
+<span class="material-icons">email</span>
+</button>
+<button class="btn-futuristic flex-1 flex items-center justify-center" type="button" id="send-whatsapp" title="Envoyer par WhatsApp">
+<img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" alt="WhatsApp" class="w-6 h-6">
+</button>
+</div>
+</form>
+</div>
+</div>
+</div>
+</section>
+</main>
+<footer class="-mt-8 md:-mt-12 bg-surface-light dark:bg-surface-dark text-text-light dark:text-text-dark/90 relative overflow-hidden">
+<div class="absolute inset-0 opacity-5">
+<svg class="w-full h-full" xmlns="http://www.w3.org/2000/svg">
+<defs>
+<pattern height="40" id="footer-pattern" patternUnits="userSpaceOnUse" width="40">
+<path d="M0 40L40 0H20L0 20M40 40V20L20 40" fill="none" stroke="currentColor" stroke-width="0.5"></path>
+</pattern>
+</defs>
+<rect fill="url(#footer-pattern)" height="100%" width="100%"></rect>
+</svg>
+</div>
+<div class="container mx-auto px-6 pt-6 md:pt-8 pb-1 relative z-10">
+<div class="grid md:grid-cols-2 lg:grid-cols-4 gap-8 md:gap-20">
+<div class="space-y-2">
+<h3 class="font-display text-lg font-bold text-text-light dark:text-white">UCAO-TECH</h3>
+<p class="text-text-muted-light dark:text-text-muted-dark text-sm">Nous sommes une équipe passionnée d'étudiants de l'UCAO-TECH, unis pour relever le défi du TRC 2025. Notre mission est d'innover et de repousser les limites de la robotique.</p>
+</div>
+<div class="space-y-2">
+<h3 class="font-display text-lg font-bold text-text-light dark:text-white">Liens Rapides</h3>
+<ul class="space-y-2 text-sm">
+<li><a class="text-text-muted-light dark:text-text-muted-dark hover:text-primary transition-colors duration-300" href="#team">Équipe</a></li>
+<li><a class="text-text-muted-light dark:text-text-muted-dark hover:text-primary transition-colors duration-300" href="documentation.html">Documentation</a></li>
+<li><a class="text-text-muted-light dark:text-text-muted-dark hover:text-primary transition-colors duration-300" href="#roadmap">Feuille de route</a></li>
+<li>
+<div class="flex items-center gap-2">
+<a class="text-text-muted-light dark:text-text-muted-dark hover:text-primary transition-colors duration-300" href="#resilience">Projet</a>
+<span class="text-text-muted-light dark:text-text-muted-dark">|</span>
+<a class="text-text-muted-light dark:text-text-muted-dark hover:text-primary transition-colors duration-300" href="#faq">FAQ</a>
+</div>
+</li>
+</ul>
+</div>
+<div class="space-y-0">
+<div class="space-y-2">
+<h3 class="font-display text-lg font-bold text-text-light dark:text-white">Contact</h3>
+<ul class="space-y-1 text-sm text-text-muted-light dark:text-text-muted-dark">
+<li class="flex items-center"><span class="material-icons text-primary mr-2 text-base">email</span>ucaotech@gmail.com</li>
+<li class="flex items-center"><span class="material-icons text-primary mr-2 text-base">phone</span>+229 01 59 32 51 23</li>
+
+</div>
+<div class="space-y-2">
+<h3 class="font-display text-lg font-bold text-text-light dark:text-white">Suivez-nous</h3>
+<div class="flex space-x-4">
+    
+    
+    <!-- Facebook -->
+        <a aria-label="Facebook" class="text-text-muted-light dark:text-text-muted-dark hover:text-primary transition-colors duration-300" href="https://www.facebook.com/" target="_blank" rel="noopener">
+        <svg class="h-6 w-6" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
+        </svg>
+    </a>
+    <!-- GitHub -->
+    <a aria-label="GitHub" class="text-text-muted-light dark:text-text-muted-dark hover:text-primary transition-colors duration-300" href="https://github.com/TekBot-Robotics-Challenge/2025-Team-UCAO-TECH-Docs" target="_blank" rel="noopener">
+        <svg class="h-6 w-6" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+            <path fill-rule="evenodd" clip-rule="evenodd" d="M12 2C6.477 2 2 6.477 2 12c0 4.418 2.865 8.168 6.839 9.492.5.092.682-.217.682-.482 0-.237-.009-.868-.014-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.031-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.82c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.378.203 2.397.1 2.65.64.7 1.03 1.595 1.03 2.688 0 3.848-2.338 4.695-4.566 4.942.359.308.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.577.688.482A10.001 10.001 0 0022 12c0-5.523-4.477-10-10-10z"/>
+        </svg>
+    </a>
+    <!-- LinkedIn -->
+        <a aria-label="LinkedIn" class="text-text-muted-light dark:text-text-muted-dark hover:text-primary transition-colors duration-300" href="https://www.linkedin.com/" target="_blank" rel="noopener">
+        <svg class="h-6 w-6" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.024-3.037-1.852-3.037-1.853 0-2.136 1.447-2.136 2.943v5.663H9.351V9h3.414v1.561h.049c.476-.9 1.637-1.852 3.367-1.852 3.6 0 4.268 2.372 4.268 5.455v6.288zM5.337 7.433a2.062 2.062 0 11.001-4.124 2.062 2.062 0 01-.001 4.124zM7.119 20.452H3.554V9h3.565v11.452z"/>
+        </svg>
+    </a>
+    <!-- Discord -->
+    <a aria-label="Discord" class="text-text-muted-light dark:text-text-muted-dark hover:text-primary transition-colors duration-300" href="https://discord.com/" target="_blank" rel="noopener">
+        <svg class="h-6 w-6" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M20.317 4.3698a19.7913 19.7913 0 0 0-4.8851-1.5152.0741.0741 0 0 0-.0785.0371c-.211.3753-.4447.8648-.6083 1.2495-1.8447-.2762-3.68-.2762-5.4868 0-.1636-.3933-.4058-.8742-.6177-1.2495a.077.077 0 0 0-.0785-.0371 19.7363 19.7363 0 0 0-4.8852 1.5152.0699.0699 0 0 0-.0321.0277C.5334 9.0458-.319 13.5799.0992 18.0578a.0824.0824 0 0 0 .0312.0561c2.0528 1.5076 4.0413 2.4228 5.9929 3.0294a.0777.0777 0 0 0 .0842-.0276c.4616-.6304.8731-1.2952 1.226-1.9942a.076.076 0 0 0-.0416-.1057c-.6528-.2476-1.2743-.5495-1.8722-.8923a.077.077 0 0 1-.0076-.1277c.1258-.0943.2517-.1923.3718-.2914a.0743.0743 0 0 1 .0776-.0105c3.9278 1.7933 8.18 1.7933 12.0614 0a.0737.0737 0 0 1 .0785.0095c.1202.0991.246.1981.3728.2924a.077.077 0 0 1-.0066.1276 12.2986 12.2986 0 0 1-1.8732.8914.0766.0766 0 0 0-.0406.1067c.3604.698.7719 1.3628 1.225 1.9932a.076.076 0 0 0 .0842.0286c1.961-.6067 3.9495-1.5218 6.0023-3.0294a.077.077 0 0 0 .0313-.0552c.5004-5.177-.8382-9.6739-3.5485-13.6604a.061.061 0 0 0-.0312-.0286zm-12.1395 9.5183c-1.1825 0-2.1569-1.0857-2.1569-2.419 0-1.3332.9555-2.4189 2.157-2.4189 1.2108 0 2.1757 1.0952 2.1568 2.4189 0 1.3333-.9555 2.419-2.1569 2.419zm7.6023 0c-1.1825 0-2.1569-1.0857-2.1569-2.419 0-1.3332.9554-2.4189 2.1569-2.4189 1.2108 0 2.1757 1.0952 2.1568 2.4189 0 1.3333-.946 2.419-2.1568 2.419z"/>
+        </svg>
+    </a>
+</div>
+</div>
+</div>
+<div class="space-y-2">
+<h3 class="font-display text-lg font-bold text-text-light dark:text-white">TRC</h3>
+<p class="text-text-muted-light dark:text-text-muted-dark text-sm">
+<a href="https://www.linkedin.com/company/tekbot-robotics/" class="text-text-muted-light dark:text-text-muted-dark hover:text-primary" target="_blank" rel="noopener">
+TEKBOT ROBOTIC
+</a><br>
+<a href="https://trc.tekbot.io/" class="text-text-muted-light dark:text-text-muted-dark hover:text-primary" target="_blank" rel="noopener">Site Officiel TRC</a><br>
+<a href="https://trc.tekbot.io/soutenir-trc/" class="text-text-muted-light dark:text-text-muted-dark hover:text-primary" target="_blank" rel="noopener">Soutenir l'événement</a>
+<img src="https://trc.tekbot.io/wp-content/uploads/2025/01/Logo-1.svg" alt="Logo TRC" class="h-12 w-auto mt-2">
+</p>
+</div>
+
+</div>
+<div class="mt-4 pt-1 pb-0 border-t border-gray-200/50 dark:border-gray-700/50 text-center text-sm text-text-muted-light dark:text-text-muted-dark relative">
+<p class="mb-4 mt-4">© 2025 UCAO-TECH – Tous droits réservés.</p>
+<!-- Scroll to Top Button intégré dans le footer -->
+<button id="scrollToTopBtn" class="absolute bottom-4 right-4 bg-gray-200/80 dark:bg-gray-700/80 text-gray-900 dark:text-white p-2 rounded-full shadow-md hover:bg-gray-300 dark:hover:bg-gray-600 hover:scale-105 transition-all duration-300 backdrop-blur-sm" aria-label="Remonter en haut">
+<span class="material-icons text-sm">keyboard_arrow_up</span>
+</button>
+</div>
+</div>
+</footer>
+<script>
+        // FAQ accordion: allow only one open at a time
+        document.addEventListener('DOMContentLoaded', function () {
+            // Empêche Google Translate de modifier les ligatures des icônes
+            document.querySelectorAll('.material-icons').forEach(icon => {
+                icon.setAttribute('translate', 'no');
+                icon.classList.add('notranslate');
+            });
+
+            const faq = document.getElementById('faq');
+            if (!faq) return;
+            const items = faq.querySelectorAll('details');
+            items.forEach((d) => {
+                d.addEventListener('toggle', () => {
+                    if (d.open) {
+                        items.forEach((other) => {
+                            if (other !== d) other.open = false;
+                        });
+                    }
+                });
+            });
+
+
+            // GTranslate - Système de traduction (comme tgb.html)
+            const translateToggle = document.getElementById('translate-toggle');
+            const langLabel = document.getElementById('lang-label');
+            const mobileTranslateToggle = document.getElementById('mobile-translate-toggle');
+            const mobileLangLabel = document.getElementById('mobile-lang-label');
+            const tooltip = document.getElementById('lang-tooltip');
+
+            let currentLang = localStorage.getItem('preferredLang') || 'fr';
+
+            const updateLanguageUI = (lang) => {
+                currentLang = lang;
+                localStorage.setItem('preferredLang', lang);
+                const displayLang = lang === 'fr' ? 'EN' : 'FR';
+                const tooltipText = lang === 'fr' ? 'English' : 'Français';
+                if (langLabel) langLabel.textContent = displayLang;
+                if (mobileLangLabel) mobileLangLabel.textContent = displayLang;
+                if (tooltip) tooltip.textContent = tooltipText;
+            };
+
+            // Fonction pour changer la langue avec GTranslate
+            const doGTranslate = (lang_pair) => {
+                if (lang_pair.value) lang_pair = lang_pair.value;
+                if (lang_pair === '') return;
+                const lang = lang_pair.split('|')[1];
+                
+                // Utiliser l'API GTranslate si disponible
+                if (typeof window.doGTranslate === 'function') {
+                    window.doGTranslate(lang_pair);
+                } else {
+                    // Fallback: utiliser un cookie pour GTranslate
+                    const teCombo = document.querySelector('.goog-te-combo, select.gt_selector');
+                    if (teCombo) {
+                        teCombo.value = lang;
+                        teCombo.dispatchEvent(new Event('change'));
+                    } else {
+                        // Créer un cookie pour forcer la langue
+                        document.cookie = 'googtrans=/fr/' + lang + '; path=/';
+                        document.cookie = 'googtrans=/fr/' + lang + '; path=/; domain=' + location.hostname;
+                        location.reload();
+                    }
+                }
+                updateLanguageUI(lang);
+            };
+
+            const toggleLanguage = () => {
+                const targetLang = currentLang === 'fr' ? 'en' : 'fr';
+                doGTranslate('fr|' + targetLang);
+            };
+
+            if (translateToggle) {
+                translateToggle.addEventListener('click', toggleLanguage);
+            }
+
+            if (mobileTranslateToggle) {
+                mobileTranslateToggle.addEventListener('click', () => {
+                    toggleLanguage();
+                    const mobileMenu = document.getElementById('mobile-menu');
+                    if (mobileMenu) {
+                        mobileMenu.classList.add('hidden');
+                    }
+                });
+            }
+
+            updateLanguageUI(currentLang);
+
+            // Theme toggle functionality
+            const themeToggle = document.getElementById('theme-toggle');
+            const themeIcon = document.getElementById('theme-icon');
+            const html = document.documentElement;
+
+            // Check for saved theme preference or default to 'light'
+            const currentTheme = localStorage.getItem('theme') || 'light';
+            if (currentTheme === 'dark') {
+                html.classList.add('dark');
+                themeIcon.textContent = 'light_mode';
+            } else {
+                html.classList.remove('dark');
+                themeIcon.textContent = 'dark_mode';
+            }
+
+            // Toggle theme on button click
+            themeToggle.addEventListener('click', () => {
+                if (html.classList.contains('dark')) {
+                    html.classList.remove('dark');
+                    themeIcon.textContent = 'dark_mode';
+                    localStorage.setItem('theme', 'light');
+                } else {
+                    html.classList.add('dark');
+                    themeIcon.textContent = 'light_mode';
+                    localStorage.setItem('theme', 'dark');
+                }
+            });
+
+            // Lecture conditionnelle de la vidéo Dofbot (visible + une seule fois)
+            const dofbotVideo = document.getElementById('dofbot-video');
+            if (dofbotVideo) {
+                let hasPlayedOnce = false;
+                let isInPictureInPicture = false;
+
+                const visibilityObserver = new IntersectionObserver((entries) => {
+                    entries.forEach(entry => {
+                        if (entry.target !== dofbotVideo) return;
+                        // Ne pas contrôler si en mode Picture-in-Picture
+                        if (isInPictureInPicture) return;
+
+                        if (entry.isIntersecting) {
+                            if (!hasPlayedOnce) {
+                                const playPromise = dofbotVideo.play();
+                                if (playPromise && typeof playPromise.catch === 'function') {
+                                    playPromise.catch(() => {/* Autoplay peut être bloqué */});
+                                }
+                            }
+                        } else if (!dofbotVideo.paused && !dofbotVideo.ended) {
+                            dofbotVideo.pause();
+                        }
+                    });
+                }, { threshold: 0.1 });
+
+                visibilityObserver.observe(dofbotVideo);
+
+                // Gestion du mode Picture-in-Picture
+                dofbotVideo.addEventListener('enterpictureinpicture', () => {
+                    isInPictureInPicture = true;
+                    // Laisser la vidéo jouer librement en PiP
+                });
+
+                dofbotVideo.addEventListener('leavepictureinpicture', () => {
+                    isInPictureInPicture = false;
+                    // Réactiver le contrôle automatique
+                });
+
+                dofbotVideo.addEventListener('ended', () => {
+                    hasPlayedOnce = true;
+                });
+            }
+
+            // Contrôle des vidéos techniques (autoplay loop mais avec pause au scroll)
+            const technicalVideos = document.querySelectorAll('video[autoplay][loop]');
+            technicalVideos.forEach(video => {
+                if (video.id === 'dofbot-video') return; // Déjà géré ci-dessus
+
+                let isInPictureInPicture = false;
+
+                const visibilityObserver = new IntersectionObserver((entries) => {
+                    entries.forEach(entry => {
+                        if (entry.target !== video) return;
+                        // Ne pas contrôler si en mode Picture-in-Picture
+                        if (isInPictureInPicture) return;
+
+                        if (entry.isIntersecting) {
+                            // Rejouer quand redevient visible (pas de limitation hasPlayedOnce)
+                            const playPromise = video.play();
+                            if (playPromise && typeof playPromise.catch === 'function') {
+                                playPromise.catch(() => {/* Autoplay peut être bloqué */});
+                            }
+                        } else if (!video.paused) {
+                            video.pause();
+                        }
+                    });
+                }, { threshold: 0.1 });
+
+                visibilityObserver.observe(video);
+
+                // Gestion du mode Picture-in-Picture pour les vidéos techniques
+                video.addEventListener('enterpictureinpicture', () => {
+                    isInPictureInPicture = true;
+                });
+
+                video.addEventListener('leavepictureinpicture', () => {
+                    isInPictureInPicture = false;
+                });
+            });
+        });
+        // Scroll animations
+        const scrollAnimations = document.querySelectorAll('.scroll-animation');
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, {
+            threshold: 0.1
+        });
+        
+        // Roadmap horizontal cards animation
+        const roadmapCards = document.querySelectorAll('.roadmap-card');
+        const roadmapProgress = document.querySelector('.roadmap-progress');
+        
+        const roadmapCardObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                    
+                    // Animer la barre de progression lorsque la première carte est visible
+                    if (roadmapProgress && !roadmapProgress.classList.contains('active')) {
+                        roadmapProgress.classList.add('active');
+                    }
+                }
+            });
+        }, {
+            threshold: 0.2
+        });
+        
+        roadmapCards.forEach((card, index) => {
+            roadmapCardObserver.observe(card);
+        });
+        
+        scrollAnimations.forEach(el => {
+            observer.observe(el);
+        });
+        const teamSection = document.querySelector('#team');
+        if (teamSection) {
+            const teamObserver = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        teamSection.classList.add('is-visible');
+                        teamObserver.unobserve(entry.target);
+                        // After all 10 cards reveal (~5s), slide to IT focus
+                        const slides = teamSection.querySelector('.team-slides');
+                        const track = slides ? slides.querySelector('.team-track') : null;
+                        const btnAll = teamSection.querySelector('.team-btn-all');
+                        const btnIt = teamSection.querySelector('.team-btn-it');
+                        const btnElec = teamSection.querySelector('.team-btn-elec');
+                        const btnMeca = teamSection.querySelector('.team-btn-meca');
+                        if (slides) {
+                            const modes = ['is-it', 'is-elec', 'is-meca', 'all'];
+                            const timeouts = [];
+
+                            function clearTimers() {
+                                while (timeouts.length) {
+                                    const id = timeouts.pop();
+                                    clearTimeout(id);
+                                }
+                            }
+
+                            function setMode(mode) {
+                                slides.classList.remove('is-it','is-elec','is-meca');
+                                document.querySelectorAll('.team-btn').forEach(b => b.classList.remove('active'));
+                                if (mode !== 'all') slides.classList.add(mode);
+                                if (mode === 'all') btnAll && btnAll.classList.add('active');
+                                if (mode === 'is-it') btnIt && btnIt.classList.add('active');
+                                if (mode === 'is-elec') btnElec && btnElec.classList.add('active');
+                                if (mode === 'is-meca') btnMeca && btnMeca.classList.add('active');
+                            }
+
+                            // Retourne true si le slider est en mode "Tous"
+                            function isAllMode() {
+                                return !slides.classList.contains('is-it') &&
+                                       !slides.classList.contains('is-elec') &&
+                                       !slides.classList.contains('is-meca');
+                            }
+
+                            // Attendre la fin de la transition du track (transform) avant de callback
+                            function onTrackTransitionEndOnce(cb) {
+                                if (!track) { cb(); return; }
+                                let called = false;
+                                const handler = (e) => {
+                                    if (e.propertyName && e.propertyName !== 'transform') return;
+                                    track.removeEventListener('transitionend', handler);
+                                    if (!called) { called = true; cb(); }
+                                };
+                                track.addEventListener('transitionend', handler);
+                                // Fallback au cas où transitionend ne se déclenche pas (déplacement instantané, préférences réduites, etc.)
+                                setTimeout(() => { if (!called) { called = true; cb(); } }, 1000);
+                            }
+
+                            // Relance robuste de la cascade: toggle classe + reflow + double rAF
+                            function retriggerCascade() {
+                                // Ne relancer que si on est bien sur la slide "Tous"
+                                if (!isAllMode()) return;
+                                teamSection.classList.remove('is-visible');
+                                // Forcer un reflow pour réinitialiser les transitions
+                                const cards = teamSection.querySelectorAll('.team-slide-all .team-card');
+                                cards.forEach(card => { void card.getBoundingClientRect(); });
+                                // Double requestAnimationFrame pour garantir un nouveau frame de rendu
+                                requestAnimationFrame(() => {
+                                    requestAnimationFrame(() => {
+                                        teamSection.classList.add('is-visible');
+                                    });
+                                });
+                            }
+
+                            function scheduleSequence() {
+                                clearTimers();
+                                // Ordre demandé: TOUS -> IT -> ELEC -> MECA -> TOUS (puis stop)
+                                // Durées: TOUS->IT: 10.4s, IT->ELEC: 5s, ELEC->MECA: 5s, MECA->TOUS: 5s
+                                const delayToIT = 10400; // 10.4s
+                                const delayToElec = 5000; // 5s
+                                const delayToMeca = 5000; // 5s
+                                const delayToAll = 5000; // 5s
+                                
+                                timeouts.push(setTimeout(() => {
+                                    setMode('is-it');
+                                }, delayToIT));
+                                timeouts.push(setTimeout(() => {
+                                    setMode('is-elec');
+                                }, delayToIT + delayToElec));
+                                timeouts.push(setTimeout(() => {
+                                    setMode('is-meca');
+                                }, delayToIT + delayToElec + delayToMeca));
+                                timeouts.push(setTimeout(() => {
+                                    // Retour simple et fluide vers Tous + relance de la révélation en cascade
+                                    setMode('all');
+                                    // Attendre la fin de la transition horizontale avant de relancer
+                                    onTrackTransitionEndOnce(() => {
+                                        retriggerCascade();
+                                    });
+                                }, delayToIT + delayToElec + delayToMeca + delayToAll));
+                            }
+
+                            // État initial: TOUS, puis IT -> ELEC -> MECA -> TOUS et stop
+                            setMode('all');
+                            scheduleSequence();
+
+                            // Contrôles manuels: annulent la séquence automatique
+                            btnAll && btnAll.addEventListener('click', () => {
+                                const wasAll = isAllMode();
+                                clearTimers();
+                                setMode('all');
+                                // Si on était déjà sur "Tous", relancer tout de suite; sinon, attendre la fin du slide
+                                if (wasAll) {
+                                    retriggerCascade();
+                                } else {
+                                    onTrackTransitionEndOnce(() => {
+                                        retriggerCascade();
+                                    });
+                                }
+                            });
+                            btnIt && btnIt.addEventListener('click', () => { clearTimers(); setMode('is-it'); });
+                            btnElec && btnElec.addEventListener('click', () => { clearTimers(); setMode('is-elec'); });
+                            btnMeca && btnMeca.addEventListener('click', () => { clearTimers(); setMode('is-meca'); });
+                        }
+                    }
+                });
+            }, {
+                threshold: 0.3
+            });
+            teamObserver.observe(teamSection);
+        }
+
+        // FAQ section scroll-triggered animation
+        const faqSection = document.querySelector('#faq');
+        if (faqSection) {
+            const faqObserver = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        faqSection.classList.add('is-visible');
+                        faqObserver.unobserve(entry.target);
+                    }
+                });
+            }, {
+                threshold: 0.5
+            });
+            faqObserver.observe(faqSection);
+        }
+
+        // Close mobile menu on link click
+        document.querySelectorAll('#mobile-menu a').forEach(link => {
+            link.addEventListener('click', () => {
+                mobileMenu.classList.add('hidden');
+            });
+        });
+
+        // Scroll to Top functionality
+        const scrollToTopBtn = document.getElementById('scrollToTopBtn');
+
+        // Scroll to top when button is clicked
+        scrollToTopBtn.addEventListener('click', () => {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        });
+
+        // Hide header on scroll (désactivé - navigation intégrée au hero)
+        // const header = document.querySelector('header');
+        // window.addEventListener('scroll', () => {
+        //     if (window.pageYOffset > 100) {
+        //         header.style.transform = 'translateY(-100%)';
+        //     } else {
+        //         header.style.transform = 'translateY(0)';
+        //     }
+        // });
+
+        // Animation typewriter pour la section contact
+        const typewriterText = document.getElementById('typewriter-text');
+        const contactSection = document.getElementById('contact');
+        
+        if (typewriterText && contactSection) {
+            const fullText = "Pour toute question ou prise de contact, utilisez le formulaire ou les coordonnées ci-dessous.";
+            let currentIndex = 0;
+            let typewriterInterval;
+            let hasAnimated = false;
+            
+            const typeWriter = () => {
+                if (currentIndex < fullText.length) {
+                    typewriterText.textContent += fullText.charAt(currentIndex);
+                    currentIndex++;
+                } else {
+                    clearInterval(typewriterInterval);
+                }
+            };
+            
+            const startTypewriter = () => {
+                if (hasAnimated) return;
+                hasAnimated = true;
+                currentIndex = 0;
+                typewriterText.textContent = "";
+                typewriterInterval = setInterval(typeWriter, 50); // 50ms entre chaque caractère
+            };
+            
+            // Observer pour déclencher l'animation quand la section devient visible
+            const contactObserver = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting && !hasAnimated) {
+                        // Petit délai avant de commencer l'animation
+                        setTimeout(startTypewriter, 500);
+                    }
+                });
+            }, { threshold: 0.6 });
+            
+            contactObserver.observe(contactSection);
+        }
+
+        // Gestionnaire du formulaire de contact
+        const contactForm = document.getElementById('contact-form');
+        if (contactForm) {
+            const sendEmailBtn = document.getElementById('send-email');
+            const sendWhatsappBtn = document.getElementById('send-whatsapp');
+            
+            // Fonction pour afficher une erreur
+            function showError(fieldId, message) {
+                const field = document.getElementById(fieldId);
+                const errorDiv = document.getElementById(fieldId + '-error');
+                field.classList.add('error');
+                errorDiv.textContent = message;
+                errorDiv.classList.add('show');
+            }
+            
+            // Fonction pour effacer une erreur
+            function clearError(fieldId) {
+                const field = document.getElementById(fieldId);
+                const errorDiv = document.getElementById(fieldId + '-error');
+                field.classList.remove('error');
+                errorDiv.classList.remove('show');
+                errorDiv.textContent = '';
+            }
+            
+            // Fonction pour effacer toutes les erreurs
+            function clearErrors() {
+                document.querySelectorAll('.error-message').forEach(el => {
+                    el.classList.remove('show');
+                    el.textContent = '';
+                });
+                document.querySelectorAll('.floating-input, .floating-textarea').forEach(el => {
+                    el.classList.remove('error');
+                });
+            }
+            
+            // Validation en temps réel
+            document.getElementById('name').addEventListener('input', function() {
+                if (this.value.trim()) {
+                    clearError('name');
+                }
+            });
+            
+            document.getElementById('email').addEventListener('input', function() {
+                if (this.value.trim()) {
+                    if (isValidEmail(this.value)) {
+                        clearError('email');
+                    } else {
+                        showError('email', 'Format invalide');
+                    }
+                } else {
+                    clearError('email');
+                }
+            });
+            
+            // Masque de saisie pour téléphone (préfixe dynamique)
+            const phoneInput = document.getElementById('phone');
+
+            const FIX_PLUS = '+';
+            const SEP = ' | ';
+
+            function formatPhone(raw) {
+                let value = raw || '';
+                // Toujours commencer par '+'
+                if (!value.startsWith(FIX_PLUS)) value = FIX_PLUS + value;
+                // Extraire/forcer la présence de '|'
+                let pipeIndex = value.indexOf('|');
+                // Pays (entre '+' et '|')
+                let cc = '';
+                // Local (après '|')
+                let local = '';
+                if (pipeIndex === -1) {
+                    cc = value.slice(1).replace(/\D/g, '').slice(0, 3);
+                } else {
+                    cc = value.slice(1, pipeIndex).replace(/\D/g, '').slice(0, 3);
+                    local = value.slice(pipeIndex + 1).replace(/\D/g, '').slice(0, 8);
+                }
+                // Formater local en paires de 2
+                let localFmt = '';
+                for (let i = 0; i < local.length; i += 2) {
+                    if (i > 0) localFmt += ' ';
+                    localFmt += local.substring(i, Math.min(i + 2, local.length));
+                }
+                return FIX_PLUS + cc + SEP + localFmt;
+            }
+
+            function caretAfterSep(inputEl) {
+                const val = inputEl.value;
+                const ccLen = val.slice(1, Math.max(val.indexOf('|'), 1)).replace(/\D/g, '').length;
+                return 1 + ccLen + SEP.length; // '+' + cc + ' | '
+            }
+
+            phoneInput.addEventListener('focus', function() {
+                if (!this.value.trim()) {
+                    this.value = FIX_PLUS + '229' + SEP;
+                }
+                setTimeout(() => {
+                    this.setSelectionRange(caretAfterSep(this), caretAfterSep(this));
+                }, 0);
+            });
+
+            phoneInput.addEventListener('blur', function() {
+                // Si vide côté pays et local, nettoyer
+                const digitsRight = (this.value.split('|')[1] || '').replace(/\D/g, '');
+                const digitsLeft = (this.value.split('|')[0] || '').replace(/\D/g, '');
+                if (!digitsRight && !digitsLeft) {
+                    this.value = '';
+                    clearError('phone');
+                }
+            });
+
+            phoneInput.addEventListener('keydown', function(e) {
+                // Empêcher la suppression du '+' ou du '|'
+                const pos = this.selectionStart;
+                const val = this.value;
+                const pipeIndex = val.indexOf('|');
+                if ((e.key === 'Backspace' && pos === 1) || (e.key === 'Delete' && pos === 0)) {
+                    e.preventDefault();
+                    return;
+                }
+                // Si le caractère ciblé est '|', empêcher suppression
+                if (pipeIndex !== -1) {
+                    if (e.key === 'Backspace' && pos - 1 === pipeIndex) { e.preventDefault(); return; }
+                    if (e.key === 'Delete' && pos === pipeIndex) { e.preventDefault(); return; }
+                }
+            });
+
+            phoneInput.addEventListener('input', function() {
+                const beforeLen = this.selectionStart;
+                this.value = formatPhone(this.value);
+                // Validation côté local (8 chiffres)
+                const localDigits = (this.value.split('|')[1] || '').replace(/\D/g, '');
+                if (localDigits.length === 8) {
+                    clearError('phone');
+                } else if (localDigits.length > 0) {
+                    showError('phone', `${8 - localDigits.length} chiffres manquants`);
+                } else {
+                    clearError('phone');
+                }
+            });
+
+            phoneInput.addEventListener('paste', function(e) {
+                e.preventDefault();
+                const paste = (e.clipboardData || window.clipboardData).getData('text');
+                const digits = paste.replace(/\D/g, '');
+                let cc = '';
+                let local = '';
+                if (digits.length <= 8) {
+                    local = digits;
+                } else {
+                    cc = digits.slice(0, 3);
+                    local = digits.slice(cc.length);
+                }
+                local = local.slice(0, 8);
+                cc = cc.slice(0, 3);
+                const pre = FIX_PLUS + cc + SEP;
+                let localFmt = '';
+                for (let i = 0; i < local.length; i += 2) {
+                    if (i > 0) localFmt += ' ';
+                    localFmt += local.substring(i, Math.min(i + 2, local.length));
+                }
+                this.value = pre + localFmt;
+                this.dispatchEvent(new Event('input'));
+            });
+            
+            document.getElementById('subject').addEventListener('input', function() {
+                if (this.value.trim()) {
+                    clearError('subject');
+                }
+            });
+            
+            document.getElementById('message').addEventListener('input', function() {
+                if (this.value.trim()) {
+                    clearError('message');
+                }
+            });
+            
+            // Fonction de validation email
+            function isValidEmail(email) {
+                const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+                return emailRegex.test(email);
+            }
+            
+            // Fonction de validation téléphone : 8 chiffres locaux (après '|')
+            function isValidPhone(phone) {
+                const right = (phone.split('|')[1] || '').replace(/\D/g, '');
+                return right.length === 8;
+            }
+            
+            sendEmailBtn.addEventListener('click', function() {
+                clearErrors();
+                
+                const name = document.getElementById('name').value;
+                const email = document.getElementById('email').value;
+                const phone = document.getElementById('phone').value;
+                const subject = document.getElementById('subject').value;
+                const message = document.getElementById('message').value;
+                
+                if (!name) {
+                    showError('name', 'Requis');
+                    document.getElementById('name').focus();
+                    return;
+                }
+                if (!subject) {
+                    showError('subject', 'Requis');
+                    document.getElementById('subject').focus();
+                    return;
+                }
+                if (!message) {
+                    showError('message', 'Requis');
+                    document.getElementById('message').focus();
+                    return;
+                }
+                if (!phone) {
+                    showError('phone', 'Requis pour Email');
+                    document.getElementById('phone').focus();
+                    return;
+                }
+                if (!isValidPhone(phone)) {
+                    showError('phone', 'Format invalide');
+                    document.getElementById('phone').focus();
+                    return;
+                }
+                if (email && !isValidEmail(email)) {
+                    showError('email', 'Format invalide');
+                    document.getElementById('email').focus();
+                    return;
+                }
+                
+                let body = `Nom: ${name}\nTéléphone: ${phone}\n\nMessage:\n${message}`;
+                if (email) {
+                    body = `Nom: ${name}\nEmail: ${email}\nTéléphone: ${phone}\n\nMessage:\n${message}`;
+                }
+                
+                const mailtoLink = `mailto:ucaotech@gmail.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+                window.location.href = mailtoLink;
+            });
+            
+            sendWhatsappBtn.addEventListener('click', function() {
+                clearErrors();
+                
+                const name = document.getElementById('name').value;
+                const email = document.getElementById('email').value;
+                const phone = document.getElementById('phone').value;
+                const subject = document.getElementById('subject').value;
+                const message = document.getElementById('message').value;
+                
+                if (!name) {
+                    showError('name', 'Requis');
+                    document.getElementById('name').focus();
+                    return;
+                }
+                if (!subject) {
+                    showError('subject', 'Requis');
+                    document.getElementById('subject').focus();
+                    return;
+                }
+                if (!message) {
+                    showError('message', 'Requis');
+                    document.getElementById('message').focus();
+                    return;
+                }
+                if (!email) {
+                    showError('email', 'Requis pour WhatsApp');
+                    document.getElementById('email').focus();
+                    return;
+                }
+                if (!isValidEmail(email)) {
+                    showError('email', 'Format invalide');
+                    document.getElementById('email').focus();
+                    return;
+                }
+                if (phone && !isValidPhone(phone)) {
+                    showError('phone', 'Format invalide');
+                    document.getElementById('phone').focus();
+                    return;
+                }
+                
+                let waText = `*Objet:* ${subject}\n\n*Message:*\n${message}\n\n*De:* ${name}\n*Email:* ${email}`;
+                if (phone) waText += `\n*Téléphone:* ${phone}`;
+                
+                const waLink = `https://wa.me/2290159325123?text=${encodeURIComponent(waText)}`;
+                window.open(waLink, '_blank');
+            });
+        }
+
+        function showRoadmapSlide(n) {
+            const slides = document.querySelectorAll('.roadmap-slide');
+            const buttons = document.querySelectorAll('.roadmap-btn');
+            
+            slides.forEach(slide => slide.classList.remove('active'));
+            buttons.forEach(btn => btn.classList.remove('active'));
+            
+            slides[n - 1].classList.add('active');
+            buttons[n - 1].classList.add('active');
+        }
+
+        // Animation automatique : slide 1 pendant 5 secondes après que la section soit visible à 50%, puis slide 2
+        const roadmapSection = document.getElementById('roadmap');
+        if (roadmapSection) {
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        // Section visible à 50%, démarrer le timer
+                        setTimeout(() => {
+                            showRoadmapSlide(2);
+                        }, 5000);
+                        observer.unobserve(roadmapSection); // Arrêter l'observation après le premier déclenchement
+                    }
+                });
+            }, { threshold: 0.5 }); // 50% de la section visible
+            
+            observer.observe(roadmapSection);
+        }
+
+    </script>
+
+    <!-- Hero Carousel Script -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const carousel = document.getElementById('hero-carousel');
+            const modelText = document.getElementById('robot-model');
+            let currentIndex = 0;
+            const totalImages = 2;
+            const models = ['Rosmaster X3', 'Dofbot'];
+
+            function updateModelText() {
+                modelText.textContent = models[currentIndex];
+            }
+
+            function nextSlide() {
+                currentIndex = (currentIndex + 1) % totalImages;
+                carousel.style.transform = `translateX(-${currentIndex * 100}%)`;
+                updateModelText();
+            }
+
+            // Initialize first model text
+            updateModelText();
+
+            // Change image every 4 seconds
+            setInterval(nextSlide, 4000);
+        });
+    </script>
+
+    <!-- Protection contre la copie -->
+    <script>
+        // Désactiver les raccourcis clavier
+        document.onkeydown = function(e) {
+            // Ctrl+S ou Cmd+S (enregistrer)
+            if ((e.ctrlKey || e.metaKey) && (e.keyCode === 83 || e.key === 's' || e.key === 'S')) {
+                e.preventDefault();
+                e.stopPropagation();
+                return false;
+            }
+            // Ctrl+U ou Cmd+U (voir source)
+            if ((e.ctrlKey || e.metaKey) && (e.keyCode === 85 || e.key === 'u' || e.key === 'U')) {
+                e.preventDefault();
+                e.stopPropagation();
+                return false;
+            }
+            // F12 (outils de développement)
+            if (e.keyCode === 123 || e.key === 'F12') {
+                e.preventDefault();
+                e.stopPropagation();
+                return false;
+            }
+            // Ctrl+Shift+I (outils de développement)
+            if ((e.ctrlKey || e.metaKey) && e.shiftKey && (e.keyCode === 73 || e.key === 'i' || e.key === 'I')) {
+                e.preventDefault();
+                e.stopPropagation();
+                return false;
+            }
+            // Ctrl+Shift+J (console)
+            if ((e.ctrlKey || e.metaKey) && e.shiftKey && (e.keyCode === 74 || e.key === 'j' || e.key === 'J')) {
+                e.preventDefault();
+                e.stopPropagation();
+                return false;
+            }
+            // Ctrl+Shift+C (inspecteur)
+            if ((e.ctrlKey || e.metaKey) && e.shiftKey && (e.keyCode === 67 || e.key === 'c' || e.key === 'C')) {
+                e.preventDefault();
+                e.stopPropagation();
+                return false;
+            }
+            // Ctrl+A (tout sélectionner)
+            if ((e.ctrlKey || e.metaKey) && (e.keyCode === 65 || e.key === 'a' || e.key === 'A')) {
+                e.preventDefault();
+                e.stopPropagation();
+                return false;
+            }
+            // Ctrl+C (copier)
+            if ((e.ctrlKey || e.metaKey) && (e.keyCode === 67 || e.key === 'c' || e.key === 'C') && !e.shiftKey) {
+                e.preventDefault();
+                e.stopPropagation();
+                return false;
+            }
+            // Ctrl+P (imprimer)
+            if ((e.ctrlKey || e.metaKey) && (e.keyCode === 80 || e.key === 'p' || e.key === 'P')) {
+                e.preventDefault();
+                e.stopPropagation();
+                return false;
+            }
+        };
+
+        // Désactiver le clic droit
+        document.oncontextmenu = function(e) {
+            e.preventDefault();
+            return false;
+        };
+
+        // Désactiver la sélection de texte
+        document.onselectstart = function(e) {
+            e.preventDefault();
+            return false;
+        };
+
+        // Désactiver le glisser-déposer
+        document.ondragstart = function(e) {
+            e.preventDefault();
+            return false;
+        };
+
+        // Désactiver la copie
+        document.oncopy = function(e) {
+            e.preventDefault();
+            return false;
+        };
+
+        // Désactiver le couper
+        document.oncut = function(e) {
+            e.preventDefault();
+            return false;
+        };
+    </script>
+
+    <!-- GTranslate Script (comme tgb.html) -->
+    <script>
+        window.gtranslateSettings = window.gtranslateSettings || {};
+        window.gtranslateSettings['ucaotech'] = {
+            "default_language": "fr",
+            "languages": ["en", "fr"],
+            "url_structure": "none",
+            "flag_style": "2d",
+            "flag_size": 24,
+            "wrapper_selector": "#gt-wrapper-ucaotech",
+            "alt_flags": {"en": "usa"},
+            "horizontal_position": "inline"
+        };
+    </script>
+    <script src="https://cdn.gtranslate.net/widgets/latest/float.js" defer></script>
+
+</body></html>
+

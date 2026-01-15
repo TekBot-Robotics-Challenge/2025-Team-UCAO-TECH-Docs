@@ -1,0 +1,1408 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TEKBOT TRC 2K25 - Convoyeur Intelligent</title>
+    <link rel="icon" href="https://ucaotech.com/wp-content/uploads/2024/10/UCAO-TECH-1.png" type="image/png">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;700;900&family=Roboto:wght@300;400;500;700&display=swap"
+        rel="stylesheet">
+    <style>
+        :root {
+            --primary: #0a192f;
+            --secondary: #00d1ff;
+            --accent: #ff2e63;
+            --light: #e6f1ff;
+            --dark: #020c1b;
+            --success: #2ecc71;
+            --cyber-blue: #00f7ff;
+            --cyber-purple: #9452ff;
+        }
+
+        body {
+            background-color: var(--dark);
+            color: var(--light);
+            font-family: 'Roboto', sans-serif;
+            overflow-x: hidden;
+            line-height: 1.6;
+        }
+
+        h1,
+        h2,
+        h3,
+        h4,
+        .logo,
+        .nav-links a {
+            font-family: 'Orbitron', sans-serif;
+            letter-spacing: 1px;
+        }
+
+        /* Boîte "cyber" */
+        .cyber-box {
+            position: relative;
+            border: 2px solid var(--secondary);
+            box-shadow: 0 0 15px rgba(0, 209, 255, 0.5);
+            background-color: rgba(10, 25, 47, 0.7);
+            backdrop-filter: blur(5px);
+            overflow: hidden;
+        }
+
+        /* Titre cyber */
+        .cyber-title {
+            position: relative;
+            display: inline-block;
+            color: var(--cyber-blue);
+            text-shadow: none;
+        }
+
+        .cyber-title::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background: linear-gradient(90deg, var(--secondary), var(--cyber-purple));
+            box-shadow: none;
+        }
+
+        /* Animations */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes slideInLeft {
+            from {
+                opacity: 0;
+                transform: translateX(-100px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        @keyframes slideInRight {
+            from {
+                opacity: 0;
+                transform: translateX(100px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        @keyframes scaleIn {
+            from {
+                opacity: 0;
+                transform: scale(0.8);
+            }
+
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        .section {
+            opacity: 0;
+            transition: all 1s ease-out;
+        }
+
+        .section.visible {
+            opacity: 1;
+        }
+
+        .section-title {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.8s ease-out 0.2s;
+        }
+
+        .section.visible .section-title {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .feature-card,
+        .member-card {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.6s ease-out;
+        }
+
+        .section.visible .feature-card,
+        .section.visible .member-card {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .floating {
+            animation: float 6s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0% {
+                transform: translateY(0px);
+            }
+
+            50% {
+                transform: translateY(-15px);
+            }
+
+            100% {
+                transform: translateY(0px);
+            }
+        }
+
+        @keyframes glitch {
+            0% {
+                transform: translate(0);
+            }
+
+            20% {
+                transform: translate(-3px, 3px);
+            }
+
+            40% {
+                transform: translate(-3px, -3px);
+            }
+
+            60% {
+                transform: translate(3px, 3px);
+            }
+
+            80% {
+                transform: translate(3px, -3px);
+            }
+
+            100% {
+                transform: translate(0);
+            }
+        }
+
+        /* Cartes section */
+        .section-card {
+            transition: all 0.3s ease;
+            background: var(--light);
+            border: 1px solid #cbd5e0;
+            box-shadow: 0 0 10px rgba(0, 119, 182, 0.15);
+            border-radius: 16px;
+            padding: 32px;
+            margin-bottom: 32px;
+        }
+
+        .section-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(0, 119, 182, 0.3);
+            border-color: var(--secondary);
+        }
+
+        /* Header */
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 1000;
+            background-color: rgba(2, 12, 27, 0.9);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(0, 209, 255, 0.2);
+            transition: all 0.3s ease;
+        }
+
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 1rem 2rem;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            color: white;
+            text-decoration: none;
+            font-size: 1.5rem;
+            font-weight: 700;
+        }
+
+        .logo img {
+            height: 50px;
+            transition: transform 0.5s ease;
+        }
+
+        .logo:hover img {
+            transform: rotate(360deg);
+        }
+
+        .logo span {
+            color: var(--secondary);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 1.5rem;
+        }
+
+        .nav-links a {
+            color: rgba(230, 241, 255, 0.8);
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 0.82rem;
+            text-transform: uppercase;
+            letter-spacing: 1.2px;
+            padding: 0.5rem 0.8rem;
+            position: relative;
+            transition: all 0.3s ease;
+        }
+
+        .nav-links a::before {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: linear-gradient(90deg, var(--secondary), var(--cyber-purple));
+            transition: width 0.3s ease;
+        }
+
+        .nav-links a:hover {
+            color: var(--cyber-blue);
+        }
+
+        .nav-links a:hover::before,
+        .nav-links a.active::before {
+            width: 100%;
+        }
+
+        .nav-links a.active {
+            color: var(--cyber-blue);
+        }
+
+        .mobile-menu-btn {
+            display: none;
+            background: transparent;
+            border: none;
+            width: 40px;
+            height: 40px;
+            position: relative;
+            cursor: pointer;
+            z-index: 1000;
+        }
+
+        .hamburger {
+            width: 30px;
+            height: 3px;
+            background: var(--cyber-blue);
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            transition: all 0.3s ease;
+        }
+
+        .hamburger::before,
+        .hamburger::after {
+            content: '';
+            position: absolute;
+            width: 30px;
+            height: 3px;
+            background: var(--cyber-blue);
+            transition: all 0.3s ease;
+        }
+
+        .hamburger::before {
+            top: -10px;
+        }
+
+        .hamburger::after {
+            top: 10px;
+        }
+
+        .mobile-menu-btn.active .hamburger {
+            background: transparent;
+        }
+
+        .mobile-menu-btn.active .hamburger::before {
+            transform: rotate(45deg);
+            top: 0;
+        }
+
+        .mobile-menu-btn.active .hamburger::after {
+            transform: rotate(-45deg);
+            top: 0;
+        }
+
+        /* Boutons */
+        .btn {
+            padding: 0.9rem 2.5rem;
+            border-radius: 4px;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            position: relative;
+            overflow: hidden;
+            border: none;
+            font-family: 'Orbitron', sans-serif;
+        }
+
+        .btn-primary {
+            background-color: transparent;
+            color: var(--cyber-blue);
+            border: 2px solid var(--secondary);
+            box-shadow: 0 0 8px rgba(0, 119, 182, 0.2);
+        }
+
+        .btn-primary:hover {
+            background-color: rgba(0, 119, 182, 0.1);
+            box-shadow: 0 0 20px rgba(0, 119, 182, 0.4);
+            transform: translateY(-2px);
+        }
+
+        /* Effet holographique atténué */
+        .holographic-card {
+            position: relative;
+            overflow: hidden;
+        }
+
+        .holographic-card::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(to bottom right,
+                    rgba(0, 119, 182, 0.05),
+                    rgba(111, 66, 193, 0.05),
+                    rgba(0, 119, 182, 0.05));
+            transform: rotate(45deg);
+            animation: hologram 8s linear infinite;
+            pointer-events: none;
+        }
+
+        @keyframes hologram {
+            0% {
+                transform: rotate(45deg) translate(-20%, -20%);
+            }
+
+            100% {
+                transform: rotate(45deg) translate(20%, 20%);
+            }
+        }
+
+        /* Responsive Design */
+        @media (max-width: 1200px) {
+            .hero h1 {
+                font-size: 3rem;
+            }
+
+            .section {
+                padding: 4rem 1.5rem;
+            }
+        }
+
+        @media (max-width: 992px) {
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+
+            .section {
+                padding: 3rem 1.5rem;
+            }
+
+            .section-title h2 {
+                font-size: 2.2rem;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .nav-links {
+                position: fixed;
+                top: 0;
+                right: -100%;
+                width: 100%;
+                height: 100vh;
+                background-color: rgba(10, 25, 47, 0.95);
+                backdrop-filter: blur(10px);
+                flex-direction: column;
+                align-items: center;
+                justify-content: center;
+                gap: 2rem;
+                padding: 5rem 2rem;
+                transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+                z-index: 999;
+            }
+
+            .nav-links.active {
+                right: 0;
+            }
+
+            .nav-links li {
+                opacity: 0;
+                transform: translateY(20px);
+                transition: all 0.3s ease;
+            }
+
+            .nav-links.active li {
+                opacity: 1;
+                transform: translateY(0);
+                transition-delay: 0.3s;
+            }
+
+            .mobile-menu-btn {
+                display: block;
+            }
+
+            .hero h1 {
+                font-size: 2rem;
+            }
+
+            .hero p {
+                font-size: 1rem;
+            }
+
+            .section-title h2 {
+                font-size: 2rem;
+            }
+
+            .about-content {
+                flex-direction: column;
+                gap: 2rem;
+            }
+
+            .grid-cols-2,
+            .grid-cols-3,
+            .grid-cols-4 {
+                grid-template-columns: 1fr !important;
+            }
+
+            .md\\:flex {
+                flex-direction: column !important;
+            }
+
+            .md\\:w-1\\ {
+                width: 100% !important;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .section {
+                padding: 2.5rem 1rem;
+            }
+
+            .hero h1 {
+                font-size: 1.8rem;
+            }
+
+            .section-title h2 {
+                font-size: 1.8rem;
+            }
+
+            .feature-card,
+            .member-card {
+                min-width: 100%;
+            }
+
+            .timeline {
+                padding: 0 1rem;
+            }
+
+            .btn {
+                width: 100%;
+                text-align: center;
+                margin: 0.5rem 0;
+            }
+
+            .footer-grid {
+                flex-direction: column !important;
+                align-items: center !important;
+                text-align: center !important;
+            }
+
+            .footer-grid>div {
+                width: 100% !important;
+                align-items: center !important;
+            }
+        }
+    </style>
+</head>
+
+<body class="bg-dark text-light">
+    <!-- Header -->
+    <header>
+        <nav class="navbar">
+            <a href="https://tekbot-robotics-challenge.github.io/2025-Team-UCAO-TECH-Docs/" class="logo">
+                <img src="https://ucaotech.com/wp-content/uploads/2024/10/UCAO-TECH-1.png" alt="UCAO-TECH Logo">
+                <span>UCAO-TECH</span>
+            </a>
+            <button class="mobile-menu-btn" aria-label="Menu">
+                <span class="hamburger"></span>
+            </button>
+            <ul class="nav-links">
+                <li><a
+                        href="https://tekbot-robotics-challenge.github.io/2025-Team-UCAO-TECH-Docs/#documentation">Accueil</a>
+                </li>
+                <li><a href="Test_Final.html" class="active">Test Final</a></li>
+                <li><a href="Informatique/informatique.html">Informatique</a></li>
+                <li><a href="Electronique/electronique.html">Électronique</a></li>
+                <li><a href="Mecanique/mecanique.html">Mécanique</a></li>
+                <li><a href="Galerie/galerie.html">Galérie</a></li>
+            </ul>
+        </nav>
+    </header>
+    <!-- Hero Section -->
+    <section class="relative py-32 overflow-hidden mt-16" style="background:rgba(10,25,47,0.7);">
+        <div class="absolute top-0 left-0 w-full h-full opacity-10 pointer-events-none">
+            <div class="absolute top-1/4 left-1/4 w-64 h-64 rounded-full bg-blue-300 filter blur-3xl"></div>
+            <div class="absolute bottom-1/4 right-1/4 w-64 h-64 rounded-full bg-indigo-300 filter blur-3xl"></div>
+        </div>
+        <div class="container mx-auto px-4 relative z-10">
+            <div class="max-w-3xl mx-auto text-center">
+                <h1 class="text-4xl md:text-5xl font-bold mb-6 floating"
+                    style="color:#00d1ff; text-shadow:0 0 12px #00d1ff,0 0 2px #fff;">Convoyeur Intelligent de Tri
+                    Automatique</h1>
+                <p class="text-xl mb-8 opacity-90" style="color:#e6f1ff;">Une solution innovante pour le tri des déchets
+                    industriels utilisant des technologies avancées de détection et d'automatisation.</p>
+                <div class="flex justify-center space-x-4">
+                    <a href="#contexte"
+                        class="px-6 py-3 font-bold rounded-lg bg-gray-900 text-white shadow-lg hover:bg-gray-800 transition">En
+                        savoir plus</a>
+                    <a href="#video"
+                        class="px-6 py-3 font-bold rounded-lg bg-gray-900 text-white shadow-lg hover:bg-gray-800 transition border-2 border-blue-900">Voir
+                        la démo</a>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- Main Content -->
+    <main class="container mx-auto px-4 py-12">
+        <!-- Contexte du projet -->
+        <section id="contexte" class="mb-20">
+            <div class="section-card rounded-xl shadow-2xl overflow-hidden mb-12"
+                style="background:rgba(10,25,47,0.92);box-shadow:0 0 32px #00d1ff33,0 2px 16px #001a2e99;">
+                <div class="md:flex">
+                    <div class="md:w-1/2 p-0">
+                        <h2 class="text-3xl font-bold mb-4" style="color:#e6f1ff;">Contexte du projet</h2>
+                        <p class="text-gray-600 mb-4" style="color:#e6f1ff;">Le TRC 2025 (Tekbot Robotics Challenge) est
+                            une compétition internationale qui met au défi les équipes étudiantes de développer des
+                            solutions robotiques innovantes.</p>
+                        <div class="section-card p-4 rounded-lg shadow-2xl"
+                            style="background:rgba(0,209,255,0.07);box-shadow:0 0 24px #00d1ff33,0 2px 8px #001a2e99;color:#e6f1ff;border-left:4px solid #00d1ff;">
+                            <h3 class="font-semibold mb-2" style="color:#00d1ff;">Détails du projet</h3>
+                            <ul class="space-y-1">
+                                <li><i class="fas fa-calendar-alt mr-2" style="color:#00d1ff;"></i> Durée : 1 mois</li>
+                                <li><i class="fas fa-tasks mr-2" style="color:#00d1ff;"></i> Critères d'évaluation :
+                                    Innovation, Fonctionnalité</li>
+                                <li><i class="fas fa-users mr-2" style="color:#00d1ff;"></i> Travail d'équipe : 10
+                                    membres multidisciplinaires</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="md:w-1/2 flex items-center justify-center p-8" style="background:transparent;">
+                        <div class="w-full h-full flex items-center justify-center p-0"
+                            style="background:linear-gradient(120deg, #14263d 60%, #1a2e47 100%) fixed; box-shadow:0 0 24px #00d1ff33,0 2px 8px #001a2e99; border-radius:0.75rem;">
+                            <img src="https://trc.tekbot.io/wp-content/uploads/2025/01/Logo-1.svg"
+                                alt="TRC 2025 Challenge" class="rounded-lg shadow-sm w-full h-auto">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Objectif -->
+        <section id="objectif" class="mb-20">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl font-bold mb-4" style="color:#e6f1ff;">Objectif du projet</h2>
+                <p class="text-xl max-w-3xl mx-auto" style="color:#e6f1ff;">Concevoir un convoyeur intelligent capable
+                    de détecter et trier automatiquement quatre types de déchets.</p>
+            </div>
+            <div class="grid md:grid-cols-3 gap-8">
+                <div class="section-card p-6 rounded-lg shadow-2xl border-t-4 border-blue-500"
+                    style="background:linear-gradient(120deg, #14263d 60%, #1a2e47 100%) fixed; box-shadow:0 0 32px #00d1ff33,0 2px 16px #001a2e99;">
+                    <div class="text-blue-500 text-4xl mb-4">
+                        <i class="fas fa-palette"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-3">Détection par couleur</h3>
+                    <p style="color:#e6f1ff;">Utilisation d'un capteur de couleur avancé pour identifier les différents
+                        types de déchets selon leur teinte dominante.</p>
+                </div>
+                <div class="section-card p-6 rounded-lg shadow-2xl border-t-4 border-green-500"
+                    style="background:linear-gradient(120deg, #14263d 60%, #1a2e47 100%) fixed; box-shadow:0 0 32px #00d1ff33,0 2px 16px #001a2e99;">
+                    <div class="text-green-500 text-4xl mb-4">
+                        <i class="fas fa-bolt"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-3">Tri par servo-moteurs</h3>
+                    <p style="color:#e6f1ff;">Système de tri automatisé utilisant des servo-moteurs pour orienter
+                        précisément les objets détectés vers la zone de collecte appropriée.</p>
+                </div>
+                <div class="section-card p-6 rounded-lg shadow-2xl border-t-4 border-purple-500"
+                    style="background:linear-gradient(120deg, #14263d 60%, #1a2e47 100%) fixed; box-shadow:0 0 32px #00d1ff33,0 2px 16px #001a2e99;">
+                    <div class="text-purple-500 text-4xl mb-4">
+                        <i class="fas fa-laptop-code"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-3">Interface web</h3>
+                    <p style="color:#e6f1ff;">Dashboard complet pour le suivi en temps réel des opérations, statistiques
+                        de tri et contrôle à distance du système.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Définition du convoyeur -->
+        <section id="definition" class="mb-20">
+            <div class="section-card rounded-xl shadow-2xl overflow-hidden"
+                style="background:linear-gradient(120deg, #14263d 60%, #1a2e47 100%) fixed; box-shadow:0 0 32px #00d1ff33,0 2px 16px #001a2e99;">
+                <div class="p-8">
+                    <h2 class="text-3xl font-bold mb-6" style="color:#e6f1ff;">Qu'est-ce qu'un convoyeur ?</h2>
+                    <div class="grid md:grid-cols-2 gap-8">
+                        <div>
+                            <p class="mb-4 text-lg" style="color:#e6f1ff;">
+                                Un convoyeur est un dispositif mécanique permettant de transporter automatiquement des
+                                objets ou des matériaux d’un point à un autre, utilisé dans de nombreux domaines pour
+                                faciliter le déplacement et la manutention.
+                            </p>
+                            <p class="mb-6" style="color:#e6f1ff;">
+                                Ces systèmes mécanisés constituent l'épine dorsale de la manutention moderne dans des
+                                secteurs variés : agroalimentaire, logistique, automobile, ou encore recyclage. Leur
+                                adoption permet une optimisation radicale des flux de production.
+                            </p>
+                            <ul class="space-y-3 mb-6" style="color:#e6f1ff;">
+                            </ul>
+                        </div>
+                        <div class="grid grid-cols-2 gap-4">
+                            <div class="section-card p-4 rounded-lg shadow-2xl"
+                                style="background:linear-gradient(120deg, #14263d 60%, #1a2e47 100%) fixed; box-shadow:0 0 24px #00d1ff33,0 2px 8px #001a2e99; color:#e6f1ff;">
+                                <h4 class="font-semibold mb-2"><i class="fas fa-chart-line mr-2 text-blue-500"></i>
+                                    Productivité</h4>
+                                <p class="text-sm">Jusqu'à 300% d'augmentation du débit par rapport à la manutention
+                                    manuelle</p>
+                            </div>
+                            <div class="section-card p-4 rounded-lg shadow-2xl"
+                                style="background:linear-gradient(120deg, #14263d 60%, #1a2e47 100%) fixed; box-shadow:0 0 24px #00d1ff33,0 2px 8px #001a2e99; color:#e6f1ff;">
+                                <h4 class="font-semibold mb-2"><i
+                                        class="fas fa-money-bill-wave mr-2 text-green-500"></i> Rentabilité</h4>
+                                <p class="text-sm">ROI typique en 12-18 mois grâce aux économies de main-d'œuvre</p>
+                            </div>
+                            <div class="section-card p-4 rounded-lg shadow-2xl"
+                                style="background:linear-gradient(120deg, #14263d 60%, #1a2e47 100%) fixed; box-shadow:0 0 24px #00d1ff33,0 2px 8px #001a2e99; color:#e6f1ff;">
+                                <h4 class="font-semibold mb-2"><i class="fas fa-user-shield mr-2 text-purple-500"></i>
+                                    Sécurité</h4>
+                                <p class="text-sm">Réduction de 80% des accidents liés à la manutention</p>
+                            </div>
+                            <div class="section-card p-4 rounded-lg shadow-2xl"
+                                style="background:linear-gradient(120deg, #14263d 60%, #1a2e47 100%) fixed; box-shadow:0 0 24px #00d1ff33,0 2px 8px #001a2e99; color:#e6f1ff;">
+                                <h4 class="font-semibold mb-2"><i class="fas fa-recycle mr-2 text-teal-500"></i>
+                                    Durabilité</h4>
+                                <p class="text-sm">Optimisation énergétique avec moteurs à vitesse variable</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="mt-6 pt-6 border-t border-blue-800">
+                        <p class="text-sm italic" style="color:#a8c4ff;">
+                            Les convoyeurs modernes intègrent des technologies IoT pour le monitoring en temps réel et
+                            l'analyse prédictive des pannes, révolutionnant la gestion des opérations industrielles.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Historique des convoyeurs -->
+        <section id="historique" class="mb-20"
+            style="background:rgba(10,25,47,0.92);box-shadow:0 0 32px #00d1ff33,0 2px 16px #001a2e99;">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl font-bold mb-4" style="color:#e6f1ff;">Historique des convoyeurs</h2>
+                <p class="text-xl max-w-3xl mx-auto" style="color:#e6f1ff;">L'évolution des systèmes de transport de
+                    matériaux à travers les âges</p>
+            </div>
+            <div class="relative">
+                <!-- Timeline -->
+                <div class="border-l-2 border-blue-200 absolute h-full left-1/2 transform -translate-x-1/2"></div>
+
+                <!-- Timeline items -->
+                <div class="space-y-8">
+                    <!-- Item 1 -->
+                    <div class="relative flex items-center">
+                        <div class="hidden md:flex items-center justify-center w-1/2 pr-8">
+                            <div class="section-card p-6 rounded-lg shadow-2xl w-full"
+                                style="background:linear-gradient(120deg, #14263d 60%, #1a2e47 100%) fixed; box-shadow:0 0 32px #00d1ff33,0 2px 16px #001a2e99;">
+                                <h3 class="text-xl font-semibold mb-2" style="color:#00d1ff;">Convoyeurs manuels</h3>
+                                <p style="color:#e6f1ff;">Avant 1800 - Transport de matériaux par la force humaine ou
+                                    animale, utilisant des paniers, brouettes et chariots.</p>
+                            </div>
+                        </div>
+                        <div
+                            class="z-10 flex items-center justify-center w-10 h-10 rounded-full bg-blue-500 text-white border-4 border-white shadow-md absolute left-1/2 transform -translate-x-1/2">
+                            <i class="fas fa-people-carry"></i>
+                        </div>
+                        <div class="md:hidden w-full pl-12">
+                            <div class="section-card p-6 rounded-lg shadow-2xl"
+                                style="background:linear-gradient(120deg, #14263d 60%, #1a2e47 100%) fixed; box-shadow:0 0 32px #00d1ff33,0 2px 16px #001a2e99;">
+                                <h3 class="text-xl font-semibold mb-2">Convoyeurs manuels</h3>
+                                <p style="color:#e6f1ff;">Avant 1800 - Transport de matériaux par la force humaine ou
+                                    animale, utilisant des paniers, brouettes et chariots.</p>
+                            </div>
+                        </div>
+                        <div class="hidden md:flex items-center justify-center w-1/2 pl-8">
+                        </div>
+                    </div>
+
+                    <!-- Item 2 -->
+                    <div class="relative flex items-center">
+                        <div class="hidden md:flex items-center justify-center w-1/2 pr-8">
+                        </div>
+                        <div
+                            class="z-10 flex items-center justify-center w-10 h-10 rounded-full bg-green-500 text-white border-4 border-white shadow-md absolute left-1/2 transform -translate-x-1/2">
+                            <i class="fas fa-link"></i>
+                        </div>
+                        <div class="hidden md:flex items-center justify-center w-1/2 pl-8">
+                            <div class="section-card p-6 rounded-lg shadow-2xl w-full"
+                                style="background:linear-gradient(120deg, #14263d 60%, #1a2e47 100%) fixed; box-shadow:0 0 32px #00d1ff33,0 2px 16px #001a2e99; color:#e6f1ff;">
+                                <h3 class="text-xl font-semibold mb-2" style="color:#00d1ff;">Convoyeurs à chaîne</h3>
+                                <p style="color:#e6f1ff;">A partir de 1800 - Premiers systèmes mécanisés utilisant des
+                                    chaînes pour déplacer des matériaux dans les mines et usines.</p>
+                            </div>
+                        </div>
+                        <div class="md:hidden w-full pl-12">
+                            <div class="section-card p-6 rounded-lg shadow-2xl"
+                                style="background:linear-gradient(120deg, #14263d 60%, #1a2e47 100%) fixed; box-shadow:0 0 32px #00d1ff33,0 2px 16px #001a2e99; color:#e6f1ff;">
+                                <h3 class="text-xl font-semibold mb-2">Convoyeurs à chaîne</h3>
+                                <p style="color:#e6f1ff;">A partir de 1800 - Premiers systèmes mécanisés utilisant des
+                                    chaînes pour déplacer des matériaux dans les mines et usines.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Item 3 -->
+                    <div class="relative flex items-center">
+                        <div class="hidden md:flex items-center justify-center w-1/2 pr-8">
+                            <div class="section-card p-6 rounded-lg shadow-2xl w-full"
+                                style="background:linear-gradient(120deg, #14263d 60%, #1a2e47 100%) fixed; box-shadow:0 0 32px #00d1ff33,0 2px 16px #001a2e99; color:#e6f1ff;">
+                                <h3 class="text-xl font-semibold mb-2" style="color:#00d1ff;">Convoyeurs à tapis</h3>
+                                <p style="color:#e6f1ff;">Début 1900 - Introduction des bandes transporteuses en
+                                    caoutchouc, révolutionnant la production de masse.</p>
+                            </div>
+                        </div>
+                        <div
+                            class="z-10 flex items-center justify-center w-10 h-10 rounded-full bg-purple-500 text-white border-4 border-white shadow-md absolute left-1/2 transform -translate-x-1/2">
+                            <i class="fas fa-conveyor-belt"></i>
+                        </div>
+                        <div class="md:hidden w-full pl-12">
+                            <div class="section-card p-6 rounded-lg shadow-2xl"
+                                style="background:linear-gradient(120deg, #14263d 60%, #1a2e47 100%) fixed; box-shadow:0 0 32px #00d1ff33,0 2px 16px #001a2e99; color:#e6f1ff;">
+                                <h3 class="text-xl font-semibold mb-2">Convoyeurs à tapis</h3>
+                                <p style="color:#e6f1ff;">Début 1900 - Introduction des bandes transporteuses en
+                                    caoutchouc, révolutionnant la production de masse.</p>
+                            </div>
+                        </div>
+                        <div class="hidden md:flex items-center justify-center w-1/2 pl-8">
+                        </div>
+                    </div>
+
+                    <!-- Item 4 -->
+                    <div class="relative flex items-center">
+                        <div class="hidden md:flex items-center justify-center w-1/2 pr-8">
+                        </div>
+                        <div
+                            class="z-10 flex items-center justify-center w-10 h-10 rounded-full bg-yellow-500 text-white border-4 border-white shadow-md absolute left-1/2 transform -translate-x-1/2">
+                            <i class="fas fa-robot"></i>
+                        </div>
+                        <div class="hidden md:flex items-center justify-center w-1/2 pl-8">
+                            <div class="section-card p-6 rounded-lg shadow-2xl w-full"
+                                style="background:linear-gradient(120deg, #14263d 60%, #1a2e47 100%) fixed; box-shadow:0 0 32px #00d1ff33,0 2px 16px #001a2e99; color:#e6f1ff;">
+                                <h3 class="text-xl font-semibold mb-2" style="color:#00d1ff;">Automatisation moderne
+                                </h3>
+                                <p style="color:#e6f1ff;">Début 2000 - Intégration de capteurs, IA et systèmes de
+                                    contrôle informatisés pour des convoyeurs intelligents et autonomes.</p>
+                            </div>
+                        </div>
+                        <div class="md:hidden w-full pl-12">
+                            <div class="section-card p-6 rounded-lg shadow-2xl"
+                                style="background:linear-gradient(120deg, #14263d 60%, #1a2e47 100%) fixed; box-shadow:0 0 32px #00d1ff33,0 2px 16px #001a2e99; color:#e6f1ff;">
+                                <h3 class="text-xl font-semibold mb-2">Automatisation moderne</h3>
+                                <p style="color:#e6f1ff;">Début 2000 - Intégration de capteurs, IA et systèmes de
+                                    contrôle informatisés pour des convoyeurs intelligents et autonomes.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Types de convoyeurs -->
+        <section id="types" class="mb-20"
+            style="background:rgba(10,25,47,0.92);box-shadow:0 0 32px #00d1ff33,0 2px 16px #001a2e99;">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl font-bold mb-4" style="color:#e6f1ff;">Types de convoyeurs</h2>
+                <p class="text-xl max-w-3xl mx-auto" style="color:#e6f1ff;">Des solutions variées adaptées à chaque
+                    besoin spécifique</p>
+            </div>
+
+            <!-- Grille des types de convoyeurs (4 cartes) -->
+            <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
+                <!-- Convoyeur à bande -->
+                <div class="section-card rounded-lg shadow-2xl overflow-hidden holographic-card"
+                    style="background:linear-gradient(120deg, #14263d 60%, #1a2e47 100%);">
+                    <div class="h-48 overflow-hidden">
+                        <img src="https://tse4.mm.bing.net/th/id/OIP.5y4fA2EUXqjGNUWw_Mff2gHaGd?w=500&h=436&rs=1&pid=ImgDetMain&o=7&rm=3.jpg"
+                            alt="Convoyeur à bande"
+                            class="w-full h-full object-cover transition-transform duration-500 hover:scale-110">
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-semibold mb-2" style="color:#00d1ff;">Convoyeur à bande</h3>
+                        <p class="mb-4 text-sm" style="color:#e6f1ff;">Système continu utilisant une bande sans fin pour
+                            transporter des matériaux.</p>
+                        <div class="flex flex-wrap gap-2">
+                            <span class="px-2 py-1 text-xs"
+                                style="background:rgba(0,209,255,0.15); color:#00d1ff; border:1px solid #00d1ff; border-radius:9999px;">Polyvalent</span>
+                            <span class="px-2 py-1 text-xs"
+                                style="background:rgba(0,209,255,0.15); color:#00d1ff; border:1px solid #00d1ff; border-radius:9999px;">Économique</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Convoyeur à rouleaux -->
+                <div class="section-card rounded-lg shadow-2xl overflow-hidden holographic-card"
+                    style="background:linear-gradient(120deg, #14263d 60%, #1a2e47 100%);">
+                    <div class="h-48 overflow-hidden">
+                        <img src="https://th.bing.com/th/id/OIP.d7z9oWgWJm2qWqwLWLJjiwHaEc?w=292&h=180&c=7&r=0&o=5&pid=1.7.jpg"
+                            alt="Convoyeur à rouleaux"
+                            class="w-full h-full object-cover transition-transform duration-500 hover:scale-110">
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-semibold mb-2" style="color:#00d1ff;">Convoyeur à rouleaux</h3>
+                        <p class="mb-4 text-sm" style="color:#e6f1ff;">Série de rouleaux parallèles pour charges
+                            palettisées ou en conteneurs.</p>
+                        <div class="flex flex-wrap gap-2">
+                            <span class="px-2 py-1 text-xs"
+                                style="background:rgba(0,209,255,0.15); color:#00d1ff; border:1px solid #00d1ff; border-radius:9999px;">Charges
+                                lourdes</span>
+                            <span class="px-2 py-1 text-xs"
+                                style="background:rgba(0,209,255,0.15); color:#00d1ff; border:1px solid #00d1ff; border-radius:9999px;">Faible
+                                maintenance</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Convoyeur à chaîne -->
+                <div class="section-card rounded-lg shadow-2xl overflow-hidden holographic-card"
+                    style="background:linear-gradient(120deg, #14263d 60%, #1a2e47 100%);">
+                    <div class="h-48 overflow-hidden">
+                        <img src="https://www.risel.tn/photos/800x600-f8f5ec6afecf332f79efed3a0fbd5626.jpg"
+                            alt="Convoyeur à chaîne"
+                            class="w-full h-full object-cover transition-transform duration-500 hover:scale-110">
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-semibold mb-2" style="color:#00d1ff;">Convoyeur à chaîne</h3>
+                        <p class="mb-4 text-sm" style="color:#e6f1ff;">Utilise des chaînes pour tirer des palettes ou
+                            des chariots.</p>
+                        <div class="flex flex-wrap gap-2">
+                            <span class="px-2 py-1 text-xs"
+                                style="background:rgba(0,209,255,0.15); color:#00d1ff; border:1px solid #00d1ff; border-radius:9999px;">Robuste</span>
+                            <span class="px-2 py-1 text-xs"
+                                style="background:rgba(0,209,255,0.15); color:#00d1ff; border:1px solid #00d1ff; border-radius:9999px;">Haute
+                                capacité</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Convoyeur à vis -->
+                <div class="section-card rounded-lg shadow-2xl overflow-hidden holographic-card"
+                    style="background:linear-gradient(120deg, #14263d 60%, #1a2e47 100%);">
+                    <div class="h-48 overflow-hidden">
+                        <img src="https://th.bing.com/th/id/OIP.SefGZjOxO1_ObRgjkiheJQHaEv?w=257&h=180&c=7&r=0&o=7&pid=1.7&rm=3.jpg"
+                            alt="Convoyeur à vis"
+                            class="w-full h-full object-cover transition-transform duration-500 hover:scale-110">
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-semibold mb-2" style="color:#00d1ff;">Convoyeur à vis</h3>
+                        <p class="mb-4 text-sm" style="color:#e6f1ff;">Hélice rotative pour déplacer des matériaux
+                            granulaires ou poudreux.</p>
+                        <div class="flex flex-wrap gap-2">
+                            <span class="px-2 py-1 text-xs"
+                                style="background:rgba(0,209,255,0.15); color:#00d1ff; border:1px solid #00d1ff; border-radius:9999px;">Granulaires</span>
+                            <span class="px-2 py-1 text-xs"
+                                style="background:rgba(0,209,255,0.15); color:#00d1ff; border:1px solid #00d1ff; border-radius:9999px;">Transport
+                                vertical</span>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- Section "Notre choix" en pleine largeur -->
+            <div class="section-card rounded-xl shadow-2xl overflow-hidden"
+                style="background:linear-gradient(120deg, #14263d 60%, #1a2e47 100%); border-left: 4px solid #00d1ff;">
+                <div class="md:flex">
+                    <div class="md:w-1/2 p-8">
+                        <h2 class="text-3xl font-bold mb-4" style="color:#00d1ff;">Notre choix stratégique pour le TRC
+                            2025</h2>
+                        <p class="mb-6" style="color:#e6f1ff;">Face aux exigences du challenge, notre sélection s'est
+                            portée sur un convoyeur à bande modulaire, offrant le meilleur compromis entre performance,
+                            précision et adaptabilité aux contraintes du concours.</p>
+
+                        <div class="grid grid-cols-2 gap-4">
+                            <div class="p-3 rounded-lg" style="background:rgba(0,209,255,0.07);">
+                                <h4 class="font-semibold mb-2" style="color:#00d1ff;"><i
+                                        class="fas fa-balance-scale mr-2"></i> Critères TRC</h4>
+                                <p class="text-sm" style="color:#e6f1ff;">Réponse optimale aux exigences de tri,
+                                    rapidité et fiabilité imposées par le règlement</p>
+                            </div>
+                            <div class="p-3 rounded-lg" style="background:rgba(0,209,255,0.07);">
+                                <h4 class="font-semibold mb-2" style="color:#00d1ff;"><i class="fas fa-cogs mr-2"></i>
+                                    Modularité</h4>
+                                <p class="text-sm" style="color:#e6f1ff;">Adaptable aux 4 catégories de déchets avec
+                                    reconfiguration rapide</p>
+                            </div>
+                            <div class="p-3 rounded-lg" style="background:rgba(0,209,255,0.07);">
+                                <h4 class="font-semibold mb-2" style="color:#00d1ff;"><i class="fas fa-bolt mr-2"></i>
+                                    Performance</h4>
+                                <p class="text-sm" style="color:#e6f1ff;">Débit conforme aux attentes avec marge de
+                                    sécurité</p>
+                            </div>
+                            <div class="p-3 rounded-lg" style="background:rgba(0,209,255,0.07);">
+                                <h4 class="font-semibold mb-2" style="color:#00d1ff;"><i
+                                        class="fas fa-project-diagram mr-2"></i> Intégration</h4>
+                                <p class="text-sm" style="color:#e6f1ff;">Solution compatible avec l'ensemble des
+                                    sous-systèmes requis</p>
+                            </div>
+                        </div>
+
+                        <div class="mt-6 p-3 rounded-lg"
+                            style="background:rgba(0,209,255,0.07); border:1px dashed #00d1ff;">
+                            <h4 class="font-semibold mb-2" style="color:#00d1ff;"><i class="fas fa-trophy mr-2"></i>
+                                Avantage compétitif</h4>
+                            <p class="text-sm" style="color:#e6f1ff;">Combinaison unique de simplicité mécanique et
+                                d'intelligence embarquée</p>
+                        </div>
+                    </div>
+                    <div class="md:w-1/2 flex items-center p-0">
+                        <div class="w-full h-full min-h-64 md:min-h-96 relative">
+                            <img src="Mecanique/convoyeur.png" alt="Notre solution TRC 2025"
+                                class="w-full h-full object-cover">
+                            <div
+                                class="absolute inset-0 bg-gradient-to-r from-blue-900 to-transparent opacity-70 md:hidden">
+                            </div>
+                            <div
+                                class="absolute bottom-0 left-0 right-0 bg-blue-900 bg-opacity-70 text-white p-4 text-center">
+                                <i class="fas fa-medal text-yellow-400 mr-2"></i> Optimisé pour les critères
+                                d'évaluation TRC
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- Pourquoi ce type pour notre projet ? -->
+        <section id="choix" class="mb-20"
+            style="background:rgba(10,25,47,0.92);box-shadow:0 0 32px #00d1ff33,0 2px 16px #001a2e99;">
+            <div class="section-card rounded-xl shadow-2xl overflow-hidden"
+                style="background:linear-gradient(120deg, #14263d 60%, #1a2e47 100%) fixed; box-shadow:0 0 32px #00d1ff33,0 2px 16px #001a2e99;">
+                <div class="md:flex">
+                    <div class="md:w-1/2 p-8">
+                        <h2 class="text-3xl font-bold mb-4" style="color:#e6f1ff;">Pourquoi un convoyeur à bande pour
+                            notre projet ?</h2>
+                        <p class="mb-4" style="color:#e6f1ff;">Après une analyse approfondie des différentes options, le
+                            convoyeur à bande motorisée s'est imposé comme la solution optimale pour notre système de
+                            tri des déchets.</p>
+                        <ul class="space-y-3 mb-6">
+                            <li class="flex items-start">
+                                <i class="fas fa-check-circle text-green-500 mt-1 mr-2"></i>
+                                <span style="color:#e6f1ff;">Facilité de conception et de fabrication pour notre
+                                    équipe</span>
+                            </li>
+                            <li class="flex items-start">
+                                <i class="fas fa-check-circle text-green-500 mt-1 mr-2"></i>
+                                <span style="color:#e6f1ff;">Compatibilité parfaite avec les composants Arduino pour le
+                                    contrôle</span>
+                            </li>
+                            <li class="flex items-start">
+                                <i class="fas fa-check-circle text-green-500 mt-1 mr-2"></i>
+                                <span style="color:#e6f1ff;">Précision de mouvement nécessaire pour le positionnement
+                                    des déchets</span>
+                            </li>
+                            <li class="flex items-start">
+                                <i class="fas fa-check-circle text-green-500 mt-1 mr-2"></i>
+                                <span style="color:#e6f1ff;">Surface plane idéale pour la détection par capteur de
+                                    couleur</span>
+                            </li>
+                            <li class="flex items-start">
+                                <i class="fas fa-check-circle text-green-500 mt-1 mr-2"></i>
+                                <span style="color:#e6f1ff;">Possibilité d'intégrer facilement des mécanismes de tri
+                                    latéraux</span>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="md:w-1/2 flex items-center justify-center p-8" style="background:transparent;">
+                        <div class="relative w-full max-w-md"
+                            style="background:linear-gradient(120deg, #14263d 60%, #1a2e47 100%) fixed; box-shadow:0 0 24px #00d1ff33,0 2px 8px #001a2e99; border-radius:0.75rem;">
+                            <img src="Mecanique/img1.png" alt="Notre convoyeur à bande"
+                                class="rounded-lg shadow-sm w-full h-auto">
+                            <div
+                                class="absolute -bottom-5 -right-5 bg-blue-600 text-white px-4 py-2 rounded-lg shadow-lg">
+                                <i class="fas fa-lightbulb mr-2"></i> Solution optimale
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Les 3 domaines clés -->
+        <section id="domaines" class="mb-20"
+            style="background:rgba(10,25,47,0.92);box-shadow:0 0 32px #00d1ff33,0 2px 16px #001a2e99;">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl font-bold mb-4" style="color:#e6f1ff;">Les 3 domaines clés du projet</h2>
+                <p class="text-xl max-w-3xl mx-auto" style="color:#e6f1ff;">Une approche multidisciplinaire pour une
+                    solution complète</p>
+            </div>
+            <div class="grid md:grid-cols-3 gap-8">
+                <!-- Domaine Électronique -->
+                <div class="section-card rounded-xl shadow-2xl overflow-hidden transform transition hover:-translate-y-2"
+                    style="background:linear-gradient(120deg, #14263d 60%, #1a2e47 100%) fixed; box-shadow:0 0 32px #00d1ff33,0 2px 16px #001a2e99;">
+                    <div class="bg-blue-600 p-6 text-white">
+                        <div class="flex items-center">
+                            <div class="bg-white bg-opacity-20 p-3 rounded-full mr-4">
+                                <i class="fas fa-microchip text-2xl"></i>
+                            </div>
+                            <h3 class="text-xl font-semibold">Électronique</h3>
+                        </div>
+                    </div>
+                    <div class="p-6">
+                        <ul class="space-y-3">
+                            <li class="flex items-start">
+                                <i class="fas fa-circle text-xs text-blue-500 mt-2 mr-2"></i>
+                                <span style="color:#e6f1ff;">Utiliser ATmega328P ou Arduino Nano comme
+                                    microcontrôleur</span>
+                            </li>
+                            <li class="flex items-start">
+                                <i class="fas fa-circle text-xs text-blue-500 mt-2 mr-2"></i>
+                                <span style="color:#e6f1ff;">Intégrer un capteur de couleur pour identifier les déchets
+                                    (4 couleurs)</span>
+                            </li>
+                            <li class="flex items-start">
+                                <i class="fas fa-circle text-xs text-blue-500 mt-2 mr-2"></i>
+                                <span style="color:#e6f1ff;">Implémenter un système de détection (laser KY-008 ou
+                                    photorésistance)</span>
+                            </li>
+                            <li class="flex items-start">
+                                <i class="fas fa-circle text-xs text-blue-500 mt-2 mr-2"></i>
+                                <span style="color:#e6f1ff;">Concevoir un PCB optimisé avec KICAD (pas de
+                                    breadboard)</span>
+                            </li>
+                            <li class="flex items-start">
+                                <i class="fas fa-circle text-xs text-blue-500 mt-2 mr-2"></i>
+                                <span style="color:#e6f1ff;">Alimentation par batteries lithium</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Domaine Informatique -->
+                <div class="section-card rounded-xl shadow-2xl overflow-hidden transform transition hover:-translate-y-2"
+                    style="background:linear-gradient(120deg, #14263d 60%, #1a2e47 100%) fixed; box-shadow:0 0 32px #00d1ff33,0 2px 16px #001a2e99;">
+                    <div class="bg-purple-600 p-6 text-white">
+                        <div class="flex items-center">
+                            <div class="bg-white bg-opacity-20 p-3 rounded-full mr-4">
+                                <i class="fas fa-laptop-code text-2xl"></i>
+                            </div>
+                            <h3 class="text-xl font-semibold">Informatique</h3>
+                        </div>
+                    </div>
+                    <div class="p-6">
+                        <ul class="space-y-3">
+                            <li class="flex items-start">
+                                <i class="fas fa-circle text-xs text-purple-500 mt-2 mr-2"></i>
+                                <span style="color:#e6f1ff;">Développer un algorithme de tri des déchets par
+                                    couleur</span>
+                            </li>
+                            <li class="flex items-start">
+                                <i class="fas fa-circle text-xs text-purple-500 mt-2 mr-2"></i>
+                                <span style="color:#e6f1ff;">Créer une interface web temps réel avec quantités de
+                                    déchets triés</span>
+                            </li>
+                            <li class="flex items-start">
+                                <i class="fas fa-circle text-xs text-purple-500 mt-2 mr-2"></i>
+                                <span style="color:#e6f1ff;">Intégrer les logos TEKBOT et TRC 2025 dans
+                                    l'interface</span>
+                            </li>
+                            <li class="flex items-start">
+                                <i class="fas fa-circle text-xs text-purple-500 mt-2 mr-2"></i>
+                                <span style="color:#e6f1ff;">Assurer la communication microcontrôleur ↔ interface
+                                    web</span>
+                            </li>
+                            <li class="flex items-start">
+                                <i class="fas fa-circle text-xs text-purple-500 mt-2 mr-2"></i>
+                                <span style="color:#e6f1ff;">Optimiser le code (éviter les fonctions bloquantes)</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Domaine Mécanique -->
+                <div class="section-card rounded-xl shadow-2xl overflow-hidden transform transition hover:-translate-y-2"
+                    style="background:linear-gradient(120deg, #14263d 60%, #1a2e47 100%) fixed; box-shadow:0 0 32px #00d1ff33,0 2px 16px #001a2e99;">
+                    <div class="bg-amber-600 p-6 text-white">
+                        <div class="flex items-center">
+                            <div class="bg-white bg-opacity-20 p-3 rounded-full mr-4">
+                                <i class="fas fa-cogs text-2xl"></i>
+                            </div>
+                            <h3 class="text-xl font-semibold">Mécanique</h3>
+                        </div>
+                    </div>
+                    <div class="p-6">
+                        <ul class="space-y-3">
+                            <li class="flex items-start">
+                                <i class="fas fa-circle text-xs text-amber-500 mt-2 mr-2"></i>
+                                <span style="color:#e6f1ff;">Modéliser en SolidWorks un convoyeur (650mm long, 100mm
+                                    haut)</span>
+                            </li>
+                            <li class="flex items-start">
+                                <i class="fas fa-circle text-xs text-amber-500 mt-2 mr-2"></i>
+                                <span style="color:#e6f1ff;">Prévoir un système de guidage pour le tri des cubes
+                                    (30mm)</span>
+                            </li>
+                            <li class="flex items-start">
+                                <i class="fas fa-circle text-xs text-amber-500 mt-2 mr-2"></i>
+                                <span style="color:#e6f1ff;">Valider la faisabilité pour impression 3D/assemblage</span>
+                            </li>
+                            <li class="flex items-start">
+                                <i class="fas fa-circle text-xs text-amber-500 mt-2 mr-2"></i>
+                                <span style="color:#e6f1ff;">Réaliser une simulation mécanique (bonus)</span>
+                            </li>
+                            <li class="flex items-start">
+                                <i class="fas fa-circle text-xs text-amber-500 mt-2 mr-2"></i>
+                                <span style="color:#e6f1ff;">Documenter les choix techniques et contraintes</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Transition vers informatique -->
+        <section id="transition" class="mb-20 text-center"
+            style="background: rgba(0, 209, 255, 0.07); box-shadow: 0 0 32px rgba(0, 209, 255, 0.2), 0 2px 16px rgba(0, 26, 46, 0.6);">
+            <div class="rounded-xl p-8 shadow-lg text-white"
+                style="background: linear-gradient(120deg, #0a192f 60%, #001a2e 100%) fixed;">
+                <h2 class="text-2xl md:text-3xl font-bold mb-4">Découvrez notre interface de contrôle</h2>
+                <p class="text-lg mb-6 max-w-2xl mx-auto opacity-90">L'équipe informatique a développé une interface web
+                    avancée pour le suivi et le contrôle du convoyeur en temps réel.</p>
+                <!-- Lien relatif vers le dashboard dans le même dossier -->
+                <a href="Dashboad/dashboad.html"
+                    class="inline-block px-8 py-3 bg-white text-green-600 rounded-lg font-bold hover:bg-gray-100 transition-transform hover:scale-105 shadow-lg floating mb-6">
+                    Accéder au dashboard <i class="fas fa-arrow-right ml-2"></i>
+                </a>
+
+                <div class="mt-8">
+                    <p class="text-lg max-w-2xl mx-auto mb-6 opacity-90">L'équipe a également implémenté une
+                        documentation complète dans chaque domaine (électronique, mécanique, informatique) concernant la
+                        réalisation du convoyeur demandé.</p>
+                    <div class="flex flex-col md:flex-row justify-center items-center gap-4">
+                        <a href="Electronique/electronique.html"
+                            class="inline-block px-8 py-3 bg-white text-blue-600 rounded-lg font-bold hover:bg-gray-100 transition-transform hover:scale-105 shadow-lg floating">
+                            Documentation Électronique <i class="fas fa-microchip ml-2"></i>
+                        </a>
+                        <a href="Informatique/informatique.html"
+                            class="inline-block px-8 py-3 bg-white text-purple-600 rounded-lg font-bold hover:bg-gray-100 transition-transform hover:scale-105 shadow-lg floating">
+                            Documentation Informatique <i class="fas fa-laptop-code ml-2"></i>
+                        </a>
+                        <a href="Mecanique/mecanique.html"
+                            class="inline-block px-8 py-3 bg-white text-amber-600 rounded-lg font-bold hover:bg-gray-100 transition-transform hover:scale-105 shadow-lg floating">
+                            Documentation Mécanique <i class="fas fa-cogs ml-2"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- Section GitHub : Autres tests et projets documentés -->
+        <section id="github-tests" class="mb-20">
+            <div class="section-card rounded-xl shadow-2xl overflow-hidden"
+                style="background:linear-gradient(120deg, #14263d 60%, #1a2e47 100%); box-shadow:0 0 32px #00d1ff33,0 2px 16px #001a2e99;">
+                <div class="p-8 flex flex-col md:flex-row items-center gap-8">
+                    <div class="md:w-2/3">
+                        <h2 class="text-2xl md:text-3xl font-bold mb-4" style="color:#e6f1ff;">
+                            Nos autres tests & projets documentés
+                        </h2>
+                        <p class="text-lg mb-4" style="color:#e6f1ff;">
+                            En plus du convoyeur présenté ici, notre équipe réalise régulièrement d'autres tests et
+                            prototypes, tous soigneusement documentés et mis à disposition sur notre espace GitHub. Vous
+                            pouvez y retrouver l'historique de nos projets, les dossiers techniques, les codes sources
+                            et les retours d'expérience.
+                        </p>
+                        <p class="mb-6" style="color:#a8c4ff;">
+                            <i class="fab fa-github mr-2"></i>
+                            Accédez à l'ensemble de nos réalisations passées et suivez l'évolution de nos travaux !
+                        </p>
+                        <a href="https://github.com/TekBot-Robotics-Challenge/2025-Team-UCAO-TECH-Docs" target="_blank"
+                            class="inline-block px-8 py-3 bg-black text-white rounded-lg font-bold hover:bg-gray-800 transition-transform hover:scale-105 shadow-lg floating">
+                            Voir la documentation GitHub <i class="fab fa-github ml-2"></i>
+                        </a>
+                        <a href="https://tekbot-robotics-challenge.github.io/2025-Team-UCAO-TECH-Docs/#documentation"
+                            class="inline-block px-8 py-3 bg-white text-cyan-700 rounded-lg font-bold hover:bg-gray-100 transition-transform hover:scale-105 shadow-lg floating ml-4">
+                            Accéder à la page Documentation <i class="fas fa-book ml-2"></i>
+                        </a>
+                    </div>
+                    <div class="md:w-1/3 flex justify-center">
+                        <img src="https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png"
+                            alt="Logo GitHub" class="w-32 h-32 object-contain rounded-lg shadow-xl bg-white p-3">
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Video Demo -->
+
+    </main>
+
+    <!-- Footer -->
+    <footer style="background: linear-gradient(120deg, #0a192f 60%, #001a2e 100%);">
+        <!-- Footer moderne, marges et espaces réduits -->
+        <footer
+            style="background: linear-gradient(120deg, #0a192f 60%, #001a2e 100%); color: #e6f1ff; padding: 1.2rem 0 0.5rem 0; border-top: 2px solid #00d1ff22;">
+            <div class="footer-grid"
+                style="max-width: 1250px; margin: 0 auto; display: flex; flex-wrap: wrap; align-items: flex-start; justify-content: space-between; gap: 1.2rem;">
+                <!-- À propos à gauche -->
+                <div
+                    style="flex:2 1 350px; min-width:220px;display:flex;flex-direction:column;align-items:flex-start;gap:0.5rem;">
+                    <div
+                        style="font-weight:700; color:#00d1ff; font-size:1.05rem;letter-spacing:1px;text-transform:uppercase;">
+                        Notre vision</div>
+                    <div
+                        style="font-size:0.98rem;opacity:0.85;line-height:1.4;text-align:left;word-break:break-word;white-space:normal;max-width:420px;">
+                        UCAO-TECH, c’est une équipe d’innovation et de passionnés de robotique engagés pour l’excellence
+                        au TRC 2025. Notre ambition : inspirer, innover et propulser la technologie au service de la
+                        jeunesse africaine. Découvrez nos projets, nos valeurs et notre engagement pour un avenir
+                        technologique durable.
+                    </div>
+                </div>
+                <!-- Liens rapides au centre -->
+                <div
+                    style="flex:1 1 220px; min-width:200px;display:flex;flex-direction:column;align-items:flex-start;gap:0.5rem;">
+                    <div
+                        style="font-weight:700; color:#00d1ff; font-size:1.05rem;letter-spacing:1px;text-transform:uppercase;">
+                        Liens rapides</div>
+                    <ul style="list-style:none;padding:0;margin:0;line-height:1.5;">
+                        <li><a href="#accueil" style="color: #e6f1ff; text-decoration: none;transition:color 0.2s;"
+                                onmouseover="this.style.color='#00d1ff'"
+                                onmouseout="this.style.color='#e6f1ff'">Accueil</a></li>
+                        <li><a href="#a-propos" style="color: #e6f1ff; text-decoration: none;transition:color 0.2s;"
+                                onmouseover="this.style.color='#00d1ff'" onmouseout="this.style.color='#e6f1ff'">À
+                                propos</a></li>
+                        <li><a href="#equipe" style="color: #e6f1ff; text-decoration: none;transition:color 0.2s;"
+                                onmouseover="this.style.color='#00d1ff'"
+                                onmouseout="this.style.color='#e6f1ff'">Équipe</a></li>
+                        <li><a href="#contact" style="color: #e6f1ff; text-decoration: none;transition:color 0.2s;"
+                                onmouseover="this.style.color='#00d1ff'"
+                                onmouseout="this.style.color='#e6f1ff'">Contact</a></li>
+                        <li><a href="#documentation"
+                                style="color: #e6f1ff; text-decoration: none;transition:color 0.2s;"
+                                onmouseover="this.style.color='#00d1ff'"
+                                onmouseout="this.style.color='#e6f1ff'">Documentation</a></li>
+                    </ul>
+                </div>
+                <!-- Contacts à droite -->
+                <div
+                    style="flex:1 1 220px; min-width:200px;display:flex;flex-direction:column;align-items:flex-start;gap:0.5rem;">
+                    <div
+                        style="font-weight:700; color:#00d1ff; font-size:1.05rem;letter-spacing:1px;text-transform:uppercase;">
+                        Contacts</div>
+                    <div style="margin-bottom:0.3rem;display:flex;align-items:center;">
+                        <i class="fas fa-phone" style="color:#00d1ff;margin-right:0.7rem;"></i>
+                        <span>+229 01 55 60 76 30</span>
+                    </div>
+                    <div style="margin-bottom:0.3rem;display:flex;align-items:center;">
+                        <i class="fas fa-envelope" style="color:#00d1ff;margin-right:0.7rem;"></i>
+                        <span><a href="mailto:contact@tekbot.io"
+                                style="color:#e6f1ff;text-decoration:underline;">contact@tekbot.io</a></span>
+                    </div>
+                    <div style="display: flex; gap: 0.5rem; margin-top:0.5rem;">
+                        <a href="#" style="color:#00d1ff;font-size:1.05rem;"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#" style="color:#00d1ff;font-size:1.05rem;"><i class="fab fa-twitter"></i></a>
+                        <a href="#" style="color:#00d1ff;font-size:1.05rem;"><i class="fab fa-instagram"></i></a>
+                        <a href="#" style="color:#00d1ff;font-size:1.05rem;"><i class="fab fa-linkedin-in"></i></a>
+                        <a href="#" style="color:#00d1ff;font-size:1.05rem;"><i class="fab fa-github"></i></a>
+                    </div>
+                </div>
+            </div>
+            <div style="text-align:center;font-size:0.91rem;opacity:0.6;margin-top:0.7rem;">
+                © Copyright - UCAO-TECH - Tous droits réservés
+            </div>
+        </footer>
+
+        <script>
+            // Mobile Menu Toggle
+            const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
+            const navLinks = document.querySelector('.nav-links');
+            const hamburger = document.querySelector('.hamburger');
+
+            mobileMenuBtn.addEventListener('click', () => {
+                navLinks.classList.toggle('active');
+                mobileMenuBtn.classList.toggle('active');
+            });
+
+            // Smooth Scrolling
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    const target = document.querySelector(this.getAttribute('href'));
+                    if (target) {
+                        window.scrollTo({
+                            top: target.offsetTop - 80,
+                            behavior: 'smooth'
+                        });
+                        // Fermer le menu mobile si ouvert
+                        if (navLinks.classList.contains('active')) {
+                            navLinks.classList.remove('active');
+                            mobileMenuBtn.classList.remove('active');
+                        }
+                    }
+                });
+            });
+
+            // Animation des sections au scroll
+            const sections = document.querySelectorAll('.section');
+            const observerOptions = {
+                root: null,
+                threshold: 0.1,
+                rootMargin: "0px"
+            };
+
+            const observer = new IntersectionObserver((entries, observer) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('visible');
+                    }
+                });
+            }, observerOptions);
+
+            sections.forEach(section => {
+                observer.observe(section);
+            });
+        </script>
+</body>
+
+</html>

@@ -1,0 +1,2236 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Documentation Électronique - Convoyeur Intelligent</title>
+    <link rel="icon" href="https://ucaotech.com/wp-content/uploads/2024/10/UCAO-TECH-1.png" type="image/png">
+
+    <!-- Optimisations ajoutées -->
+    <link rel="preload" href="https://fonts.googleapis.com/css2?family=Orbitron&family=Roboto&display=swap" as="style">
+    <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+    <link rel="preconnect" href="https://cdn.jsdelivr.net">
+
+    <meta http-equiv="Content-Security-Policy"
+        content="default-src 'self'; img-src 'self' data: https:; style-src 'self' 'unsafe-inline' https://cdn.tailwindcss.com https://cdnjs.cloudflare.com https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com https://cdnjs.cloudflare.com; script-src 'self' https://cdn.jsdelivr.net https://cdn.tailwindcss.com;">
+
+    <!-- Script Mermaid placé dans le head pour un chargement anticipé -->
+    <script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
+
+    <!-- CDN existants -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="preload"
+        href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;700;900&family=Roboto:wght@300;400;500;700&display=swap"
+        as="style" onload="this.rel='stylesheet'">
+    <noscript>
+        <link rel="stylesheet"
+            href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;700;900&family=Roboto:wght@300;400;500;700&display=swap">
+    </noscript>
+
+    <style>
+        :root {
+            /* Couleurs de base */
+            --primary: rgb(2, 12, 27);
+            --secondary: #00f7ff;
+            --accent: #ff2e63;
+            --light: #112240;
+            --dark: #eaf6fb;
+            --success: #2ecc71;
+
+            /* Palette cyber */
+            --cyber-blue: #00f7ff;
+            --cyber-purple: #bd93f9;
+            --cyber-red: #ff2e63;
+            --cyber-green: #50fa7b;
+            --cyber-yellow: #f1fa8c;
+
+            /* Variables fonctionnelles */
+            --text-primary: #eaf6fb;
+            --text-secondary: #8892b0;
+            --bg-card: rgba(2, 12, 27, 0.7);
+            --bg-card-hover: rgba(2, 12, 27, 0.9);
+            --border-glow: rgba(0, 247, 255, 0.2);
+            --border-glow-hover: rgba(0, 247, 255, 0.4);
+
+            /* Effets */
+            --shadow-blue: 0 0 15px rgba(0, 247, 255, 0.3);
+            --shadow-purple: 0 0 15px rgba(189, 147, 249, 0.3);
+            --gradient-cyber: linear-gradient(135deg, var(--cyber-blue), var(--cyber-purple));
+
+            /* Transitions */
+            --transition-fast: 200ms;
+            --transition-normal: 300ms;
+            --transition-slow: 500ms;
+            --easing-smooth: cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        body {
+            background-color: var(--primary);
+            color: var(--text-primary);
+            font-family: 'Roboto', Arial, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 0;
+            min-height: 100vh;
+        }
+
+        h1,
+        h2,
+        h3,
+        h4,
+        .logo,
+        .nav-links a {
+            font-family: 'Orbitron', sans-serif;
+            letter-spacing: 1px;
+            margin: 0;
+            color: var(--text-primary);
+        }
+
+        .cyber-title {
+            color: var(--secondary);
+            font-size: 2.2rem;
+            font-weight: 700;
+            margin-bottom: 1.125rem;
+            text-shadow: 0 0 10px var(--border-glow);
+            position: relative;
+        }
+
+        .cyber-title::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: -5px;
+            width: 100%;
+            height: 2px;
+            background: var(--secondary);
+            box-shadow: 0 0 10px var(--border-glow);
+            transform: scaleX(0);
+            transform-origin: right;
+            transition: transform 0.5s ease;
+        }
+
+        .cyber-title:hover::after {
+            transform: scaleX(1);
+            transform-origin: left;
+        }
+
+        .nav-link {
+            color: var(--text-primary);
+            text-decoration: none;
+            font-family: 'Orbitron', sans-serif;
+            font-weight: 500;
+            letter-spacing: 1.2px;
+            transition: all 0.3s ease;
+            position: relative;
+            padding: 0.5rem 1rem;
+        }
+
+        .nav-link::before {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background-color: var(--secondary);
+            transform: scaleX(0);
+            transform-origin: right;
+            transition: transform 0.3s ease;
+            box-shadow: 0 0 10px var(--border-glow);
+        }
+
+        .nav-link:hover {
+            color: var(--secondary);
+        }
+
+        .nav-link:hover::before {
+            transform: scaleX(1);
+            transform-origin: left;
+        }
+
+        .btn {
+            padding: 0.9rem 2.5rem;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            font-family: 'Orbitron', sans-serif;
+            background-color: transparent;
+            color: var(--secondary);
+            border: 2px solid var(--secondary);
+            border-radius: 8px;
+            position: relative;
+            overflow: hidden;
+            z-index: 1;
+        }
+
+        .btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 0;
+            height: 100%;
+            background-color: var(--secondary);
+            transition: width 0.3s ease;
+            z-index: -1;
+        }
+
+        .btn:hover {
+            color: var(--primary);
+            box-shadow: 0 0 15px var(--border-glow);
+        }
+
+        .btn:hover::before {
+            width: 100%;
+        }
+
+        @keyframes buttonPulse {
+            0% {
+                box-shadow: 0 0 0 0 rgba(0, 247, 255, 0.4);
+            }
+
+            70% {
+                box-shadow: 0 0 0 10px rgba(0, 247, 255, 0);
+            }
+
+            100% {
+                box-shadow: 0 0 0 0 rgba(0, 247, 255, 0);
+            }
+        }
+
+        /* Animations */
+        @keyframes float {
+
+            0%,
+            100% {
+                transform: translateY(0);
+            }
+
+            50% {
+                transform: translateY(-10px);
+            }
+        }
+
+        @keyframes glow {
+
+            0%,
+            100% {
+                box-shadow: 0 0 5px var(--border-glow);
+            }
+
+            50% {
+                box-shadow: 0 0 20px var(--border-glow-hover);
+            }
+        }
+
+        /* Styles de composants améliorés */
+        .circuit-block {
+            background: var(--bg-card);
+            border: 1px solid var(--secondary);
+            border-radius: 1rem;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            transition: all var(--transition-normal) var(--easing-smooth);
+            box-shadow: 0 0 10px var(--border-glow);
+            backdrop-filter: blur(10px);
+            overflow: hidden;
+        }
+
+        .circuit-block:hover {
+            transform: translateY(-5px);
+            border-color: var(--cyber-blue);
+            box-shadow: var(--shadow-blue);
+            background: var(--bg-card-hover);
+        }
+
+        .circuit-title {
+            color: var(--cyber-blue);
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            transition: color var(--transition-fast);
+        }
+
+        .circuit-title i {
+            margin-right: 0.75rem;
+            color: var(--cyber-purple);
+            transition: transform var(--transition-fast);
+        }
+
+        .circuit-block:hover .circuit-title i {
+            transform: scale(1.1) rotate(-10deg);
+        }
+
+        /* Style de grille amélioré */
+        .grid-layout {
+            display: grid;
+            gap: 1.5rem;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        }
+
+        /* Cartes avec effet de survol */
+        .hover-card {
+            position: relative;
+            overflow: hidden;
+            transition: all var(--transition-normal);
+        }
+
+        .hover-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: var(--gradient-cyber);
+            opacity: 0;
+            transition: opacity var(--transition-normal);
+            z-index: 1;
+        }
+
+        .hover-card:hover::before {
+            opacity: 0.1;
+        }
+
+        /* Boutons d'action */
+        .action-button {
+            background: transparent;
+            border: 2px solid var(--cyber-blue);
+            color: var(--cyber-blue);
+            padding: 0.75rem 1.5rem;
+            border-radius: 0.5rem;
+            font-weight: 600;
+            transition: all var(--transition-normal);
+            position: relative;
+            overflow: hidden;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .action-button:hover {
+            background: var(--cyber-blue);
+            color: var(--primary);
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-blue);
+        }
+
+        .action-button i {
+            transition: transform var(--transition-fast);
+        }
+
+        .action-button:hover i {
+            transform: translateX(4px);
+        }
+
+        /* Styles de tableaux améliorés */
+        .cyber-table {
+            width: 100%;
+            border-collapse: separate;
+            border-spacing: 0;
+            margin: 1rem 0;
+        }
+
+        .cyber-table th {
+            background: var(--light);
+            color: var(--cyber-blue);
+            padding: 1rem;
+            font-weight: 600;
+            text-align: left;
+            border-bottom: 2px solid var(--cyber-blue);
+        }
+
+        .cyber-table td {
+            padding: 0.75rem 1rem;
+            border-bottom: 1px solid rgba(0, 247, 255, 0.1);
+            transition: all var(--transition-fast);
+        }
+
+        .cyber-table tr:hover td {
+            background: rgba(0, 247, 255, 0.05);
+            color: var(--cyber-blue);
+        }
+
+        /* Styles de code améliorés */
+        .code-block {
+            background: var(--light);
+            border-radius: 0.5rem;
+            padding: 1rem;
+            margin: 1rem 0;
+            position: relative;
+            overflow-x: auto;
+        }
+
+        .code-block::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 4px;
+            height: 100%;
+            background: var(--cyber-blue);
+            box-shadow: var(--shadow-blue);
+        }
+
+        /* Style de liste amélioré */
+        .cyber-list {
+            list-style: none;
+            padding: 0;
+            margin: 1rem 0;
+        }
+
+        .cyber-list li {
+            padding: 0.5rem 0;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            transition: transform var(--transition-fast);
+        }
+
+        .cyber-list li:hover {
+            transform: translateX(10px);
+        }
+
+        .cyber-list li i {
+            color: var(--cyber-blue);
+            transition: transform var(--transition-fast);
+        }
+
+        .cyber-list li:hover i {
+            transform: scale(1.2);
+        }
+
+        /* Badges et étiquettes */
+        .cyber-badge {
+            display: inline-flex;
+            align-items: center;
+            padding: 0.25rem 0.75rem;
+            border-radius: 9999px;
+            font-size: 0.875rem;
+            font-weight: 500;
+            background: var(--light);
+            color: var(--cyber-blue);
+            border: 1px solid var(--cyber-blue);
+            transition: all var(--transition-fast);
+        }
+
+        .cyber-badge:hover {
+            background: var(--cyber-blue);
+            color: var(--primary);
+            transform: scale(1.05);
+            box-shadow: var(--shadow-blue);
+        }
+
+        .btn-primary {
+            animation: buttonPulse 2s infinite;
+        }
+
+        .section-card {
+            background: var(--bg-card);
+            border: 1px solid var(--secondary);
+            border-radius: 16px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 0 15px var(--border-glow);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            backdrop-filter: blur(10px);
+        }
+
+        .section-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 0 25px var(--border-glow);
+        }
+
+        .sommaire-link {
+            display: flex;
+            align-items: center;
+            color: var(--text-primary);
+            text-decoration: none;
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1em;
+            padding: 0.5rem 1rem;
+            border-radius: 6px;
+            transition: all 0.3s ease;
+            background: transparent;
+            border: 1px solid transparent;
+        }
+
+        .sommaire-link i {
+            color: var(--secondary);
+            font-size: 1em;
+            margin-right: 0.5rem;
+            transition: transform 0.3s ease;
+        }
+
+        .sommaire-link:hover {
+            color: var(--secondary);
+            background: rgba(0, 247, 255, 0.1);
+            border-color: var(--secondary);
+            box-shadow: 0 0 10px var(--border-glow);
+        }
+
+        .sommaire-link:hover i {
+            transform: scale(1.2);
+        }
+
+        .active-sommaire {
+            color: var(--accent) !important;
+            background: rgba(255, 46, 99, 0.1) !important;
+            border-color: var(--accent) !important;
+            box-shadow: 0 0 10px rgba(255, 46, 99, 0.3) !important;
+        }
+
+        .component-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .component-table th {
+            background-color: var(--secondary);
+            color: white;
+            text-align: left;
+            padding: 0.75rem;
+        }
+
+        .component-table td {
+            padding: 0.625rem 0.75rem;
+            border-bottom: 1px solid #dee2e6;
+        }
+
+        .component-table tr:hover {
+            background-color: rgba(0, 0, 0, 0.02);
+        }
+
+        .code-block {
+            background-color: var(--light);
+            border-left: 4px solid var(--secondary);
+            padding: 0.9375rem;
+            font-family: monospace;
+            overflow-x: auto;
+            border-radius: 0 8px 8px 0;
+            font-size: 0.9rem;
+        }
+
+        /* Bouton Arduino */
+        .btn-arduino {
+            background: #00979d;
+            color: white;
+            border-radius: 4px;
+            text-decoration: none;
+            transition: all 0.3s;
+            border: 1px solid #00d1ff;
+        }
+
+        .btn-arduino:hover {
+            background: #007377;
+        }
+    </style>
+</head>
+
+<body class="bg-dark text-light">
+    <header class="fixed top-0 left-0 w-full z-50"
+        style="background:rgba(2,12,27,0.9); backdrop-filter:blur(10px); border-bottom:2px solid rgba(0,209,255,0.2);">
+        <div class="container mx-auto px-4 py-4 flex justify-between items-center">
+            <a href="#" class="logo flex items-center">
+                <img src="https://ucaotech.com/wp-content/uploads/2024/10/UCAO-TECH-1.png" alt="Logo UCAO-TECH"
+                    class="h-10 mr-3">
+                <span class="text-xl font-bold" style="color: var(--secondary);">UCAO-TECH</span>
+            </a>
+            <nav class="hidden md:flex space-x-6">
+                <a href="https://tekbot-robotics-challenge.github.io/2025-Team-UCAO-TECH-Docs/#accueil"
+                    class="nav-link">Accueil</a>
+                <a href="https://tekbot-robotics-challenge.github.io/2025-Team-UCAO-TECH-Docs/Test_Final/Test_Final.html"
+                    class="nav-link"></i>TEST-FINAL</a>
+                <a href="#" class="nav-link"><i class="fa-solid fa-microchip mr-1"></i>Électronique</a>
+                <a href="https://tekbot-robotics-challenge.github.io/2025-Team-UCAO-TECH-Docs/Test_Final/Dashboad/dashboad.html"
+                    class="nav-link">Dashboard</a>
+                <a href="https://github.com/TekBot-Robotics-Challenge/2025-Team-UCAO-TECH-Docs" target="_blank"
+                    class="nav-link"><i class="fab fa-github mr-1"></i>Github</a>
+            </nav>
+            <button id="menuBtn" class="md:hidden text-white text-2xl">
+                <i class="fas fa-bars"></i>
+            </button>
+            <!-- Menu mobile -->
+            <div id="mobile-menu"
+                class="hidden md:hidden fixed top-16 left-0 right-0 bg-gray-900 bg-opacity-95 backdrop-blur-md border-b border-blue-900/50">
+                <div class="flex flex-col items-center py-4 space-y-4">
+                    <a href="https://tekbot-robotics-challenge.github.io/2025-Team-UCAO-TECH-Docs/#accueil"
+                        class="text-white hover:text-blue-400 transition">Accueil</a>
+                    <a href="https://tekbot-robotics-challenge.github.io/2025-Team-UCAO-TECH-Docs/Test_Final/Test_Final.html"
+                        class="text-white hover:text-blue-400 transition">TEST-FINAL</a>
+                    <a href="#" class="text-white hover:text-blue-400 transition"><i
+                            class="fa-solid fa-microchip mr-1"></i>Électronique</a>
+                    <a href="https://tekbot-robotics-challenge.github.io/2025-Team-UCAO-TECH-Docs/Test_Final/Dashboad/dashboad.html"
+                        class="text-white hover:text-blue-400 transition">Dashboard</a>
+                    <a href="https://github.com/TekBot-Robotics-Challenge/2025-Team-UCAO-TECH-Docs" target="_blank"
+                        class="text-white hover:text-blue-400 transition"><i class="fab fa-github mr-1"></i>Github</a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <script>
+        const menuBtn = document.getElementById('menuBtn');
+        const mobileMenu = document.getElementById('mobile-menu');
+
+        menuBtn.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+        });
+
+        const sidebarBtn = document.getElementById('sidebarBtn');
+        const sidebar = document.querySelector('aside');
+
+        sidebarBtn.addEventListener('click', () => {
+            sidebar.classList.toggle('hidden');
+            sidebar.classList.toggle('fixed');
+            sidebar.classList.toggle('inset-0');
+            sidebar.classList.toggle('z-40');
+            sidebar.classList.toggle('md:relative');
+            sidebar.classList.toggle('md:inset-auto');
+        });
+
+        // Fermer la barre latérale en cliquant en dehors
+        document.addEventListener('click', (e) => {
+            if (!sidebar.contains(e.target) && e.target !== sidebarBtn) {
+                if (!sidebar.classList.contains('hidden') && window.innerWidth < 768) {
+                    sidebar.classList.add('hidden');
+                    sidebar.classList.remove('fixed', 'inset-0', 'z-40');
+                }
+            }
+        });
+
+        // Gérer la visibilité de la barre latérale lors du redimensionnement
+        window.addEventListener('resize', () => {
+            if (window.innerWidth >= 768) {
+                sidebar.classList.remove('fixed', 'inset-0', 'z-40');
+                sidebar.classList.remove('hidden');
+            } else {
+                sidebar.classList.add('hidden');
+            }
+        });
+    </script>
+    <div class="flex flex-col md:flex-row mt-24 min-h-screen">
+        <aside
+            class="hidden md:block w-full md:w-64 p-4 md:sticky md:top-24 md:h-[calc(100vh-6rem)] overflow-y-auto bg-gray-900/50 border-r border-blue-900/50 backdrop-blur-md">
+            <h2 class="font-orbitron text-cyber-blue text-lg mb-4 flex items-center">
+                <i class="fas fa-book-open mr-2"></i>
+                Sommaire Électronique
+            </h2>
+            <nav class="space-y-2">
+                <a class="sommaire-link group transition-all duration-300" href="#intro-elec">
+                    <i class="fa-solid fa-circle-info mr-2 group-hover:scale-110 transition-transform"></i>
+                    <span>Introduction</span>
+                </a>
+                <a class="sommaire-link group transition-all duration-300" href="#architecture">
+                    <i class="fa-solid fa-sitemap mr-2 group-hover:scale-110 transition-transform"></i>
+                    <span>Architecture</span>
+                </a>
+                <a class="sommaire-link group transition-all duration-300" href="#composants">
+                    <i class="fa-solid fa-microchip mr-2 group-hover:scale-110 transition-transform"></i>
+                    <span>Composants</span>
+                </a>
+                <a class="sommaire-link group transition-all duration-300" href="#alimentation">
+                    <i class="fa-solid fa-bolt mr-2 group-hover:scale-110 transition-transform"></i>
+                    <span>Alimentation</span>
+                </a>
+                <a class="sommaire-link group transition-all duration-300" href="#entree">
+                    <i class="fa-solid fa-signal mr-2 group-hover:scale-110 transition-transform"></i>
+                    <span>Bloc d'Entrée</span>
+                </a>
+                <a class="sommaire-link group transition-all duration-300" href="#traitement">
+                    <i class="fa-solid fa-microchip mr-2 group-hover:scale-110 transition-transform"></i>
+                    <span>Bloc de Traitement</span>
+                </a>
+                <a class="sommaire-link group transition-all duration-300" href="#sortie">
+                    <i class="fa-solid fa-motorcycle mr-2 group-hover:scale-110 transition-transform"></i>
+                    <span>Bloc de Sortie</span>
+                </a>
+                <a class="sommaire-link group transition-all duration-300" href="#schema-global">
+                    <i class="fa-solid fa-project-diagram mr-2 group-hover:scale-110 transition-transform"></i>
+                    <span>Schéma Global</span>
+                </a>
+                <a class="sommaire-link group transition-all duration-300" href="#arduino-sketch">
+                    <i class="fa-solid fa-code mr-2 group-hover:scale-110 transition-transform"></i>
+                    <span>Programme Arduino</span>
+                </a>
+                <a class="sommaire-link group transition-all duration-300" href="#serial-communication">
+                    <i class="fa-solid fa-exchange-alt mr-2 group-hover:scale-110 transition-transform"></i>
+                    <span>Communication Série</span>
+                </a>
+                <a class="sommaire-link group transition-all duration-300" href="#downloads">
+                    <i class="fa-solid fa-download mr-2 group-hover:scale-110 transition-transform"></i>
+                    <span>Téléchargements</span>
+                </a>
+                <a class="sommaire-link group transition-all duration-300" href="#tests-elec">
+                    <i class="fa-solid fa-vial mr-2 group-hover:scale-110 transition-transform"></i>
+                    <span>Tests</span>
+                </a>
+                <a class="sommaire-link group transition-all duration-300" href="#conclusion-elec">
+                    <i class="fa-solid fa-flag-checkered mr-2 group-hover:scale-110 transition-transform"></i>
+                    <span>Conclusion</span>
+                </a>
+            </nav>
+        </aside>
+
+        <!-- Bouton du menu latéral mobile avec effet hover et focus -->
+        <button id="sidebarBtn"
+            class="md:hidden fixed bottom-4 right-4 z-50 w-12 h-12 rounded-full bg-cyber-blue text-white flex items-center justify-center shadow-lg hover:bg-cyan-600 focus:ring-2 focus:ring-cyan-400 focus:ring-offset-2 focus:ring-offset-gray-900 transition-all duration-300">
+            <i class="fas fa-list"></i>
+        </button>
+
+        <main class="flex-1 p-4 md:p-8 relative">
+            <div class="container mx-auto">
+                <h1 class="cyber-title text-center text-xl md:text-4xl mb-10 relative group" id="intro-elec">
+                    <span class="relative inline-block">
+                        Documentation Électronique
+                        <div
+                            class="absolute bottom-0 left-0 w-full h-0.5 bg-gradient-to-r from-cyber-blue to-cyber-purple transform scale-x-0 group-hover:scale-x-100 transition-transform duration-500">
+                        </div>
+                    </span>
+                    <br>
+                    <span class="relative inline-block text-cyber-blue">
+                        Système de Convoyeur Intelligent
+                        <div
+                            class="absolute bottom-0 left-0 w-full h-0.5 bg-gradient-to-r from-cyber-purple to-cyber-blue transform scale-x-0 group-hover:scale-x-100 transition-transform duration-500 delay-100">
+                        </div>
+                    </span>
+                </h1>
+
+                <!-- Introduction Section -->
+                <div class="circuit-block hover-card" id="intro-elec">
+                    <h2 class="text-2xl font-bold mb-4 flex items-center" style="color:var(--secondary);">
+                        <i class="fa-solid fa-circle-info mr-3 text-cyber-blue text-2xl"></i>
+                        Introduction
+                    </h2>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div>
+                            <p class="mb-4 text-lg" style="text-align:justify;">
+                                Ce document présente l'implémentation électronique du système de convoyeur intelligent
+                                pour le tri des déchets. Le système utilise une architecture modulaire avec des blocs
+                                fonctionnels distincts pour l'alimentation, la détection, le traitement et
+                                l'actionnement.
+                            </p>
+                            <div class="mt-4 p-4 bg-gray-900/50 rounded-lg">
+                                <h4 class="font-semibold text-cyan-400 mb-2"><i
+                                        class="fas fa-list-ol mr-2"></i>Composants Principaux</h4>
+                                <ul class="list-disc pl-5 text-sm space-y-1">
+                                    <li>Arduino Nano (ATmega328P) - Cœur du système</li>
+                                    <li>ESP8266MOD-12 - Communication WiFi</li>
+                                    <li>Régulateurs 7805 et 7812 - Gestion de l'alimentation</li>
+                                    <li>Photorésistance + KY-008 - Détection des objets</li>
+                                    <li>Moteur pas à pas 12V + L298N - Mouvement du convoyeur</li>
+                                    <li>Servomoteur - Mécanisme de tri</li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div>
+                            <img src="img_ensemble.png"
+                                alt="Vue d'ensemble du système électronique montrant les différents composants interconnectés"
+                                class="w-full rounded-lg border border-cyan-500/20">
+                            <p class="mt-3 text-sm text-gray-400">Fig. 1 - Vue d'ensemble du système électronique</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Architecture Section -->
+                <div class="section-card" id="architecture">
+                    <div class="bg-gradient-to-r from-cyber-blue to-cyber-purple p-1 rounded-t-xl">
+                        <div class="bg-gray-900 rounded-t-lg p-6">
+                            <h2 class="text-3xl font-bold mb-2 flex items-center">
+                                <svg class="w-8 h-8 mr-3 text-cyber-blue" fill="none" stroke="currentColor"
+                                    viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M9 3V5M12 3V5M15 3V5M9 19V21M12 19V21M15 19V21M5 9H3M5 12H3M5 15H3M21 9H19M21 12H19M21 15H19M7 19H17C18.1046 19 19 18.1046 19 17V7C19 5.89543 18.1046 5 17 5H7C5.89543 5 5 5.89543 5 7V17C5 18.1046 5.89543 19 7 19Z">
+                                    </path>
+                                </svg>
+                                Architecture du Système
+                            </h2>
+                            <img src="diagramm.png" alt="Diagramme Fonctionnel"
+                                style="width:100%; max-width:800px; border-radius:8px;">
+                            <div class="mt-4 flex justify-center">
+                                <div class="flex space-x-4 text-sm text-gray-700">
+                                    <span class="flex items-center"><span
+                                            class="inline-block w-3 h-3 bg-cyber-blue rounded-full mr-2"></span>
+                                        Alimentation</span>
+                                    <span class="flex items-center"><span
+                                            class="inline-block w-3 h-3 bg-[#ff2e63] rounded-full mr-2"></span>
+                                        Détection</span>
+                                    <span class="flex items-center"><span
+                                            class="inline-block w-3 h-3 bg-[#9452ff] rounded-full mr-2"></span>
+                                        Traitement</span>
+                                    <span class="flex items-center"><span
+                                            class="inline-block w-3 h-3 bg-[#2ecc71] rounded-full mr-2"></span>
+                                        Actionneurs</span>
+                                    <span class="flex items-center"><span
+                                            class="inline-block w-3 h-3 bg-[#00f7ff] rounded-full mr-2"></span>
+                                        Communication</span>
+                                    <span class="flex items-center"><span
+                                            class="inline-block w-3 h-3 bg-[#f1c40f] rounded-full mr-2"></span>
+                                        Interface Web</span>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Grid Section -->
+                        <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                            <!-- Functional Description Card -->
+                            <div
+                                class="bg-gray-900/70 p-5 rounded-xl border border-gray-700 hover:border-cyber-purple transition-all duration-300">
+                                <div class="flex items-center mb-4">
+                                    <div class="bg-cyber-purple/20 p-2 rounded-lg">
+                                        <svg class="w-6 h-6 text-cyber-purple" fill="none" stroke="currentColor"
+                                            viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                d="M9 17v-2m3 2v-4m3 4v-6m2 10H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z">
+                                            </path>
+                                        </svg>
+                                    </div>
+                                    <h3 class="text-xl font-semibold ml-3">Description Fonctionnelle</h3>
+                                </div>
+                                <div class="space-y-4">
+                                    <div class="flex items-start">
+                                        <div class="bg-cyber-blue/10 text-cyber-blue rounded-full p-1 mr-3 mt-0.5">
+                                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                                                xmlns="http://www.w3.org/2000/svg">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                    d="M5 13l4 4L19 7"></path>
+                                            </svg>
+                                        </div>
+                                        <div>
+                                            <h4 class="font-medium text-cyber-blue">Alimentation</h4>
+                                            <p class="text-sm text-gray-400">Conversion de la tension batterie en 12V
+                                                pour les moteurs et 5V pour les circuits logiques avec régulation
+                                                précise</p>
+                                        </div>
+                                    </div>
+                                    <div class="flex items-start">
+                                        <div class="bg-cyber-blue/10 text-cyber-blue rounded-full p-1 mr-3 mt-0.5">
+                                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                                                xmlns="http://www.w3.org/2000/svg">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                    d="M5 13l4 4L19 7"></path>
+                                            </svg>
+                                        </div>
+                                        <div>
+                                            <h4 class="font-medium text-[#ff2e63]">Détection d'Objets</h4>
+                                            <p class="text-sm text-gray-400">Barrière laser KY-008 avec photorésistance
+                                                pour une détection précise à ±1mm</p>
+                                        </div>
+                                    </div>
+                                    <div class="flex items-start">
+                                        <div class="bg-cyber-blue/10 text-cyber-blue rounded-full p-1 mr-3 mt-0.5">
+                                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                                                xmlns="http://www.w3.org/2000/svg">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                    d="M5 13l4 4L19 7"></path>
+                                            </svg>
+                                        </div>
+                                        <div>
+                                            <h4 class="font-medium text-[#9452ff]">Traitement Temps Réel</h4>
+                                            <p class="text-sm text-gray-400">Arduino Nano avec algorithme optimisé pour
+                                                une latence &lt; 5ms</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Data Flow Card -->
+                            <div
+                                class="bg-gray-900/70 p-5 rounded-xl border border-gray-700 hover:border-cyber-green transition-all duration-300">
+                                <div class="flex items-center mb-4">
+                                    <div class="bg-cyber-green/20 p-2 rounded-lg">
+                                        <svg class="w-6 h-6 text-cyber-green" fill="none" stroke="currentColor"
+                                            viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                d="M13 5l7 7-7 7M5 5l7 7-7 7"></path>
+                                        </svg>
+                                    </div>
+                                    <h3 class="text-xl font-semibold ml-3">Flux de Données</h3>
+                                </div>
+                                <div class="mermaid">
+                                    sequenceDiagram
+                                    autonumber
+                                    participant Capteur
+                                    participant Arduino
+                                    participant Actionneurs
+                                    participant WiFi
+                                    participant Dashboard
+
+                                    Capteur->>Arduino: Signal analogique (0-5V)
+                                    Arduino->>Arduino: Conversion ADC → Traitement
+                                    alt Détection positive
+                                    Arduino->>Actionneurs: Commande PWM
+                                    Arduino->>WiFi: JSON {type, timestamp}
+                                    else Pas de détection
+                                    Arduino->>Actionneurs: Position neutre
+                                    end
+                                    WiFi->>Dashboard: Mise à jour en temps réel
+                                    Dashboard-->>WiFi: Commandes utilisateur
+                                </div>
+                                <div class="mt-3 text-sm text-gray-400 flex items-center">
+                                    <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                                        xmlns="http://www.w3.org/2000/svg">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                            d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                                    </svg>
+                                    Latence moyenne : 8ms (capteur→actionneur)
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Technical Specs Footer -->
+                        <div class="mt-6 bg-gray-900/50 p-4 rounded-lg border border-gray-700">
+                            <div class="grid grid-cols-2 md:grid-cols-4 gap-4 text-center">
+                                <div>
+                                    <div class="text-cyber-blue text-sm">Fréquence d'échantillonnage</div>
+                                    <div class="font-mono">200Hz</div>
+                                </div>
+                                <div>
+                                    <div class="text-[#ff2e63] text-sm">Précision détection</div>
+                                    <div class="font-mono">±1mm</div>
+                                </div>
+                                <div>
+                                    <div class="text-[#9452ff] text-sm">Latence traitement</div>
+                                    <div class="font-mono">&lt;5ms</div>
+                                </div>
+                                <div>
+                                    <div class="text-cyber-green text-sm">Débit WiFi</div>
+                                    <div class="font-mono">54Mbps</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Composants Section -->
+                <div class="section-card" id="composants">
+                    <h2 class="text-2xl font-bold mb-4 flex items-center" style="color:var(--secondary);">
+                        <i class="fa-solid fa-microchip mr-3 text-cyber-blue text-2xl"></i>
+                        Composants Électroniques
+                    </h2>
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+                        <!-- Arduino Nano -->
+                        <div class="circuit-block">
+                            <h3 class="circuit-title flex items-center">
+                                <img src="https://th.bing.com/th/id/R.bf8898567fc7881e13f1d1ce6fe3cb35?rik=X2h2ccz9H2GcWw&riu=http%3a%2f%2fwww.tekparts.in%2fwp-content%2fuploads%2f2019%2f10%2fARDUINO-NANO-1.jpg&ehk=gk2SvDigh4Jve%2fhlOvBhJGFFrTTDDlIZQG4xDYwBAVY%3d&risl=&pid=ImgRaw&r=0"
+                                    alt="Arduino Nano" class="w-16 h-16 object-cover rounded-lg mr-3">
+                                Arduino Nano
+                            </h3>
+                            <div class="grid grid-cols-1 gap-4">
+                                <div>
+                                    <p><strong>Fonction :</strong> Cœur du système - Contrôle tous les autres composants
+                                    </p>
+                                    <p><strong>Description détaillée :</strong></p>
+                                    <p class="mb-3">L'Arduino Nano est une carte microcontrôleur compacte basée sur
+                                        l'ATmega328P. Elle agit comme le cerveau du système, exécutant le programme
+                                        principal qui coordonne toutes les fonctions :</p>
+                                    <ul class="list-disc pl-5 space-y-2">
+                                        <li><strong>Programmation :</strong> Se programme via l'IDE Arduino avec un
+                                            câble USB mini-B</li>
+                                        <li><strong>Connectivité :</strong> 22 broches d'E/S dont 14 numériques (dont 6
+                                            PWM) et 8 analogiques</li>
+                                        <li><strong>Mémoire :</strong> 32Ko de flash (programme), 2Ko de SRAM (données),
+                                            1Ko EEPROM</li>
+                                        <li><strong>Communication :</strong> UART, I2C et SPI pour dialoguer avec
+                                            d'autres composants</li>
+                                        <li><strong>Alimentation :</strong> 7-12V via la broche VIN ou 5V via USB</li>
+                                    </ul>
+                                    <div class="mt-3 p-3 bg-gray-900/50 rounded-lg">
+                                        <p class="text-sm"><strong>Conseils pratiques :</strong> Pour une utilisation
+                                            optimale, téléchargez les drivers CH340 si nécessaire et vérifiez bien le
+                                            port COM dans l'IDE Arduino avant le téléversement.</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- ESP8266 WiFi -->
+                        <div class="circuit-block">
+                            <h3 class="circuit-title flex items-center">
+                                <img src="https://3.bp.blogspot.com/-dERmihP2kB0/WNLfXFSpfFI/AAAAAAAAGUU/Z49ZjchXgLIliWEpzzx8T55EGpHYPjP1ACLcB/s1600/esp8266.jpg"
+                                    alt="ESP8266" class="w-16 h-16 object-cover rounded-lg mr-3">
+                                Module ESP8266 (ESP-12F)
+                            </h3>
+                            <div class="grid grid-cols-1 gap-4">
+                                <div>
+                                    <p><strong>Fonction :</strong> Communication WiFi avec l'interface web</p>
+                                    <p><strong>Description détaillée :</strong></p>
+                                    <p class="mb-3">Ce module WiFi économique intègre un microcontrôleur Tensilica
+                                        32-bit avec pile TCP/IP complète :</p>
+                                    <ul class="list-disc pl-5 space-y-2">
+                                        <li><strong>Protocoles :</strong> 802.11 b/g/n WiFi à 2.4GHz avec support
+                                            WPA/WPA2</li>
+                                        <li><strong>Portée :</strong> Jusqu'à 100m en champ libre (dépend de l'antenne
+                                            et des obstacles)</li>
+                                        <li><strong>Consommation :</strong> 80mA en transmission, <1mA en veille</li>
+                                        <li><strong>Interface :</strong> UART à 115200 bauds par défaut (réglable
+                                            jusqu'à 4Mbps)</li>
+                                        <li><strong>Programmation :</strong> Compatible AT-command ou programmable via
+                                            Arduino IDE</li>
+                                    </ul>
+                                    <div class="mt-3 p-3 bg-gray-900/50 rounded-lg">
+                                        <p class="text-sm"><strong>Conseils pratiques :</strong> Utilisez un diviseur de
+                                            tension 3.3V/5V pour la communication avec l'Arduino. Pensez à reset le
+                                            module si la connexion WiFi est instable.</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Régulateur 7812 -->
+                        <div class="circuit-block">
+                            <h3 class="circuit-title flex items-center">
+                                <img src="https://components101.com/sites/default/files/component_pin/LM7812-Pinout.jpg"
+                                    alt="Régulateur 7812" class="w-16 h-16 object-cover rounded-lg mr-3">
+                                Régulateur LM7812
+                            </h3>
+                            <div class="grid grid-cols-1 gap-4">
+                                <div>
+                                    <p><strong>Fonction :</strong> Régulation tension 12V pour moteurs</p>
+                                    <p><strong>Description détaillée :</strong></p>
+                                    <p class="mb-3">Régulateur linéaire de tension fixe 12V dans un boîtier TO-220 :</p>
+                                    <ul class="list-disc pl-5 space-y-2">
+                                        <li><strong>Entrée :</strong> Accepte 14-35V DC (minimum 14.5V pour bon
+                                            fonctionnement)</li>
+                                        <li><strong>Sortie :</strong> 12V ±0.2V avec courant max 1A (1.5A avec
+                                            dissipateur thermique)</li>
+                                        <li><strong>Protections :</strong> Limitation de courant et coupure thermique
+                                            intégrées</li>
+                                        <li><strong>Ripple :</strong> 70dB de réjection des perturbations d'entrée</li>
+                                        <li><strong>Dissipation :</strong> Nécessite un dissipateur thermique pour
+                                            courants >500mA</li>
+                                    </ul>
+                                    <div class="mt-3 p-3 bg-gray-900/50 rounded-lg">
+                                        <p class="text-sm"><strong>Conseils pratiques :</strong> Placer un condensateur
+                                            0.33µF en entrée et 0.1µF en sortie pour la stabilité. La différence
+                                            Vin-Vout doit être d'au moins 2.5V.</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Régulateur 7805 -->
+                        <div class="circuit-block">
+                            <h3 class="circuit-title flex items-center">
+                                <img src="https://components101.com/sites/default/files/component_pin/7805-Voltage-Regulator-Pinout.png"
+                                    alt="Régulateur 7805" class="w-16 h-16 object-cover rounded-lg mr-3">
+                                Régulateur LM7805
+                            </h3>
+                            <div class="grid grid-cols-1 gap-4">
+                                <div>
+                                    <p><strong>Fonction :</strong> Régulation tension 5V pour logique</p>
+                                    <p><strong>Description détaillée :</strong></p>
+                                    <p class="mb-3">Régulateur linéaire classique pour alimentation des circuits
+                                        logiques :</p>
+                                    <ul class="list-disc pl-5 space-y-2">
+                                        <li><strong>Entrée :</strong> 7-25V DC (minimum 7.5V recommandé)</li>
+                                        <li><strong>Sortie :</strong> 5V ±0.25V avec courant max 1A</li>
+                                        <li><strong>Stabilité :</strong> Variation de ±1% pour charges de 5mA à 1A</li>
+                                        <li><strong>Température :</strong> Fonctionne de 0°C à 125°C</li>
+                                        <li><strong>Efficacité :</strong> Environ 40% (60% de l'énergie dissipée en
+                                            chaleur)</li>
+                                    </ul>
+                                    <div class="mt-3 p-3 bg-gray-900/50 rounded-lg">
+                                        <p class="text-sm"><strong>Conseils pratiques :</strong> Pour réduire la
+                                            dissipation thermique, préférer une tension d'entrée entre 7.5V et 12V. Un
+                                            condensateur 10µF en sortie améliore la réponse transitoire.</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Photorésistance -->
+                        <div class="circuit-block">
+                            <h3 class="circuit-title flex items-center">
+                                <img src="https://3.bp.blogspot.com/-p12bwro-RVA/VVO8paED3xI/AAAAAAAAAhg/cZuX5Y4RGhE/s1600/Photoresistors_-_three_sizes_-_mm_scale.jpg"
+                                    alt="Photorésistance" class="w-16 h-16 object-cover rounded-lg mr-3">
+                                Photorésistance GL5528
+                            </h3>
+                            <div class="grid grid-cols-1 gap-4">
+                                <div>
+                                    <p><strong>Fonction :</strong> Détection de la lumière laser</p>
+                                    <p><strong>Description détaillée :</strong></p>
+                                    <p class="mb-3">Composant dont la résistance varie avec l'intensité lumineuse :</p>
+                                    <ul class="list-disc pl-5 space-y-2">
+                                        <li><strong>Plage spectrale :</strong> Maximum sensibilité à 540nm (vert)</li>
+                                        <li><strong>Résistance :</strong> 10-20kΩ sous lumière ambiante (500 lux), 1-2MΩ
+                                            dans l'obscurité</li>
+                                        <li><strong>Temps réponse :</strong> 20ms pour monter, 30ms pour descendre</li>
+                                        <li><strong>Température :</strong> Coefficient de température de ±0.5%/°C</li>
+                                        <li><strong>Puissance max :</strong> 100mW à 25°C</li>
+                                    </ul>
+                                    <div class="mt-3 p-3 bg-gray-900/50 rounded-lg">
+                                        <p class="text-sm"><strong>Montage pratique :</strong> Utiliser en pont diviseur
+                                            de tension avec une résistance fixe de 10kΩ. Placer un condensateur en
+                                            parallèle pour filtrer les variations rapides.</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Module Laser KY-008 -->
+                        <div class="circuit-block">
+                            <h3 class="circuit-title flex items-center">
+                                <img src="https://th.bing.com/th/id/R.4400cd23c0d47d980ba7068f08f9bb35?rik=dE5P1mIluxpdDg&pid=ImgRaw&r=0"
+                                    alt="Module Laser KY-008" class="w-16 h-16 object-cover rounded-lg mr-3">
+                                Module Laser KY-008
+                            </h3>
+                            <div class="grid grid-cols-1 gap-4">
+                                <div>
+                                    <p><strong>Fonction :</strong> Émetteur laser pour détection d'objets</p>
+                                    <p><strong>Description détaillée :</strong></p>
+                                    <p class="mb-3">Module laser rouge avec diode de classe 2 :</p>
+                                    <ul class="list-disc pl-5 space-y-2">
+                                        <li><strong>Longueur d'onde :</strong> 650nm (rouge visible)</li>
+                                        <li><strong>Puissance :</strong>
+                                            <5mW (sans danger pour les yeux)</li>
+                                        <li><strong>Portée :</strong> Jusqu'à 50cm en utilisation standard</li>
+                                        <li><strong>Alimentation :</strong> 5V DC, consomme ~30mA</li>
+                                        <li><strong>Angle :</strong> Faisceau de 1-2° de divergence</li>
+                                    </ul>
+                                    <div class="mt-3 p-3 bg-gray-900/50 rounded-lg">
+                                        <p class="text-sm"><strong>Sécurité :</strong> Ne jamais diriger vers les yeux.
+                                            Pour une meilleure détection, utiliser une lentille pour focaliser le
+                                            faisceau sur la photorésistance.</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Moteur pas à pas -->
+                        <div class="circuit-block">
+                            <h3 class="circuit-title flex items-center">
+                                <img src="https://tse1.mm.bing.com/th/id/OIP.HD68a9WK_hZOJgytCWfEkQHaFj?rs=1&pid=ImgDetMain&o=7&rm=3" " 
+                     alt=" Moteur pas à pas" class="w-16 h-16 object-cover rounded-lg mr-3">
+                                Moteur Pas à Pas 28BYJ-48
+                            </h3>
+                            <div class="grid grid-cols-1 gap-4">
+                                <div>
+                                    <p><strong>Fonction :</strong> Mouvement précis du convoyeur</p>
+                                    <p><strong>Description détaillée :</strong></p>
+                                    <p class="mb-3">Moteur unipolaire 5V avec réducteur intégré :</p>
+                                    <ul class="list-disc pl-5 space-y-2">
+                                        <li><strong>Angle pas :</strong> 5.62° par pas (64 pas/tour moteur, 2048
+                                            pas/tour arbre)</li>
+                                        <li><strong>Couple :</strong> 34.3mN.m (3.5kg.cm) à vitesse nominale</li>
+                                        <li><strong>Résistance :</strong> 50Ω par bobine, courant 100mA par phase</li>
+                                        <li><strong>Réducteur :</strong> Rapport 1:64 (64 tours moteur = 1 tour arbre)
+                                        </li>
+                                        <li><strong>Précision :</strong> ±5% non cumulatif</li>
+                                    </ul>
+                                    <div class="mt-3 p-3 bg-gray-900/50 rounded-lg">
+                                        <p class="text-sm"><strong>Contrôle :</strong> Nécessite un driver ULN2003 ou
+                                            similaire. Pour un mouvement fluide, utiliser un délai de 2-5ms entre pas en
+                                            mode wave drive ou half-step.</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Driver L298N -->
+                        <div class="circuit-block">
+                            <h3 class="circuit-title flex items-center">
+                                <img src="https://tse4.mm.bing.net/th/id/OIP._eVpNAaSyDATHw3OAEAFAQHaHa?rs=1&pid=ImgDetMain&o=7&rm=3"
+                                    alt="Driver L298N" class="w-16 h-16 object-cover rounded-lg mr-3">
+                                Driver Moteur L298N
+                            </h3>
+                            <div class="grid grid-cols-1 gap-4">
+                                <div>
+                                    <p><strong>Fonction :</strong> Contrôle des moteurs pas à pas et DC</p>
+                                    <p><strong>Description détaillée :</strong></p>
+                                    <p class="mb-3">Double pont en H pour contrôle bidirectionnel de moteurs :</p>
+                                    <ul class="list-disc pl-5 space-y-2">
+                                        <li><strong>Tension :</strong> Alimentation moteur 5-35V, logique 5V</li>
+                                        <li><strong>Courant :</strong> 2A par pont (max 3A peak)</li>
+                                        <li><strong>Puissance :</strong> Jusqu'à 25W par canal</li>
+                                        <li><strong>Contrôle :</strong> Signaux TTL/CMOS compatibles</li>
+                                        <li><strong>Protections :</strong> Diodes de roue libre intégrées</li>
+                                    </ul>
+                                    <div class="mt-3 p-3 bg-gray-900/50 rounded-lg">
+                                        <p class="text-sm"><strong>Branchement :</strong> Activer les jumpers
+                                            d'alimentation 5V si utilisation de la régulation intégrée. Pour les moteurs
+                                            pas à pas, utiliser les sorties OUT1-OUT4 avec les broches IN1-IN4 et EN A.
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Servomoteur -->
+                        <div class="circuit-block">
+                            <h3 class="circuit-title flex items-center">
+                                <img src="https://etqan.sa/wp-content/uploads/2018/05/servo-motor-sg90_-large.png"
+                                    alt="Servomoteur" class="w-16 h-16 object-cover rounded-lg mr-3">
+                                Servomoteur SG90
+                            </h3>
+                            <div class="grid grid-cols-1 gap-4">
+                                <div>
+                                    <p><strong>Fonction :</strong> Mécanisme de tri des objets</p>
+                                    <p><strong>Description détaillée :</strong></p>
+                                    <p class="mb-3">Servomoteur standard à rotation limitée :</p>
+                                    <ul class="list-disc pl-5 space-y-2">
+                                        <li><strong>Plage :</strong> 180° de rotation (90° à gauche et droite)</li>
+                                        <li><strong>Couple :</strong> 1.8kg.cm à 4.8V, 2.2kg.cm à 6V</li>
+                                        <li><strong>Vitesse :</strong> 0.1s/60° à 4.8V, 0.08s/60° à 6V</li>
+                                        <li><strong>Signal :</strong> PWM 50Hz (20ms), pulse 1-2ms pour 0-180°</li>
+                                        <li><strong>Consommation :</strong> 100mA en mouvement, 10mA au repos</li>
+                                    </ul>
+                                    <div class="mt-3 p-3 bg-gray-900/50 rounded-lg">
+                                        <p class="text-sm"><strong>Contrôle :</strong> Utiliser la bibliothèque Servo.h
+                                            avec une résolution théorique de ~1°. Éviter de bloquer mécaniquement le
+                                            servo sous tension pour ne pas endommager le moteur.</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Batterie Li-ion -->
+                        <div class="circuit-block">
+                            <h3 class="circuit-title flex items-center">
+                                <img src="https://www.enix-power-solutions.fr/wp-content/uploads/2021/06/Lithium-ion-standard-Battery-1024x1003.jpg"
+                                    alt="Batterie Li-ion" class="w-16 h-16 object-cover rounded-lg mr-3">
+                                Batterie Li-ion 4S
+                            </h3>
+                            <div class="grid grid-cols-1 gap-4">
+                                <div>
+                                    <p><strong>Fonction :</strong> Alimentation mobile du système</p>
+                                    <p><strong>Description détaillée :</strong></p>
+                                    <p class="mb-3">Pack batterie lithium-ion 14.8V :</p>
+                                    <ul class="list-disc pl-5 space-y-2">
+                                        <li><strong>Configuration :</strong> 4 cellules 18650 en série (4S)</li>
+                                        <li><strong>Capacité :</strong> 2000mAh (29.6Wh)</li>
+                                        <li><strong>Tension :</strong> 16.8V pleine charge, 12V décharge complète</li>
+                                        <li><strong>Courant :</strong> Décharge continue 2C (4A), max 5A</li>
+                                        <li><strong>Protection :</strong> PCB intégré contre surcharge/décharge profonde
+                                        </li>
+                                    </ul>
+                                    <div class="mt-3 p-3 bg-gray-900/50 rounded-lg">
+                                        <p class="text-sm"><strong>Sécurité :</strong> Utiliser uniquement un chargeur
+                                            4S Li-ion équilibré. Ne jamais décharger en dessous de 3V/cellule. Stocker à
+                                            50% de charge pour une longue durée de vie.</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Condensateur -->
+                        <div class="circuit-block">
+                            <h3 class="circuit-title flex items-center">
+                                <img src="https://blog.izi-by-edf.fr/2021/01/condensateur-1024x768.jpg"
+                                    alt="Condensateur" class="w-16 h-16 object-cover rounded-lg mr-3">
+                                Condensateur 475µF 25V
+                            </h3>
+                            <div class="grid grid-cols-1 gap-4">
+                                <div>
+                                    <p><strong>Fonction :</strong> Filtrage de l'alimentation</p>
+                                    <p><strong>Description détaillée :</strong></p>
+                                    <p class="mb-3">Condensateur électrolytique aluminium radial :</p>
+                                    <ul class="list-disc pl-5 space-y-2">
+                                        <li><strong>Capacité :</strong> 475µF ±20%</li>
+                                        <li><strong>Tension :</strong> 25V DC (max 30V surge)</li>
+                                        <li><strong>ESR :</strong> ~0.5Ω à 20°C, 100kHz</li>
+                                        <li><strong>Température :</strong> -40°C à +105°C</li>
+                                        <li><strong>Durée vie :</strong> 2000h à 105°C</li>
+                                    </ul>
+                                    <div class="mt-3 p-3 bg-gray-900/50 rounded-lg">
+                                        <p class="text-sm"><strong>Montage :</strong> Respecter la polarité (bande "-"
+                                            sur le boîtier). Pour les hautes fréquences, placer un condensateur
+                                            céramique 100nF en parallèle.</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Résistances -->
+                        <div class="circuit-block">
+                            <h3 class="circuit-title flex items-center">
+                                <img src="https://th.bing.com/th/id/R.e7c50a3ecc1c940b8aa733888da5f673?rik=%2fY0UJp9msUt8yQ&riu=http%3a%2f%2fwww.elektronique.fr%2fimg%2fimg_pr_news%2felectronique%2fresistances%2f800px-3_Resistors.jpg&ehk=0y%2bw1A%2fmpXr2tYWhYjkJbph6YEcVBcTL7Fe%2bDK1MMLQ%3d&risl=&pid=ImgRaw&r=0"
+                                    alt="Résistances" class="w-16 h-16 object-cover rounded-lg mr-3">
+                                Résistances 1kΩ/10kΩ
+                            </h3>
+                            <div class="grid grid-cols-1 gap-4">
+                                <div>
+                                    <p><strong>Fonction :</strong> Limitation de courant et ponts diviseurs</p>
+                                    <p><strong>Description détaillée :</strong></p>
+                                    <p class="mb-3">Résistances carbone/métal film 1/4W :</p>
+                                    <ul class="list-disc pl-5 space-y-2">
+                                        <li><strong>Tolérance :</strong> ±5% (doré dans le code couleur)</li>
+                                        <li><strong>Température :</strong> Coefficient ±250ppm/°C</li>
+                                        <li><strong>Puissance :</strong> 0.25W (max 0.4W en pic)</li>
+                                        <li><strong>Tension max :</strong> 250V (limité par la puissance)</li>
+                                        <li><strong>Applications :</strong> Pull-up/down, limitation LED, diviseurs
+                                            tension</li>
+                                    </ul>
+                                    <div class="mt-3 p-3 bg-gray-900/50 rounded-lg">
+                                        <p class="text-sm"><strong>Calcul :</strong> Pour une LED standard (20mA, 2V)
+                                            avec alimentation 5V : R = (5V-2V)/0.02A = 150Ω. Toujours vérifier la
+                                            dissipation : P = V²/R.</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Connecteurs Section -->
+                    <div class="circuit-block">
+                        <h3 class="circuit-title flex items-center">
+                            <img src="https://m.media-amazon.com/images/I/719BPqGZ+xL.jpg" alt="Connecteurs"
+                                class="w-16 h-16 object-cover rounded-lg mr-3">
+                            Connecteurs et Câblage
+                        </h3>
+                        <div class="grid grid-cols-1 gap-4">
+                            <div>
+                                <p><strong>Fonction :</strong> Interconnexion entre les différents modules du système
+                                </p>
+                                <p><strong>Description détaillée :</strong></p>
+                                <p class="mb-3">Ensemble de connecteurs standardisés pour assurer des liaisons fiables :
+                                </p>
+
+                                <h4 class="font-semibold mt-4 mb-2 text-cyan-400">1. Connecteurs Dupont 2.54mm</h4>
+                                <ul class="list-disc pl-5 space-y-2">
+                                    <li><strong>Type :</strong> Mâle/femelle, droit/angulaire</li>
+                                    <li><strong>Pas :</strong> 2.54mm (standard breadboard)</li>
+                                    <li><strong>Section fil :</strong> 20-24 AWG (0.2-0.5mm²)</li>
+                                    <li><strong>Courant max :</strong> 3A par contact (1A continu recommandé)</li>
+                                    <li><strong>Applications :</strong> Liaisons entre cartes, connexion capteurs</li>
+                                </ul>
+
+                                <h4 class="font-semibold mt-4 mb-2 text-cyan-400">2. Borniers à vis</h4>
+                                <ul class="list-disc pl-5 space-y-2">
+                                    <li><strong>Type :</strong> Bornier 2-12 positions, pas 5mm</li>
+                                    <li><strong>Section fil :</strong> Jusqu'à 2.5mm² (14 AWG)</li>
+                                    <li><strong>Courant max :</strong> 10A par borne</li>
+                                    <li><strong>Couplage :</strong> Pince à vis auto-serrante</li>
+                                    <li><strong>Applications :</strong> Alimentation moteurs, connexions puissance</li>
+                                </ul>
+
+                                <h4 class="font-semibold mt-4 mb-2 text-cyan-400">3. Connecteurs JST</h4>
+                                <ul class="list-disc pl-5 space-y-2">
+                                    <li><strong>Série :</strong> PH (2.0mm), XH (2.5mm), SM (3.0mm)</li>
+                                    <li><strong>Verrouillage :</strong> Clip de sécurité intégré</li>
+                                    <li><strong>Courant :</strong> 2-3A selon modèle</li>
+                                    <li><strong>Applications :</strong> Connexions semi-permanentes, batteries</li>
+                                </ul>
+
+                                <div class="mt-4 p-4 bg-gray-900/50 rounded-lg">
+                                    <h4 class="font-semibold text-cyan-400 mb-2"><i
+                                            class="fas fa-lightbulb mr-2"></i>Bonnes Pratiques de Câblage</h4>
+                                    <ul class="list-disc pl-5 space-y-1">
+                                        <li><strong>Code couleur :</strong> Rouge (+VCC), Noir (GND), autres couleurs
+                                            pour signaux</li>
+                                        <li><strong>Longueur :</strong> Garder les câbles les plus courts possibles pour
+                                            réduire les interférences</li>
+                                        <li><strong>Nappes :</strong> Grouper les câbles similaires (alim, signaux,
+                                            données)</li>
+                                        <li><strong>Sertissage :</strong> Utiliser des pinces à sertir pour des
+                                            connexions professionnelles</li>
+                                        <li><strong>Marquage :</strong> Étiqueter les câbles aux deux extrémités</li>
+                                    </ul>
+                                </div>
+
+                                <div class="mt-4 p-4 bg-yellow-900/30 rounded-lg">
+                                    <h4 class="font-semibold text-yellow-400 mb-2"><i
+                                            class="fas fa-exclamation-triangle mr-2"></i>Sécurité Électrique</h4>
+                                    <ul class="list-disc pl-5 space-y-1">
+                                        <li>Vérifier l'isolation des câbles haute tension (>12V)</li>
+                                        <li>Ne pas surcharger les connecteurs (respecter les courants max)</li>
+                                        <li>Protéger les connexions exposées avec gaine thermo ou silicone</li>
+                                        <li>Pour les hautes tensions, utiliser des connecteurs avec verrouillage</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Tableau récapitulatif -->
+                    <h3 class="text-xl font-semibold mb-4" style="color:var(--cyber-purple);">
+                        <i class="fas fa-table mr-2"></i>Liste Complète des Composants
+                    </h3>
+                    <div class="overflow-x-auto">
+                        <table class="component-table">
+                            <thead>
+                                <tr>
+                                    <th>Composant</th>
+                                    <th>Référence</th>
+                                    <th>Quantité</th>
+                                    <th>Fonction Principale</th>
+                                    <th>Caractéristiques Clés</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>Arduino Nano</td>
+                                    <td>ATmega328P</td>
+                                    <td>1</td>
+                                    <td>Contrôleur principal</td>
+                                    <td>16MHz, 32KB Flash, 14 E/S, 8 analogiques</td>
+                                </tr>
+                                <tr>
+                                    <td>Module WiFi</td>
+                                    <td>ESP8266MOD-12</td>
+                                    <td>1</td>
+                                    <td>Communication sans fil</td>
+                                    <td>802.11 b/g/n, UART, 80mA TX</td>
+                                </tr>
+                                <tr>
+                                    <td>Régulateur 12V</td>
+                                    <td>LM7812</td>
+                                    <td>1</td>
+                                    <td>Alimentation moteurs</td>
+                                    <td>1A max, TO-220, 14-35V in</td>
+                                </tr>
+                                <tr>
+                                    <td>Régulateur 5V</td>
+                                    <td>LM7805</td>
+                                    <td>1</td>
+                                    <td>Alimentation logique</td>
+                                    <td>1A max, TO-220, 7-25V in</td>
+                                </tr>
+                                <tr>
+                                    <td>Photorésistance</td>
+                                    <td>GL5528</td>
+                                    <td>1</td>
+                                    <td>Détection lumière</td>
+                                    <td>10kΩ (light), 1MΩ (dark)</td>
+                                </tr>
+                                <tr>
+                                    <td>Module Laser</td>
+                                    <td>KY-008</td>
+                                    <td>1</td>
+                                    <td>Détection objet</td>
+                                    <td>650nm, 5mW, 50cm portée</td>
+                                </tr>
+                                <tr>
+                                    <td>Moteur pas à pas</td>
+                                    <td>28BYJ-48</td>
+                                    <td>1</td>
+                                    <td>Mouvement convoyeur</td>
+                                    <td>12V, 2048 pas/tour, 3.5kg.cm</td>
+                                </tr>
+                                <tr>
+                                    <td>Driver Moteur</td>
+                                    <td>L298N</td>
+                                    <td>1</td>
+                                    <td>Contrôle moteur</td>
+                                    <td>2A/phase, 46V max, double pont H</td>
+                                </tr>
+                                <tr>
+                                    <td>Servomoteur</td>
+                                    <td>SG90</td>
+                                    <td>1</td>
+                                    <td>Mécanisme de tri</td>
+                                    <td>180°, 4.8-6V, 0.1s/60°</td>
+                                </tr>
+                                <tr>
+                                    <td>Batterie</td>
+                                    <td>Li-ion 4S</td>
+                                    <td>1</td>
+                                    <td>Alimentation mobile</td>
+                                    <td>14.8V, 2000mAh, 4A max</td>
+                                </tr>
+                                <tr>
+                                    <td>Condensateur</td>
+                                    <td>475µF 25V</td>
+                                    <td>2</td>
+                                    <td>Filtrage alim</td>
+                                    <td>Électrolytique, 105°C, 2000h</td>
+                                </tr>
+                                <tr>
+                                    <td>Résistances</td>
+                                    <td>1kΩ, 10kΩ</td>
+                                    <td>5</td>
+                                    <td>Circuits divers</td>
+                                    <td>1/4W, 5%, carbone/métal</td>
+                                </tr>
+                                <tr>
+                                    <td>Connecteurs</td>
+                                    <td>Dupont 2.54mm</td>
+                                    <td>10</td>
+                                    <td>Interconnexions</td>
+                                    <td>Mâle/femelle, 20-24AWG</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- Alimentation Section -->
+                <div class="section-card" id="alimentation">
+                    <h2 class="text-2xl font-bold mb-4 flex items-center" style="color:var(--secondary);">
+                        <i class="fa-solid fa-bolt mr-3 text-cyber-blue text-2xl"></i>
+                        Alimentation
+                    </h2>
+
+                    <div class="circuit-block">
+                        <h3 class="circuit-title"><i class="fas fa-car-battery mr-2"></i>Circuit d'Alimentation
+                            Principal</h3>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <div>
+                                <img src="Circuit alimentation.PNG" alt="Circuit d'alimentation"
+                                    class="w-full rounded-lg border border-cyan-500/20">
+                                <p class="mt-3 text-sm text-gray-400">Fig. 3 - Schéma du circuit d'alimentation</p>
+                            </div>
+                            <div>
+                                <p class="mb-3">Ce circuit fournit les tensions nécessaires à tous les composants :</p>
+                                <ul class="list-disc pl-6 space-y-2">
+                                    <li><strong>Batterieau Lithium 4S 14,8V</strong> : Source d'énergie principale</li>
+                                    <li><strong>Régulateur 7812</strong> : Stabilise la tension à 12V pour le moteur pas
+                                        à pas et pour l'alimentation de la carte Arduino NANO par la broche VIN.</li>
+                                    <li><strong>Régulateur 7805</strong> : Fournit du 5V pour les capteurs et les
+                                        servomoteurs.</li>
+                                    <li><strong>Protections</strong> :
+                                        <ul class="list-disc pl-6 mt-1">
+                                            <li>Diode anti-retour</li>
+                                            <li>Condensateurs de stabilisation (475µF + 100nF)</li>
+                                        </ul>
+                                    </li>
+                                </ul>
+                                <div class="mt-4 p-4 bg-gray-900/50 rounded-lg">
+                                    <h4 class="font-semibold text-cyan-400 mb-2"><i
+                                            class="fas fa-lightbulb mr-2"></i>Conseils d'Implémentation</h4>
+                                    <ul class="list-disc pl-5 text-sm space-y-1">
+                                        <li>Utiliser des dissipateurs thermiques pour les régulateurs</li>
+                                        <li>Placer les condensateurs au plus près des régulateurs</li>
+                                        <li>Prévoir des pistes larges pour les lignes 12V </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Bloc d'Entrée Section -->
+                <div class="section-card" id="entree">
+                    <h2 class="text-2xl font-bold mb-4 flex items-center" style="color:var(--secondary);">
+                        <i class="fa-solid fa-signal mr-3 text-cyber-blue text-2xl"></i>
+                        Bloc d'Entrée
+                    </h2>
+
+                    <div class="circuit-block">
+                        <h3 class="circuit-title"><i class="fas fa-satellite-dish mr-2"></i>Schéma Fonctionnel Complet
+                        </h3>
+                        <div class="grid grid-cols-1 gap-6">
+                            <div>
+                                <img src="Circuit_entrée_systeme.PNG" alt="Schéma bloc d'entrée"
+                                    class="w-full rounded-lg border border-cyan-500/20">
+                                <p class="mt-3 text-sm text-gray-400">Fig. 4 - Architecture complète du bloc d'entrée
+                                </p>
+                            </div>
+                            <div>
+                                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                    <div class="bg-gray-900/50 p-4 rounded-lg">
+                                        <h4 class="font-semibold text-cyan-400 mb-2"><i
+                                                class="fas fa-lightbulb mr-2"></i>Fonctionnalités</h4>
+                                        <ul class="list-disc pl-5 text-sm space-y-1">
+                                            <li>Détection optique par barrière laser</li>
+                                            <li>Conditionnement du signal analogique</li>
+                                            <li>Seuillage numérique pour déclenchement</li>
+                                        </ul>
+                                    </div>
+                                    <div class="bg-gray-900/50 p-4 rounded-lg">
+                                        <h4 class="font-semibold text-cyan-400 mb-2"><i
+                                                class="fas fa-cogs mr-2"></i>Spécifications</h4>
+                                        <ul class="list-disc pl-5 text-sm space-y-1">
+                                            <li>Portée : 15-50 cm</li>
+                                            <li>Temps de réponse : < 10ms</li>
+                                            <li>Consommation : 25mA</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Bloc de Traitement Section -->
+                <div class="section-card" id="traitement">
+                    <h2 class="text-2xl font-bold mb-4 flex items-center" style="color:var(--secondary);">
+                        <i class="fa-solid fa-microchip mr-3 text-cyber-blue text-2xl"></i>
+                        Bloc de Traitement
+                    </h2>
+
+                    <div class="circuit-block">
+                        <h3 class="circuit-title"><i class="fas fa-brain mr-2"></i>Architecture Centrale</h3>
+                        <div class="grid grid-cols-1 gap-6">
+                            <div>
+                                <img src="Circuit_bloc_traitement.PNG" alt="Schéma bloc de traitement"
+                                    class="w-full rounded-lg border border-cyan-500/20">
+                                <p class="mt-3 text-sm text-gray-400">Fig. 5 - Schéma fonctionnel du traitement</p>
+                            </div>
+                            <div>
+                                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                    <div class="bg-gray-900/50 p-4 rounded-lg">
+                                        <h4 class="font-semibold text-cyan-400 mb-2"><i
+                                                class="fas fa-project-diagram mr-2"></i>Flux de Données</h4>
+                                        <ol class="list-decimal pl-5 text-sm space-y-1">
+                                            <li>Acquisition des capteurs</li>
+                                            <li>Traitement des signaux</li>
+                                            <li>Décision de tri</li>
+                                            <li>Génération des commandes</li>
+                                        </ol>
+                                    </div>
+                                    <div class="bg-gray-900/50 p-4 rounded-lg">
+                                        <h4 class="font-semibold text-cyan-400 mb-2"><i
+                                                class="fas fa-microchip mr-2"></i>Configuration</h4>
+                                        <ul class="list-disc pl-5 text-sm space-y-1">
+                                            <li>Horloge : 16MHz</li>
+                                            <li>Mémoire : 32KB Flash</li>
+                                            <li>Entrées/Sorties : 22 numériques</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Bloc de Sortie Section -->
+                <div class="section-card" id="sortie">
+                    <h2 class="text-2xl font-bold mb-4 flex items-center" style="color:var(--secondary);">
+                        <i class="fa-solid fa-motorcycle mr-3 text-cyber-blue text-2xl"></i>
+                        Bloc de Sortie
+                    </h2>
+
+                    <div class="circuit-block">
+                        <h3 class="circuit-title"><i class="fas fa-cogs mr-2"></i>Schéma des Actionneurs</h3>
+                        <div class="grid grid-cols-1 gap-6">
+                            <div>
+                                <img src="Circuit_sorti.PNG" alt="Schéma bloc de sortie"
+                                    class="w-full rounded-lg border border-cyan-500/20">
+                                <p class="mt-3 text-sm text-gray-400">Fig. 6 - Architecture des systèmes d'actionnement
+                                </p>
+                            </div>
+                            <div>
+                                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                    <div class="bg-gray-900/50 p-4 rounded-lg">
+                                        <h4 class="font-semibold text-cyan-400 mb-2"><i
+                                                class="fas fa-tachometer-alt mr-2"></i>Signalisation visuelle</h4>
+                                        <ul class="list-disc pl-5 text-sm space-y-1">
+                                            <li>LED Rouge pour les cubes de couleur rouge</li>
+                                            <li>LED Vert pour les cubes de couleur verte</li>
+                                            <li>LED Jaune pour les cubes de couleur jaune</li>
+                                            <li>LED Bleue pour les cubes de couleur bleue</li>
+                                            <li>LED Blanche pour l'état du système</li>
+                                            <li>Buzzer pour signaler un mauvais tri ou les couleurs inconnues</li>
+                                        </ul>
+                                    </div>
+                                    <div class="bg-gray-900/50 p-4 rounded-lg">
+                                        <h4 class="font-semibold text-cyan-400 mb-2"><i
+                                                class="fas fa-tachometer-alt mr-2"></i>Contrôle Moteur</h4>
+                                        <ul class="list-disc pl-5 text-sm space-y-1">
+                                            <li>Driver L298N</li>
+                                            <li>Alimentation 12V isolée</li>
+                                            <li>Protections contre les surtensions</li>
+                                        </ul>
+                                    </div>
+                                    <div class="bg-gray-900/50 p-4 rounded-lg">
+                                        <h4 class="font-semibold text-cyan-400 mb-2"><i
+                                                class="fas fa-robot mr-2"></i>Mécanisme de Tri</h4>
+                                        <ul class="list-disc pl-5 text-sm space-y-1">
+                                            <li>Servomoteur 180°</li>
+                                            <li>Contrôle PWM</li>
+                                            <li>Positions prédéfinies</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Schéma Complet Section -->
+                <div class="section-card" id="schema-global">
+                    <h2 class="text-2xl font-bold mb-4 flex items-center" style="color:var(--secondary);">
+                        <i class="fa-solid fa-project-diagram mr-3 text-cyber-blue text-2xl"></i>
+                        Schéma Électronique Complet
+                    </h2>
+
+                    <div class="grid grid-cols-1 gap-6">
+                        <div>
+                            <h3 class="text-xl font-semibold mb-3" style="color:var(--cyber-purple);"><i
+                                    class="fas fa-microchip mr-2"></i>Circuit Principal</h3>
+                            <img src="img_schematic.PNG" alt="Schéma électronique complet"
+                                class="w-full rounded-lg border border-cyan-500/20">
+                            <p class="mt-3 text-sm text-gray-400">Fig. 7 - Schéma complet du système (cliquer pour
+                                agrandir)</p>
+                        </div>
+
+                        <div>
+                            <h3 class="text-xl font-semibold mb-3" style="color:var(--cyber-purple);"><i
+                                    class="fas fa-layer-group mr-2"></i>PCB Final</h3>
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                <div>
+                                    <img src="img_pcb.PNG" alt="Typon du PCB"
+                                        class="w-full rounded-lg border border-cyan-500/20">
+                                    <p class="mt-3 text-sm text-gray-400">Fig. 8 - Typon du PCB</p>
+                                </div>
+                                <div>
+                                    <img src="img_3Dpcb_front.png" alt="Vue dessus du PCB"
+                                        class="w-full rounded-lg border border-cyan-500/20">
+                                    <p class="mt-3 text-sm text-gray-400">Fig. 9 - Vue de la couche supérieure</p>
+                                </div>
+                                <div>
+                                    <img src="img_3Dpcb_back.png" alt="Vue dessous du PCB"
+                                        class="w-full rounded-lg border border-cyan-500/20">
+                                    <p class="mt-3 text-sm text-gray-400">Fig. 10 - Vue de la couche inférieure</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="bg-gray-900/50 p-4 rounded-lg">
+                            <h4 class="font-semibold text-cyan-400 mb-2"><i
+                                    class="fas fa-lightbulb mr-2"></i>Caractéristiques du PCB</h4>
+                            <ul class="list-disc pl-5 text-sm space-y-1">
+                                <li><strong>Dimensions</strong> : 138mm x 85mm</li>
+                                <li><strong>Couches</strong> : 1 couche cuivrée (B.Cu)</li>
+                                <li><strong>Spécifications</strong> :
+                                    <ul class="list-disc pl-5 mt-1">
+                                        <li>Pistes puissance : 0.8mm</li>
+                                        <li>Pistes signal : 0.6mm</li>
+                                    </ul>
+                                </li>
+                                <li><strong>Note</strong> : Prototype réalisé sur veroboard en attendant fabrication PCB
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Rendu Physique Section -->
+                <div class="section-card" id="prototype">
+                    <h2 class="text-2xl font-bold mb-4 flex items-center" style="color:var(--secondary);">
+                        <i class="fa-solid fa-cube mr-3 text-cyber-blue text-2xl"></i>
+                        Prototype Physique
+                    </h2>
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-4">
+                        <!-- Photo principale -->
+                        <div class="border border-cyan-500/30 rounded-lg overflow-hidden">
+                            <img src="img_elec1.jpg" alt="Vue d'ensemble du prototype"
+                                class="w-full hover:scale-105 transition duration-500">
+                            <p class="mt-2 text-sm text-gray-400 text-center">Fig. 11 - Vue d'ensemble du prototype</p>
+                        </div>
+
+                        <div class="border border-cyan-500/30 rounded-lg overflow-hidden">
+                            <img src="img_elec6.jpg" alt="Soudure"
+                                class="w-full hover:scale-105 transition duration-500">
+                            <p class="mt-2 text-sm text-gray-400 text-center">Fig. 11 - Soudure sur veroboard</p>
+                        </div>
+
+                        <!-- Détail technique -->
+                        <div class="border border-cyan-500/30 rounded-lg overflow-hidden">
+                            <img src="img_elec2.jpg" alt="Détail des connexions"
+                                class="w-full hover:scale-105 transition duration-500">
+                            <p class="mt-2 text-sm text-gray-400 text-center">Fig. 12 - Détail des interconnexions</p>
+                        </div>
+                    </div>
+
+                    <div class="text-center mt-4">
+                        <a href="https://tekbot-robotics-challenge.github.io/2025-Team-UCAO-TECH-Docs/Test_Final/Galerie/galerie.html#"
+                            class="inline-flex items-center text-cyber-blue hover:text-accent transition">
+                            Voir plus de photos dans la galerie complète
+                            <i class="fa-solid fa-arrow-right ml-2"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Téléchargements Section -->
+                <div class="section-card" id="downloads">
+                    <h2 class="text-2xl font-bold mb-4 flex items-center" style="color:var(--secondary);">
+                        <i class="fa-solid fa-download mr-3 text-cyber-blue text-2xl"></i>
+                        Téléchargements
+                    </h2>
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div class="circuit-block">
+                            <h3 class="circuit-title"><i class="fas fa-file-archive mr-2"></i>Fichiers Complets</h3>
+                            <div class="grid grid-cols-1 gap-4">
+                                <div>
+                                    <p>Téléchargez l'ensemble des fichiers sources pour modification ou fabrication :
+                                    </p>
+                                    <div class="mt-4 space-y-3">
+                                        <a href="Fichiers/test_final_kicad.rar" download
+                                            class="btn flex items-center justify-center">
+                                            <i class="fas fa-file-archive mr-2"></i> Projet KiCad Complet
+                                        </a>
+                                        <a href="Fichiers/gerber_circuit.rar" download
+                                            class="btn flex items-center justify-center">
+                                            <i class="fas fa-industry mr-2"></i> Fichiers Gerber (PCB)
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="mt-6 bg-gray-900/50 p-4 rounded-lg">
+                        <h4 class="font-semibold text-cyan-400 mb-2"><i class="fas fa-info-circle mr-2"></i>Instructions
+                        </h4>
+                        <ul class="list-disc pl-5 text-sm space-y-1">
+                            <li><strong>KiCad</strong> : Version 6.0 ou supérieure requise pour ouvrir les fichiers</li>
+                            <li><strong>Gerber</strong> : Compatible avec la plupart des fabricants de PCB</li>
+                        </ul>
+                    </div>
+                </div>
+
+
+                <!-- Programme Arduino Section -->
+                <div class="section-card" id="arduino-sketch">
+                    <h2 class="text-2xl font-bold mb-4 flex items-center" style="color:var(--secondary);">
+                        <i class="fa-solid fa-robot mr-3 text-cyber-blue text-2xl"></i>
+                        Implémentation Logicielle
+                    </h2>
+
+                    <!-- Structure du sketch -->
+                    <div class="circuit-block">
+                        <h3 class="circuit-title"><i class="fas fa-file-alt mr-2"></i>Configuration, Setup et Loop</h3>
+                        <div class="code-block arduino-code">
+                            <pre><code>// === Définition des broches ===
+#define START_PHOTO_PIN A1
+#define STOP_PHOTO_PIN A2
+#define BUTTON_PIN 12
+#define LED_PIN 7
+#define IN1 8
+#define IN2 9
+#define IN3 10
+#define IN4 11
+
+#include &lt;Wire.h&gt;
+#include &lt;Adafruit_TCS34725.h&gt;
+
+Adafruit_TCS34725 tcs = Adafruit_TCS34725();
+const int bleu = 3;
+const int rouge = 4;
+const int jaune = 5;
+const int vert = 6;
+
+const int threshold = 450;
+const int stepDelay = 5;
+const unsigned long longPressTime = 2000;
+
+bool systemActive = false;
+unsigned long buttonPressTime = 0;
+
+void setup() {
+  pinMode(IN1, OUTPUT); 
+  pinMode(IN2, OUTPUT);
+  pinMode(IN3, OUTPUT); 
+  pinMode(IN4, OUTPUT);
+  pinMode(BUTTON_PIN, INPUT);
+  pinMode(LED_PIN, OUTPUT);
+
+  stopMotor();
+  digitalWrite(LED_PIN, LOW);
+
+  Serial.begin(9600);
+  Serial.println("Système prêt. En attente...");
+
+  if (tcs.begin()) {
+    Serial.println("Capteur TCS34725 détecté !");
+    tcs.setInterrupt(false);
+  } else {
+    Serial.println("Erreur capteur TCS34725");
+    while (1);
+  }
+
+  pinMode(bleu, OUTPUT);
+  pinMode(rouge, OUTPUT);
+  pinMode(jaune, OUTPUT);
+  pinMode(vert, OUTPUT);
+
+  digitalWrite(rouge, LOW);
+  digitalWrite(bleu, LOW);
+  digitalWrite(jaune, LOW);
+  digitalWrite(vert, LOW);
+}
+
+void loop() {
+  Serial.print("Start capteur: ");
+  Serial.print(analogRead(START_PHOTO_PIN));
+  Serial.print(" | Stop capteur: ");
+  Serial.println(analogRead(STOP_PHOTO_PIN));
+
+  handleButton();
+
+  if (!systemActive && detectStartSensor()) {
+    activateSystem("Détection START → Activation");
+  }
+
+  if (systemActive && detectStopSensor()) {
+    deactivateSystem("Détection STOP → Arrêt");
+  }
+
+  if (systemActive) {
+    stepMotor();
+    delay(stepDelay);
+
+    String couleur = detectColorTCS34725();
+    Serial.print("Couleur détectée : ");
+    Serial.println(couleur);
+  }
+}</code></pre>
+                        </div>
+                        <p class="mt-2 text-sm text-gray-400">Fig. 1 - Configuration et logique principale du système
+                            TRC 2025</p>
+                    </div>
+
+                    <!-- Structure des fichiers -->
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mt-6">
+                        <div class="bg-gray-900/50 p-4 rounded-lg">
+                            <h4 class="font-semibold text-cyan-400 mb-2">
+                                <i class="fas fa-microchip mr-2"></i>Broches et composants
+                            </h4>
+                            <ul class="list-disc pl-5 text-sm space-y-1">
+                                <li>Capteurs analogiques : A1 (début), A2 (fin)</li>
+                                <li>Moteur pas à pas : IN1 à IN4</li>
+                                <li>LEDs de tri : broches 3 à 6</li>
+                                <li>Bouton multifonction : broche 12 (pull-down)</li>
+                                <li>Capteur TCS34725 pour détection couleur</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <!-- Communication Série Arduino ↔ ESP8266 -->
+                    <div class="section-card mt-10" id="serial-communication">
+                        <h2 class="text-2xl font-bold mb-4 flex items-center" style="color:var(--secondary);">
+                            <i class="fas fa-exchange-alt mr-3 text-cyber-purple text-2xl"></i>
+                            Communication Série avec ESP8266 pour Interface Web
+                        </h2>
+
+                        <div class="bg-gray-900/50 p-4 rounded-lg">
+                            <p class="text-sm text-gray-300 mb-4">
+                                L'Arduino Nano transmet les données de tri à l'ESP8266 NodeMCU via une liaison série.
+                                Ces données sont ensuite affichées sur le dashboard web, incluant les compteurs de
+                                couleurs, la position de tri, et l'heure du dernier déchet traité.
+                            </p>
+
+                            <h4 class="font-semibold text-cyan-400 mb-2">
+                                <i class="fas fa-microchip mr-2"></i>Connexion matérielle
+                            </h4>
+                            <ul class="list-disc pl-5 text-sm space-y-1">
+                                <li>TX Arduino Nano → RX ESP8266 (via diviseur de tension)</li>
+                                <li>RX Arduino Nano ← TX ESP8266</li>
+                                <li>Baudrate : <code>9600</code></li>
+                            </ul>
+
+                            <h4 class="font-semibold text-cyan-400 mt-6 mb-2">
+                                <i class="fas fa-code mr-2"></i>Fonction Arduino pour l'envoi des données
+                            </h4>
+                            <div class="code-block arduino-code">
+                                <pre><code>// Compteurs globaux
+int compteurRouge = 0, compteurVert = 0, compteurJaune = 0, compteurBleu = 0;
+
+void envoyerDonneesWeb(String couleur, int position) {
+  if (couleur == "Rouge") compteurRouge++;
+  else if (couleur == "Vert") compteurVert++;
+  else if (couleur == "Jaune") compteurJaune++;
+  else if (couleur == "Bleu") compteurBleu++;
+
+  Serial.print("{\"couleur\":\"");
+  Serial.print(couleur);
+  Serial.print("\",\"position\":");
+  Serial.print(position);
+  Serial.print(",\"compteurs\":{\"Rouge\":");
+  Serial.print(compteurRouge);
+  Serial.print(",\"Vert\":");
+  Serial.print(compteurVert);
+  Serial.print(",\"Jaune\":");
+  Serial.print(compteurJaune);
+  Serial.print(",\"Bleu\":");
+  Serial.print(compteurBleu);
+  Serial.println("}}");
+}</code></pre>
+                            </div>
+
+                            <h4 class="font-semibold text-cyan-400 mt-6 mb-2">
+                                <i class="fas fa-wifi mr-2"></i>Traitement côté ESP8266
+                            </h4>
+                            <p class="text-sm text-gray-300">
+                                L'ESP8266 lit les données via <code>Serial.readStringUntil('\\n')</code>, les parse et
+                                met à jour dynamiquement le dashboard web. Chaque couleur est comptabilisée et affichée
+                                en temps réel.
+                            </p>
+                        </div>
+                    </div>
+
+                    <!-- Lien vers la partie informatique -->
+                    <div class="mt-6 text-center">
+                        <a href="https://tekbot-robotics-challenge.github.io/2025-Team-UCAO-TECH-Docs/Test_Final/Informatique/informatique.html"
+                            class="btn inline-flex items-center px-6 py-3">
+                            <i class="fas fa-code mr-3"></i>Voir les fonctions détaillées
+                        </a>
+                        <p class="text-xs mt-2 text-gray-400">Les fonctions comme <code>detectColorTCS34725()</code>
+                            sont documentées dans la section informatique</p>
+                    </div>
+
+                    <!-- Téléchargement -->
+                    <div class="mt-6 text-center">
+                        <a href="arduino/Code_convoyeur.rar" download
+                            class="btn-arduino inline-flex items-center px-6 py-3">
+                            <i class="fas fa-download mr-3"></i>Télécharger le croquis complet (.rar)
+                        </a>
+                        <p class="text-xs mt-2 text-gray-400">Compatibilité : Arduino IDE 2.x ou supérieur</p>
+                    </div>
+                </div>
+
+                <!-- Tests Section -->
+                <div class="section-card" id="tests-elec">
+                    <h2 class="text-2xl font-bold mb-4 flex items-center" style="color:var(--secondary);">
+                        <i class="fa-solid fa-vial mr-3 text-cyber-blue text-2xl"></i>
+                        Tests et Validation
+                    </h2>
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <!-- Colonne Plan de Test -->
+                        <div>
+                            <h3 class="text-xl font-semibold mb-3" style="color:var(--cyber-purple);">
+                                <i class="fas fa-clipboard-list mr-2"></i>Plan de Test
+                            </h3>
+                            <div class="test-plan">
+                                <ol class="list-decimal pl-6 space-y-3">
+                                    <li><strong>Test Alimentation</strong> : Mesurer les tensions 12V, 5V et 3.3V sous
+                                        charge</li>
+                                    <li><strong>Test Détection</strong> : Vérifier la détection d'objets à différentes
+                                        distances</li>
+                                    <li><strong>Test Couleur</strong> : Valider l'identification des 4 couleurs</li>
+                                    <li><strong>Test Moteur</strong> : Vérifier le mouvement précis du convoyeur</li>
+                                    <li><strong>Test Tri</strong> : Valider le mécanisme de tri pour chaque couleur</li>
+                                    <li><strong>Test WiFi</strong> : Vérifier l'envoi des données à l'interface web</li>
+                                </ol>
+                            </div>
+                        </div>
+
+                        <!-- Colonne Vidéo -->
+                        <div>
+                            <h3 class="text-xl font-semibold mb-3" style="color:var(--cyber-purple);">
+                                <i class="fas fa-video mr-2"></i>Démonstration
+                            </h3>
+                            <div class="relative pt-[56.25%] rounded-lg overflow-hidden bg-black">
+                                <video class="absolute top-0 left-0 w-full h-full" controls poster="poster.jpg">
+                                    <source src="../Galerie/video_fonctionnement.mp4" type="video/mp4">
+                                    Votre navigateur ne supporte pas les vidéos HTML5.
+                                </video>
+                            </div>
+                            <p class="mt-2 text-sm text-gray-400 text-center">Vidéo : Fonctionnement du système complet
+                            </p>
+                        </div>
+                        <div class="mt-4 p-4 bg-yellow-900/30 rounded-lg">
+                            <h4 class="font-semibold text-yellow-400 mb-2">
+                                <i class="fas fa-exclamation-triangle mr-2"></i> Note importante
+                            </h4>
+                            <p class="mt-2 text-sm text-gray-400">
+                                Lors de la simulation, la pile s'est déchargée, ce qui explique pourquoi vous voyez une
+                                main actionner manuellement le convoyeur.
+                            </p>
+                            <ul class="list-disc pl-5 space-y-1 mt-2 text-sm text-gray-400">
+                                <li><span class="font-medium">LED blanche</span> : Indique la mise en marche du
+                                    convoyeur (démarrage du moteur).</li>
+                                <li><span class="font-medium">Autres LED</span> : Indiquent la couleur des cubes
+                                    détectés.</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Conclusion Section -->
+                <div class="section-card" id="conclusion-elec">
+                    <h2 class="text-2xl font-bold mb-4 flex items-center" style="color:var(--secondary);">
+                        <i class="fa-solid fa-flag-checkered mr-3 text-cyber-blue text-2xl"></i>
+                        Conclusion
+                    </h2>
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div>
+                            <h3 class="text-xl font-semibold mb-3" style="color:var(--cyber-purple);"><i
+                                    class="fas fa-check-circle mr-2"></i>Bilan Technique</h3>
+                            <p class="mb-3">La solution électronique répond aux exigences du projet :</p>
+                            <ul class="list-disc pl-6 space-y-2">
+                                <li>Détection fiable des objets et des couleurs</li>
+                                <li>Contrôle précis des actionneurs</li>
+                                <li>Communication stable avec l'interface web</li>
+                                <li>Autonomie suffisante (>3 heures)</li>
+                            </ul>
+                            <div class="mt-4 p-4 bg-gray-900/50 rounded-lg">
+                                <h4 class="font-semibold text-cyan-400 mb-2"><i class="fas fa-trophy mr-2"></i>Points
+                                    Forts</h4>
+                                <ul class="list-disc pl-5 text-sm space-y-1">
+                                    <li>Architecture modulaire bien séparée</li>
+                                    <li>Protections électriques complètes</li>
+                                    <li>Documentation détaillée</li>
+                                    <li>Code optimisé et commenté</li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div>
+                            <h3 class="text-xl font-semibold mb-3" style="color:var(--cyber-purple);"><i
+                                    class="fas fa-rocket mr-2"></i>Perspectives</h3>
+                            <div class="bg-gray-900/50 p-4 rounded-lg">
+                                <h4 class="font-semibold text-cyan-400 mb-2"><i
+                                        class="fas fa-lightbulb mr-2"></i>Améliorations Possibles</h4>
+                                <ul class="list-disc pl-5 text-sm space-y-1">
+                                    <li>Ajout d'une batterie de secours</li>
+                                    <li>Intégration de capteurs supplémentaires</li>
+                                    <li>Optimisation de la consommation</li>
+                                    <li>Version sans fil complète</li>
+                                </ul>
+                            </div>
+                            <div class="mt-4 p-4 bg-gray-900/50 rounded-lg">
+                                <h4 class="font-semibold text-cyan-400 mb-2"><i
+                                        class="fas fa-code-branch mr-2"></i>Évolutions Futures</h4>
+                                <ul class="list-disc pl-5 text-sm space-y-1">
+                                    <li>Intégration IoT avancée</li>
+                                    <li>Analyse en temps réel</li>
+                                    <li>Interface utilisateur améliorée</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Script pour Mermaid et overlay image -->
+    <script>
+        // Gestion du sommaire actif et des transitions fluides
+        document.addEventListener('DOMContentLoaded', function () {
+            // Gestion du sommaire actif
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        // Retirer la classe active de tous les liens
+                        document.querySelectorAll('.sommaire-link').forEach(link => {
+                            link.classList.remove('active-sommaire');
+                        });
+
+                        // Ajouter la classe active au lien correspondant
+                        const id = entry.target.id;
+                        const correspondingLink = document.querySelector(`.sommaire-link[href="#${id}"]`);
+                        if (correspondingLink) {
+                            correspondingLink.classList.add('active-sommaire');
+                        }
+                    }
+                });
+            }, {
+                threshold: 0.5
+            });
+
+            // Observer chaque section
+            document.querySelectorAll('section[id], div[id]').forEach((section) => {
+                observer.observe(section);
+            });
+
+            // Défilement fluide pour les ancres
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    const targetId = this.getAttribute('href');
+                    const targetElement = document.querySelector(targetId);
+
+                    if (targetElement) {
+                        targetElement.scrollIntoView({
+                            behavior: 'smooth',
+                            block: 'start'
+                        });
+                    }
+                });
+            });
+
+            // Animation des cartes au défilement
+            const animateOnScroll = new IntersectionObserver(
+                (entries) => {
+                    entries.forEach(entry => {
+                        if (entry.isIntersecting) {
+                            entry.target.classList.add('animate-in');
+                            animateOnScroll.unobserve(entry.target);
+                        }
+                    });
+                },
+                {
+                    threshold: 0.1
+                }
+            );
+
+            document.querySelectorAll('.circuit-block').forEach(block => {
+                animateOnScroll.observe(block);
+            });
+        });
+
+        // Initialisation Mermaid en mode clair après chargement du DOM
+        document.addEventListener('DOMContentLoaded', function () {
+            if (window.mermaid) {
+                mermaid.initialize({
+                    startOnLoad: true,
+                    theme: 'default', // mode clair
+                    themeVariables: {
+                        fontSize: '18px',
+                        background: '#fff',
+                        primaryColor: '#fff',
+                        primaryTextColor: '#222',
+                        nodeTextColor: '#222',
+                        lineColor: '#222',
+                        edgeLabelBackground: '#fff',
+                    }
+                });
+                mermaid.init(undefined, document.querySelectorAll('.mermaid'));
+                // Correction post-rendu pour forcer le fond clair et le texte foncé
+                document.querySelectorAll('.mermaid svg').forEach(svg => {
+                    svg.style.background = '#fff';
+                    svg.querySelectorAll('text').forEach(t => t.setAttribute('fill', '#222'));
+                    svg.querySelectorAll('.label, .edgeLabel').forEach(lab => {
+                        lab.setAttribute('fill', '#222');
+                        lab.setAttribute('color', '#222');
+                    });
+                    svg.querySelectorAll('.node rect, .node polygon, .node ellipse').forEach(shape => {
+                        shape.setAttribute('fill', '#fff');
+                        shape.setAttribute('stroke', '#00d1ff');
+                    });
+                    svg.querySelectorAll('.edgePath path').forEach(path => {
+                        path.setAttribute('stroke', '#222');
+                    });
+                });
+            }
+
+            // Fonctionnalité d'affichage en plein écran (exemple simple)
+            document.querySelectorAll('img').forEach(img => {
+                img.addEventListener('click', function () {
+                    const overlay = document.createElement('div');
+                    overlay.style.position = 'fixed';
+                    overlay.style.top = 0;
+                    overlay.style.left = 0;
+                    overlay.style.width = '100vw';
+                    overlay.style.height = '100vh';
+                    overlay.style.background = 'rgba(0,0,0,0.95)';
+                    overlay.style.display = 'flex';
+                    overlay.style.alignItems = 'center';
+                    overlay.style.justifyContent = 'center';
+                    overlay.style.zIndex = 9999;
+                    const imgClone = img.cloneNode();
+                    imgClone.style.maxWidth = '90vw';
+                    imgClone.style.maxHeight = '90vh';
+                    imgClone.style.boxShadow = '0 0 40px #00d1ff';
+                    overlay.appendChild(imgClone);
+                    document.body.appendChild(overlay);
+                    const closeOverlay = function () {
+                        document.body.removeChild(overlay);
+                        window.removeEventListener('keydown', handleKeyPress);
+                    };
+                    function handleKeyPress(e) {
+                        if (e.key === 'Escape') {
+                            closeOverlay();
+                        }
+                    }
+                    overlay.addEventListener('click', closeOverlay);
+                    window.addEventListener('keydown', handleKeyPress);
+                });
+            });
+        });
+    </script>
+</body>
+
+</html>

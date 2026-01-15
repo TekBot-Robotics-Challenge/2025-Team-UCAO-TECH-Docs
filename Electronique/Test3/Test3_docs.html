@@ -1,0 +1,632 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+   <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Documentation Afficheur 7 Segments à Servos | UCAO-TECH</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Roboto:wght@300;400;700&display=swap" rel="stylesheet" />
+  <style>
+
+      header {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      z-index: 1000;
+      background-color: rgba(2, 12, 27, 0.9);
+      backdrop-filter: blur(10px);
+      border-bottom: 1px solid rgba(0, 209, 255, 0.2);
+    }
+    .navbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 1rem 2rem;
+    }
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+      color: white;
+      text-decoration: none;
+      font-size: 1.5rem;
+      font-weight: 700;
+    }
+    .logo img {
+      height: 50px;
+      transition: transform 0.5s ease;
+      cursor: pointer;
+    }
+    .logo:hover img {
+      transform: rotate(360deg);
+    }
+    .logo span {
+      color: #00d1ff;
+    }
+    .nav-links {
+      display: flex;
+      gap: 1.5rem;
+    }
+    .nav-links a {
+      color: rgba(230, 241, 255, 0.8);
+      text-decoration: none;
+      font-weight: 500;
+      font-size: 0.82rem;
+      text-transform: uppercase;
+      letter-spacing: 1.2px;
+      padding: 0.5rem 0.8rem;
+      position: relative;
+      transition: all 0.3s ease;
+    }
+    .nav-links a::before {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 0;
+      height: 2px;
+      background: linear-gradient(90deg, #00d1ff, #9452ff);
+      transition: width 0.3s ease;
+    }
+    .nav-links a:hover {
+      color: #00d1ff;
+    }
+    .nav-links a:hover::before,
+    .nav-links a.active::before {
+      width: 100%;
+    }
+    .nav-links a.active {
+      color: #00d1ff;
+    }
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    body {
+      background-color: #020c1b;
+      color: #e6f1ff;
+      font-family: 'Roboto', sans-serif;
+      line-height: 1.6;
+      padding: 100px 2rem 2rem 2rem;
+    }
+    h1, h2, h3, h4, h5, h6 {
+      color: #00f7ff;
+      font-family: 'Orbitron', sans-serif;
+      margin-top: 1rem;
+    }
+    .section {
+      background-color: rgba(10, 25, 47, 0.4);
+      padding: 2rem;
+      border-radius: 10px;
+      margin: 2rem auto;
+      max-width: 1000px;
+      border-left: 4px solid #00f7ff;
+    }
+    .subsection {
+      margin-top: 1.5rem;
+      padding-left: 1rem;
+      border-left: 2px solid rgba(0, 247, 255, 0.3);
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 1rem 0;
+    }
+    th, td {
+      padding: 0.8rem;
+      border: 1px solid #00d1ff;
+    }
+    pre {
+      background-color: #0a192f;
+      padding: 1rem;
+      overflow-x: auto;
+      border-left: 4px solid #00f7ff;
+      margin: 1rem 0;
+      border-radius: 0 8px 8px 0;
+    }
+    code {
+      font-family: monospace;
+      color: #00f7ff;
+    }
+    ul, ol {
+      margin-left: 1.5rem;
+      margin-top: 0.5rem;
+    }
+    .component-card {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 2rem;
+      background-color: rgba(2, 12, 27, 0.6);
+      padding: 1.5rem;
+      border-radius: 8px;
+      margin: 2rem 0;
+      align-items: center;
+      border: 1px solid #00d1ff;
+    }
+    .component-img {
+      max-width: 100%;
+      height: auto;
+      border-radius: 8px;
+      border: 1px solid #00d1ff;
+      margin: 0 auto;
+      display: block;
+      object-fit: contain;
+    }
+    .img-container {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1rem;
+      justify-content: center;
+      margin: 1rem 0;
+    }
+    .img-container img {
+      max-width: calc(50% - 0.5rem);
+      height: auto;
+    }
+    .download-btn {
+      display: inline-block;
+      padding: 0.8rem 1.5rem;
+      background: linear-gradient(90deg, #00d1ff, #9452ff);
+      color: #fff;
+      font-weight: 600;
+      text-decoration: none;
+      border-radius: 8px;
+      margin: 1rem 0;
+      transition: transform 0.3s ease;
+    }
+    .download-btn:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 5px 15px rgba(0, 209, 255, 0.4);
+    }
+    .video-container {
+      margin: 2rem 0;
+      text-align: center;
+    }
+    video {
+      max-width: 100%;
+      max-height: 500px;
+      border-radius: 8px;
+      border: 1px solid #00d1ff;
+    }
+    .comparison-table {
+      margin: 2rem 0;
+    }
+    .comparison-table th {
+      background-color: rgba(0, 209, 255, 0.1);
+    }
+    @media (max-width: 768px) {
+      body {
+        padding: 80px 1rem 1rem 1rem;
+      }
+      .section {
+        padding: 1rem;
+      }
+      .component-card {
+        flex-direction: column;
+      }
+      .img-container img {
+        max-width: 100%;
+      }
+    }
+   .toc {
+      background-color: rgba(10, 25, 47, 0.6);
+      border-left: 4px solid #00f7ff;
+    }
+    
+    .toc ol {
+      padding-left: 1.5rem;
+    }
+    
+    .toc li {
+      margin-bottom: 0.5rem;
+      transition: all 0.3s ease;
+    }
+    
+    .toc a {
+      color: #e6f1ff;
+      text-decoration: none;
+      display: inline-block;
+      padding: 0.2rem 0;
+    }
+    
+    .toc a:hover {
+      color: #00f7ff;
+      transform: translateX(5px);
+    }
+    
+    .toc h3 {
+      margin-bottom: 1rem;
+    }
+    
+    /* Amélioration de la section d'alimentation */
+    .power-section {
+      background: rgba(0, 209, 255, 0.05);
+      border-radius: 8px;
+      padding: 1.5rem;
+      margin: 1rem 0;
+      border: 1px dashed #00d1ff;
+    }
+    
+    .power-section h4 {
+      margin-bottom: 1rem;
+      display: flex;
+      align-items: center;
+    }
+    
+    .power-section h4::before {
+      content: "⚡";
+      margin-right: 0.5rem;
+      font-size: 1.2em;
+    }
+  </style>
+</head>
+<body>
+   <!-- Header -->
+  <header>
+    <nav class="navbar">
+      <a href="https://tekbot-robotics-challenge.github.io/2025-Team-UCAO-TECH-Docs" class="logo">
+        <img src="https://ucaotech.com/wp-content/uploads/2024/10/UCAO-TECH-1.png" alt="UCAO-TECH Logo" />
+        <span>UCAO-TECH</span>
+      </a>
+      <ul class="nav-links">
+        <li><a href="https://tekbot-robotics-challenge.github.io/2025-Team-UCAO-TECH-Docs">Accueil</a></li>
+        <li><a href="https://tekbot-robotics-challenge.github.io/2025-Team-UCAO-TECH-Docs/#a-propos">À propos</a></li>
+        <li><a href="https://tekbot-robotics-challenge.github.io/2025-Team-UCAO-TECH-Docs/#equipe">Équipe</a></li>
+        <li><a href="https://tekbot-robotics-challenge.github.io/2025-Team-UCAO-TECH-Docs/#contact">Contact</a></li>
+        <li><a href="https://tekbot-robotics-challenge.github.io/2025-Team-UCAO-TECH-Docs/#documentation">Documentation</a></li>
+      </ul>
+    </nav>
+  </header>
+   
+  <main class="section-doc">
+    <h1>Documentation Afficheur 7 Segments à Servomoteurs</h1>
+    
+    <div class="toc section">
+      <h3>Sommaire</h3>
+      <ol>
+    <li><a href="#contexte">Contexte du projet</a></li>
+    <li><a href="#objectifs">Objectifs du projet</a></li>
+    <li><a href="#partie1">Partie 1 : Réalisation physique</a></li>
+    <li><a href="#partie2">Partie 2 : Innovation théorique</a></li>
+    <li><a href="#comparaison">Comparaison et avantages</a></li>
+    <li><a href="#problemes">Problèmes rencontrés</a></li>
+    <li><a href="#references">Références techniques</a></li>
+    <li><a href="#conclusion">Conclusion</a></li>
+  </ol>
+    </div>
+    <!-- Section 1: Contexte -->
+    <section id="contexte" class="section">
+      <h2>1. Contexte du projet</h2>
+      <p>Dans un monde dominé par les écrans numériques et les LEDs, Tekbot Robotic Challenge 2025 lance un défi audacieux : réinventer l’afficheur 7 segments en lui donnant une âme mécanique.</p>
+      
+      <div class="component-card">
+        <img src="Images/image1.jpg" alt="Concept initial" class="component-img" style="max-height: 300px;"/>
+        <div>
+          <p><strong>Origine du projet :</strong></p>
+          <ul>
+            <p>TEKBOT ROBOTIC CHALLENGE 2025</p>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- Section 2: Objectifs -->
+    <section id="objectifs" class="section">
+      <h2>2. Objectifs du projet</h2>
+      <div class="subsection">
+        <h3>Objectifs principaux</h3>
+        <ul>
+          <li>Concevoir un afficheur 7 segments entièrement mécanique</li>
+          <li>Contrôler précisément 7 servomoteurs avec un microcontrôleur</li>
+          <li>Implémenter un comptage cyclique 0→9→0</li>
+        </ul>
+      </div>
+      
+      <div class="subsection">
+        <h3>Objectifs secondaires</h3>
+        <ul>
+          <li>Réduire le nombre de broches utilisées via des circuits intégrés</li>
+          <li>Documenter le processus de développement</li>
+          <li>Valider la solution par simulation</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- Partie 1: Réalisation physique -->
+    <section id="partie1" class="section">
+      <h2>3. Partie 1 : Réalisation physique</h2>
+      
+      <div class="subsection">
+        <h3>3.1 Composants utilisés</h3>
+        <table>
+          <tr><th>Composant</th><th>Référence</th><th>Quantité</th><th>Rôle</th></tr>
+          <tr><td>Microcontrôleur</td><td>ATmega328P</td><td>1</td><td>Cerveau du système</td></tr>
+          <tr><td>Servomoteurs</td><td>SG90</td><td>7</td><td>Contrôle des segments</td></tr>
+          <tr><td>Régulateur</td><td>LM7805</td><td>1</td><td>Régulation 5V</td></tr>
+          <tr><td>Batterie</td><td>Li-ion 7.4V</td><td>1</td><td>Alimentation</td></tr>
+          <tr><td>Condensateurs</td><td>100nF, 1000μF, 10µF</td><td>4</td><td>Filtrage</td></tr>
+          <tr><td>Quartz</td><td>16MHz</td><td>1</td><td>Horloge</td></tr>
+        </table>
+      </div>
+
+    <!-- Section 3.2 Schéma électronique -->
+    <div class="subsection">
+      <h3>3.2 Schéma électronique</h3>
+      <div class="component-card">
+        <img src="Images/circuit.PNG" alt="Schéma électronique complet" class="component-img" style="max-height: 400px;"/>
+        <div>
+          <p><strong>Description :</strong></p>
+          <ul>
+            <li>Protections contre les surtensions</li>
+            <li>Connexion directe des servos aux broches PWM</li>
+            <li>Circuit de reset avec bouton poussoir</li>
+          </ul>
+        </div>
+      </div>
+      <div class="img-container">
+        <img src="Images/image2.jpg" alt="Schéma physique" class="component-img"/>
+        <img src="Images/image3.jpg" alt="Schéma physique" class="component-img"/>
+      </div>
+      <div class="power-section">
+        <h4>Alimentation</h4>
+        <p>Le système d'alimentation comprend :</p>
+        <ul>
+          <li><strong>Batterie Li-ion 7.4V 2S </strong> : Source d'énergie principale</li>
+          <li><strong>Régulateur LM7805</strong> : Stabilisation à 5V pour les composants</li>
+          <li><strong>Condensateurs de filtrage</strong> : 100nF et 10μF pour lisser l'alimentation</li>
+        </ul>
+      </div>
+    </div>
+    <div class="subsection">
+        <h3>3.3 Réalisation des PCB</h3>
+        <div class="component-card">
+          <img src="Images/pcb_test3_front.PNG" alt="PCB réalisé" class="component-img" style="max-height: 300px;"/>
+          <img src="Images/pcb_test3_back.PNG" alt="PCB réalisé" class="component-img" style="max-height: 300px;"/>
+          <div>
+            <p><strong>Caractéristiques :</strong></p>
+            <ul>
+              <li>Conception sous KiCad</li>
+              <li>Double face</li>
+              <li>Pistes de 0.6 mm</li>
+              <li>Espacement optimisé pour les connecteurs</li>
+            </ul>
+            <a href="Kicad/7seg_circuit_electronique.rar" class="download-btn">
+              <i class="fas fa-download"></i> Télécharger les fichiers PCB
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <div class="subsection">
+        <h3>3.4 Code Arduino</h3>
+        <p>Extrait du code principal utilisant millis() pour la temporisation non-bloquante :</p>
+        <pre><code>
+          // Initialisation progressive des servos
+            if (!initTerminee) {
+            if (millis() - debutInit >= 100) { // Délai entre servos
+            debutInit = millis();
+            servoEnCours++;
+      
+            if (servoEnCours < 7) {
+            segments[servoEnCours].attach(brochesServos[servoEnCours]);
+            segments[servoEnCours].write(90);
+           } else {
+            initTerminee = true;
+            afficher(chiffreActuel); // Affiche le 0 initial
+           }
+        }
+       } 
+        </code></pre>
+        <a href="CodeSource/7segment_servo.rar" class="download-btn">
+          <i class="fas fa-download"></i> Télécharger le code complet
+        </a>
+      </div>
+
+      <div class="subsection">
+        <h3>3.5 Vidéo de démonstration</h3>
+        <div class="video-container">
+          <video controls style="max-width: 800px;">
+            <source src="Videos/videodemonstration.mp4" type="video/mp4">
+            Votre navigateur ne supporte pas la vidéo.
+          </video>
+        </div>
+      </div>
+    </section>
+
+    <!-- Partie 2: Innovation théorique -->
+    <section id="partie2" class="section">
+      <h2>4. Partie 2 : Innovation théorique</h2>
+      
+      <div class="subsection">
+        <h3>4.1 Architecture prévue</h3>
+        <div class="component-card">
+          <img src="Images/img_simulation.PNG" alt="Schéma théorique" class="component-img" style="max-height: 400px;"/>
+          <div>
+            <p><strong>Composants clés :</strong></p>
+            <ul>
+              <li><strong>74HC138</strong> : Décodeur 3→8 lignes</li>
+              <li><strong>74HC574</strong> : Registre à verrouillage</li>
+              <li>Transistors NPN (ex : 2N2222)</li>
+              <li>Résistances de base (10kΩ)</li>
+            </ul>
+          </div>
+        </div>
+        
+        <h4>Fonctionnement du système</h4>
+        <p>
+Ce système met en œuvre un afficheur 7 segments mécanique à base de servomoteurs, contrôlé avec un minimum de broches du microcontrôleur grâce à l'utilisation combinée de deux circuits intégrés : le décodeur <strong>74HC138</strong> et le registre à verrouillage <strong>74HC574</strong>.
+</p>
+<p>
+L'ATmega328P utilise une seule sortie PWM (la broche D6) pour générer les impulsions de contrôle destinées aux servos. Chaque segment de l'afficheur est associé à un servomoteur, soit un total de 7 servos pour les 7 segments (A à G).
+</p>
+<p>
+Le <strong>74HC138</strong> est un décodeur 3 vers 8 : à partir de 3 lignes d'adresse (A0, A1, A2), il active une seule sortie parmi Y0 à Y7. Dans ce projet, seules les sorties Y0 à Y6 sont utilisées, chacune correspondant à un segment (donc un servo). Ces sorties du 74HC138 ne peuvent pas directement commuter le signal PWM , elles sont donc reliées à des transistors NPN via des résistances de base.
+</p>
+<pre><code>void selectionnerServoInverse(uint8_t index) {
+  uint8_t inverse = 7 - index; // Inversion des bits
+  digitalWrite(SELECTION_A, inverse & 0x01);
+  digitalWrite(SELECTION_B, (inverse >> 1) & 0x01);
+  digitalWrite(SELECTION_C, (inverse >> 2) & 0x01);
+}</code></pre>
+<p>
+Le <strong>74HC574</strong> est un registre à verrouillage qui capture l'état des entrées D0 à D6 au moment où une impulsion est appliquée sur sa broche d'horloge (latch). Lorsqu'un segment est sélectionné par le 138, le microcontrôleur envoie une impulsion PWM. Cette impulsion est transférée via le transistor vers l'entrée Dx du 74HC574, et une impulsion d'horloge permet de verrouiller cette valeur à la sortie Qx du registre, laquelle est reliée au servomoteur correspondant.
+</p>
+<pre><code>// Génère une impulsion PWM et verrouille
+void envoyerImpulsionEtVerrouiller(uint16_t dureeImpulsion) {
+  digitalWrite(PWM_SORTIE, HIGH);
+  delayMicroseconds(dureeImpulsion);
+  verrouiller(); // Capture pendant l'état HIGH
+  digitalWrite(PWM_SORTIE, LOW);
+}
+
+// Verrouillage du registre
+void verrouiller() {
+  digitalWrite(HORLOGE_VERROU, LOW);
+  delayMicroseconds(5);
+  digitalWrite(HORLOGE_VERROU, HIGH);
+  delayMicroseconds(5);
+  digitalWrite(HORLOGE_VERROU, LOW);
+}</code></pre>
+<p>
+L'ATmega328P répète cette séquence pour chaque segment : </p>
+<div>
+  <li>Sélection avec le 138</li>
+  <li>Envoi du PWM</li>
+  <li>Verrouillage via le 574</li>
+</div>
+<p>Les servos étant rafraîchis périodiquement (toutes les 20 ms), l'affichage reste stable. Ce montage permet de piloter 7 servos avec une seule broche PWM, tout en minimisant l'utilisation des ressources de l'ATmega328P.</p>
+
+      <div class="subsection">
+        <h3>4.2 Simulation Proteus</h3>
+        <div class="video-container">
+          <video controls style="max-width: 800px;">
+            <source src="Videos/Videosimulation.mp4" type="video/mp4">
+            Votre navigateur ne supporte pas la vidéo.
+          </video>
+        </div>
+        <p>La simulation valide :</p>
+        <ul>
+          <li>La logique de sélection des segments</li>
+          <li>Le timing des signaux PWM</li>
+          <li>L'interface avec le microcontrôleur</li>
+        </ul>
+      </div>
+
+      <div class="subsection">
+        <p>Télécharger le dossier comportant le code arduino et le fichier du schéma sous proteus </p>
+      <a href="ProteusSimulation/doc_simulation.rar" class="download-btn">
+      <i class="fas fa-download"></i> Télécharger le document complet
+      </a>
+      </div>
+    </section>
+
+    <!-- Comparaison -->
+    <section id="comparaison" class="section">
+      <h2>5. Comparaison et avantages</h2>
+      <table class="comparison-table">
+        <tr><th>Aspect</th><th>Version physique</th><th>Version optimisée</th></tr>
+        <tr><td>Broches utilisées</td><td>7 broches PWM</td><td>3 broches + 1 PWM</td></tr>
+        <tr><td>Consommation</td><td>800mA</td><td>~700mA (estimé)</td></tr>
+        <tr><td>Complexité</td><td>Faible</td><td>Modérée</td></tr>
+      </table>
+      
+      <div class="subsection">
+        <h3>Avantages de la solution optimisée</h3>
+        <ul>
+          <li>Économie de broches précieuses sur le microcontrôleur</li>
+          <li>Architecture scalable pour plusieurs afficheurs</li>
+          <li>Meilleure isolation des signaux de contrôle</li>
+          <li>Possibilité de multiplexage temporel</li>
+        </ul>
+      </div>
+    </section>
+<!-- Problèmes rencontrés -->
+    <section id="problemes" class="section">
+      <h2>6. Problèmes rencontrés</h2>
+      
+      <div class="subsection">
+          <li><strong>Synchronisation des servomoteurs</strong> : Délais variables dans la réponse des servos nécessitant un recalibrage</li>
+          <li><strong>Alimentation instable</strong> : Chutes de tension lors du mouvement simultané de plusieurs servos</li>
+      </div>
+    </section>
+
+    <!-- Références -->
+    <section id="references" class="section">
+      <h2>7. Références techniques</h2>
+      <div class="subsection">
+        <h3>Datasheets</h3>
+        <ul>
+          <li><a href="#">ATmega328P - Microchip</a></li>
+          <li><a href="#">74HC138 - Texas Instruments</a></li>
+          <li><a href="#">74HC574 - Texas Instruments</a></li>
+          <li><a href="#">Servo SG90 - Datasheet</a></li>
+        </ul>
+      </div>
+      
+      <div class="subsection">
+        <h3>Outils logiciels</h3>
+        <ul>
+          <li><a href="#">Arduino IDE</a></li>
+          <li><a href="#">KiCad EDA</a></li>
+          <li><a href="#">Proteus Design Suite</a></li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- Conclusion -->
+    <section id="conclusion" class="section">
+      <h2>8. Conclusion</h2>
+      <p>Ce projet a démontré la faisabilité d'un afficheur numérique mécanique contrôlé par servomoteurs. Les principaux enseignements sont :</p>
+      <ul>
+        <li>La solution physique directe offre une implémentation simple mais limite l'extensibilité</li>
+        <li>L'approche avec circuits intégrés permet une optimisation significative des ressources</li>
+        <li>La consommation énergétique reste le principal défi pour les applications embarquées</li>
+      </ul>
+      
+    </section>
+  </main>
+  <script>
+    // Lightbox pour les images
+    document.addEventListener('DOMContentLoaded', function() {
+      const images = document.querySelectorAll('.component-img');
+      const lightbox = document.createElement('div');
+      lightbox.id = 'lightbox-overlay';
+      lightbox.style.display = 'none';
+      lightbox.style.position = 'fixed';
+      lightbox.style.top = '0';
+      lightbox.style.left = '0';
+      lightbox.style.width = '100%';
+      lightbox.style.height = '100%';
+      lightbox.style.backgroundColor = 'rgba(0,0,0,0.9)';
+      lightbox.style.zIndex = '1000';
+      lightbox.style.justifyContent = 'center';
+      lightbox.style.alignItems = 'center';
+      lightbox.style.cursor = 'zoom-out';
+      
+      const img = document.createElement('img');
+      img.style.maxWidth = '90%';
+      img.style.maxHeight = '90%';
+      img.style.border = '2px solid #00f7ff';
+      img.style.borderRadius = '8px';
+      
+      lightbox.appendChild(img);
+      document.body.appendChild(lightbox);
+      
+      images.forEach(image => {
+        image.addEventListener('click', () => {
+          img.src = image.src;
+          lightbox.style.display = 'flex';
+        });
+      });
+      
+      lightbox.addEventListener('click', () => {
+        lightbox.style.display = 'none';
+      });
+    });
+  </script>
+</body>
+</html>
